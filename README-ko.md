@@ -6,6 +6,8 @@
 
 🧪 Upstage Solar Open2, Claude Agent SDK, LangChain의 Upstage × deepagents 연동까지 — 포트폴리오용 3대 에이전트 하네스 실험
 
+[![verify-solar-open2-harness](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-solar-open2-harness.yml/badge.svg)](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-solar-open2-harness.yml)
+
 [English](README.md) / [한국어](README-ko.md)
 
 </div>

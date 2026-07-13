@@ -6,6 +6,8 @@
 
 🧪 Three portfolio experiments in agent harnessing — Upstage Solar Open2, the Claude Agent SDK, and LangChain's Upstage integration with deepagents
 
+[![verify-solar-open2-harness](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-solar-open2-harness.yml/badge.svg)](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-solar-open2-harness.yml)
+
 [English](README.md) / [한국어](README-ko.md)
 
 </div>
