@@ -8,6 +8,8 @@
 #      pointed at Upstage's Anthropic-compatible endpoint
 #   C. explicit invocation of the ported `git-commit-helper` skill,
 #      checked against its gitmoji + type(domain) format contract
+#   D. a subagent (Task tool) call, to confirm CLAUDE_CODE_SUBAGENT_MODEL
+#      keeps subagent traffic on solar-open2 too
 #
 # Requires: `claude` and `claude-upstage` on PATH, UPSTAGE_API_KEY set.
 
@@ -17,7 +19,9 @@ fail() { printf '✗ %s\n' "$1" >&2; exit 1; }
 ok()   { printf '✓ %s\n' "$1"; }
 
 # Runs `claude -p "$1"` against Solar Open2 with the same ANTHROPIC_* env
-# vars claude-upstage sets, so Method B and C share one recipe.
+# vars claude-upstage sets, so Methods B-D share one recipe. $2 overrides
+# the default timeout — subagent calls (Method D) run a nested agent and
+# need more headroom than a direct completion.
 claude_solar() {
   ANTHROPIC_BASE_URL="https://api.upstage.ai" \
   ANTHROPIC_AUTH_TOKEN="$UPSTAGE_API_KEY" \
@@ -26,8 +30,10 @@ claude_solar() {
   ANTHROPIC_DEFAULT_HAIKU_MODEL="solar-open2" \
   ANTHROPIC_DEFAULT_SONNET_MODEL="solar-open2" \
   ANTHROPIC_DEFAULT_OPUS_MODEL="solar-open2" \
+  ANTHROPIC_DEFAULT_FABLE_MODEL="solar-open2" \
+  CLAUDE_CODE_SUBAGENT_MODEL="solar-open2" \
   CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
-  timeout 60 claude -p "$1" 2>&1
+  timeout "${2:-90}" claude -p "$1" 2>&1
 }
 
 [ -n "${UPSTAGE_API_KEY:-}" ] || fail "UPSTAGE_API_KEY is not set"
@@ -64,6 +70,18 @@ printf '%s' "$method_c_out" | LC_ALL=C grep -q '[^ -~]' \
 printf '%s' "$method_c_out" | grep -Eq '\([A-Za-z0-9_.-]+\):' \
   || fail "skill output has no type(domain): segment: $method_c_out"
 ok "git-commit-helper skill format honored via Solar Open2"
+
+echo
+echo "== Method D: subagent (Task tool) call via CLAUDE_CODE_SUBAGENT_MODEL =="
+method_d_out="$(claude_solar 'Use the Explore agent (a subagent) to list every file directly inside the current directory. Report just the file list.' 180)" \
+  || fail "subagent-invocation prompt exited non-zero"
+# README.md is a fixed, always-present file in this directory — its
+# presence in the report is a cheap, deterministic proxy for "the subagent
+# actually ran (on solar-open2, per CLAUDE_CODE_SUBAGENT_MODEL) and saw
+# the real filesystem," without pinning exact wording.
+printf '%s' "$method_d_out" | grep -q 'README.md' \
+  || fail "subagent call didn't report README.md: $method_d_out"
+ok "subagent call completed on solar-open2 and saw the real directory"
 
 echo
 ok "All checks passed."

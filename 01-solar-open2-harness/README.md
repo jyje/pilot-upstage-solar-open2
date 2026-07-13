@@ -3,9 +3,9 @@
 [← back to repo overview](../README.md)
 
 **Status:** Verified — Claude Code runs against Upstage's Solar Open2 model
-two different ways, and its custom-skill system works through that
-backend too. All three checks are confirmed working end to end (locally
-and in CI).
+two different ways, and both its custom-skill system and subagent/Task
+calls work through that backend too. All four checks are confirmed
+working end to end (locally and in CI).
 
 ## Goal
 
@@ -32,13 +32,26 @@ export ANTHROPIC_SMALL_FAST_MODEL="solar-open2"
 export ANTHROPIC_DEFAULT_HAIKU_MODEL="solar-open2"
 export ANTHROPIC_DEFAULT_SONNET_MODEL="solar-open2"
 export ANTHROPIC_DEFAULT_OPUS_MODEL="solar-open2"
+export ANTHROPIC_DEFAULT_FABLE_MODEL="solar-open2"
+export CLAUDE_CODE_SUBAGENT_MODEL="solar-open2"
 
 claude -p "hello"
 ```
 
+Every model *slot* Claude Code has needs to point at `solar-open2` —
+Upstage only serves that one model, so any slot left unmapped risks a
+background or subagent call requesting a model name the backend doesn't
+have. `ANTHROPIC_DEFAULT_FABLE_MODEL` and `CLAUDE_CODE_SUBAGENT_MODEL`
+(per the [model configuration docs](https://code.claude.com/docs/en/model-config#environment-variables))
+close the two slots the installed `claude-upstage` (below) doesn't cover —
+its own `set_claude_env` maps haiku/sonnet/opus/small-fast but predates
+both the `fable` alias and the dedicated subagent-model variable, so a
+`fable`-aliased or subagent/Task-tool call routed purely through
+`claude-upstage` isn't guaranteed to land on Solar Open2.
+
 No fork, no patch, no proxy — the stock `claude` binary from
 `@anthropic-ai/claude-code` just needs to be told where to send requests.
-`claude-upstage` (see below) is a convenience wrapper that sets exactly
+`claude-upstage` (see below) is a convenience wrapper that sets most of
 these variables for you and then `exec`s `claude`.
 
 ## Installation
@@ -177,15 +190,37 @@ phrases the way Claude models tend to. **Practical takeaway:** when
 running Claude Code on Solar Open2, name the skill explicitly in prompts
 that need it rather than relying on automatic trigger-phrase matching.
 
+## Subagents stay on Solar Open2 too
+
+`CLAUDE_CODE_SUBAGENT_MODEL="solar-open2"` is what keeps subagent/Task-tool
+calls (e.g. the Explore agent) on Solar Open2 instead of falling back to
+whatever the SDK's default subagent model would otherwise be. Verified
+directly — asked the harness to hand a file-listing task to the Explore
+subagent, and it came back with the real directory contents:
+
+```console
+$ claude -p "Use the Explore agent (a subagent) to list every file \
+  directly inside the current directory. Report just the file list."
+현재 디렉토리(`/.../01-solar-open2-harness/`)의 파일 목록입니다:
+
+- `.env.sample` (파일)
+- `README.md` (파일)
+- `scripts/` (디렉토리)
+```
+
 ## Verification
 
-[`scripts/verify.sh`](scripts/verify.sh) runs three checks —
-`claude-upstage doctor`, Method A, Method B, and the explicit
-`git-commit-helper` skill invocation — and fails loudly if any of them
-don't hold up. The skill check doesn't pin exact wording (the title text
-isn't deterministic); it asserts the two structural things the skill's
-format contract requires: a gitmoji (a non-ASCII byte) and a
-`(domain):` segment. Run it locally with `UPSTAGE_API_KEY` set:
+[`scripts/verify.sh`](scripts/verify.sh) runs four checks —
+`claude-upstage doctor`, Method A, Method B, the explicit
+`git-commit-helper` skill invocation (Method C), and a subagent call
+gated on `CLAUDE_CODE_SUBAGENT_MODEL` (Method D) — and fails loudly if any
+of them don't hold up. The skill check doesn't pin exact wording (the
+title text isn't deterministic); it asserts the two structural things the
+skill's format contract requires: a gitmoji (a non-ASCII byte) and a
+`(domain):` segment. The subagent check looks for `README.md` — a file
+that's always present in this directory — in the subagent's report, as a
+deterministic proxy for "it actually ran against the real filesystem."
+Run it locally with `UPSTAGE_API_KEY` set:
 
 ```bash
 UPSTAGE_API_KEY="..." ./scripts/verify.sh
