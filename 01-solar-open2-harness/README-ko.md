@@ -1,4 +1,4 @@
-# 01 — Solar Open2 하네스
+# Case 01 — Solar Open2 하네스
 
 [English](README.md) / [한국어](README-ko.md)
 

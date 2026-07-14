@@ -12,19 +12,19 @@ and seminar-ready home:
 3. Initializing **deepagents** at the code level using the
    **LangChain Upstage SDK**.
 
-Each topic is scoped to be independently readable, runnable, and
-presentable — someone should be able to open one topic folder and follow it
-without needing the other two.
+Each case is scoped to be independently readable, runnable, and
+presentable — someone should be able to open one case's folder and follow
+it without needing the other two.
 
 ## Summary
 
-| # | Topic | Goal | Key tech | Status |
-| --- | --- | --- | --- | --- |
-| 01 | Solar Open2 harness | Stand up a minimal Claude Code harness (custom skills, project config) that routes through Upstage's Solar Open2 model | Solar Open2, Claude Code, `.claude/skills/` | Verified |
-| 02 | Claude Agent SDK, local | Drive a local Claude Code instance programmatically via the Claude Agent SDK (no manual CLI interaction) | Claude Agent SDK, Python | Verified |
-| 03 | LangChain Upstage deepagents | Initialize a `deepagents`-based agent at the code level using `langchain-upstage` as the model backend | LangChain, `langchain-upstage`, `deepagents` | Planned |
+| Case | Goal | Key tech | Status |
+| --- | --- | --- | --- |
+| Case 01 — Solar Open2 harness | Stand up a minimal Claude Code harness (custom skills, project config) that routes through Upstage's Solar Open2 model | Solar Open2, Claude Code, `.claude/skills/` | Verified |
+| Case 02 — Claude Agent SDK, local | Drive a local Claude Code instance programmatically via the Claude Agent SDK (no manual CLI interaction) | Claude Agent SDK, Python | Verified |
+| Case 03 — LangChain Upstage deepagents | Initialize a `deepagents`-based agent at the code level using `langchain-upstage` as the model backend | LangChain, `langchain-upstage`, `deepagents` | Verified |
 
-## Topic 01 — Solar Open2 harness
+## Case 01 — Solar Open2 harness
 
 - **Goal**: show that a Claude Code-style harness (custom skills, project
   conventions, `.claude/` config) can run against Upstage's Solar Open2
@@ -49,7 +49,7 @@ without needing the other two.
   `01-solar-open2-harness/README.md` for transcripts and the finding about
   `claude-upstage`'s argument passthrough.
 
-## Topic 02 — Claude Agent SDK, local
+## Case 02 — Claude Agent SDK, local
 
 - **Goal**: run Claude Code locally driven entirely through the Claude
   Agent SDK, not the interactive CLI — i.e. a program that opens sessions,
@@ -61,7 +61,7 @@ without needing the other two.
   `02-claude-agent-sdk-local/src/`, plus a README with setup + a captured
   example run.
 - **Result**: done. `claude-agent-sdk` (Python) drives the same `claude`
-  CLI as a subprocess, so the Solar Open2 env var recipe from topic 01
+  CLI as a subprocess, so the Solar Open2 env var recipe from Case 01
   carries over unchanged — passed via `ClaudeAgentOptions(env={...})`
   instead of shell `export`. Same auth-variable finding surfaced from the
   SDK side: its own docs example (`ANTHROPIC_API_KEY`) hangs against
@@ -70,10 +70,10 @@ without needing the other two.
   memory (a number recalled across turns), and `ToolUseBlock` visibility
   for a tool call. Verified locally and in CI
   (`.github/workflows/verify-claude-agent-sdk-local.yml`), reusing the
-  `UPSTAGE_API_KEY` secret from topic 01. See
+  `UPSTAGE_API_KEY` secret from Case 01. See
   `02-claude-agent-sdk-local/README.md` for details.
 
-## Topic 03 — LangChain Upstage deepagents
+## Case 03 — LangChain Upstage deepagents
 
 - **Goal**: initialize a `deepagents`-based agent at the code level with
   `langchain-upstage` supplying the model, showing how deepagents composes
@@ -88,6 +88,20 @@ without needing the other two.
 - **Expected output**: a runnable agent in
   `03-langchain-upstage-deepagents/src/`, plus a README with setup + a
   captured example run.
+- **Result**: done. `ChatUpstage` (from `langchain-upstage`) supplies
+  Solar Open2 to `create_deep_agent()` — no `claude` CLI, no
+  `ANTHROPIC_BASE_URL`/`ANTHROPIC_AUTH_TOKEN` dance, just `UPSTAGE_API_KEY`
+  read automatically via Upstage's OpenAI-compatible endpoint. Finding:
+  Python 3.14 (this repo's default elsewhere) doesn't work here yet —
+  `tokenizers`, a `langchain-upstage` dependency, has no `cp314` wheel as
+  of any release through `0.23.1`, and building it from source fails in
+  this environment; Case 03 pins Python 3.13 instead. Three methods
+  verified: tool use (weather lookup), deepagents' built-in virtual
+  filesystem (write + read back a file), and subagent delegation (a
+  named `math-agent` subagent computing `17 + 25`). Verified locally and
+  in CI (`.github/workflows/verify-langchain-upstage-deepagents.yml`,
+  reusing the `UPSTAGE_API_KEY` secret, no Node/`claude`-CLI step
+  needed). See `03-langchain-upstage-deepagents/README.md` for details.
 
 ## Repo structure
 
@@ -98,8 +112,6 @@ policy).
 
 ## Next steps
 
-- Confirm which topic to implement first (order isn't fixed by this plan).
-- Per topic, once implementation starts: `uv init` a `src/` inside that
-  topic's directory, add real dependencies, and write a `REPORT.md` inside
-  that topic folder once there's a working demo to document (mirrors the
-  plan → implement → report lifecycle used in other `pilot-*` repos).
+All three cases are implemented and verified. Remaining open item: none
+planned currently — revisit Case 03's Python 3.14 pin once `tokenizers`
+ships a `cp314` wheel, to bring every case onto the same Python version.

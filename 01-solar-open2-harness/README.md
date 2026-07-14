@@ -1,4 +1,4 @@
-# 01 — Solar Open2 harness
+# Case 01 — Solar Open2 harness
 
 [English](README.md) / [한국어](README-ko.md)
 

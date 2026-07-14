@@ -1,4 +1,4 @@
-# 02 — Claude Agent SDK, local
+# Case 02 — Claude Agent SDK, local
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -13,7 +13,7 @@ in CI).
 
 Drive Claude Code **programmatically** — no manual CLI interaction — using
 the official Python `claude-agent-sdk`, and show what that actually buys
-over topic 01's raw-CLI-plus-shell-script approach: **structured, typed
+over Case 01's raw-CLI-plus-shell-script approach: **structured, typed
 message objects** instead of scraping text out of stdout.
 
 ## How it works
@@ -22,7 +22,7 @@ message objects** instead of scraping text out of stdout.
 `uv add claude-agent-sdk`) drives the same `claude` CLI binary as a
 subprocess — it's not a separate implementation, so the exact Solar Open2
 env var recipe verified in
-[topic 01](../01-solar-open2-harness/README.md#how-it-works) still
+[Case 01](../01-solar-open2-harness/README.md#how-it-works) still
 applies, just passed through `ClaudeAgentOptions(env={...})` instead of
 shell `export`:
 
@@ -44,8 +44,8 @@ The [Python Agent SDK docs](https://code.claude.com/docs/en/agent-sdk/python)
 show custom endpoints configured with `env={"ANTHROPIC_API_KEY": ...}`.
 Tried verbatim against Upstage, that **hangs** — no message ever comes
 back before timing out. Swapping in `ANTHROPIC_AUTH_TOKEN` (the same
-variable topic 01 found the plain CLI needs) works immediately. Same
-underlying cause as topic 01's finding, from the other side: whatever
+variable Case 01 found the plain CLI needs) works immediately. Same
+underlying cause as Case 01's finding, from the other side: whatever
 `claude` expects for a non-default auth source, it's `ANTHROPIC_AUTH_TOKEN`,
 not `ANTHROPIC_API_KEY` — and that holds however you launch `claude`,
 CLI flags or SDK.
@@ -66,7 +66,7 @@ async for message in query(prompt="hello", options=solar_options()):
     print(type(message).__name__)  # SystemMessage, AssistantMessage, ResultMessage, ...
 ```
 
-Unlike topic 01's shell script, which had to grep/parse `claude`'s stdout
+Unlike Case 01's shell script, which had to grep/parse `claude`'s stdout
 text, the SDK hands back typed Python objects (`SystemMessage`,
 `AssistantMessage`, `ResultMessage`, with `TextBlock`/`ToolUseBlock`
 content) — structure, not string-scraping.
@@ -84,7 +84,7 @@ async with ClaudeSDKClient(options=solar_options()) as client:
 
 Deterministic and CI-checkable: turn 2 must contain "42", or the check
 fails. This is what a retained session gets you that spawning a fresh
-`claude -p` per question (topic 01's approach) cannot.
+`claude -p` per question (Case 01's approach) cannot.
 
 ### Method C — tool-use visibility
 
@@ -138,7 +138,7 @@ UPSTAGE_API_KEY="..." ./scripts/verify.sh
 
 Runs in CI on every push/PR that touches this directory:
 [`.github/workflows/verify-claude-agent-sdk-local.yml`](../.github/workflows/verify-claude-agent-sdk-local.yml),
-reusing the same `UPSTAGE_API_KEY` repository secret topic 01 set up —
+reusing the same `UPSTAGE_API_KEY` repository secret Case 01 set up —
 no new secret, no cost for a separate Anthropic key.
 
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.
