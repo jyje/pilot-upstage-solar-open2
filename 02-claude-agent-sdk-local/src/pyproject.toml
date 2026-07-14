@@ -1,0 +1,18 @@
+[project]
+name = "claude-agent-sdk-local"
+version = "0.1.0"
+description = "Drive a local Claude Code instance programmatically via the Claude Agent SDK, against Upstage's Solar Open2 model"
+requires-python = ">=3.14"
+dependencies = [
+    "claude-agent-sdk>=0.2.117",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.15.21",
+    "ty>=0.0.59",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
