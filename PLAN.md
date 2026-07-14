@@ -103,6 +103,45 @@ it without needing the other two.
   reusing the `UPSTAGE_API_KEY` secret, no Node/`claude`-CLI step
   needed). See `03-langchain-upstage-deepagents/README.md` for details.
 
+## Special Use Cases
+
+Separate from the three core Experiments above: more specific
+integrations tried against Solar Open2, expected to grow over time.
+
+### Case 04 — LangChain OpenWiki
+
+- **Goal**: use `openwiki` (github.com/langchain-ai/openwiki) — a CLI
+  that builds/maintains an agent-readable wiki for a codebase —
+  configured to run on Solar Open2, targeting `pilot-solar-2` itself:
+  document its latest commit and answer questions about it.
+- **Approach**: shallow-clone this repo into a gitignored `scratch/`
+  directory inside `04-langchain-openwiki-solar-open2/` and run
+  `openwiki` there, so the real root `CLAUDE.md`/`AGENTS.md` are never
+  touched and no auto-PR bot goes live on this repo.
+- **Result**: done, with three real findings along the way:
+  1. `openwiki`'s `anthropic` provider can't reach Solar Open2 — its
+     `ChatAnthropic` construction only supports `apiKey`
+     (`x-api-key`), never `authToken` (`Authorization: Bearer`).
+     Confirmed via a direct 401 from Upstage. Worked around with the
+     generic `openai-compatible` provider instead.
+  2. Solar Open2 drops the `tool_call` function name specifically in
+     **streamed** responses (confirmed via a local logging proxy and a
+     minimal `stream: false` vs `stream: true` comparison) — a real
+     Upstage-side bug, not an `openwiki`/`deepagents` bug. Patched a
+     fork (`jyje/openwiki`, branch
+     `fix/disable-streaming-for-tool-calling-providers`) with an opt-in
+     `OPENWIKI_DISABLE_STREAMING` env var; verified the fix directly.
+  3. Full documentation generation (`openwiki code --update`) exceeds
+     Upstage's default 50k-tokens/minute rate limit within a single
+     run — a capacity/tier constraint, not a bug. The 3-question Q&A
+     (cheap, single-turn) is the hard, reliably-passing verification
+     gate; doc generation is attempted best-effort.
+  Verified locally and in CI
+  (`.github/workflows/verify-langchain-openwiki-solar-open2.yml`,
+  building the patched fork from source, reusing the `UPSTAGE_API_KEY`
+  secret). See `04-langchain-openwiki-solar-open2/README.md` for
+  details.
+
 ## Repo structure
 
 See [`CLAUDE.md`](CLAUDE.md) for the directory tree and repo conventions
@@ -112,6 +151,11 @@ policy).
 
 ## Next steps
 
-All three cases are implemented and verified. Remaining open item: none
-planned currently — revisit Case 03's Python 3.14 pin once `tokenizers`
-ships a `cp314` wheel, to bring every case onto the same Python version.
+All three core Experiments and the first Special Use Case are
+implemented and verified. Open items:
+- Revisit Case 03's Python 3.14 pin once `tokenizers` ships a `cp314`
+  wheel, to bring every case onto the same Python version.
+- Decide whether to open an upstream issue/PR against
+  `langchain-ai/openwiki` for Case 04's two findings (the `anthropic`
+  provider auth gap and the streaming tool-name bug) — not done yet,
+  a separate decision from building Case 04 itself.

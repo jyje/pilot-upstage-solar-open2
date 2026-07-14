@@ -9,6 +9,7 @@
 [![verify-solar-open2-harness](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-solar-open2-harness.yml/badge.svg)](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-solar-open2-harness.yml)
 [![verify-claude-agent-sdk-local](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-claude-agent-sdk-local.yml/badge.svg)](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-claude-agent-sdk-local.yml)
 [![verify-langchain-upstage-deepagents](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-langchain-upstage-deepagents.yml/badge.svg)](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-langchain-upstage-deepagents.yml)
+[![verify-langchain-openwiki-solar-open2](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-langchain-openwiki-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-langchain-openwiki-solar-open2.yml)
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -27,6 +28,15 @@ Claude Code 스타일의 에이전트 하네스를 구축하고 구동해보는 
 | [Case 01 — Solar Open2 하네스](01-solar-open2-harness/) | Upstage Solar Open2 모델을 백엔드로 하는 Claude Code 하네스(스킬 등) 구성 | 검증 완료 |
 | [Case 02 — Claude Agent SDK, 로컬 구동](02-claude-agent-sdk-local/) | Claude Agent SDK로 로컬 Claude Code 인스턴스를 프로그래밍 방식으로 구동 | 검증 완료 |
 | [Case 03 — LangChain Upstage deepagents](03-langchain-upstage-deepagents/) | LangChain Upstage SDK를 이용해 코드 레벨에서 deepagents 초기화 | 검증 완료 |
+
+## Special Use Cases
+
+위 3가지 핵심 실험과는 별개로, Solar Open2를 대상으로 시도한 좀 더
+구체적인 연동 사례입니다 — 앞으로 계속 늘어날 수 있습니다.
+
+| Case | 요약 | 상태 |
+| --- | --- | --- |
+| [Case 04 — LangChain OpenWiki](04-langchain-openwiki-solar-open2/) | `openwiki`로 이 리포를 문서화하고 질문에 답변 — Solar Open2로 구동 | 검증 완료 |
 
 전체 계획은 [`PLAN.md`](PLAN.md), 리포 규칙은 [`CLAUDE.md`](CLAUDE.md)를 참고하세요.
 

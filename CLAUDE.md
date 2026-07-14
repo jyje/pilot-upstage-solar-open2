@@ -10,17 +10,21 @@ for the public-facing overview.
 ```
 pilot-solar-2/
 ├── .claude/skills/                    # skills available in this repo (see below)
-├── PLAN.md                            # full 3-case plan
+├── PLAN.md                            # full plan (core Experiments + Special Use Cases)
 ├── README.md / README-ko.md           # portfolio front page
 ├── 01-solar-open2-harness/            # Case 01: Claude Code harness on Solar Open2
 ├── 02-claude-agent-sdk-local/         # Case 02: local Claude Code via Claude Agent SDK
-└── 03-langchain-upstage-deepagents/   # Case 03: deepagents init via LangChain Upstage SDK
+├── 03-langchain-upstage-deepagents/   # Case 03: deepagents init via LangChain Upstage SDK
+└── 04-langchain-openwiki-solar-open2/ # Case 04: openwiki documents this repo via Solar Open2
 ```
 
-Referred to as **Case 01 / Case 02 / Case 03** in prose and docs — the
-numbered directory prefixes (`01-`, `02-`, `03-`) are just filesystem
-sort order, not a rename target. Each case directory is a self-contained
-experiment with its own `src/` (uv-managed). All three are implemented
+Referred to as **Case 01 / Case 02 / ...** in prose and docs — the
+numbered directory prefixes are just filesystem sort order, not a rename
+target. Cases 01-03 are the three core **Experiments**; Case 04 onward
+are **Special Use Cases** — more specific integrations, expected to grow
+over time, kept in their own root README section separate from the core
+three. Each case directory is a self-contained experiment with its own
+`src/` (uv-managed, or a Node project for Case 04). All are implemented
 and verified, each with its own `scripts/verify.sh` and a matching
 `.github/workflows/verify-<case>.yml` that reuses the same
 `UPSTAGE_API_KEY` secret. Case 03 pins Python 3.13 instead of 3.14 (the
