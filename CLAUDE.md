@@ -30,9 +30,11 @@ starts on a topic, it gets its own `src/` (uv-managed) inside that directory.
 
 - **Language**: all source code and code comments are English only — no
   Korean in code, docstrings, or inline comments.
-- **README language**: English is the default for every README. Only the
-  repo-root `README.md` gets a Korean twin (`README-ko.md`) with a language
-  navigator; topic READMEs stay English-only.
+- **README language**: English is the default for every README's primary
+  content. Every scenario — the repo root and each topic (01, 02, 03) —
+  gets a Korean twin (`README-ko.md`) with the same language navigator
+  style. Everything else (source code, comments, `CLAUDE.md`, `PLAN.md`)
+  stays English-only.
 - **Python changes**: run the `python-lint` skill's workflow (ruff check,
   ruff format, ty check, pytest) before considering a Python change done.
 - **Commits**: follow the `git-commit-helper` skill's gitmoji + type/domain
