@@ -11,12 +11,37 @@
 #   D. a subagent (Task tool) call, to confirm CLAUDE_CODE_SUBAGENT_MODEL
 #      keeps subagent traffic on solar-open2 too
 #
+# Each method prints a one-line, <=100-char preview of its real response
+# (noise like the "connectors are disabled" warning stripped, newlines
+# collapsed) so the CI log itself carries visible, inspectable evidence
+# instead of just a pass/fail line.
+#
 # Requires: `claude` and `claude-upstage` on PATH, UPSTAGE_API_KEY set.
 
 set -euo pipefail
 
 fail() { printf '✗ %s\n' "$1" >&2; exit 1; }
 ok()   { printf '✓ %s\n' "$1"; }
+
+# preview <text> — one line, <=100 chars, real content only.
+preview() {
+  s="$1"
+  s="$(printf '%s' "$s" | grep -v 'connectors are disabled' || true)"
+  s="${s//$'\n'/ }"
+  s="$(printf '%s' "$s" | sed -E 's/ +/ /g; s/^ //; s/ $//')"
+  if [ "${#s}" -gt 100 ]; then
+    printf '  -> %s ...(truncated)\n' "${s:0:100}"
+  else
+    printf '  -> %s\n' "$s"
+  fi
+}
+
+# strip_wrapper_banner <text> — for claude-upstage's own launch banner
+# (host/model/key lines), keep only what `claude` itself printed after it.
+strip_wrapper_banner() {
+  after="$(printf '%s' "$1" | sed -n '/Launching claude/,$p' | tail -n +2)"
+  [ -n "$after" ] && printf '%s' "$after" || printf '%s' "$1"
+}
 
 # Runs `claude -p "$1"` against Solar Open2 with the same ANTHROPIC_* env
 # vars claude-upstage sets, so Methods B-D share one recipe. $2 overrides
@@ -50,12 +75,14 @@ method_a_out="$(printf 'hello\n' | timeout 60 claude-upstage 2>&1)" \
   || fail "claude-upstage (piped stdin) exited non-zero"
 [ -n "$method_a_out" ] || fail "claude-upstage (piped stdin) produced no output"
 ok "claude-upstage (piped stdin) produced a response"
+preview "$(strip_wrapper_banner "$method_a_out")"
 
 echo
 echo "== Method B: official claude CLI with manual ANTHROPIC_* env vars =="
 method_b_out="$(claude_solar "hello")" || fail "claude -p \"hello\" exited non-zero"
 [ -n "$method_b_out" ] || fail "claude -p \"hello\" produced no output"
 ok "claude -p \"hello\" (official CLI, alternate API) produced a response"
+preview "$method_b_out"
 
 echo
 echo "== Method C: explicit git-commit-helper skill invocation =="
@@ -70,6 +97,7 @@ printf '%s' "$method_c_out" | LC_ALL=C grep -q '[^ -~]' \
 printf '%s' "$method_c_out" | grep -Eq '\([A-Za-z0-9_.-]+\):' \
   || fail "skill output has no type(domain): segment: $method_c_out"
 ok "git-commit-helper skill format honored via Solar Open2"
+preview "$method_c_out"
 
 echo
 echo "== Method D: subagent (Task tool) call via CLAUDE_CODE_SUBAGENT_MODEL =="
@@ -82,6 +110,7 @@ method_d_out="$(claude_solar 'Use the Explore agent (a subagent) to list every f
 printf '%s' "$method_d_out" | grep -q 'README.md' \
   || fail "subagent call didn't report README.md: $method_d_out"
 ok "subagent call completed on solar-open2 and saw the real directory"
+preview "$method_d_out"
 
 echo
 ok "All checks passed."
