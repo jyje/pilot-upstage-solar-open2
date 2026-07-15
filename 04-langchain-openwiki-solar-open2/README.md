@@ -104,8 +104,19 @@ hand-picked or edited:
 
 ## Verified methods
 
-Evidence run: *(added after the first CI run on this case — see
-[Verification](#verification))*
+Real output from one CI run of `verify.sh` — not hand-picked or edited.
+Click through to read the run yourself:
+
+**Evidence run:** [`verify` job, 2026-07-15](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29380954792/job/87244280144)
+(or browse [every run](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-langchain-openwiki-solar-open2.yml) for the latest)
+
+| Question | Answer (truncated preview) |
+| --- | --- |
+| Q1 — what is this repo about | This repository (`jyje/pilot-upstage-solar-open2`, pilot-solar-2) is a single repo hosting **three i ...(truncated) |
+| Q2 — what did the latest commit change | The most recent commit (`003c1a8`) is a large init-style commit that adds: - **Bug fix**: `warn()` i ...(truncated) |
+| Q3 — how many cases, what do they demonstrate | There are **4 experiment cases** in this repo. Let me read their detail pages to give you a full bre ...(truncated) |
+
+[Full output →](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29380954792/job/87244280144)
 
 ## Verification
 
