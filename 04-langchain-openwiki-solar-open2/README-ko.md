@@ -14,14 +14,13 @@ Upstage의 Solar Open2 모델로 구동되어 이 리포 자체에 대한 실제
 `openwiki`(코드베이스용 에이전트 읽기용 위키를 만들고 유지하는 CLI)를
 평소의 Anthropic/OpenAI 기본값이 아닌 **Solar Open2**로 구동해, **이
 리포 자체**(`pilot-upstage-solar-open2`)를 대상으로 최신 커밋을 문서화하고 질문에
-답하게 합니다. 핵심 세 가지 실험(Case 01-03)과는 별개로, 앞으로 늘어날
-수 있는 **Special Use Cases**(Case 04 이상)의 첫 사례입니다.
+답하게 합니다.
 
 ## 동작 원리
 
 `openwiki`는 현재 작업 디렉토리를 대상으로 동작합니다 — 별도의 대상
 경로 플래그 없이 그냥 원하는 체크아웃 안에서 `cd`한 뒤 실행하면 됩니다.
-이 리포의 실제 루트를 건드리지 않기 위해(`CLAUDE.md`/`AGENTS.md`에 블록
+이 리포의 실제 루트를 건드리지 않기 위해(`AGENTS.md`에 블록
 주입 없음, `openwiki/` 폴더 생성 없음, 자동 PR 봇 없음)
 [`scripts/verify.sh`](scripts/verify.sh)는 `pilot-upstage-solar-open2`를 git-ignore된
 `scratch/` 디렉토리에 shallow clone한 뒤 그 안에서 `openwiki`를

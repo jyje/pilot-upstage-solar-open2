@@ -5,7 +5,7 @@
 # Upstage's Solar Open2 model via the `openai-compatible` provider —
 # not `anthropic`, which openwiki's own code can't point at Upstage (see
 # README.md's first Finding). Never touches this repo's real
-# CLAUDE.md/AGENTS.md — everything happens inside scratch/, gitignored.
+# AGENTS.md — everything happens inside scratch/, gitignored.
 #
 # Requires a patched `openwiki` build — see README.md's second Finding:
 # Solar Open2 drops the tool_call function name when streaming, so

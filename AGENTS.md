@@ -1,8 +1,8 @@
 # pilot-upstage-solar-open2
 
-Portfolio/seminar repo hosting three independent agent-harness experiments
-built around Upstage's Solar Open2 model and the Claude Code / OpenAI Codex /
-LangChain agent ecosystem. See [`PLAN.md`](PLAN.md) for the full plan and [`README.md`](README.md)
+Portfolio/seminar repo hosting several independent agent-harness use cases
+built around Upstage's Solar Open2 model and the Claude Code / OpenAI
+Codex / LangChain agent ecosystem. See [`PLAN.md`](PLAN.md) for the full plan and [`README.md`](README.md)
 for the public-facing overview.
 
 ## Structure
@@ -10,7 +10,7 @@ for the public-facing overview.
 ```
 pilot-upstage-solar-open2/
 ├── .claude/skills/                    # skills available in this repo (see below)
-├── PLAN.md                            # full plan (core Experiments + Special Use Cases)
+├── PLAN.md                            # full plan (all cases)
 ├── README.md / README-ko.md           # portfolio front page
 ├── 01-solar-open2-harness/            # Case 01: Claude Code harness on Solar Open2
 ├── 02-claude-agent-sdk-local/         # Case 02: local Claude Code via Claude Agent SDK
@@ -20,12 +20,11 @@ pilot-upstage-solar-open2/
 
 Referred to as **Case 01 / Case 02 / ...** in prose and docs — the
 numbered directory prefixes are just filesystem sort order, not a rename
-target. Cases 01-03 are the three core **Experiments**; Case 04 onward
-are **Special Use Cases** — more specific integrations, expected to grow
-over time, kept in their own root README section separate from the core
-three. Each case directory is a self-contained experiment with its own
-`src/` (uv-managed, or a Node project for Case 04). All are implemented
-and verified, each with its own `scripts/verify.sh` and a matching
+target. All cases live at the top level as one flat list — no split
+between "core" and "special" cases.
+Each case directory is a self-contained experiment with its own `src/`
+(uv-managed, or a Node project for Case 04). All are implemented and
+verified, each with its own `scripts/verify.sh` and a matching
 `.github/workflows/verify-<case>.yml` that reuses the same
 `UPSTAGE_API_KEY` secret. Case 03 pins Python 3.13 instead of 3.14 (the
 default elsewhere) — see its README for why.
@@ -41,7 +40,7 @@ default elsewhere) — see its README for why.
 - **Language**: all source code and code comments are English only — no
   Korean in code, docstrings, or inline comments.
 - **README language**: English is the default for every README's primary
-  content. Every scenario — the repo root and each topic (01, 02, 03) —
+  content. Every scenario — the repo root and every case directory —
   gets a Korean twin (`README-ko.md`) with the same language navigator
   style. Everything else (source code, comments, `AGENTS.md`, `PLAN.md`)
   stays English-only.

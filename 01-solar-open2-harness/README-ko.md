@@ -134,7 +134,7 @@ claude -p "hello"
 
 [전체 출력 →](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29304170180/job/86994029784)
 
-두 응답 모두 이 리포의 실제 `CLAUDE.md`/상태를 읽어서 답한 것이지 정해진
+두 응답 모두 이 리포의 실제 `AGENTS.md`/상태를 읽어서 답한 것이지 정해진
 답변이 아닙니다 — Solar Open2가 단순 채팅 완성이 아니라 완전한 에이전틱
 Claude Code 하네스(툴 접근 포함)를 통해 응답함을 확인시켜줍니다.
 

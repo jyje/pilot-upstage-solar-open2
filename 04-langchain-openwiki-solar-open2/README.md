@@ -15,15 +15,13 @@ Use `openwiki` — a CLI that builds and maintains an agent-readable wiki
 for a codebase — configured to run on **Solar Open2** instead of its
 typical Anthropic/OpenAI defaults, targeting **this repo itself**
 (`pilot-upstage-solar-open2`): document its latest commit and answer questions about
-it. This is the first of what may become a growing set of **Special Use
-Cases** (Case 04+), separate from the three core Experiments (Cases
-01-03).
+it.
 
 ## How it works
 
 `openwiki` operates on its current working directory — no target-path
 flag needed, just `cd` into a checkout and run it. To keep this repo's
-real root untouched (no injected `CLAUDE.md`/`AGENTS.md` blocks, no
+real root untouched (no injected `AGENTS.md` blocks, no
 `openwiki/` folder, no auto-PR bot), [`scripts/verify.sh`](scripts/verify.sh)
 shallow-clones `pilot-upstage-solar-open2` into a gitignored `scratch/` directory and
 runs `openwiki` there instead of against the live checkout.

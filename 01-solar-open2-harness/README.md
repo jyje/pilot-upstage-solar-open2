@@ -136,7 +136,7 @@ claude -p "hello"
 
 [Full output →](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29304170180/job/86994029784)
 
-Both responses read this repo's actual `CLAUDE.md`/state, not a canned
+Both responses read this repo's actual `AGENTS.md`/state, not a canned
 reply, confirming Solar Open2 answers through the full agentic Claude
 Code harness (tool access included), not just a raw chat completion.
 

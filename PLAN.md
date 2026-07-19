@@ -1,9 +1,9 @@
-# Plan: pilot-upstage-solar-open2 — three agent-harness experiments
+# Plan: pilot-upstage-solar-open2 — agent-harness experiments
 
 ## Context
 
-This repo exists to give three independent experiments a shared, portfolio
-and seminar-ready home:
+This repo exists to give several independent experiments a shared,
+portfolio and seminar-ready home:
 
 1. Building a Claude Code harness (skills, etc.) on top of Upstage's
    **Solar Open2** model.
@@ -11,10 +11,12 @@ and seminar-ready home:
    **Claude Agent SDK**.
 3. Initializing **deepagents** at the code level using the
    **LangChain Upstage SDK**.
+4. Documenting this repo itself with **LangChain OpenWiki**, powered by
+   Solar Open2.
 
 Each case is scoped to be independently readable, runnable, and
 presentable — someone should be able to open one case's folder and follow
-it without needing the other two.
+it without needing any of the others.
 
 ## Summary
 
@@ -23,6 +25,7 @@ it without needing the other two.
 | Case 01 — Solar Open2 harness | Stand up a minimal Claude Code harness (custom skills, project config) that routes through Upstage's Solar Open2 model | Solar Open2, Claude Code, `.claude/skills/` | Verified |
 | Case 02 — Claude Agent SDK, local | Drive a local Claude Code instance programmatically via the Claude Agent SDK (no manual CLI interaction) | Claude Agent SDK, Python | Verified |
 | Case 03 — LangChain Upstage deepagents | Initialize a `deepagents`-based agent at the code level using `langchain-upstage` as the model backend | LangChain, `langchain-upstage`, `deepagents` | Verified |
+| Case 04 — LangChain OpenWiki | Document this repo itself with `openwiki`, configured to run on Solar Open2 | LangChain, `openwiki`, Solar Open2 | Verified |
 
 ## Case 01 — Solar Open2 harness
 
@@ -32,7 +35,7 @@ it without needing the other two.
   simple custom skills built for it.
 - **Approach**: point Claude Code's model routing at Solar Open2 (directly
   via Upstage's OpenAI-compatible endpoint, or via a proxy such as LiteLLM —
-  see `~/repo/jyje/cluster/clusters/r4spi/apps/litellm.yaml` for a prior
+  see `jyje/cluster`'s `clusters/r4spi/apps/litellm.yaml` for a prior
   `upstage/solar-open2` routing config to reference), then build 1-2 small
   skills to exercise it end to end.
 - **Prior art to reference (not copy verbatim)**: the LiteLLM routing config
@@ -79,11 +82,11 @@ it without needing the other two.
   `langchain-upstage` supplying the model, showing how deepagents composes
   with a non-Anthropic, non-OpenAI backend.
 - **Approach**: start from the `create_deep_agent()` pattern already used in
-  `~/repo/jyje/pilot-deep-agents` and the middleware composition style in
-  `~/repo/jyje/pilot-deepagents-rubrics`, swapping the model for
+  `jyje/pilot-deep-agents` and the middleware composition style in
+  `jyje/pilot-deepagents-rubrics`, swapping the model for
   `langchain-upstage`.
-- **Prior art to reference (not copy verbatim)**: `pilot-deep-agents`
-  (`create_deep_agent()` + simple tool demo), `pilot-deepagents-rubrics`
+- **Prior art to reference (not copy verbatim)**: `jyje/pilot-deep-agents`
+  (`create_deep_agent()` + simple tool demo), `jyje/pilot-deepagents-rubrics`
   (`RubricMiddleware` composition).
 - **Expected output**: a runnable agent in
   `03-langchain-upstage-deepagents/src/`, plus a README with setup + a
@@ -103,12 +106,7 @@ it without needing the other two.
   reusing the `UPSTAGE_API_KEY` secret, no Node/`claude`-CLI step
   needed). See `03-langchain-upstage-deepagents/README.md` for details.
 
-## Special Use Cases
-
-Separate from the three core Experiments above: more specific
-integrations tried against Solar Open2, expected to grow over time.
-
-### Case 04 — LangChain OpenWiki
+## Case 04 — LangChain OpenWiki
 
 - **Goal**: use `openwiki` (github.com/langchain-ai/openwiki) — a CLI
   that builds/maintains an agent-readable wiki for a codebase —
@@ -116,8 +114,8 @@ integrations tried against Solar Open2, expected to grow over time.
   document its latest commit and answer questions about it.
 - **Approach**: shallow-clone this repo into a gitignored `scratch/`
   directory inside `04-langchain-openwiki-solar-open2/` and run
-  `openwiki` there, so the real root `CLAUDE.md`/`AGENTS.md` are never
-  touched and no auto-PR bot goes live on this repo.
+  `openwiki` there, so the real root `AGENTS.md` is never touched and no
+  auto-PR bot goes live on this repo.
 - **Result**: done, with three real findings along the way:
   1. `openwiki`'s `anthropic` provider can't reach Solar Open2 — its
      `ChatAnthropic` construction only supports `apiKey`
@@ -144,15 +142,15 @@ integrations tried against Solar Open2, expected to grow over time.
 
 ## Repo structure
 
-See [`CLAUDE.md`](CLAUDE.md) for the directory tree and repo conventions
+See [`AGENTS.md`](AGENTS.md) for the directory tree and repo conventions
 (English-only source/comments, README language policy, required
 `python-lint` workflow for Python changes, `git-commit-helper` commit
 policy).
 
 ## Next steps
 
-All three core Experiments and the first Special Use Case are
-implemented and verified. Open items:
+All cases so far (01 through 04) are implemented and verified. Open
+items:
 - Revisit Case 03's Python 3.14 pin once `tokenizers` ships a `cp314`
   wheel, to bring every case onto the same Python version.
 - Decide whether to open an upstream issue/PR against
