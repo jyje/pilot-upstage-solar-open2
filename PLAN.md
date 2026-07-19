@@ -112,7 +112,7 @@ integrations tried against Solar Open2, expected to grow over time.
 
 - **Goal**: use `openwiki` (github.com/langchain-ai/openwiki) — a CLI
   that builds/maintains an agent-readable wiki for a codebase —
-  configured to run on Solar Open2, targeting `pilot-solar-2` itself:
+  configured to run on Solar Open2, targeting `pilot-upstage-solar-open2` itself:
   document its latest commit and answer questions about it.
 - **Approach**: shallow-clone this repo into a gitignored `scratch/`
   directory inside `04-langchain-openwiki-solar-open2/` and run

@@ -1,4 +1,4 @@
-# Case 04 — LangChain OpenWiki, documenting pilot-solar-2 with Solar Open2
+# Case 04 — LangChain OpenWiki, documenting pilot-upstage-solar-open2 with Solar Open2
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -14,7 +14,7 @@ uncovered along the way.
 Use `openwiki` — a CLI that builds and maintains an agent-readable wiki
 for a codebase — configured to run on **Solar Open2** instead of its
 typical Anthropic/OpenAI defaults, targeting **this repo itself**
-(`pilot-solar-2`): document its latest commit and answer questions about
+(`pilot-upstage-solar-open2`): document its latest commit and answer questions about
 it. This is the first of what may become a growing set of **Special Use
 Cases** (Case 04+), separate from the three core Experiments (Cases
 01-03).
@@ -25,7 +25,7 @@ Cases** (Case 04+), separate from the three core Experiments (Cases
 flag needed, just `cd` into a checkout and run it. To keep this repo's
 real root untouched (no injected `CLAUDE.md`/`AGENTS.md` blocks, no
 `openwiki/` folder, no auto-PR bot), [`scripts/verify.sh`](scripts/verify.sh)
-shallow-clones `pilot-solar-2` into a gitignored `scratch/` directory and
+shallow-clones `pilot-upstage-solar-open2` into a gitignored `scratch/` directory and
 runs `openwiki` there instead of against the live checkout.
 
 ## Finding 1: the `anthropic` provider can't reach Solar Open2
@@ -98,7 +98,7 @@ below — cheap, single-turn calls — is the hard, reliably-passing check.
 Real answers from an `openwiki code -p "<question>"` run — not
 hand-picked or edited:
 
-1. **"What is this repository (pilot-solar-2) about?"**
+1. **"What is this repository (pilot-upstage-solar-open2) about?"**
 2. **"What did the most recent commit change?"**
 3. **"How many experiment cases does this repo have, and what does each one demonstrate?"**
 
@@ -112,7 +112,7 @@ Click through to read the run yourself:
 
 | Question | Answer (truncated preview) |
 | --- | --- |
-| Q1 — what is this repo about | This repository (`jyje/pilot-upstage-solar-open2`, pilot-solar-2) is a single repo hosting **three i ...(truncated) |
+| Q1 — what is this repo about | This repository (`jyje/pilot-upstage-solar-open2`, pilot-upstage-solar-open2) is a single repo hosting **three i ...(truncated) |
 | Q2 — what did the latest commit change | The most recent commit (`003c1a8`) is a large init-style commit that adds: - **Bug fix**: `warn()` i ...(truncated) |
 | Q3 — how many cases, what do they demonstrate | There are **4 experiment cases** in this repo. Let me read their detail pages to give you a full bre ...(truncated) |
 

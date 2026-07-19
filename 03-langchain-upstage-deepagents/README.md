@@ -102,8 +102,8 @@ it itself — both the main agent and the subagent run on Solar Open2.
 Real output from one CI run of `verify.sh` — not hand-picked or edited.
 Click through to read the run yourself:
 
-**Evidence run:** [`verify` job, 2026-07-14](https://github.com/jyje/pilot-solar-2/actions/runs/29313121694/job/87021080894)
-(or browse [every run](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-langchain-upstage-deepagents.yml) for the latest)
+**Evidence run:** [`verify` job, 2026-07-14](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29313121694/job/87021080894)
+(or browse [every run](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-langchain-upstage-deepagents.yml) for the latest)
 
 | Method | Result |
 | --- | --- |
@@ -111,7 +111,7 @@ Click through to read the run yourself:
 | B — virtual filesystem | `HELLO-DEEPAGENTS` (`result["files"]["/note.txt"]["content"]`) |
 | C — subagent delegation | `17 + 25 = 42` (from the `math-agent` subagent) |
 
-[Full output →](https://github.com/jyje/pilot-solar-2/actions/runs/29313121694/job/87021080894)
+[Full output →](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29313121694/job/87021080894)
 
 ## Verification
 

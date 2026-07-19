@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Runs `openwiki` (github.com/langchain-ai/openwiki) against a scratch
-# shallow clone of this very repo (pilot-solar-2), configured to use
+# shallow clone of this very repo (pilot-upstage-solar-open2), configured to use
 # Upstage's Solar Open2 model via the `openai-compatible` provider —
 # not `anthropic`, which openwiki's own code can't point at Upstage (see
 # README.md's first Finding). Never touches this repo's real
@@ -44,10 +44,10 @@ preview() {
 command -v openwiki >/dev/null 2>&1 || fail "openwiki not found (needs the jyje/openwiki patched build on PATH)"
 command -v git >/dev/null 2>&1 || fail "git not found"
 
-echo "== cloning a fresh shallow copy of pilot-solar-2 into scratch/target =="
+echo "== cloning a fresh shallow copy of pilot-upstage-solar-open2 into scratch/target =="
 rm -rf scratch
 mkdir -p scratch
-git clone --depth=1 https://github.com/jyje/pilot-solar-2 scratch/target >/dev/null 2>&1 \
+git clone --depth=1 https://github.com/jyje/pilot-upstage-solar-open2 scratch/target >/dev/null 2>&1 \
   || fail "shallow clone failed"
 ok "cloned $(git -C scratch/target rev-parse --short HEAD)"
 
@@ -62,7 +62,7 @@ export OPENWIKI_DISABLE_STREAMING=true
 echo
 echo "== 3 questions about this project (hard gate) =="
 questions=(
-  "What is this repository (pilot-solar-2) about?"
+  "What is this repository (pilot-upstage-solar-open2) about?"
   "What did the most recent commit change?"
   "How many experiment cases does this repo have, and what does each one demonstrate?"
 )

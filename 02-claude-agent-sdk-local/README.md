@@ -110,8 +110,8 @@ Real output from one CI run of `verify.sh` (<=100 chars, same truncation
 `demo.py` itself prints) — not hand-picked or edited. Click through to
 read the untruncated response yourself:
 
-**Evidence run:** [`verify` job, 2026-07-14](https://github.com/jyje/pilot-solar-2/actions/runs/29306803664/job/87001673982)
-(or browse [every run](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-claude-agent-sdk-local.yml) for the latest)
+**Evidence run:** [`verify` job, 2026-07-14](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29306803664/job/87001673982)
+(or browse [every run](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-claude-agent-sdk-local.yml) for the latest)
 
 | Method | Result |
 | --- | --- |
@@ -119,7 +119,7 @@ read the untruncated response yourself:
 | B — `ClaudeSDKClient` session memory | `42` (recalled correctly in turn 2) |
 | C — tool-use visibility | `saw_tool_use=True` (a real `ToolUseBlock` appeared in the message stream) |
 
-[Full output →](https://github.com/jyje/pilot-solar-2/actions/runs/29306803664/job/87001673982)
+[Full output →](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29306803664/job/87001673982)
 
 ## Verification
 

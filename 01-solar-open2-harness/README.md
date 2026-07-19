@@ -112,17 +112,17 @@ Every sample below is real output from one CI run of `verify.sh`
 hand-picked or edited. Click through to read the untruncated response
 yourself:
 
-**Evidence run:** [`verify` job, 2026-07-14](https://github.com/jyje/pilot-solar-2/actions/runs/29304170180/job/86994029784)
-(or browse [every run](https://github.com/jyje/pilot-solar-2/actions/workflows/verify-solar-open2-harness.yml) for the latest)
+**Evidence run:** [`verify` job, 2026-07-14](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29304170180/job/86994029784)
+(or browse [every run](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-solar-open2-harness.yml) for the latest)
 
 ### Method A — `claude-upstage`, piped stdin
 
 ```bash
 echo "hello" | claude-upstage
 ```
-> Hello! 👋 How can I help you with the `pilot-solar-2` project today? I can assist with the three inde ...(truncated)
+> Hello! 👋 How can I help you with the `pilot-upstage-solar-open2` project today? I can assist with the three inde ...(truncated)
 
-[Full output →](https://github.com/jyje/pilot-solar-2/actions/runs/29304170180/job/86994029784)
+[Full output →](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29304170180/job/86994029784)
 
 ### Method B — official `claude` CLI, plain env vars
 
@@ -132,9 +132,9 @@ export ANTHROPIC_AUTH_TOKEN="$UPSTAGE_API_KEY"
 export ANTHROPIC_MODEL="solar-open2"
 claude -p "hello"
 ```
-> Hello! 👋 I'm ready to help you with your `pilot-solar-2` project. This repo contains three agent-har ...(truncated)
+> Hello! 👋 I'm ready to help you with your `pilot-upstage-solar-open2` project. This repo contains three agent-har ...(truncated)
 
-[Full output →](https://github.com/jyje/pilot-solar-2/actions/runs/29304170180/job/86994029784)
+[Full output →](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29304170180/job/86994029784)
 
 Both responses read this repo's actual `CLAUDE.md`/state, not a canned
 reply, confirming Solar Open2 answers through the full agentic Claude
@@ -174,7 +174,7 @@ claude -p "Use the git-commit-helper skill. A new file docs/hello.txt \
 ```
 > 📄 docs(docs): add greeting file
 
-[Full output →](https://github.com/jyje/pilot-solar-2/actions/runs/29304170180/job/86994029784)
+[Full output →](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29304170180/job/86994029784)
 
 Correct once the skill is explicitly invoked — gitmoji, type, and
 `(domain):` all present. The gap between these two prompts is small in
@@ -198,9 +198,9 @@ subagent (this is Method D):
 claude -p "Use the Explore agent (a subagent) to list every file \
   directly inside the current directory. Report just the file list."
 ```
-> Files directly inside the current directory (`/home/runner/work/pilot-solar-2/pilot-solar-2/01-solar ...(truncated)
+> Files directly inside the current directory (`/home/runner/work/pilot-upstage-solar-open2/pilot-upstage-solar-open2/01-solar ...(truncated)
 
-[Full output →](https://github.com/jyje/pilot-solar-2/actions/runs/29304170180/job/86994029784)
+[Full output →](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/29304170180/job/86994029784)
 
 The reported path is the CI runner's actual checkout of this directory —
 confirming the subagent call really executed against the real filesystem,
