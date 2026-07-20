@@ -1,0 +1,19 @@
+# LiteLLM receives Codex Responses API calls and translates them to Upstage's
+# OpenAI-compatible Chat Completions API. The model-name prefix opts into
+# LiteLLM's /responses -> /chat/completions bridge.
+model_list:
+  - model_name: solar-open2
+    litellm_params:
+      model: openai/chat_completions/solar-open2
+      api_base: https://api.upstage.ai/v1/solar
+      api_key: os.environ/UPSTAGE_API_KEY
+      drop_params: true
+      additional_drop_params:
+        - web_search_options
+        - client_metadata
+
+litellm_settings:
+  drop_params: true
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY

@@ -1,4 +1,4 @@
-# Case 01 — Solar Open2 하네스
+# Case 01 — Solar Open2 x Claude Code
 
 [English](README.md) / [한국어](README-ko.md)
 

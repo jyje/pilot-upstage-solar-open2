@@ -1,0 +1,37 @@
+name: verify-codex-upstage-solar-open2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "05-codex-upstage-solar-open2/**"
+      - ".github/workflows/verify-codex-upstage-solar-open2.yml"
+  pull_request:
+    paths:
+      - "05-codex-upstage-solar-open2/**"
+      - ".github/workflows/verify-codex-upstage-solar-open2.yml"
+  workflow_dispatch: {}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install LiteLLM and Codex
+        run: |
+          pip install 'litellm[proxy]'
+          npm install -g @openai/codex
+
+      - name: Run verification
+        env:
+          UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
+        run: ./05-codex-upstage-solar-open2/scripts/verify.sh

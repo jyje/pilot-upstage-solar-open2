@@ -1,4 +1,4 @@
-# Case 04 — LangChain OpenWiki, documenting pilot-upstage-solar-open2 with Solar Open2
+# Case 04 — Solar Open2 x LangChain OpenWiki, documenting pilot-upstage-solar-open2
 
 [English](README.md) / [한국어](README-ko.md)
 

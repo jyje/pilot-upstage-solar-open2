@@ -1,4 +1,4 @@
-# Case 02 — Claude Agent SDK, 로컬 구동
+# Case 02 — Solar Open2 x Claude Agent SDK
 
 [English](README.md) / [한국어](README-ko.md)
 

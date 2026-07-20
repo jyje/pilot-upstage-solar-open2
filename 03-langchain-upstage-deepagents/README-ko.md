@@ -1,4 +1,4 @@
-# Case 03 — LangChain Upstage deepagents
+# Case 03 — Solar Open2 x LangChain Deepagents
 
 [English](README.md) / [한국어](README-ko.md)
 

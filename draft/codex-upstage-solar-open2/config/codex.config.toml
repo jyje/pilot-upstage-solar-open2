@@ -1,0 +1,12 @@
+# Copy this file to $CODEX_HOME/config.toml or use it from an isolated
+# CODEX_HOME. The proxy key authenticates Codex to LiteLLM; Upstage's API key
+# remains confined to the proxy process.
+model = "solar-open2"
+model_provider = "solar_proxy"
+model_context_window = 32768
+
+[model_providers.solar_proxy]
+name = "Solar Open2 through LiteLLM"
+base_url = "http://127.0.0.1:4000/v1"
+env_key = "LITELLM_MASTER_KEY"
+wire_api = "responses"

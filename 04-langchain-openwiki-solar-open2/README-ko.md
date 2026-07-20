@@ -1,4 +1,4 @@
-# Case 04 — LangChain OpenWiki로 Solar Open2를 이용해 pilot-upstage-solar-open2 문서화
+# Case 04 — Solar Open2 x LangChain OpenWiki로 pilot-upstage-solar-open2 문서화
 
 [English](README.md) / [한국어](README-ko.md)
 

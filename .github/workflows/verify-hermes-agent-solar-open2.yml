@@ -1,0 +1,24 @@
+name: verify-hermes-agent-solar-open2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "05-hermes-agent-solar-open2/**"
+      - ".github/workflows/verify-hermes-agent-solar-open2.yml"
+  pull_request:
+    paths:
+      - "05-hermes-agent-solar-open2/**"
+      - ".github/workflows/verify-hermes-agent-solar-open2.yml"
+  workflow_dispatch: {}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify Hermes Agent with Solar Open2
+        env:
+          UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
+        run: ./05-hermes-agent-solar-open2/scripts/verify.sh

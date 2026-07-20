@@ -1,0 +1,11 @@
+_config_version: 33
+
+model:
+  provider: upstage
+  default: solar-open2
+
+terminal:
+  backend: local
+
+agent:
+  max_turns: 2

@@ -93,7 +93,7 @@ preview "$method_b_out"
 
 echo
 echo "== Method C: explicit git-commit-helper skill invocation =="
-method_c_out="$(claude_solar 'Use the git-commit-helper skill. A new file docs/hello.txt with a greeting was just added to this repo as a new doc. Write the commit message per that skill'"'"'s exact format (gitmoji + type(domain): title). Output only the commit message.')" \
+method_c_out="$(claude_solar 'Use the git-commit-helper skill. A new file docs/hello.txt with a greeting was just added to this repo as a new doc. Write the commit message per that skill'"'"'s exact format (gitmoji + type(domain): title). Output only the commit message.' 180)" \
   || fail "skill-invocation prompt exited non-zero"
 [ -n "$method_c_out" ] || fail "skill-invocation prompt produced no output"
 # Format contract from git-commit-helper: "<gitmoji> <type>(<domain>): <title>".
