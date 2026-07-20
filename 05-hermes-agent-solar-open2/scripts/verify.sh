@@ -27,6 +27,7 @@ chmod 644 "$hermes_home/config.yaml" "$hermes_home/.env"
 
 hermes() {
   docker run --rm \
+    --user "$(id -u):$(id -g)" \
     -e UPSTAGE_API_KEY \
     -v "$hermes_home:/opt/data" \
     --entrypoint hermes \
