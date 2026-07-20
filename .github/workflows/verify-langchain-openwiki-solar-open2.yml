@@ -28,10 +28,16 @@ jobs:
         with:
           node-version: "22"
 
-      # openwiki's public npm release can't reach Solar Open2 correctly yet
-      # (see README.md's Finding: it streams tool_call function names, and
-      # Solar Open2 drops them mid-stream). Build the patched fork instead
-      # of `npm install -g openwiki` until the fix lands upstream.
+      # Why a fork instead of `npm install -g openwiki`: Solar Open2 has a
+      # real, confirmed bug (Upstage-side, not openwiki's or deepagents')
+      # where it drops the tool_call function name specifically in
+      # *streamed* responses — verified directly via a local logging
+      # proxy comparing stream:false vs stream:true. openwiki's public npm
+      # release always streams, so it can't reach Solar Open2 correctly.
+      # The jyje/openwiki fork below adds an opt-in
+      # OPENWIKI_DISABLE_STREAMING env var that works around it; that fix
+      # hasn't landed upstream yet. See README.md's Finding 2 for the
+      # full writeup.
       - name: Check out patched openwiki fork
         uses: actions/checkout@v4
         with:

@@ -11,8 +11,10 @@ name: verify-all-sequential
 # about to use and only waits if headroom is actually low (see
 # scripts/wait-for-upstage-headroom.sh), instead of a fixed guessed
 # delay. continue-on-error: true per step so one failing combination
-# doesn't hide the rest. Manual-only (workflow_dispatch) since a full
-# sequential pass takes considerably longer than the parallel one.
+# doesn't hide the rest — the final Recap step reports the real
+# pass/fail of every step regardless. Manual-only (workflow_dispatch)
+# since a full sequential pass takes considerably longer than the
+# parallel one.
 
 on:
   workflow_dispatch: {}
@@ -35,10 +37,18 @@ jobs:
       - name: Install claude-upstage
         run: curl -fsSL https://console.upstage.ai/claude-upstage.sh | sh -s install
 
-      # openwiki's public npm release can't reach Solar Open2 correctly yet
-      # (see 04-langchain-openwiki-solar-open2/README.md's Finding). Build
-      # the patched fork instead of `npm install -g openwiki`, same as
-      # verify-langchain-openwiki-solar-open2.yml does.
+      # Why a fork instead of `npm install -g openwiki`: Solar Open2 has a
+      # real, confirmed bug (Upstage-side, not openwiki's or deepagents')
+      # where it drops the tool_call function name specifically in
+      # *streamed* responses — verified directly via a local logging
+      # proxy comparing stream:false vs stream:true. openwiki's public npm
+      # release always streams, so it can't reach Solar Open2 correctly.
+      # The jyje/openwiki fork below adds an opt-in
+      # OPENWIKI_DISABLE_STREAMING env var that works around it; that fix
+      # hasn't landed upstream yet. Same as
+      # verify-langchain-openwiki-solar-open2.yml does. See
+      # 04-langchain-openwiki-solar-open2/README.md's Finding 2 for the
+      # full writeup.
       - name: Check out patched openwiki fork
         uses: actions/checkout@v4
         with:
@@ -55,61 +65,124 @@ jobs:
           npm link
 
       - name: "Case 01 (solar-open2)"
+        id: c01-open2
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 01-solar-open2-harness solar-open2
 
       - name: "Case 01 (solar-pro3)"
+        id: c01-pro3
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 01-solar-open2-harness solar-pro3
 
       - name: "Case 02 (solar-open2)"
+        id: c02-open2
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 02-claude-agent-sdk-local solar-open2
 
       - name: "Case 02 (solar-pro3)"
+        id: c02-pro3
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 02-claude-agent-sdk-local solar-pro3
 
       - name: "Case 03 (solar-open2)"
+        id: c03-open2
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 03-langchain-upstage-deepagents solar-open2
 
       - name: "Case 03 (solar-pro3)"
+        id: c03-pro3
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 03-langchain-upstage-deepagents solar-pro3
 
       - name: "Case 04 (solar-open2)"
+        id: c04-open2
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 04-langchain-openwiki-solar-open2 solar-open2
 
       - name: "Case 04 (solar-pro3)"
+        id: c04-pro3
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 04-langchain-openwiki-solar-open2 solar-pro3
 
       - name: "Case 05 (solar-open2)"
+        id: c05-open2
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 05-hermes-agent-solar-open2 solar-open2
 
       - name: "Case 05 (solar-pro3)"
+        id: c05-pro3
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 05-hermes-agent-solar-open2 solar-pro3
+
+      # continue-on-error steps always report conclusion=success at the
+      # job level, so this reads each step's real `outcome` (not
+      # overridden) to report what actually happened, and fails the job
+      # itself if anything did. Also written to GITHUB_STEP_SUMMARY so
+      # the recap renders as a table on the run's summary page, not just
+      # in this step's log.
+      - name: Recap
+        if: always()
+        run: |
+          names=(
+            "Case 01 — Solar Open2 x Claude Code"
+            "Case 02 — Solar Open2 x Claude Agent SDK"
+            "Case 03 — Solar Open2 x LangChain Deepagents"
+            "Case 04 — Solar Open2 x LangChain OpenWiki"
+            "Case 05 — Solar Open2 x Hermes Agent"
+          )
+          open2_outcomes=(
+            "${{ steps.c01-open2.outcome }}"
+            "${{ steps.c02-open2.outcome }}"
+            "${{ steps.c03-open2.outcome }}"
+            "${{ steps.c04-open2.outcome }}"
+            "${{ steps.c05-open2.outcome }}"
+          )
+          pro3_outcomes=(
+            "${{ steps.c01-pro3.outcome }}"
+            "${{ steps.c02-pro3.outcome }}"
+            "${{ steps.c03-pro3.outcome }}"
+            "${{ steps.c04-pro3.outcome }}"
+            "${{ steps.c05-pro3.outcome }}"
+          )
+
+          mark() { [ "$1" = success ] && echo "✅" || echo "❌"; }
+
+          {
+            echo "## verify-all-sequential recap"
+            echo
+            echo "| Case | solar-open2 | solar-pro3 |"
+            echo "| --- | --- | --- |"
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+          any_failed=false
+          for i in "${!names[@]}"; do
+            open2="${open2_outcomes[$i]}"
+            pro3="${pro3_outcomes[$i]}"
+            echo "| ${names[$i]} | $(mark "$open2") $open2 | $(mark "$pro3") $pro3 |" | tee -a "$GITHUB_STEP_SUMMARY"
+            [ "$open2" = success ] && [ "$pro3" = success ] || any_failed=true
+          done
+
+          if [ "$any_failed" = true ]; then
+            echo "One or more case x model combinations failed — see that step's own log above." >&2
+            exit 1
+          fi
