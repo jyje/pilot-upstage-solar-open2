@@ -94,24 +94,45 @@ async def method_c_tool_use() -> bool:
 
 
 async def _main() -> int:
-    a_reply = await method_a_query()
-    print(f"Method A: {truncate(a_reply)}")
+    print("== Method A: query() one-shot call, structured message types ==")
+    try:
+        a_reply = await method_a_query()
+    except Exception as exc:  # noqa: BLE001 - report cleanly, not a raw trace
+        print(f"FAIL: Method A raised {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
+    print(f"  -> {truncate(a_reply)}")
     if not a_reply:
         print("FAIL: Method A got no reply", file=sys.stderr)
         return 1
+    print("PASS: Method A got a structured reply.")
 
-    b_reply = await method_b_session_memory()
-    print(f"Method B: {truncate(b_reply)}")
+    print()
+    print("== Method B: ClaudeSDKClient multi-turn session memory ==")
+    try:
+        b_reply = await method_b_session_memory()
+    except Exception as exc:  # noqa: BLE001
+        print(f"FAIL: Method B raised {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
+    print(f"  -> {truncate(b_reply)}")
     if "42" not in b_reply:
         print(f"FAIL: Method B didn't recall 42: {b_reply}", file=sys.stderr)
         return 1
+    print("PASS: Method B recalled context across turns.")
 
-    c_saw_tool_use = await method_c_tool_use()
-    print(f"Method C: saw_tool_use={c_saw_tool_use}")
+    print()
+    print("== Method C: query() + tool use, ToolUseBlock visibility ==")
+    try:
+        c_saw_tool_use = await method_c_tool_use()
+    except Exception as exc:  # noqa: BLE001
+        print(f"FAIL: Method C raised {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
+    print(f"  -> saw_tool_use={c_saw_tool_use}")
     if not c_saw_tool_use:
         print("FAIL: Method C saw no ToolUseBlock", file=sys.stderr)
         return 1
+    print("PASS: Method C's tool use surfaced in the structured stream.")
 
+    print()
     print("All checks passed.")
     return 0
 

@@ -123,29 +123,50 @@ def method_c_subagent_delegation() -> str:
 
 
 def _main() -> int:
-    a_reply = method_a_tool_use()
-    print(f"Method A: {truncate(a_reply)}")
+    print("== Method A: custom tool use (weather lookup) ==")
+    try:
+        a_reply = method_a_tool_use()
+    except Exception as exc:  # noqa: BLE001 - report cleanly, not a raw trace
+        print(f"FAIL: Method A raised {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
+    print(f"  -> {truncate(a_reply)}")
     if "sunny" not in a_reply.lower() or "seoul" not in a_reply.lower():
         print(
             f"FAIL: Method A didn't answer the weather question: {a_reply}",
             file=sys.stderr,
         )
         return 1
+    print("PASS: Method A answered using the weather tool.")
 
-    b_content = method_b_virtual_filesystem()
-    print(f"Method B: {truncate(b_content)}")
+    print()
+    print("== Method B: deepagents' built-in virtual filesystem ==")
+    try:
+        b_content = method_b_virtual_filesystem()
+    except Exception as exc:  # noqa: BLE001
+        print(f"FAIL: Method B raised {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
+    print(f"  -> {truncate(b_content)}")
     if b_content != "HELLO-DEEPAGENTS":
         print(
             f"FAIL: Method B's file content was wrong: {b_content!r}", file=sys.stderr
         )
         return 1
+    print("PASS: Method B wrote and read back the file correctly.")
 
-    c_reply = method_c_subagent_delegation()
-    print(f"Method C: {truncate(c_reply)}")
+    print()
+    print("== Method C: named subagent delegation ==")
+    try:
+        c_reply = method_c_subagent_delegation()
+    except Exception as exc:  # noqa: BLE001
+        print(f"FAIL: Method C raised {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
+    print(f"  -> {truncate(c_reply)}")
     if "42" not in c_reply:
         print(f"FAIL: Method C's subagent didn't return 42: {c_reply}", file=sys.stderr)
         return 1
+    print("PASS: Method C's math-agent subagent computed 17 + 25 correctly.")
 
+    print()
     print("All checks passed.")
     return 0
 

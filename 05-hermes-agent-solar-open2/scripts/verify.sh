@@ -38,12 +38,16 @@ hermes() {
 
 echo "== Model under test: $SOLAR_MODEL =="
 
+echo
+echo "== Check 1: official Hermes Agent image starts =="
 version="$(hermes --version)" || fail "Hermes Agent image did not start"
 printf '%s\n' "$version"
 printf '%s' "$version" | grep -q 'Hermes Agent' \
   || fail "unexpected Hermes version output"
 ok "official Hermes Agent image started"
 
+echo
+echo "== Check 2: hermes doctor accepts the Upstage configuration =="
 doctor_output="$(hermes doctor 2>&1)" || {
   printf '%s\n' "$doctor_output" >&2
   fail "hermes doctor failed"
@@ -53,6 +57,8 @@ printf '%s' "$doctor_output" | grep -qi 'upstage' \
   || fail "hermes doctor did not detect the Upstage provider"
 ok "Hermes accepted the Upstage configuration"
 
+echo
+echo "== Check 3: live chat round trip via the built-in Upstage provider =="
 # This repo's cases share one Upstage account/rate limit, so a chat call
 # can 429 simply because another case just ran — retry with backoff.
 chat_output=""

@@ -91,9 +91,11 @@ ask() {
 
 for i in "${!questions[@]}"; do
   q="${questions[$i]}"
-  echo "Q$((i + 1)): $q"
+  echo
+  echo "== Question $((i + 1)): $q =="
   a="$(ask "$q")" || fail "question $((i + 1)) failed after retry"
   preview "$a"
+  ok "question $((i + 1)) answered"
 done
 ok "all 3 questions answered"
 
