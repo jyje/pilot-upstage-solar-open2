@@ -22,6 +22,8 @@ docker info >/dev/null 2>&1 || fail "Docker daemon is not available"
 
 cp config.yaml "$hermes_home/config.yaml"
 touch "$hermes_home/.env"
+chmod 755 "$hermes_home"
+chmod 644 "$hermes_home/config.yaml" "$hermes_home/.env"
 
 hermes() {
   docker run --rm \

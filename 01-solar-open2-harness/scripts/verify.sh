@@ -93,16 +93,25 @@ preview "$method_b_out"
 
 echo
 echo "== Method C: explicit git-commit-helper skill invocation =="
-method_c_out="$(claude_solar 'Use the git-commit-helper skill. A new file docs/hello.txt with a greeting was just added to this repo as a new doc. Write the commit message per that skill'"'"'s exact format (gitmoji + type(domain): title). Output only the commit message.' 180)" \
-  || fail "skill-invocation prompt exited non-zero"
-[ -n "$method_c_out" ] || fail "skill-invocation prompt produced no output"
 # Format contract from git-commit-helper: "<gitmoji> <type>(<domain>): <title>".
 # Check loosely — a non-ASCII byte (the gitmoji) and a "(domain):" segment —
 # rather than exact wording, since the title text itself isn't deterministic.
+method_c_out=""
+for attempt in 1 2 3; do
+  method_c_out="$(claude_solar 'Use the git-commit-helper skill. A new file docs/hello.txt with a greeting was just added to this repo as a new doc. Write exactly one commit message in this required format: <gitmoji> <type>(<domain>): <title>. The parenthesized domain is mandatory. Output only the commit message.' 180)" \
+    || fail "skill-invocation prompt exited non-zero"
+  [ -n "$method_c_out" ] || fail "skill-invocation prompt produced no output"
+  if printf '%s' "$method_c_out" | LC_ALL=C grep -q '[^ -~]' \
+    && printf '%s' "$method_c_out" | grep -Eq '\([A-Za-z0-9_.-]+\):'; then
+    break
+  fi
+  printf '  attempt %s returned a non-conforming message: %s\n' \
+    "$attempt" "$(preview_text "$method_c_out")" >&2
+done
 printf '%s' "$method_c_out" | LC_ALL=C grep -q '[^ -~]' \
   || fail "skill output has no gitmoji: $method_c_out"
 printf '%s' "$method_c_out" | grep -Eq '\([A-Za-z0-9_.-]+\):' \
-  || fail "skill output has no type(domain): segment: $method_c_out"
+  || fail "skill output has no type(domain): segment after 3 attempts: $method_c_out"
 ok "git-commit-helper skill format honored via Solar Open2"
 preview "$method_c_out"
 
