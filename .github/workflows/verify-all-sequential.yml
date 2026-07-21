@@ -26,6 +26,16 @@ name: verify-all-sequential
 on:
   workflow_dispatch: {}
 
+# All 7 verify-*.yml workflows in this repo share this same group, so
+# only one can ever run against the shared Upstage account at a time —
+# this is the concrete fix for the collision that produced this file's
+# 6/10-pass runs earlier today (a push touching multiple case files
+# fired 5 individual workflows at once, on top of an already-running
+# instance of this very workflow).
+concurrency:
+  group: verify-upstage-solar-open2
+  cancel-in-progress: false
+
 jobs:
   verify-sequential:
     runs-on: ubuntu-latest
