@@ -1,20 +1,21 @@
 name: verify-all-sequential
 
-# Companion to verify-all.yml (left untouched — this does not replace it).
-# verify-all.yml fans every case x model out in parallel, which is fast but
-# means up to 10 jobs hit the same shared Upstage account/rate limit at
-# once; a real run of that escalated from 429s into a temporary 403 block
-# (see the run for commit 46f0fa9). This workflow instead runs every
-# case x model combination **one at a time, as one of 10 steps** — each
-# step is scripts/verify-case.sh (shared with local ad-hoc runs), which
-# checks Upstage's own rate-limit response headers for the model it's
-# about to use and only waits if headroom is actually low (see
+# The single active verification workflow for this repo. Runs every
+# case x model combination **one at a time, as one of 10 steps** —
+# each step is scripts/verify-case.sh (shared with local ad-hoc runs),
+# which checks Upstage's own rate-limit response headers for the model
+# it's about to use and only waits if headroom is actually low (see
 # scripts/wait-for-upstage-headroom.sh), instead of a fixed guessed
 # delay. continue-on-error: true per step so one failing combination
 # doesn't hide the rest — the final Recap step reports the real
-# pass/fail of every step regardless. Manual-only (workflow_dispatch)
-# since a full sequential pass takes considerably longer than the
-# parallel one.
+# pass/fail of every step regardless. Manual-only (workflow_dispatch).
+#
+# The other 6 verify-*.yml workflows (5 per-case + the parallel
+# verify-all) are archived as .yaml_disabled, not deleted — their own
+# push triggers used to fire mid-run and collide with this workflow
+# for the same Upstage account's quota (confirmed live). Rather than
+# try to coordinate multiple active workflows against each other, this
+# is now the only one GitHub Actions will even run.
 #
 # This whole pipeline assumes the account behind UPSTAGE_API_KEY is on
 # Upstage's **default (Tier 0)** rate limits, not a paid commitment
@@ -25,16 +26,6 @@ name: verify-all-sequential
 
 on:
   workflow_dispatch: {}
-
-# All 7 verify-*.yml workflows in this repo share this same group, so
-# only one can ever run against the shared Upstage account at a time —
-# this is the concrete fix for the collision that produced this file's
-# 6/10-pass runs earlier today (a push touching multiple case files
-# fired 5 individual workflows at once, on top of an already-running
-# instance of this very workflow).
-concurrency:
-  group: verify-upstage-solar-open2
-  cancel-in-progress: false
 
 jobs:
   verify-sequential:
