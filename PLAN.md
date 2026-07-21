@@ -3,7 +3,7 @@
 ## Context
 
 This repo exists to give several independent experiments a shared,
-portfolio and seminar-ready home:
+seminar-ready home:
 
 1. Building a Claude Code harness (skills, etc.) on top of Upstage's
    **Solar Open2** model.

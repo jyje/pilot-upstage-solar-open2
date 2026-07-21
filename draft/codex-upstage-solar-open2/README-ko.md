@@ -42,7 +42,7 @@ API 설정을 제공하지 않습니다.
 [Codex custom-provider 설정](https://developers.openai.com/codex/config-advanced),
 [Codex 설정 레퍼런스](https://developers.openai.com/codex/config-reference).
 
-현재 Upstage 콘솔 예제의 모델명은 `solar-pro3`이고, 이 포트폴리오의 기존
+현재 Upstage 콘솔 예제의 모델명은 `solar-pro3`이고, 이 리포의 기존
 Case들은 `solar-open2`를 사용합니다. Case 05의 실제 검증에서는 계정에
 활성화된 모델 ID를 확인해 기록해야 하며, 프로토콜 브리지가 된다는 이유만으로
 과거 모델 ID가 계속 제공된다고 가정하면 안 됩니다.

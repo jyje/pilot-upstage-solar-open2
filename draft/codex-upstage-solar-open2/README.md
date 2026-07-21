@@ -43,7 +43,7 @@ Sources: [Upstage API key console — Chat example](https://console.upstage.ai/a
 [Codex custom-provider configuration](https://developers.openai.com/codex/config-advanced), and
 [Codex configuration reference](https://developers.openai.com/codex/config-reference).
 
-The current Upstage console example names `solar-pro3`, while this portfolio's
+The current Upstage console example names `solar-pro3`, while this repo's
 earlier cases use `solar-open2`. Case 05 must list the account-enabled model
 ID during its live verification; it must not assume an older model ID remains
 available merely because the protocol bridge works.
