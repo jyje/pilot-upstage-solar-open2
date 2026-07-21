@@ -1,8 +1,8 @@
 # pilot-upstage-solar-open2
 
-Portfolio/seminar repo hosting several independent agent-harness use cases
-built around Upstage's Solar Open2 model and the Claude Code / OpenAI
-Codex / LangChain / Hermes Agent ecosystem. See [`PLAN.md`](PLAN.md) for the full plan and [`README.md`](README.md)
+A repo hosting several independent agent-harness use cases built around
+Upstage's Solar Open2 model and the Claude Code / OpenAI Codex /
+LangChain / Hermes Agent ecosystem. See [`PLAN.md`](PLAN.md) for the full plan and [`README.md`](README.md)
 for the public-facing overview.
 
 ## Structure
@@ -11,7 +11,8 @@ for the public-facing overview.
 pilot-upstage-solar-open2/
 ├── .claude/skills/                    # skills available in this repo (see below)
 ├── PLAN.md                            # full plan (all cases)
-├── README.md / README-ko.md           # portfolio front page
+├── README.md / README-ko.md           # repo front page
+├── CONTRIBUTING.md                    # conventions + local dev commands
 ├── 01-solar-open2-harness/            # Case 01: Claude Code harness on Solar Open2
 ├── 02-claude-agent-sdk-local/         # Case 02: local Claude Code via Claude Agent SDK
 ├── 03-langchain-upstage-deepagents/   # Case 03: deepagents init via LangChain Upstage SDK
@@ -45,8 +46,8 @@ its README for why.
 - **README language**: English is the default for every README's primary
   content. Every scenario — the repo root and every case directory —
   gets a Korean twin (`README-ko.md`) with the same language navigator
-  style. Everything else (source code, comments, `AGENTS.md`, `PLAN.md`)
-  stays English-only.
+  style. Everything else (source code, comments, `AGENTS.md`, `PLAN.md`,
+  `CONTRIBUTING.md`) stays English-only.
 - **Python changes**: run the `python-lint` skill's workflow (ruff check,
   ruff format, ty check, pytest) before considering a Python change done.
 - **Commits**: follow the `git-commit-helper` skill's gitmoji + type/domain
