@@ -1,8 +1,8 @@
-# Case 02 — Reproducing locally
+# Case 02 — Use Case Guide
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
-[← back to this case's README](README.md) · [← all cases' reproduction guides](../docs/REPRODUCE.md)
+[← back to this case's README](README.md) · [← all cases' use case guides](../docs/REPRODUCE.md)
 
 Goal: drive Claude Code programmatically through the Python
 `claude-agent-sdk`, against Solar Open2.

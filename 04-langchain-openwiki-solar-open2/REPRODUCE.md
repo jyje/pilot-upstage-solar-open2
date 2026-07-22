@@ -1,8 +1,8 @@
-# Case 04 — Reproducing locally
+# Case 04 — Use Case Guide
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
-[← back to this case's README](README.md) · [← all cases' reproduction guides](../docs/REPRODUCE.md)
+[← back to this case's README](README.md) · [← all cases' use case guides](../docs/REPRODUCE.md)
 
 Goal: use `openwiki` to document this very repo and answer questions
 about it, powered by Solar Open2.

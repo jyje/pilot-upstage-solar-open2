@@ -1,8 +1,8 @@
-# Case 01 — 로컬 재현 가이드
+# Case 01 — 유즈케이스 가이드
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
-[← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 재현 가이드](../docs/REPRODUCE-ko.md)
+[← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 유즈케이스 가이드](../docs/REPRODUCE-ko.md)
 
 목표: Claude Code 자체를 Solar Open2로 구동하고, 커스텀 스킬과
 서브에이전트가 이 백엔드에서도 그대로 동작하는지 확인합니다.

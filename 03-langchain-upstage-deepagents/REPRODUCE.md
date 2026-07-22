@@ -1,8 +1,8 @@
-# Case 03 — Reproducing locally
+# Case 03 — Use Case Guide
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
-[← back to this case's README](README.md) · [← all cases' reproduction guides](../docs/REPRODUCE.md)
+[← back to this case's README](README.md) · [← all cases' use case guides](../docs/REPRODUCE.md)
 
 Goal: initialize a `deepagents` agent at the code level, with
 `langchain-upstage` supplying Solar Open2 as the model — no `claude` CLI

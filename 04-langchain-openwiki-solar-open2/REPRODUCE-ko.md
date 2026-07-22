@@ -1,8 +1,8 @@
-# Case 04 — 로컬 재현 가이드
+# Case 04 — 유즈케이스 가이드
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
-[← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 재현 가이드](../docs/REPRODUCE-ko.md)
+[← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 유즈케이스 가이드](../docs/REPRODUCE-ko.md)
 
 목표: `openwiki`로 이 리포 자체를 문서화하고 질문에 답하게 하되, Solar
 Open2로 구동합니다.

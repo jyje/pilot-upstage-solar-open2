@@ -28,9 +28,9 @@ commands you'll actually run.
 ## Local development
 
 Looking for a step-by-step walkthrough instead — exact prerequisites and
-commands per case, with expected output and troubleshooting? See
-[`docs/REPRODUCE.md`](docs/REPRODUCE.md) (English/Korean). The rest of
-this section stays a quick reference for people already familiar with the
+commands per case, with expected output and troubleshooting? See the
+[Use Case Guide](docs/REPRODUCE.md) (English/Korean). The rest of this
+section stays a quick reference for people already familiar with the
 repo.
 
 ### Prerequisites
@@ -122,8 +122,8 @@ actionlint .github/workflows/*.yml
    `scripts/verify-case.sh` so it gets the same full-reset rate-limit
    wait as every other case.
 4. Update `PLAN.md`'s summary table, the root `README.md`/`README-ko.md`
-   Cases table, and `docs/REPRODUCE.md`/`docs/REPRODUCE-ko.md`'s
-   reproduction-page table.
+   Cases table, and `docs/REPRODUCE.md`/`docs/REPRODUCE-ko.md`'s use case
+   guide table.
 
 ## Pull requests
 

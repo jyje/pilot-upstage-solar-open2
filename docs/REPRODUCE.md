@@ -1,4 +1,4 @@
-# Reproducing every case locally
+# Use Case Guide
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
@@ -6,14 +6,14 @@
 
 This is a step-by-step guide.
 
-Each case has its own dedicated reproduction page, linked below.
+Each case has its own dedicated use case guide, linked below.
 
 This page only covers what's shared across all of them: getting an API
 key, understanding the shared rate limit, and picking how to run a case.
 Read this once, then jump to whichever case you want.
 
 Each case's own `README.md` still holds the full story — findings, prior
-art, verified transcripts. The reproduction pages only answer one
+art, verified transcripts. The use case guides only answer one
 question: *how do I run it myself, right now, on my machine?*
 
 ## Before you start
@@ -83,9 +83,9 @@ Both run the exact same check.
 
 The wrapper just adds a wait in front.
 
-## Every case's reproduction page
+## Every case's use case guide
 
-| Case | Goal | Reproduction page |
+| Case | Goal | Use case guide |
 | --- | --- | --- |
 | Case 01 | Claude Code itself, against Solar Open2 | [`01-solar-open2-harness/REPRODUCE.md`](../01-solar-open2-harness/REPRODUCE.md) |
 | Case 02 | Claude Code driven programmatically via the Claude Agent SDK | [`02-claude-agent-sdk-local/REPRODUCE.md`](../02-claude-agent-sdk-local/REPRODUCE.md) |

@@ -1,8 +1,8 @@
-# Case 02 — 로컬 재현 가이드
+# Case 02 — 유즈케이스 가이드
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
-[← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 재현 가이드](../docs/REPRODUCE-ko.md)
+[← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 유즈케이스 가이드](../docs/REPRODUCE-ko.md)
 
 목표: Python `claude-agent-sdk`로 Claude Code를 프로그래밍 방식으로
 구동하며, Solar Open2를 상대로 동작을 확인합니다.

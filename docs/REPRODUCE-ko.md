@@ -1,4 +1,4 @@
-# 케이스별 로컬 재현 가이드
+# 유즈케이스 가이드
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
@@ -6,7 +6,7 @@
 
 이 문서는 단계별 가이드입니다.
 
-케이스마다 각자의 재현 전용 문서가 따로 있고, 아래에서 링크로
+케이스마다 각자의 유즈케이스 가이드가 따로 있고, 아래에서 링크로
 연결됩니다.
 
 이 문서에서는 모든 케이스에 공통되는 부분만 다룹니다: API 키 발급,
@@ -14,8 +14,9 @@
 케이스로 바로 넘어가세요.
 
 각 케이스의 `README.md`/`README-ko.md`에는 더 자세한 이야기가 있습니다 —
-발견 사항, 참고한 선행 사례, 실제 검증 로그까지. 재현 문서들은 딱 하나의
-질문에만 답합니다. *지금, 내 컴퓨터에서, 어떻게 직접 돌려볼 수 있는가?*
+발견 사항, 참고한 선행 사례, 실제 검증 로그까지. 유즈케이스 가이드는 딱
+하나의 질문에만 답합니다. *지금, 내 컴퓨터에서, 어떻게 직접 돌려볼 수
+있는가?*
 
 ## 시작하기 전에
 
@@ -86,9 +87,9 @@ UPSTAGE_API_KEY="..." ./scripts/verify-case.sh 01-solar-open2-harness solar-open
 
 래퍼는 그 앞에 대기 시간만 하나 더할 뿐입니다.
 
-## 케이스별 재현 문서
+## 케이스별 유즈케이스 가이드
 
-| Case | 목표 | 재현 문서 |
+| Case | 목표 | 유즈케이스 가이드 |
 | --- | --- | --- |
 | Case 01 | Claude Code 자체를 Solar Open2로 구동 | [`01-solar-open2-harness/REPRODUCE-ko.md`](../01-solar-open2-harness/REPRODUCE-ko.md) |
 | Case 02 | Claude Agent SDK로 Claude Code를 프로그래밍 방식 구동 | [`02-claude-agent-sdk-local/REPRODUCE-ko.md`](../02-claude-agent-sdk-local/REPRODUCE-ko.md) |

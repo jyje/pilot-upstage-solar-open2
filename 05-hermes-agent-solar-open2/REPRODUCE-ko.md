@@ -1,8 +1,8 @@
-# Case 05 — 로컬 재현 가이드
+# Case 05 — 유즈케이스 가이드
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
-[← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 재현 가이드](../docs/REPRODUCE-ko.md)
+[← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 유즈케이스 가이드](../docs/REPRODUCE-ko.md)
 
 목표: Hermes Agent에 내장된 자체 Upstage provider로, 공식 Docker
 이미지를 통해 Solar Open2를 구동합니다 — 브리지도 프록시도 없이.
