@@ -62,10 +62,10 @@ UPSTAGE_API_KEY="..." ./04-langchain-openwiki-solar-open2/scripts/verify.sh
 UPSTAGE_API_KEY="..." ./05-hermes-agent-solar-open2/scripts/verify.sh
 ```
 
-Or through the shared, rate-limit-aware wrapper CI itself uses — waits for
-a full Upstage budget reset before the case starts
-(`scripts/wait-for-upstage-full-reset.sh`, 10-minute cap), so it's safe to
-re-run repeatedly on a Tier-0 account without hand-tuning delays:
+Or through the shared, rate-limit-aware wrapper CI itself uses. It waits
+for a full Upstage budget reset before the case starts
+(`scripts/wait-for-upstage-full-reset.sh`, 10-minute cap), so it's safe
+to re-run repeatedly on a Tier-0 account without hand-tuning delays:
 
 ```bash
 UPSTAGE_API_KEY="..." ./scripts/verify-case.sh 01-solar-open2-harness solar-open2
