@@ -20,13 +20,15 @@ External links:<br>
 ## Solar Open2
 
 [Solar Open2](https://huggingface.co/upstage/Solar-Open2-250B)는 Upstage의
-공개 가중치 250B-A15B(총 2500억, 활성 150억) Mixture-of-Experts 모델로,
-1M 토큰 컨텍스트에서 툴 사용·다단계 추론·엔드투엔드 태스크 실행 같은
-장기 에이전틱(long-horizon agentic) 작업을 위해 하이브리드
-linear/softmax attention 스택으로 설계됐습니다. 비슷한 크기의 공개
-가중치 모델들 중 MMLU-Pro, LiveCodeBench, APEX-Agents 에이전틱 스위트에서
-선두이며, 한국어 벤치마크에서는 fast-tier 폐쇄형 API를 포함한 비교
-대상 중 가장 높은 평균 점수를 기록합니다.
+공개 가중치 250B-A15B(총 2500억, 활성 150억) Mixture-of-Experts
+모델입니다. 1M 토큰 컨텍스트에서 툴 사용·다단계 추론·엔드투엔드 태스크
+실행 같은 장기 에이전틱(long-horizon agentic) 작업을 위해 하이브리드
+linear/softmax attention 스택으로 설계됐습니다.
+
+비슷한 크기의 공개 가중치 모델들 중 MMLU-Pro, LiveCodeBench,
+APEX-Agents 에이전틱 스위트에서 선두입니다. 한국어 벤치마크에서는
+fast-tier 폐쇄형 API를 포함한 비교 대상 중 가장 높은 평균 점수를
+기록합니다.
 
 | 특징 | 설명 |
 | --- | --- |
@@ -92,8 +94,8 @@ Case 추가나 로컬 실행 방법은 [`CONTRIBUTING.md`](CONTRIBUTING.md)를
 
 - Case 01/02는 Claude Code / Claude Agent SDK를 Solar Open2의 Anthropic
   호환 엔드포인트로 `ANTHROPIC_BASE_URL` + `ANTHROPIC_AUTH_TOKEN`을 통해
-  라우팅합니다(실제 발견 사항: `ANTHROPIC_API_KEY`는 Upstage 상대로
-  행이 걸리고, `ANTHROPIC_AUTH_TOKEN`이 필요합니다).
+  라우팅합니다. 실제 발견 사항: `ANTHROPIC_API_KEY`는 Upstage 상대로
+  행이 걸리고, `ANTHROPIC_AUTH_TOKEN`이 필요합니다.
 - Case 03의 `ChatUpstage`(`langchain-upstage`)는 Upstage의 OpenAI 호환
   엔드포인트를 바라보는 얇은 `BaseChatOpenAI` 서브클래스입니다 — 브리지도
   프록시도 없습니다.
@@ -122,19 +124,19 @@ Solar 챗 모델 기준 분당 100 요청, 분당 5만 토큰([Upstage rate-limi
 
 1. **Case 사이에 남은 예산.** 5개 Case를 한 순차 job에서 연달아 돌리면,
    무거운 Case 직후 시작하는 Case는 단순 임계치 검사로는 "충분해
-   보이는" 잔여 예산을 물려받았지만 실제로는 부족했습니다. 해결: 이제
+   보이는" 잔여 예산을 물려받았지만, 실제로는 부족했습니다. 해결: 이제
    모든 Case는 시작 전에 토큰/요청 예산이 **완전히** 리셋될 때까지
    기다립니다([`scripts/wait-for-upstage-full-reset.sh`](scripts/wait-for-upstage-full-reset.sh),
    최대 10분).
 2. **호출 하나가 예산을 다 써버리는 경우.** Case 04의 `openwiki`는 질문
    하나당 여러 번의 순차 tool-calling 왕복을 하며, 매번 전체 시스템
-   프롬프트와 툴 스키마를 다시 보냅니다 — 질문 하나만으로 49,998토큰
+   프롬프트와 툴 스키마를 다시 보냅니다. 질문 하나만으로 49,998토큰
    예산 중 36,440토큰을 소모한 사례가 관측됐습니다. Upstage의 한도는
    고정된 리셋 시점이 아니라 *rolling* 분당 윈도우이기 때문에, 재시도가
    보고된 리셋 시점을 지나서도 계속 0토큰 잔여로 나타났습니다. 해결:
    Case 04 내부에서는 케이스당 한 번이 아니라 매 재시도 시도 전마다
    동일한 완전 리셋 대기를 적용합니다.
-3. **`solar-pro3`는 Case 04에서 Tier 0으로는 부족합니다** — 에이전틱
+3. **`solar-pro3`는 Case 04에서 Tier 0으로는 부족합니다.** 에이전틱
    루프의 몇 번의 호출 누적 사용량만으로도 분당 5만 토큰 예산을 초과해
    버립니다. 잔여 예산 문제와는 무관합니다. 이 리포 코드의 버그가
    아니라, 계정이 **Tier 1 이상**이면 동작할 것으로 예상됩니다. 전체

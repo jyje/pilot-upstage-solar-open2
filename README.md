@@ -20,13 +20,14 @@ External links:<br>
 ## Solar Open2
 
 [Solar Open2](https://huggingface.co/upstage/Solar-Open2-250B) is Upstage's
-open-weight, 250B-A15B (250B total, 15B active) Mixture-of-Experts model,
-purpose-built for long-horizon agentic tasks — tool use, multi-step
-reasoning, and end-to-end task execution — over a 1M-token context via a
-hybrid linear/softmax attention stack. It leads comparably sized
-open-weight models on MMLU-Pro, LiveCodeBench, and the APEX-Agents agentic
-suite, and posts the highest average of any model compared, including
-fast-tier closed APIs, on Korean benchmarks.
+open-weight, 250B-A15B (250B total, 15B active) Mixture-of-Experts model.
+It's purpose-built for long-horizon agentic tasks — tool use, multi-step
+reasoning, end-to-end task execution — over a 1M-token context, via a
+hybrid linear/softmax attention stack.
+
+It leads comparably sized open-weight models on MMLU-Pro, LiveCodeBench,
+and the APEX-Agents agentic suite. On Korean benchmarks, it posts the
+highest average of any model compared, including fast-tier closed APIs.
 
 | Feature | Description |
 | --- | --- |
@@ -93,20 +94,20 @@ mainstream framework already speaks, not a custom client:
 
 - Case 01/02 route Claude Code / the Claude Agent SDK at Solar Open2's
   Anthropic-compatible endpoint via `ANTHROPIC_BASE_URL` +
-  `ANTHROPIC_AUTH_TOKEN` (a real finding along the way: `ANTHROPIC_API_KEY`
-  hangs against Upstage, `ANTHROPIC_AUTH_TOKEN` is required).
+  `ANTHROPIC_AUTH_TOKEN`. A real finding along the way: `ANTHROPIC_API_KEY`
+  hangs against Upstage, `ANTHROPIC_AUTH_TOKEN` is required.
 - Case 03's `ChatUpstage` (from `langchain-upstage`) is a thin
   `BaseChatOpenAI` subclass pointed at Upstage's OpenAI-compatible
   endpoint — no bridge, no proxy.
 - Case 04's `openwiki` reaches Solar Open2 through its generic
   `openai-compatible` provider. Its `anthropic` provider is a confirmed
   dead end here: the client only ever sends `apiKey` (`x-api-key`), never
-  `authToken` (`Authorization: Bearer`), and Upstage's Anthropic-compatible
+  `authToken` (`Authorization: Bearer`). Upstage's Anthropic-compatible
   endpoint rejects `x-api-key` outright — see
   [Case 04's README](04-langchain-openwiki-solar-open2/README.md) for the
   full trace.
-- Case 05's Hermes Agent ships a first-class, built-in `upstage` provider
-  — no bridge needed at all.
+- Case 05's Hermes Agent ships a first-class, built-in `upstage` provider.
+  No bridge needed at all.
 
 The practical upshot: adding a new agent harness to this list is mostly
 configuration (base URL, auth style, model ID), not new integration code,
@@ -123,29 +124,29 @@ real failure modes, and how each is handled:
 
 1. **Leftover budget between cases.** Running all 5 cases back-to-back in
    one sequential job, a case starting right after a heavier one could
-   inherit partial headroom that looked "enough" by a naive threshold
-   check but wasn't. Fixed: every case now waits for the token/request
-   budget to be **fully** reset before it starts
+   inherit partial headroom. That headroom looked "enough" by a naive
+   threshold check, but wasn't. Fixed: every case now waits for the
+   token/request budget to be **fully** reset before it starts
    ([`scripts/wait-for-upstage-full-reset.sh`](scripts/wait-for-upstage-full-reset.sh),
    10-minute cap).
 2. **A single call exhausting the budget.** Case 04's `openwiki` makes
    several sequential tool-calling round trips per question, each
-   resending the full system prompt and tool schemas — one question alone
+   resending the full system prompt and tool schemas. One question alone
    was observed to burn 36,440 of a 49,998-token budget. Because
    Upstage's limit is a *rolling* per-minute window, not a fixed reset
    clock, retries kept seeing 0 tokens remaining even past the reported
-   reset instant. Fixed: the same full-reset wait runs before every retry
-   attempt inside Case 04, not just once per case.
+   reset instant. Fixed: the same full-reset wait now runs before every
+   retry attempt inside Case 04, not just once per case.
 3. **`solar-pro3` needs more than Tier 0 offers** for Case 04
-   specifically — its agentic loop's cumulative usage across a handful of
+   specifically. Its agentic loop's cumulative usage across a handful of
    calls exceeds the 50k/minute budget outright, independent of any
-   leftover-budget issue. Not a bug in this repo's code; expected to work
-   once the account is on **Tier 1 or above**. Full trace in
+   leftover-budget issue. Not a bug in this repo's code — expected to
+   work once the account is on **Tier 1 or above**. Full trace in
    [`PLAN.md`](PLAN.md)'s Case 04, Finding 4.
 
 This is why [`verify-all-sequential.yml`](.github/workflows/verify-all-sequential.yml)
 runs the 5 cases **one at a time**, waiting on real Upstage rate-limit
-response headers instead of a fixed guessed delay — expect a full run to
+response headers instead of a fixed guessed delay. Expect a full run to
 take on the order of 10-20+ minutes on a Tier-0 account. A higher tier
 would make the waits mostly disappear, but nothing here assumes one.
 
