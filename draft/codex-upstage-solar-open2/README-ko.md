@@ -33,10 +33,10 @@ base_url = "https://api.upstage.ai/v1"
 env_key = "UPSTAGE_API_KEY"
 ```
 
-Codex는 Responses API 요청을 보내지만, Upstage가 공개한 Solar API 사용법은
-Chat Completions를 사용합니다. Base URL만 바꾼다고 두 wire protocol이
-변환되지는 않으며, Upstage 문서는 이 간극을 메우는 직접 Codex 또는 Responses
-API 설정을 제공하지 않습니다.
+Codex는 Responses API 요청을 보냅니다. 반면 Upstage가 공개한 Solar API
+사용법은 Chat Completions를 사용합니다. Base URL만 바꾼다고 두 wire
+protocol이 변환되지는 않으며, Upstage 문서는 이 간극을 메우는 직접 Codex
+또는 Responses API 설정을 제공하지 않습니다.
 
 근거: [Upstage API 키 콘솔 — Chat 예제](https://console.upstage.ai/api-keys?api=chat),
 [Codex custom-provider 설정](https://developers.openai.com/codex/config-advanced),
@@ -58,11 +58,14 @@ Codex (Responses API) → 프로토콜 변환 프록시 → Upstage (Chat Comple
 LiteLLM이 이 브리지를 제공합니다. 이 Case가 사용하는
 `openai/chat_completions/<model>` 모델 prefix(또는 같은 기능의
 `use_chat_completions_api`)는 custom OpenAI-compatible upstream에 대해
-`/responses → /chat/completions` 변환을 강제합니다. 다만 Upstage를 향한 전체
-tool·streaming 경로는 실제 실행으로 검증해야 합니다.
+`/responses → /chat/completions` 변환을 강제합니다.
 
-브리지가 준비되면 Codex는 `openai` 예약 provider를 덮어쓰는 대신 *이름 있는
-custom provider*를 사용해야 합니다.
+다만 Upstage를 향한 전체 tool·streaming 경로는 실제 실행으로 검증해야
+합니다.
+
+브리지가 준비되면 Codex는 `openai` 예약 provider를 덮어쓰는 대신, 아래
+예제의 `solar_proxy`처럼 *직접 이름을 정한 별도의 custom provider*
+항목을 새로 추가해야 합니다.
 
 ```toml
 model = "solar-open2"

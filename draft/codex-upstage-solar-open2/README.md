@@ -34,10 +34,10 @@ base_url = "https://api.upstage.ai/v1"
 env_key = "UPSTAGE_API_KEY"
 ```
 
-Codex will send Responses API requests; Upstage's published Solar API recipe
-uses Chat Completions. A Base URL does not translate between those wire
-protocols, and Upstage's documentation does not publish a direct Codex or
-Responses API setup to close that gap.
+Codex will send Responses API requests. Upstage's published Solar API
+recipe uses Chat Completions instead. A Base URL does not translate
+between those wire protocols, and Upstage's documentation does not
+publish a direct Codex or Responses API setup to close that gap.
 
 Sources: [Upstage API key console — Chat example](https://console.upstage.ai/api-keys?api=chat),
 [Codex custom-provider configuration](https://developers.openai.com/codex/config-advanced), and
@@ -56,11 +56,13 @@ The viable path to test is:
 Codex (Responses API) → protocol-converting proxy → Upstage (Chat Completions API) → Solar Open2
 ```
 
-LiteLLM provides this bridge. Its merged `use_chat_completions_api` feature,
-or the equivalent `openai/chat_completions/<model>` model prefix used by this
-case, forces `/responses → /chat/completions` translation for a custom
-OpenAI-compatible upstream. The proxy must still prove the full tool and
-streaming path against Upstage in a live run.
+LiteLLM provides this bridge. Its merged `use_chat_completions_api`
+feature (or the equivalent `openai/chat_completions/<model>` model prefix
+used by this case) forces `/responses → /chat/completions` translation
+for a custom OpenAI-compatible upstream.
+
+The proxy must still prove the full tool and streaming path against
+Upstage in a live run.
 
 After a bridge is running, Codex will need a *named custom provider* — not a
 replacement `[model_providers.openai]` table, because `openai` is reserved by
