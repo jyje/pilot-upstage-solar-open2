@@ -12,19 +12,19 @@ in CI).
 
 ## Goal
 
-Drive Claude Code **programmatically** — no manual CLI interaction — using
-the official Python `claude-agent-sdk`, and show what that actually buys
-over Case 01's raw-CLI-plus-shell-script approach: **structured, typed
-message objects** instead of scraping text out of stdout.
+Drive Claude Code **programmatically**, with no manual CLI interaction,
+using the official Python `claude-agent-sdk`. Show what that actually
+buys over Case 01's raw-CLI-plus-shell-script approach: **structured,
+typed message objects** instead of scraping text out of stdout.
 
 ## How it works
 
 `claude-agent-sdk` (PyPI, `pip install claude-agent-sdk` / here via
 `uv add claude-agent-sdk`) drives the same `claude` CLI binary as a
-subprocess — it's not a separate implementation, so the exact Solar Open2
+subprocess. It's not a separate implementation, so the exact Solar Open2
 env var recipe verified in
 [Case 01](../01-solar-open2-harness/README.md#how-it-works) still
-applies, just passed through `ClaudeAgentOptions(env={...})` instead of
+applies — just passed through `ClaudeAgentOptions(env={...})` instead of
 shell `export`:
 
 ```python
@@ -44,12 +44,14 @@ options = ClaudeAgentOptions(
 The [Python Agent SDK docs](https://code.claude.com/docs/en/agent-sdk/python)
 show custom endpoints configured with `env={"ANTHROPIC_API_KEY": ...}`.
 Tried verbatim against Upstage, that **hangs** — no message ever comes
-back before timing out. Swapping in `ANTHROPIC_AUTH_TOKEN` (the same
-variable Case 01 found the plain CLI needs) works immediately. Same
-underlying cause as Case 01's finding, from the other side: whatever
-`claude` expects for a non-default auth source, it's `ANTHROPIC_AUTH_TOKEN`,
-not `ANTHROPIC_API_KEY` — and that holds however you launch `claude`,
-CLI flags or SDK.
+back before timing out.
+
+Swapping in `ANTHROPIC_AUTH_TOKEN` (the same variable Case 01 found the
+plain CLI needs) works immediately. It's the same underlying cause as
+Case 01's finding, seen from the other side: whatever `claude` expects
+for a non-default auth source, it's `ANTHROPIC_AUTH_TOKEN`, not
+`ANTHROPIC_API_KEY`. That holds however you launch `claude` — CLI flags
+or SDK.
 
 ## Two entry points, three methods
 
@@ -125,11 +127,13 @@ read the untruncated response yourself:
 ## Verification
 
 [`scripts/verify.sh`](scripts/verify.sh) runs `src/demo.py`, which
-executes all three methods for real against Solar Open2 and exits
-non-zero if any of them don't check out (Method B's "42" missing, or
-Method C seeing no `ToolUseBlock`). Python changes here also go through
-the `python-lint` skill's workflow — `ruff check`, `ruff format --check`,
-`ty check`, `pytest` — before `verify.sh` runs, both locally and in CI.
+executes all three methods for real against Solar Open2. It exits
+non-zero if any of them don't check out: Method B's "42" missing, or
+Method C seeing no `ToolUseBlock`.
+
+Python changes here also go through the `python-lint` skill's workflow —
+`ruff check`, `ruff format --check`, `ty check`, `pytest` — before
+`verify.sh` runs, both locally and in CI.
 
 Run locally with `UPSTAGE_API_KEY` set:
 

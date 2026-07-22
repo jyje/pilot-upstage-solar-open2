@@ -22,8 +22,8 @@ end-to-end로 확인되었습니다.
 
 `claude-agent-sdk`(PyPI, `pip install claude-agent-sdk` / 이 리포에서는
 `uv add claude-agent-sdk`)는 동일한 `claude` CLI 바이너리를 서브프로세스로
-구동합니다 — 별도 구현체가 아니므로, [Case 01](../01-solar-open2-harness/README-ko.md#동작-원리)에서
-검증한 Solar Open2 env var 레시피가 그대로 적용되며, 셸 `export` 대신
+구동합니다. 별도 구현체가 아니므로, [Case 01](../01-solar-open2-harness/README-ko.md#동작-원리)에서
+검증한 Solar Open2 env var 레시피가 그대로 적용됩니다 — 셸 `export` 대신
 `ClaudeAgentOptions(env={...})`로 전달할 뿐입니다:
 
 ```python
@@ -44,11 +44,13 @@ options = ClaudeAgentOptions(
 커스텀 엔드포인트를 `env={"ANTHROPIC_API_KEY": ...}`로 설정하는 예시를
 보여줍니다. 이를 Upstage 대상으로 그대로 시도하면 **행(hang)**이
 걸립니다 — 타임아웃 전까지 어떤 메시지도 돌아오지 않습니다.
-`ANTHROPIC_AUTH_TOKEN`(Case 01에서 순정 CLI에 필요하다고 확인한 것과 동일한
-변수)으로 바꾸면 즉시 동작합니다. Case 01의 발견과 근본 원인이 같습니다 —
-다만 이번엔 반대편(SDK)에서 확인된 것뿐입니다: `claude`가 비-기본 인증
-소스에 기대하는 것은 `ANTHROPIC_API_KEY`가 아니라 `ANTHROPIC_AUTH_TOKEN`이며,
-이는 CLI 플래그로 실행하든 SDK로 실행하든 동일하게 적용됩니다.
+
+`ANTHROPIC_AUTH_TOKEN`(Case 01에서 순정 CLI에 필요하다고 확인한 것과
+동일한 변수)으로 바꾸면 즉시 동작합니다. Case 01의 발견과 근본 원인이
+같고, 이번엔 반대편(SDK)에서 확인된 것뿐입니다. `claude`가 비-기본
+인증 소스에 기대하는 것은 `ANTHROPIC_API_KEY`가 아니라
+`ANTHROPIC_AUTH_TOKEN`입니다. CLI 플래그로 실행하든 SDK로 실행하든
+동일하게 적용됩니다.
 
 ## 두 가지 진입점, 세 가지 방식
 
@@ -125,11 +127,13 @@ async for message in query(
 ## 검증
 
 [`scripts/verify.sh`](scripts/verify.sh)가 `src/demo.py`를 실행하며,
-이는 Solar Open2를 대상으로 세 가지 방식을 실제로 실행하고 하나라도
+이는 Solar Open2를 대상으로 세 가지 방식을 실제로 실행합니다. 하나라도
 어긋나면(방식 B에서 "42"가 빠지거나, 방식 C에서 `ToolUseBlock`을 보지
-못하면) 즉시 실패합니다. 이 디렉토리의 파이썬 변경 사항은 `verify.sh`
-실행 전에 `python-lint` 스킬의 절차(`ruff check`, `ruff format --check`,
-`ty check`, `pytest`)도 로컬과 CI 모두에서 거칩니다.
+못하면) 즉시 실패합니다.
+
+이 디렉토리의 파이썬 변경 사항은 `verify.sh` 실행 전에 `python-lint`
+스킬의 절차(`ruff check`, `ruff format --check`, `ty check`, `pytest`)도
+로컬과 CI 모두에서 거칩니다.
 
 `UPSTAGE_API_KEY`를 설정하고 로컬에서 실행하세요:
 
