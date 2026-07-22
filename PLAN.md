@@ -69,12 +69,14 @@ it without needing any of the others.
 - **Result**: done. `claude-agent-sdk` (Python) drives the same `claude`
   CLI as a subprocess, so the Solar Open2 env var recipe from Case 01
   carries over unchanged — passed via `ClaudeAgentOptions(env={...})`
-  instead of shell `export`. Same auth-variable finding surfaced from the
-  SDK side: its own docs example (`ANTHROPIC_API_KEY`) hangs against
-  Upstage, `ANTHROPIC_AUTH_TOKEN` is required. Three methods verified:
-  `query()` structured message types, `ClaudeSDKClient` multi-turn session
-  memory (a number recalled across turns), and `ToolUseBlock` visibility
-  for a tool call. Verified locally and in CI
+  instead of shell `export`.
+  Same auth-variable finding surfaced from the SDK side: its own docs
+  example (`ANTHROPIC_API_KEY`) hangs against Upstage, `ANTHROPIC_AUTH_TOKEN`
+  is required.
+  Three methods verified: `query()` structured message types,
+  `ClaudeSDKClient` multi-turn session memory (a number recalled across
+  turns), and `ToolUseBlock` visibility for a tool call.
+  Verified locally and in CI
   (`.github/workflows/verify-all-sequential.yml`), reusing the
   `UPSTAGE_API_KEY` secret from Case 01. See
   `02-claude-agent-sdk-local/README.md` for details.
@@ -97,15 +99,16 @@ it without needing any of the others.
 - **Result**: done. `ChatUpstage` (from `langchain-upstage`) supplies
   Solar Open2 to `create_deep_agent()` — no `claude` CLI, no
   `ANTHROPIC_BASE_URL`/`ANTHROPIC_AUTH_TOKEN` dance, just `UPSTAGE_API_KEY`
-  read automatically via Upstage's OpenAI-compatible endpoint. Finding:
-  Python 3.14 (this repo's default elsewhere) doesn't work here yet —
-  `tokenizers`, a `langchain-upstage` dependency, has no `cp314` wheel as
-  of any release through `0.23.1`, and building it from source fails in
-  this environment; Case 03 pins Python 3.13 instead. Three methods
-  verified: tool use (weather lookup), deepagents' built-in virtual
-  filesystem (write + read back a file), and subagent delegation (a
-  named `math-agent` subagent computing `17 + 25`). Verified locally and
-  in CI (`.github/workflows/verify-all-sequential.yml`,
+  read automatically via Upstage's OpenAI-compatible endpoint.
+  Finding: Python 3.14 (this repo's default elsewhere) doesn't work here
+  yet. `tokenizers`, a `langchain-upstage` dependency, has no `cp314`
+  wheel as of any release through `0.23.1`, and building it from source
+  fails in this environment. Case 03 pins Python 3.13 instead.
+  Three methods verified: tool use (weather lookup), deepagents' built-in
+  virtual filesystem (write + read back a file), and subagent delegation
+  (a named `math-agent` subagent computing `17 + 25`).
+  Verified locally and in CI
+  (`.github/workflows/verify-all-sequential.yml`,
   reusing the `UPSTAGE_API_KEY` secret, no Node/`claude`-CLI step
   needed). See `03-langchain-upstage-deepagents/README.md` for details.
 
@@ -138,16 +141,17 @@ it without needing any of the others.
      (cheap, single-turn) is the hard, reliably-passing verification
      gate; doc generation is attempted best-effort.
   4. `solar-pro3` needs more than a Tier-0 account's 50k-tokens/minute
-     budget to answer even one question here: its agentic tool-calling
+     budget to answer even one question here. Its agentic tool-calling
      loop makes 4-5 sequential round trips per question, and each one
      resends the cached system prompt + all 16 tool schemas
      (~13-15k tokens/call) — cumulative usage across just 4 calls
-     already exceeds 50k. Confirmed with a local logging proxy showing
-     real per-call `usage`, alongside a `reasoning_effort=low` patch to
-     the fork (branch `feat/reasoning-effort-passthrough`, committed but
-     not yet pushed/merged) that ruled out reasoning overhead as the
-     cause — `reasoning_tokens: 0` on every call, same result. Not a
-     code bug: `solar-open2` needs fewer round trips for the same
+     already exceeds 50k.
+     Confirmed with a local logging proxy showing real per-call `usage`,
+     alongside a `reasoning_effort=low` patch to the fork (branch
+     `feat/reasoning-effort-passthrough`, committed but not yet
+     pushed/merged) that ruled out reasoning overhead as the cause —
+     `reasoning_tokens: 0` on every call, same result.
+     Not a code bug: `solar-open2` needs fewer round trips for the same
      question and comfortably fits the same budget. Expected to work on
      Upstage's Tier 1 and above (higher RPM/TPM); just not verifiable on
      this repo's Tier-0 account.
@@ -164,10 +168,10 @@ it without needing any of the others.
 - **Finding**: the current Hermes Agent release includes `upstage` as a
   built-in provider (`solar` is an alias), and its bundled implementation
   explicitly handles the `solar-open*` family. The originally considered
-  named custom-provider configuration is therefore unnecessary. This is
-  distinct from Upstage's public model catalog: its current console example
-  uses `solar-pro3`, so `solar-open2` availability must still be confirmed
-  against the repository's account by the live check.
+  named custom-provider configuration is therefore unnecessary.
+  This is distinct from Upstage's public model catalog: its current
+  console example uses `solar-pro3`, so `solar-open2` availability must
+  still be confirmed against the repository's account by the live check.
 - **Approach**: set `model.provider: upstage` and `model.default:
   solar-open2` in `config.yaml`, pass `UPSTAGE_API_KEY` only through the
   environment, and run the digest-pinned official
