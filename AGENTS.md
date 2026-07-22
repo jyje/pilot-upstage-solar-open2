@@ -22,16 +22,18 @@ pilot-upstage-solar-open2/
 
 Referred to as **Case 01 / Case 02 / ...** in prose and docs — the
 numbered directory prefixes are just filesystem sort order, not a rename
-target. All cases live at the top level as one flat list — no split
+target. All cases live at the top level as one flat list, with no split
 between "core" and "special" cases.
+
 Each case directory is a self-contained experiment with its own `src/`
 (uv-managed, or a Node project for Case 04), or a Docker-based runnable
-configuration for Case 05. All are implemented and verified. Each has its
-own `scripts/verify.sh`; all 5 are run, solar-open2 only, as steps in the
-single `.github/workflows/verify-all-sequential.yml` workflow (manual
-`workflow_dispatch`), which reuses the same `UPSTAGE_API_KEY` secret.
-Case 03 pins Python 3.13 instead of 3.14 (the default elsewhere) — see
-its README for why.
+configuration for Case 05. All are implemented and verified.
+
+Each has its own `scripts/verify.sh`. All 5 run, solar-open2 only, as
+steps in the single `.github/workflows/verify-all-sequential.yml`
+workflow (manual `workflow_dispatch`), which reuses the same
+`UPSTAGE_API_KEY` secret. Case 03 pins Python 3.13 instead of 3.14 (the
+default elsewhere) — see its README for why.
 
 ## Skills available
 
