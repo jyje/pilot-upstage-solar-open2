@@ -7,7 +7,9 @@
 🧪 Claude Code, the Claude Agent SDK, LangChain, OpenWiki, and Hermes Agent — every use case built on Upstage Solar Open2!
 
 [![verify-all-sequential](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)
-[![Model on Hugging Face](https://huggingface.co/datasets/huggingface/badges/resolve/main/model-on-hf-md.svg)](https://huggingface.co/upstage/Solar-Open2-250B)
+
+External links:<br>
+[![Model on Hugging Face](https://img.shields.io/badge/🤗_Hugging_Face-upstage/solar--open2--250b-yellow)](https://huggingface.co/upstage/Solar-Open2-250B)
 [![Technical Report](https://img.shields.io/badge/📄_Technical_Report-PDF-blue)](https://huggingface.co/upstage/Solar-Open2-250B/blob/main/Solar_Open_2_Tech_Report.pdf)
 [![Launch Event](https://img.shields.io/badge/📺_Launch_Event-YouTube-red)](https://www.youtube.com/live/6XX-yR3qomM)
 
