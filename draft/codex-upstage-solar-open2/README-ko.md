@@ -1,12 +1,15 @@
-# Case 02 — Upstage Solar Open 2를 통한 Codex
+# Upstage Solar Open 2를 통한 Codex
 
 [English](README.md) / [한국어](README-ko.md)
 
 [← 리포 개요로 돌아가기](../README.md)
 
-**상태:** 기본 경로 검증 완료 — Docker LiteLLM이 Codex 응답을 Solar Open 2로
-성공적으로 라우팅했습니다. Codex → Upstage 직접 Base URL 변경은 여전히 지원되는
-방식이 아니며, 이 Case는 그 대신 브리지의 동작을 검증합니다. workspace-file 및 tool-result
+**상태:** 대기 중(draft, 번호 없음) — Codex가 아직 커스텀 OpenAI 호환
+엔드포인트를 가리키는 공식 지원 방법을 제공하지 않아서, 그게 바뀌기 전까지는
+번호가 매겨진 Case 목록에 포함하지 않습니다. 기본 경로는 검증 완료 —
+Docker LiteLLM이 Codex 응답을 Solar Open 2로 성공적으로 라우팅했습니다.
+Codex → Upstage 직접 Base URL 변경은 여전히 지원되는 방식이 아니며, 이
+Case는 그 대신 브리지의 동작을 검증합니다. workspace-file 및 tool-result
 cycle은 아직 확인 대상입니다.
 
 ## 목표
@@ -43,7 +46,7 @@ protocol이 변환되지는 않으며, Upstage 문서는 이 간극을 메우는
 [Codex 설정 레퍼런스](https://developers.openai.com/codex/config-reference).
 
 현재 Upstage 콘솔 예제의 모델명은 `solar-pro3`이고, 이 리포의 기존
-Case들은 `solar-open2`를 사용합니다. Case 02의 실제 검증에서는 계정에
+Case들은 `solar-open2`를 사용합니다. 이 실험의 실제 검증에서는 계정에
 활성화된 모델 ID를 확인해 기록해야 하며, 프로토콜 브리지가 된다는 이유만으로
 과거 모델 ID가 계속 제공된다고 가정하면 안 됩니다.
 

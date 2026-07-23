@@ -1,13 +1,15 @@
-# Case 02 — Codex via Upstage Solar Open 2
+# Codex via Upstage Solar Open 2
 
 [English](README.md) / [한국어](README-ko.md)
 
 [← back to repo overview](../README.md)
 
-**Status:** Basic path verified — Docker LiteLLM successfully routed a Codex
-response to Solar Open 2. A direct Codex → Upstage Base URL override remains
-unsupported; this case verifies the bridge instead. Workspace-file and
-tool-result cycles remain pending.
+**Status:** Paused (draft, unnumbered) — Codex has no officially supported
+way to point at a custom OpenAI-compatible endpoint yet, so this stays out
+of the numbered Case list until that changes. Basic path verified: Docker
+LiteLLM successfully routed a Codex response to Solar Open 2. A direct
+Codex → Upstage Base URL override remains unsupported; this case verifies
+the bridge instead. Workspace-file and tool-result cycles remain pending.
 
 ## Goal
 
@@ -44,9 +46,9 @@ Sources: [Upstage API key console — Chat example](https://console.upstage.ai/a
 [Codex configuration reference](https://developers.openai.com/codex/config-reference).
 
 The current Upstage console example names `solar-pro3`, while this repo's
-earlier cases use `solar-open2`. Case 02 must list the account-enabled model
-ID during its live verification; it must not assume an older model ID remains
-available merely because the protocol bridge works.
+earlier cases use `solar-open2`. This case must list the account-enabled
+model ID during its live verification; it must not assume an older model ID
+remains available merely because the protocol bridge works.
 
 ## Planned bridge
 
