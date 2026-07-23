@@ -17,7 +17,7 @@ commands you'll actually run.
   `.claude/skills/git-commit-helper/SKILL.md`. Split unrelated concerns
   into separate commits. Commit messages and PR descriptions are English
   only.
-- **Python changes** (Cases 02, 03): ruff (lint + format), `ty` (type
+- **Python changes** (Cases 03, 04): ruff (lint + format), `ty` (type
   check), and pytest all have to pass — see
   `.claude/skills/python-lint/SKILL.md` for the exact commands and test
   coverage expectations.
@@ -36,19 +36,19 @@ repo.
 ### Prerequisites
 
 - `UPSTAGE_API_KEY` — every case's verification hits the real Upstage API.
-- [`uv`](https://docs.astral.sh/uv/) — Cases 02 and 03 are uv-managed
+- [`uv`](https://docs.astral.sh/uv/) — Cases 03 and 04 are uv-managed
   Python projects.
 - Node 22+, the `claude` CLI (`npm install -g @anthropic-ai/claude-code`),
   and `claude-upstage` (`curl -fsSL https://console.upstage.ai/claude-upstage.sh | sh -s install`)
-  — Cases 01 and 02 drive `claude` as a subprocess.
-- `git` — Case 04 shallow-clones this repo into a gitignored `scratch/`
+  — Cases 01 and 03 drive `claude` as a subprocess.
+- `git` — Case 05 shallow-clones this repo into a gitignored `scratch/`
   directory rather than touching the real checkout.
-- A patched `openwiki` build on `PATH` for Case 04: check out
+- A patched `openwiki` build on `PATH` for Case 05: check out
   [`jyje/openwiki`](https://github.com/jyje/openwiki/tree/fix/disable-streaming-for-tool-calling-providers)
   at `fix/disable-streaming-for-tool-calling-providers`, then
   `pnpm install && pnpm run build && npm link` — the public npm release
-  doesn't have the streaming fix Case 04 needs yet (see its README).
-- Docker — Case 05 runs the official, digest-pinned `nousresearch/hermes-agent` image.
+  doesn't have the streaming fix Case 05 needs yet (see its README).
+- Docker — Case 02 runs the official, digest-pinned `nousresearch/hermes-agent` image.
 
 ### Running one case
 
@@ -56,10 +56,10 @@ Each case's own script, straight:
 
 ```bash
 UPSTAGE_API_KEY="..." ./01-solar-open2-harness/scripts/verify.sh
-UPSTAGE_API_KEY="..." ./02-claude-agent-sdk-local/scripts/verify.sh
-UPSTAGE_API_KEY="..." ./03-langchain-upstage-deepagents/scripts/verify.sh
-UPSTAGE_API_KEY="..." ./04-langchain-openwiki-solar-open2/scripts/verify.sh
-UPSTAGE_API_KEY="..." ./05-hermes-agent-solar-open2/scripts/verify.sh
+UPSTAGE_API_KEY="..." ./02-hermes-agent-solar-open2/scripts/verify.sh
+UPSTAGE_API_KEY="..." ./03-claude-agent-sdk-local/scripts/verify.sh
+UPSTAGE_API_KEY="..." ./04-langchain-upstage-deepagents/scripts/verify.sh
+UPSTAGE_API_KEY="..." ./05-langchain-openwiki-solar-open2/scripts/verify.sh
 ```
 
 Or through the shared, rate-limit-aware wrapper CI itself uses. It waits
@@ -76,10 +76,10 @@ UPSTAGE_API_KEY="..." ./scripts/verify-case.sh 01-solar-open2-harness solar-open
 ```bash
 for case in \
   01-solar-open2-harness \
-  02-claude-agent-sdk-local \
-  03-langchain-upstage-deepagents \
-  04-langchain-openwiki-solar-open2 \
-  05-hermes-agent-solar-open2
+  02-hermes-agent-solar-open2 \
+  03-claude-agent-sdk-local \
+  04-langchain-upstage-deepagents \
+  05-langchain-openwiki-solar-open2
 do
   UPSTAGE_API_KEY="..." ./scripts/verify-case.sh "$case" solar-open2
 done
@@ -88,10 +88,10 @@ done
 Expect this to take a while on a Tier-0 account — see the root
 [`README.md`](README.md)'s Tier 0 section for why.
 
-### Python cases (02, 03)
+### Python cases (03, 04)
 
 ```bash
-cd 02-claude-agent-sdk-local  # or 03-langchain-upstage-deepagents
+cd 03-claude-agent-sdk-local  # or 04-langchain-upstage-deepagents
 uv run ruff check --fix .
 uv run ruff format .
 uv run ty check .

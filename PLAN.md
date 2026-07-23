@@ -7,14 +7,14 @@ seminar-ready home:
 
 1. Building a Claude Code harness (skills, etc.) on top of Upstage's
    **Solar Open2** model.
-2. Driving a **local Claude Code** instance programmatically with the
-   **Claude Agent SDK**.
-3. Initializing **deepagents** at the code level using the
-   **LangChain Upstage SDK**.
-4. Documenting this repo itself with **LangChain OpenWiki**, powered by
-   Solar Open2.
-5. Running **Solar Open2 x Hermes Agent** through Hermes's officially
+2. Running **Solar Open2 x Hermes Agent** through Hermes's officially
    bundled Upstage provider.
+3. Driving a **local Claude Code** instance programmatically with the
+   **Claude Agent SDK**.
+4. Initializing **deepagents** at the code level using the
+   **LangChain Upstage SDK**.
+5. Documenting this repo itself with **LangChain OpenWiki**, powered by
+   Solar Open2.
 
 Each case is scoped to be independently readable, runnable, and
 presentable — someone should be able to open one case's folder and follow
@@ -25,10 +25,10 @@ it without needing any of the others.
 | Case | Goal | Key tech | Status |
 | --- | --- | --- | --- |
 | Case 01 — Solar Open2 x Claude Code | Stand up a minimal Claude Code harness (custom skills, project config) that routes through Upstage's Solar Open2 model | Solar Open2, Claude Code, `.claude/skills/` | Verified |
-| Case 02 — Solar Open2 x Claude Agent SDK | Drive a local Claude Code instance programmatically via the Claude Agent SDK (no manual CLI interaction) | Claude Agent SDK, Python | Verified |
-| Case 03 — Solar Open2 x LangChain Deepagents | Initialize a `deepagents`-based agent at the code level using the LangChain Upstage SDK (`langchain-upstage`) as the model backend | LangChain, `langchain-upstage`, `deepagents` | Verified |
-| Case 04 — Solar Open2 x LangChain OpenWiki | Document this repo itself with `openwiki`, configured to run on Solar Open2 | LangChain, `openwiki`, Solar Open2 | Verified |
-| Case 05 — Solar Open2 x Hermes Agent | Run Hermes Agent against Solar Open2 through its officially bundled Upstage provider | Hermes Agent, Docker, Solar Open2 | Verified |
+| Case 02 — Solar Open2 x Hermes Agent | Run Hermes Agent against Solar Open2 through its officially bundled Upstage provider | Hermes Agent, Docker, Solar Open2 | Verified |
+| Case 03 — Solar Open2 x Claude Agent SDK | Drive a local Claude Code instance programmatically via the Claude Agent SDK (no manual CLI interaction) | Claude Agent SDK, Python | Verified |
+| Case 04 — Solar Open2 x LangChain Deepagents | Initialize a `deepagents`-based agent at the code level using the LangChain Upstage SDK (`langchain-upstage`) as the model backend | LangChain, `langchain-upstage`, `deepagents` | Verified |
+| Case 05 — Solar Open2 x LangChain OpenWiki | Document this repo itself with `openwiki`, configured to run on Solar Open2 | LangChain, `openwiki`, Solar Open2 | Verified |
 
 ## Case 01 — Solar Open2 x Claude Code
 
@@ -55,7 +55,35 @@ it without needing any of the others.
   `01-solar-open2-harness/README.md` for transcripts and the finding about
   `claude-upstage`'s argument passthrough.
 
-## Case 02 — Solar Open2 x Claude Agent SDK
+## Case 02 — Solar Open2 x Hermes Agent
+
+- **Goal**: run NousResearch's Hermes Agent against Upstage's Solar Open2
+  model with no bridge or proxy in the request path.
+- **Finding**: the current Hermes Agent release includes `upstage` as a
+  built-in provider (`solar` is an alias), and its bundled implementation
+  explicitly handles the `solar-open*` family. The originally considered
+  named custom-provider configuration is therefore unnecessary.
+  This is distinct from Upstage's public model catalog: its current
+  console example uses `solar-pro3`, so `solar-open2` availability must
+  still be confirmed against the repository's account by the live check.
+- **Approach**: set `model.provider: upstage` and `model.default:
+  solar-open2` in `config.yaml`, pass `UPSTAGE_API_KEY` only through the
+  environment, and run the digest-pinned official
+  `nousresearch/hermes-agent` image directly. Verify the configuration with
+  `hermes doctor`, then make a non-interactive `hermes chat -m solar-open2
+  --provider upstage -q "<prompt>" --max-turns 2` round trip.
+- **Prior art**: `jyje/hermes-agent-helm` established the official image and
+  non-interactive `hermes chat` verification pattern on Kubernetes. This
+  case uses the same image directly through Docker and replaces the chart's
+  proxy-oriented example with Hermes's newer bundled Upstage provider.
+- **Output**: a self-contained `02-hermes-agent-solar-open2/` case with a
+  `config.yaml`, verification script, English/Korean README pair, and
+  matching GitHub Actions workflow.
+- **Status**: verified locally on 2026-07-20 with Hermes Agent v0.18.2.
+  `hermes doctor` confirmed Upstage connectivity and a non-interactive
+  `solar-open2` chat returned the expected `hermes-ready` response.
+
+## Case 03 — Solar Open2 x Claude Agent SDK
 
 - **Goal**: run Claude Code locally driven entirely through the Claude
   Agent SDK, not the interactive CLI — i.e. a program that opens sessions,
@@ -64,7 +92,7 @@ it without needing any of the others.
   that uses the Claude Agent SDK to launch and drive a local Claude Code
   session against a sample task, capturing input/output for the writeup.
 - **Expected output**: a runnable script/CLI in
-  `02-claude-agent-sdk-local/src/`, plus a README with setup + a captured
+  `03-claude-agent-sdk-local/src/`, plus a README with setup + a captured
   example run.
 - **Result**: done. `claude-agent-sdk` (Python) drives the same `claude`
   CLI as a subprocess, so the Solar Open2 env var recipe from Case 01
@@ -79,9 +107,9 @@ it without needing any of the others.
   Verified locally and in CI
   (`.github/workflows/verify-all-sequential.yml`), reusing the
   `UPSTAGE_API_KEY` secret from Case 01. See
-  `02-claude-agent-sdk-local/README.md` for details.
+  `03-claude-agent-sdk-local/README.md` for details.
 
-## Case 03 — Solar Open2 x LangChain Deepagents
+## Case 04 — Solar Open2 x LangChain Deepagents
 
 - **Goal**: initialize a `deepagents`-based agent at the code level with
   `langchain-upstage` supplying the model, showing how deepagents composes
@@ -94,7 +122,7 @@ it without needing any of the others.
   (`create_deep_agent()` + simple tool demo), `jyje/pilot-deepagents-rubrics`
   (`RubricMiddleware` composition).
 - **Expected output**: a runnable agent in
-  `03-langchain-upstage-deepagents/src/`, plus a README with setup + a
+  `04-langchain-upstage-deepagents/src/`, plus a README with setup + a
   captured example run.
 - **Result**: done. `ChatUpstage` (from `langchain-upstage`) supplies
   Solar Open2 to `create_deep_agent()` — no `claude` CLI, no
@@ -103,23 +131,23 @@ it without needing any of the others.
   Finding: Python 3.14 (this repo's default elsewhere) doesn't work here
   yet. `tokenizers`, a `langchain-upstage` dependency, has no `cp314`
   wheel as of any release through `0.23.1`, and building it from source
-  fails in this environment. Case 03 pins Python 3.13 instead.
+  fails in this environment. Case 04 pins Python 3.13 instead.
   Three methods verified: tool use (weather lookup), deepagents' built-in
   virtual filesystem (write + read back a file), and subagent delegation
   (a named `math-agent` subagent computing `17 + 25`).
   Verified locally and in CI
   (`.github/workflows/verify-all-sequential.yml`,
   reusing the `UPSTAGE_API_KEY` secret, no Node/`claude`-CLI step
-  needed). See `03-langchain-upstage-deepagents/README.md` for details.
+  needed). See `04-langchain-upstage-deepagents/README.md` for details.
 
-## Case 04 — Solar Open2 x LangChain OpenWiki
+## Case 05 — Solar Open2 x LangChain OpenWiki
 
 - **Goal**: use `openwiki` (github.com/langchain-ai/openwiki) — a CLI
   that builds/maintains an agent-readable wiki for a codebase —
   configured to run on Solar Open2, targeting `pilot-upstage-solar-open2` itself:
   document its latest commit and answer questions about it.
 - **Approach**: shallow-clone this repo into a gitignored `scratch/`
-  directory inside `04-langchain-openwiki-solar-open2/` and run
+  directory inside `05-langchain-openwiki-solar-open2/` and run
   `openwiki` there, so the real root `AGENTS.md` is never touched and no
   auto-PR bot goes live on this repo.
 - **Result**: done, with three real findings along the way:
@@ -158,36 +186,8 @@ it without needing any of the others.
   Verified locally and in CI
   (`.github/workflows/verify-all-sequential.yml`,
   building the patched fork from source, reusing the `UPSTAGE_API_KEY`
-  secret). See `04-langchain-openwiki-solar-open2/README.md` for
+  secret). See `05-langchain-openwiki-solar-open2/README.md` for
   details.
-
-## Case 05 — Solar Open2 x Hermes Agent
-
-- **Goal**: run NousResearch's Hermes Agent against Upstage's Solar Open2
-  model with no bridge or proxy in the request path.
-- **Finding**: the current Hermes Agent release includes `upstage` as a
-  built-in provider (`solar` is an alias), and its bundled implementation
-  explicitly handles the `solar-open*` family. The originally considered
-  named custom-provider configuration is therefore unnecessary.
-  This is distinct from Upstage's public model catalog: its current
-  console example uses `solar-pro3`, so `solar-open2` availability must
-  still be confirmed against the repository's account by the live check.
-- **Approach**: set `model.provider: upstage` and `model.default:
-  solar-open2` in `config.yaml`, pass `UPSTAGE_API_KEY` only through the
-  environment, and run the digest-pinned official
-  `nousresearch/hermes-agent` image directly. Verify the configuration with
-  `hermes doctor`, then make a non-interactive `hermes chat -m solar-open2
-  --provider upstage -q "<prompt>" --max-turns 2` round trip.
-- **Prior art**: `jyje/hermes-agent-helm` established the official image and
-  non-interactive `hermes chat` verification pattern on Kubernetes. This
-  case uses the same image directly through Docker and replaces the chart's
-  proxy-oriented example with Hermes's newer bundled Upstage provider.
-- **Output**: a self-contained `05-hermes-agent-solar-open2/` case with a
-  `config.yaml`, verification script, English/Korean README pair, and
-  matching GitHub Actions workflow.
-- **Status**: verified locally on 2026-07-20 with Hermes Agent v0.18.2.
-  `hermes doctor` confirmed Upstage connectivity and a non-interactive
-  `solar-open2` chat returned the expected `hermes-ready` response.
 
 ## Repo structure
 
@@ -199,12 +199,12 @@ policy).
 ## Next steps
 
 Cases 01-05 are implemented and verified. Open items:
-- Revisit Case 03's Python 3.14 pin once `tokenizers` ships a `cp314`
+- Revisit Case 04's Python 3.14 pin once `tokenizers` ships a `cp314`
   wheel, to bring every case onto the same Python version.
 - Decide whether to open an upstream issue/PR against
-  `langchain-ai/openwiki` for Case 04's two findings (the `anthropic`
+  `langchain-ai/openwiki` for Case 05's two findings (the `anthropic`
   provider auth gap and the streaming tool-name bug) — not done yet,
-  a separate decision from building Case 04 itself.
+  a separate decision from building Case 05 itself.
 - Revisit a direct OpenAI Codex integration once there's a clearer path
   between Codex's Responses-API provider interface and Upstage's Chat
   Completions endpoint; earlier exploration is archived in

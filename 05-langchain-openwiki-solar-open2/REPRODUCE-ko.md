@@ -1,4 +1,4 @@
-# Case 04 — 유즈케이스 가이드
+# Case 05 — 유즈케이스 가이드
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
@@ -52,7 +52,7 @@ openwiki --version
 리포 루트에서 먼저 이 디렉토리로 이동한 뒤, 스크립트를 실행하세요:
 
 ```bash
-cd 04-langchain-openwiki-solar-open2
+cd 05-langchain-openwiki-solar-open2
 export UPSTAGE_API_KEY="up_..."
 ./scripts/verify.sh
 ```
@@ -96,6 +96,6 @@ best-effort로 이어집니다. 이 단계는 실패해도 괜찮습니다 — T
   [`README-ko.md`](README-ko.md)의 발견 3에 따라 예상된 동작입니다.
   스크립트 전체를 실패시키지 않습니다.
 - **`solar-open2`가 아닌 `solar-pro3`가 타임아웃/레이트리밋에 걸린다** —
-  [`PLAN.md`](../PLAN.md#case-04--solar-open2-x-langchain-openwiki)의
-  Case 04, Finding 4에 따라 Tier 0에서는 예상된 동작입니다(영문). 이
+  [`PLAN.md`](../PLAN.md#case-05--solar-open2-x-langchain-openwiki)의
+  Case 05, Finding 4에 따라 Tier 0에서는 예상된 동작입니다(영문). 이
   리포는 `solar-open2`만 검증합니다.

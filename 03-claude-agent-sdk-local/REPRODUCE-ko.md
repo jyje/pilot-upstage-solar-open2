@@ -4,9 +4,8 @@
 
 [← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 유즈케이스 가이드](../docs/REPRODUCE-ko.md)
 
-목표: `langchain-upstage`가 Solar Open2를 모델로 공급하는 `deepagents`
-에이전트를 코드 레벨에서 초기화합니다 — 이 경로에는 `claude` CLI가
-전혀 등장하지 않습니다.
+목표: Python `claude-agent-sdk`로 Claude Code를 프로그래밍 방식으로
+구동하며, Solar Open2를 상대로 동작을 확인합니다.
 
 전체 이야기, 발견 사항, 검증 로그: [`README-ko.md`](README-ko.md).
 
@@ -17,21 +16,22 @@
 ## 필요한 것
 
 - [`uv`](https://docs.astral.sh/uv/)
-- Python 3.13 (이 케이스는 3.14가 아닌 3.13을 고정합니다 — 이유는
-  [`README-ko.md`](README-ko.md#발견-python-314는-아직-여기서-동작하지-않음)
-  참고. 없다면 `uv`가 알아서 준비해줍니다)
-
-그 외엔 없습니다. Node도, `claude` CLI도 필요 없습니다.
+- 공식 Claude Code CLI ([Case 01A](../01-solar-open2-harness/REPRODUCE-ko.md#설치--case-01a-공식-claude-code-cli)과 설치 방법 동일)
 
 ## 실행
 
 리포 루트에서 먼저 이 디렉토리로 이동한 뒤, 스크립트를 실행하세요:
 
 ```bash
-cd 03-langchain-upstage-deepagents
+cd 03-claude-agent-sdk-local
+npm install -g @anthropic-ai/claude-code  # 아직 설치 안 했다면
 export UPSTAGE_API_KEY="up_..."
 ./scripts/verify.sh
 ```
+
+스크립트 내부에서 `uv run python demo.py`를 실행합니다 — 처음 실행할 때
+`uv`가 프로젝트의 Python 의존성을 알아서 해석하고 설치해줍니다. 별도의
+설치 단계는 필요 없습니다.
 
 ## 성공했을 때 화면
 
@@ -44,9 +44,12 @@ export UPSTAGE_API_KEY="up_..."
 
 ## 문제가 생겼다면
 
-- **`uv run` 중 `tokenizers` 관련 Rust 빌드 에러** — Python 3.14를 쓰고
-  있을 가능성이 큽니다. 3.14를 강제하지 말고, `uv`가 고정해둔 3.13을
-  그대로 쓰세요.
+- **호출이 멈추고 응답이 안 온다** — `ANTHROPIC_AUTH_TOKEN` 대신
+  `ANTHROPIC_API_KEY`가 환경 어딘가에 설정돼 있다는 강력한 신호입니다.
+  `verify.sh`는 이미 올바르게 설정하므로, 직접 `demo.py`를 자신의 환경으로
+  돌릴 때만 해당됩니다.
+- **`uv not found`** — [uv 문서](https://docs.astral.sh/uv/getting-started/installation/)를
+  참고해 설치한 뒤 다시 실행하세요.
 
 ## 이 케이스를 변경하고 커밋하기 전에
 

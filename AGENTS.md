@@ -14,10 +14,10 @@ pilot-upstage-solar-open2/
 ├── README.md / README-ko.md           # repo front page
 ├── CONTRIBUTING.md                    # conventions + local dev commands
 ├── 01-solar-open2-harness/            # Case 01: Claude Code harness on Solar Open2
-├── 02-claude-agent-sdk-local/         # Case 02: local Claude Code via Claude Agent SDK
-├── 03-langchain-upstage-deepagents/   # Case 03: deepagents init via LangChain Upstage SDK
-├── 04-langchain-openwiki-solar-open2/ # Case 04: openwiki documents this repo via Solar Open2
-└── 05-hermes-agent-solar-open2/       # Case 05: Hermes Agent via its built-in Upstage provider
+├── 02-hermes-agent-solar-open2/       # Case 02: Hermes Agent via its built-in Upstage provider
+├── 03-claude-agent-sdk-local/         # Case 03: local Claude Code via Claude Agent SDK
+├── 04-langchain-upstage-deepagents/   # Case 04: deepagents init via LangChain Upstage SDK
+└── 05-langchain-openwiki-solar-open2/ # Case 05: openwiki documents this repo via Solar Open2
 ```
 
 Referred to as **Case 01 / Case 02 / ...** in prose and docs — the
@@ -26,13 +26,13 @@ target. All cases live at the top level as one flat list, with no split
 between "core" and "special" cases.
 
 Each case directory is a self-contained experiment with its own `src/`
-(uv-managed, or a Node project for Case 04), or a Docker-based runnable
-configuration for Case 05. All are implemented and verified.
+(uv-managed, or a Node project for Case 05), or a Docker-based runnable
+configuration for Case 02. All are implemented and verified.
 
 Each has its own `scripts/verify.sh`. All 5 run, solar-open2 only, as
 steps in the single `.github/workflows/verify-all-sequential.yml`
 workflow (manual `workflow_dispatch`), which reuses the same
-`UPSTAGE_API_KEY` secret. Case 03 pins Python 3.13 instead of 3.14 (the
+`UPSTAGE_API_KEY` secret. Case 04 pins Python 3.13 instead of 3.14 (the
 default elsewhere) — see its README for why.
 
 ## Skills available

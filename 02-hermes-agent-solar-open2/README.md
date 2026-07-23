@@ -1,4 +1,4 @@
-# Case 05 — Solar Open2 x Hermes Agent
+# Case 02 — Solar Open2 x Hermes Agent
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -46,8 +46,8 @@ There is an important distinction between **Hermes provider support** and
 So this case doesn't claim that every new Upstage account can select
 `solar-open2`. The authenticated round trip below is the real authority
 for whether the model stays enabled on the account this repo uses.
-Cases 01-04 already verified that account against `solar-open2`, and
-Case 05 confirmed it again on 2026-07-20.
+The other four cases in this repo already verified that account against
+`solar-open2`; this case confirmed it again on 2026-07-20.
 
 ## Run
 

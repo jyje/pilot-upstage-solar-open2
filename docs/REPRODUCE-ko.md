@@ -92,10 +92,10 @@ UPSTAGE_API_KEY="..." ./scripts/verify-case.sh 01-solar-open2-harness solar-open
 | Case | 목표 | 유즈케이스 가이드 |
 | --- | --- | --- |
 | Case 01 | Claude Code 자체를 Solar Open2로 구동 | [`01-solar-open2-harness/REPRODUCE-ko.md`](../01-solar-open2-harness/REPRODUCE-ko.md) |
-| Case 02 | Claude Agent SDK로 Claude Code를 프로그래밍 방식 구동 | [`02-claude-agent-sdk-local/REPRODUCE-ko.md`](../02-claude-agent-sdk-local/REPRODUCE-ko.md) |
-| Case 03 | `langchain-upstage`로 `deepagents`를 코드 레벨에서 초기화 | [`03-langchain-upstage-deepagents/REPRODUCE-ko.md`](../03-langchain-upstage-deepagents/REPRODUCE-ko.md) |
-| Case 04 | `openwiki`가 이 리포를 문서화, Solar Open2로 구동 | [`04-langchain-openwiki-solar-open2/REPRODUCE-ko.md`](../04-langchain-openwiki-solar-open2/REPRODUCE-ko.md) |
-| Case 05 | Hermes Agent 내장 Upstage provider, 공식 Docker 이미지 | [`05-hermes-agent-solar-open2/REPRODUCE-ko.md`](../05-hermes-agent-solar-open2/REPRODUCE-ko.md) |
+| Case 02 | Hermes Agent 내장 Upstage provider, 공식 Docker 이미지 | [`02-hermes-agent-solar-open2/REPRODUCE-ko.md`](../02-hermes-agent-solar-open2/REPRODUCE-ko.md) |
+| Case 03 | Claude Agent SDK로 Claude Code를 프로그래밍 방식 구동 | [`03-claude-agent-sdk-local/REPRODUCE-ko.md`](../03-claude-agent-sdk-local/REPRODUCE-ko.md) |
+| Case 04 | `langchain-upstage`로 `deepagents`를 코드 레벨에서 초기화 | [`04-langchain-upstage-deepagents/REPRODUCE-ko.md`](../04-langchain-upstage-deepagents/REPRODUCE-ko.md) |
+| Case 05 | `openwiki`가 이 리포를 문서화, Solar Open2로 구동 | [`05-langchain-openwiki-solar-open2/REPRODUCE-ko.md`](../05-langchain-openwiki-solar-open2/REPRODUCE-ko.md) |
 
 각 문서 상단의 `[English]` 링크를 따라가면 영문판도 볼 수 있습니다.
 
@@ -109,10 +109,10 @@ export UPSTAGE_API_KEY="up_..."
 
 for case in \
   01-solar-open2-harness \
-  02-claude-agent-sdk-local \
-  03-langchain-upstage-deepagents \
-  04-langchain-openwiki-solar-open2 \
-  05-hermes-agent-solar-open2
+  02-hermes-agent-solar-open2 \
+  03-claude-agent-sdk-local \
+  04-langchain-upstage-deepagents \
+  05-langchain-openwiki-solar-open2
 do
   ./scripts/verify-case.sh "$case" solar-open2
 done

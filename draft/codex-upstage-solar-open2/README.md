@@ -1,4 +1,4 @@
-# Case 05 — Codex via Upstage Solar Open2
+# Case 02 — Codex via Upstage Solar Open2
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -44,7 +44,7 @@ Sources: [Upstage API key console — Chat example](https://console.upstage.ai/a
 [Codex configuration reference](https://developers.openai.com/codex/config-reference).
 
 The current Upstage console example names `solar-pro3`, while this repo's
-earlier cases use `solar-open2`. Case 05 must list the account-enabled model
+earlier cases use `solar-open2`. Case 02 must list the account-enabled model
 ID during its live verification; it must not assume an older model ID remains
 available merely because the protocol bridge works.
 

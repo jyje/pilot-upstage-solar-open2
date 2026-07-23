@@ -1,4 +1,4 @@
-# Case 03 — Solar Open2 x LangChain Deepagents
+# Case 04 — Solar Open2 x LangChain Deepagents
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -15,7 +15,7 @@ in CI).
 Initialize a [`deepagents`](https://pypi.org/project/deepagents/) agent
 purely at the code level, using
 [`langchain-upstage`](https://pypi.org/project/langchain-upstage/) to
-supply Solar Open2 as the model. Unlike Cases 01-02, there's no Claude Code
+supply Solar Open2 as the model. Unlike Case 01 and Case 03, there's no Claude Code
 CLI involved anywhere in this path — this is LangChain/LangGraph talking
 to Upstage directly.
 
@@ -36,7 +36,7 @@ agent.invoke({"messages": [{"role": "user", "content": "..."}]})
 ```
 
 That's the whole auth story — no `ANTHROPIC_BASE_URL`/`ANTHROPIC_AUTH_TOKEN`
-dance, no `claude` CLI subprocess. Cases 01-02 had to route through
+dance, no `claude` CLI subprocess. Case 01 and Case 03 had to route through
 Anthropic's Messages API wire format (Upstage exposes that compatibility
 layer too, at a different host path). This case skips it entirely,
 using Upstage's native OpenAI-compatible endpoint through the LangChain
@@ -44,7 +44,7 @@ integration Upstage itself publishes.
 
 ## Finding: Python 3.14 doesn't work here (yet)
 
-This repo's other cases pin Python 3.14, but Case 03 pins **3.13**.
+This repo's other cases pin Python 3.14, but Case 04 pins **3.13**.
 
 The cause, confirmed by actually trying it: `langchain-upstage` depends
 on `tokenizers` (a Rust/PyO3 extension), and no `tokenizers` release —
@@ -53,7 +53,7 @@ yet. Building it from source also failed in this environment: a real
 `cargo`/PyO3 compile error, not a missing-toolchain issue.
 
 This is an upstream ecosystem gap, not something a config change can work
-around. Case 03 will move back to 3.14 once `tokenizers` (or an
+around. Case 04 will move back to 3.14 once `tokenizers` (or an
 alternative Upstage integration that doesn't pull it in) supports it.
 
 ## Three methods
@@ -136,7 +136,7 @@ UPSTAGE_API_KEY="..." ./scripts/verify.sh
 
 Runs as a step in CI (manual dispatch, solar-open2 only):
 [`.github/workflows/verify-all-sequential.yml`](../.github/workflows/verify-all-sequential.yml) —
-no Node/`claude`-CLI install step needed, unlike Cases 01-02 — reusing the
+no Node/`claude`-CLI install step needed, unlike Case 01 and Case 03 — reusing the
 same `UPSTAGE_API_KEY` repository secret.
 
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.

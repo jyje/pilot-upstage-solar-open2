@@ -1,4 +1,4 @@
-# Case 03 — Solar Open2 x LangChain Deepagents
+# Case 04 — Solar Open2 x LangChain Deepagents
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -15,7 +15,7 @@
 
 [`deepagents`](https://pypi.org/project/deepagents/) 에이전트를 순수
 코드 수준에서 초기화하되, [`langchain-upstage`](https://pypi.org/project/langchain-upstage/)로
-Solar Open2를 모델로 공급합니다. Case 01·02와 달리 이 경로에는 Claude Code
+Solar Open2를 모델로 공급합니다. Case 01·03과 달리 이 경로에는 Claude Code
 CLI가 전혀 관여하지 않습니다 — LangChain/LangGraph가 Upstage와 직접
 통신합니다.
 
@@ -36,7 +36,7 @@ agent.invoke({"messages": [{"role": "user", "content": "..."}]})
 ```
 
 인증 관련해서는 이게 전부입니다 — `ANTHROPIC_BASE_URL`/`ANTHROPIC_AUTH_TOKEN`
-설정도, `claude` CLI 서브프로세스도 필요 없습니다. Case 01·02는 Anthropic
+설정도, `claude` CLI 서브프로세스도 필요 없습니다. Case 01·03은 Anthropic
 Messages API 와이어 포맷을 거쳐야 했습니다(Upstage가 다른 호스트
 경로에서 이 호환 레이어도 제공하긴 합니다). 이번 케이스는 Upstage가
 직접 공개한 LangChain 통합을 통해 Upstage 네이티브 OpenAI 호환
@@ -44,7 +44,7 @@ Messages API 와이어 포맷을 거쳐야 했습니다(Upstage가 다른 호스
 
 ## 발견: Python 3.14는 아직 여기서 동작하지 않음
 
-이 리포의 다른 케이스들은 Python 3.14를 고정하지만, Case 03은 **3.13**을
+이 리포의 다른 케이스들은 Python 3.14를 고정하지만, Case 04는 **3.13**을
 고정합니다.
 
 실제로 시도해서 확인한 원인은 이렇습니다: `langchain-upstage`가
@@ -55,7 +55,7 @@ Messages API 와이어 포맷을 거쳐야 했습니다(Upstage가 다른 호스
 
 설정으로 우회할 수 있는 문제가 아니라 업스트림 생태계의 공백입니다.
 `tokenizers`가 지원하거나(또는 이를 끌어오지 않는 대체 Upstage 통합이
-나오면) Case 03도 3.14로 돌아갈 예정입니다.
+나오면) Case 04도 3.14로 돌아갈 예정입니다.
 
 ## 세 가지 방식
 
@@ -138,7 +138,7 @@ UPSTAGE_API_KEY="..." ./scripts/verify.sh
 
 CI에서도 한 단계로 실행됩니다(수동 실행, `solar-open2`만):
 [`.github/workflows/verify-all-sequential.yml`](../.github/workflows/verify-all-sequential.yml) —
-Case 01·02와 달리 Node/`claude` CLI 설치 과정이 필요 없습니다 — 동일한
+Case 01·03과 달리 Node/`claude` CLI 설치 과정이 필요 없습니다 — 동일한
 `UPSTAGE_API_KEY` 저장소 시크릿을 재사용합니다.
 
 전체 맥락은 리포 레벨의 [`PLAN.md`](../PLAN.md)를 참고하세요.

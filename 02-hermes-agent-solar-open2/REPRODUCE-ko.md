@@ -1,4 +1,4 @@
-# Case 05 — 유즈케이스 가이드
+# Case 02 — 유즈케이스 가이드
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
@@ -24,7 +24,7 @@
 리포 루트에서 먼저 이 디렉토리로 이동한 뒤, 스크립트를 실행하세요:
 
 ```bash
-cd 05-hermes-agent-solar-open2
+cd 02-hermes-agent-solar-open2
 export UPSTAGE_API_KEY="up_..."
 ./scripts/verify.sh
 ```
@@ -53,7 +53,7 @@ hermes-ready
 이미지 검증이 끝났다면, 스크립트가 실행하는 것과 동일한 호출을 직접
 원하는 프롬프트로 실행해볼 수 있습니다. Hermes는 파일 하나가 아니라
 `/opt/data` 디렉토리 전체를 기대하므로, 먼저 디렉토리를 준비하세요
-(`05-hermes-agent-solar-open2/` 안에서 실행):
+(`02-hermes-agent-solar-open2/` 안에서 실행):
 
 ```bash
 hermes_home="$(mktemp -d)"

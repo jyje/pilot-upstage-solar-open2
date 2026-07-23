@@ -1,4 +1,4 @@
-# Case 03 — Use Case Guide
+# Case 04 — Use Case Guide
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
@@ -27,7 +27,7 @@ Nothing else. No Node, no `claude` CLI.
 From the repo root, `cd` into this directory first, then run its script:
 
 ```bash
-cd 03-langchain-upstage-deepagents
+cd 04-langchain-upstage-deepagents
 export UPSTAGE_API_KEY="up_..."
 ./scripts/verify.sh
 ```

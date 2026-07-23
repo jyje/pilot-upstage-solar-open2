@@ -88,10 +88,10 @@ The wrapper just adds a wait in front.
 | Case | Goal | Use case guide |
 | --- | --- | --- |
 | Case 01 | Claude Code itself, against Solar Open2 | [`01-solar-open2-harness/REPRODUCE.md`](../01-solar-open2-harness/REPRODUCE.md) |
-| Case 02 | Claude Code driven programmatically via the Claude Agent SDK | [`02-claude-agent-sdk-local/REPRODUCE.md`](../02-claude-agent-sdk-local/REPRODUCE.md) |
-| Case 03 | `deepagents` initialized at the code level via `langchain-upstage` | [`03-langchain-upstage-deepagents/REPRODUCE.md`](../03-langchain-upstage-deepagents/REPRODUCE.md) |
-| Case 04 | `openwiki` documenting this repo, powered by Solar Open2 | [`04-langchain-openwiki-solar-open2/REPRODUCE.md`](../04-langchain-openwiki-solar-open2/REPRODUCE.md) |
-| Case 05 | Hermes Agent's built-in Upstage provider, official Docker image | [`05-hermes-agent-solar-open2/REPRODUCE.md`](../05-hermes-agent-solar-open2/REPRODUCE.md) |
+| Case 02 | Hermes Agent's built-in Upstage provider, official Docker image | [`02-hermes-agent-solar-open2/REPRODUCE.md`](../02-hermes-agent-solar-open2/REPRODUCE.md) |
+| Case 03 | Claude Code driven programmatically via the Claude Agent SDK | [`03-claude-agent-sdk-local/REPRODUCE.md`](../03-claude-agent-sdk-local/REPRODUCE.md) |
+| Case 04 | `deepagents` initialized at the code level via `langchain-upstage` | [`04-langchain-upstage-deepagents/REPRODUCE.md`](../04-langchain-upstage-deepagents/REPRODUCE.md) |
+| Case 05 | `openwiki` documenting this repo, powered by Solar Open2 | [`05-langchain-openwiki-solar-open2/REPRODUCE.md`](../05-langchain-openwiki-solar-open2/REPRODUCE.md) |
 
 Each page has its own Korean twin — follow the `[한국어]` link at its top.
 
@@ -105,10 +105,10 @@ export UPSTAGE_API_KEY="up_..."
 
 for case in \
   01-solar-open2-harness \
-  02-claude-agent-sdk-local \
-  03-langchain-upstage-deepagents \
-  04-langchain-openwiki-solar-open2 \
-  05-hermes-agent-solar-open2
+  02-hermes-agent-solar-open2 \
+  03-claude-agent-sdk-local \
+  04-langchain-upstage-deepagents \
+  05-langchain-openwiki-solar-open2
 do
   ./scripts/verify-case.sh "$case" solar-open2
 done

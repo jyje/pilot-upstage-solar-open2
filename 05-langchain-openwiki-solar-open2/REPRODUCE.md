@@ -1,4 +1,4 @@
-# Case 04 — Use Case Guide
+# Case 05 — Use Case Guide
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
@@ -52,7 +52,7 @@ Finding 2.
 From the repo root, `cd` into this directory first, then run its script:
 
 ```bash
-cd 04-langchain-openwiki-solar-open2
+cd 05-langchain-openwiki-solar-open2
 export UPSTAGE_API_KEY="up_..."
 ./scripts/verify.sh
 ```
@@ -93,5 +93,5 @@ case.
 - **Doc-generation step fails/warns** — expected on a Tier-0 account, per
   Finding 3 in [`README.md`](README.md). It doesn't fail the script.
 - **`solar-pro3` (not `solar-open2`) times out or rate-limits** — expected
-  on Tier 0, per [`PLAN.md`](../PLAN.md#case-04--solar-open2-x-langchain-openwiki)'s
-  Case 04, Finding 4. This repo only verifies `solar-open2`.
+  on Tier 0, per [`PLAN.md`](../PLAN.md#case-05--solar-open2-x-langchain-openwiki)'s
+  Case 05, Finding 4. This repo only verifies `solar-open2`.

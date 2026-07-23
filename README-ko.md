@@ -55,10 +55,10 @@ Upstage의 Solar Open2 모델을 Claude, LangChain, OpenWiki, Hermes Agent
 | Case | 요약 | 상태 |
 | --- | --- | --- |
 | [Case 01 — Solar Open2 x Claude Code](01-solar-open2-harness/) | Upstage Solar Open2 모델을 기반으로 하는 Claude Code 하네스(스킬 등) 구성 | 검증 완료 |
-| [Case 02 — Solar Open2 x Claude Agent SDK](02-claude-agent-sdk-local/) | Claude Agent SDK로 로컬 Claude Code 인스턴스를 프로그래밍 방식으로 실행 | 검증 완료 |
-| [Case 03 — Solar Open2 x LangChain Deepagents](03-langchain-upstage-deepagents/) | LangChain Upstage SDK를 이용해 코드 수준에서 deepagents 초기화 | 검증 완료 |
-| [Case 04 — Solar Open2 x LangChain OpenWiki](04-langchain-openwiki-solar-open2/) | `openwiki`로 이 리포를 문서화하고 질문에 답변 — Solar Open2로 실행 | 검증 완료 |
-| [Case 05 — Solar Open2 x Hermes Agent](05-hermes-agent-solar-open2/) | Hermes Agent에 공식 번들된 Upstage provider와 공식 Docker 이미지로 실행 | 검증 완료 |
+| [Case 02 — Solar Open2 x Hermes Agent](02-hermes-agent-solar-open2/) | Hermes Agent에 공식 번들된 Upstage provider와 공식 Docker 이미지로 실행 | 검증 완료 |
+| [Case 03 — Solar Open2 x Claude Agent SDK](03-claude-agent-sdk-local/) | Claude Agent SDK로 로컬 Claude Code 인스턴스를 프로그래밍 방식으로 실행 | 검증 완료 |
+| [Case 04 — Solar Open2 x LangChain Deepagents](04-langchain-upstage-deepagents/) | LangChain Upstage SDK를 이용해 코드 수준에서 deepagents 초기화 | 검증 완료 |
+| [Case 05 — Solar Open2 x LangChain OpenWiki](05-langchain-openwiki-solar-open2/) | `openwiki`로 이 리포를 문서화하고 질문에 답변 — Solar Open2로 실행 | 검증 완료 |
 
 ## 구성과 의도
 
@@ -68,13 +68,13 @@ Upstage의 Solar Open2 모델을 Claude, LangChain, OpenWiki, Hermes Agent
 쓰고 있는 오픈 에이전트 생태계에 별도의 전용 도구 없이 바로 연결되는
 기반이라는 걸 보여주는 것입니다:
 
-- **Case 01/02** — Anthropic 자체 Claude Code CLI와 Claude Agent SDK를
+- **Case 01/03** — Anthropic 자체 Claude Code CLI와 Claude Agent SDK를
   Anthropic 모델 대신 Solar Open2로 라우팅.
-- **Case 03** — LangChain의 `deepagents`에 `langchain-upstage`가 모델을
-  공급.
-- **Case 04** — `openwiki`(LangChain AI)가 이 리포 자체를 문서화.
-- **Case 05** — NousResearch의 Hermes Agent가 자체 번들된 Upstage
+- **Case 02** — NousResearch의 Hermes Agent가 자체 번들된 Upstage
   provider로 실행.
+- **Case 04** — LangChain의 `deepagents`에 `langchain-upstage`가 모델을
+  공급.
+- **Case 05** — `openwiki`(LangChain AI)가 이 리포 자체를 문서화.
 
 모든 Case는 독립적입니다 — 각자 `README.md`/`README-ko.md`, 실제 Upstage
 API를 호출하는(모킹 없음) 자체 `scripts/verify.sh`, 그리고 공유 CI
@@ -92,22 +92,22 @@ Case 추가나 로컬 실행 방법은 [`CONTRIBUTING.md`](CONTRIBUTING.md)를
 위 모든 Case는 커스텀 클라이언트가 아니라, 주류 프레임워크가 이미
 사용하는 와이어 호환 엔드포인트를 통해 Solar Open2에 도달했습니다:
 
-- Case 01/02는 Claude Code / Claude Agent SDK를 Solar Open2의 Anthropic
+- Case 01/03은 Claude Code / Claude Agent SDK를 Solar Open2의 Anthropic
   호환 엔드포인트로 `ANTHROPIC_BASE_URL` + `ANTHROPIC_AUTH_TOKEN`을 통해
   라우팅합니다. 실제 발견 사항: `ANTHROPIC_API_KEY`는 Upstage 상대로
   행이 걸리고, `ANTHROPIC_AUTH_TOKEN`이 필요합니다.
-- Case 03의 `ChatUpstage`(`langchain-upstage`)는 Upstage의 OpenAI 호환
+- Case 02의 Hermes Agent는 별도 브리지 없이 바로 쓸 수 있는 1급 내장
+  `upstage` provider를 제공합니다.
+- Case 04의 `ChatUpstage`(`langchain-upstage`)는 Upstage의 OpenAI 호환
   엔드포인트를 바라보는 얇은 `BaseChatOpenAI` 서브클래스입니다 — 브리지도
   프록시도 없습니다.
-- Case 04의 `openwiki`는 범용 `openai-compatible` provider로 Solar
+- Case 05의 `openwiki`는 범용 `openai-compatible` provider로 Solar
   Open2에 도달합니다. `anthropic` provider는 여기서 확실한 막다른
   길입니다 — 클라이언트가 `apiKey`(`x-api-key`)만 보내고 `authToken`
   (`Authorization: Bearer`)은 전혀 보내지 않는데, Upstage의 Anthropic
   호환 엔드포인트는 `x-api-key`를 그냥 거부합니다. 전체 추적 과정은
-  [Case 04의 README](04-langchain-openwiki-solar-open2/README-ko.md)를
+  [Case 05의 README](05-langchain-openwiki-solar-open2/README-ko.md)를
   참고하세요.
-- Case 05의 Hermes Agent는 별도 브리지 없이 바로 쓸 수 있는 1급 내장
-  `upstage` provider를 제공합니다.
 
 실질적인 결론: 프레임워크가 이미 OpenAI 또는 Anthropic 형태의 와이어
 포맷을 구사한다면, 새 에이전트 하네스를 이 목록에 추가하는 작업은 대부분
@@ -128,19 +128,19 @@ Solar 챗 모델 기준 분당 100 요청, 분당 5만 토큰([Upstage rate-limi
    모든 Case는 시작 전에 토큰/요청 예산이 **완전히** 리셋될 때까지
    기다립니다([`scripts/wait-for-upstage-full-reset.sh`](scripts/wait-for-upstage-full-reset.sh),
    최대 10분).
-2. **호출 하나가 예산을 다 써버리는 경우.** Case 04의 `openwiki`는 질문
+2. **호출 하나가 예산을 다 써버리는 경우.** Case 05의 `openwiki`는 질문
    하나당 여러 번의 순차 tool-calling 왕복을 하며, 매번 전체 시스템
    프롬프트와 툴 스키마를 다시 보냅니다. 질문 하나만으로 49,998토큰
    예산 중 36,440토큰을 소모한 사례가 관측됐습니다. Upstage의 한도는
    고정된 리셋 시점이 아니라 *rolling* 분당 윈도우이기 때문에, 재시도가
    보고된 리셋 시점을 지나서도 계속 0토큰 잔여로 나타났습니다. 해결:
-   Case 04 내부에서는 케이스당 한 번이 아니라 매 재시도 시도 전마다
+   Case 05 내부에서는 케이스당 한 번이 아니라 매 재시도 시도 전마다
    동일한 완전 리셋 대기를 적용합니다.
-3. **`solar-pro3`는 Case 04에서 Tier 0으로는 부족합니다.** 에이전틱
+3. **`solar-pro3`는 Case 05에서 Tier 0으로는 부족합니다.** 에이전틱
    루프의 몇 번의 호출 누적 사용량만으로도 분당 5만 토큰 예산을 초과해
    버립니다. 잔여 예산 문제와는 무관합니다. 이 리포 코드의 버그가
    아니라, 계정이 **Tier 1 이상**이면 동작할 것으로 예상됩니다. 전체
-   추적 과정은 [`PLAN.md`](PLAN.md)의 Case 04, Finding 4를 참고하세요.
+   추적 과정은 [`PLAN.md`](PLAN.md)의 Case 05, Finding 4를 참고하세요.
 
 이런 이유로 [`verify-all-sequential.yml`](.github/workflows/verify-all-sequential.yml)은
 5개 Case를 고정된 추측성 지연이 아니라 실제 Upstage rate-limit 응답
@@ -157,10 +157,10 @@ Solar 챗 모델 기준 분당 100 요청, 분당 5만 토큰([Upstage rate-limi
 | Case | solar-open2 |
 | --- | --- |
 | Case 01 — Solar Open2 x Claude Code | ✅ |
-| Case 02 — Solar Open2 x Claude Agent SDK | ✅ |
-| Case 03 — Solar Open2 x LangChain Deepagents | ✅ |
-| Case 04 — Solar Open2 x LangChain OpenWiki | ✅ |
-| Case 05 — Solar Open2 x Hermes Agent | ✅ |
+| Case 02 — Solar Open2 x Hermes Agent | ✅ |
+| Case 03 — Solar Open2 x Claude Agent SDK | ✅ |
+| Case 04 — Solar Open2 x LangChain Deepagents | ✅ |
+| Case 05 — Solar Open2 x LangChain OpenWiki | ✅ |
 
 최신 상태는 위 배지를 확인하거나
 [모든 실행 목록](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)을

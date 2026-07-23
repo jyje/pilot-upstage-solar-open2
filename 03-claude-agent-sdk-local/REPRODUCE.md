@@ -1,4 +1,4 @@
-# Case 02 — Use Case Guide
+# Case 03 — Use Case Guide
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
@@ -23,7 +23,7 @@ this page assumes both are already handled.
 From the repo root, `cd` into this directory first, then run its script:
 
 ```bash
-cd 02-claude-agent-sdk-local
+cd 03-claude-agent-sdk-local
 npm install -g @anthropic-ai/claude-code  # if not already installed
 export UPSTAGE_API_KEY="up_..."
 ./scripts/verify.sh

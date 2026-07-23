@@ -5,7 +5,7 @@
 # ways: once at the start of each case (verify-case.sh), so every case
 # starts with a full budget regardless of what earlier cases in the same
 # sequential run already used; and before every retry attempt inside
-# Case 04's own scripts/verify.sh, since a single question there
+# Case 05's own scripts/verify.sh, since a single question there
 # (openwiki's multi-round-trip tool-calling loop) can burn most of the
 # budget by itself. A lighter "wait only if headroom looks thin"
 # threshold check was tried first and wasn't enough in either case: a

@@ -1,4 +1,4 @@
-# Case 04 — Solar Open2 x LangChain OpenWiki로 pilot-upstage-solar-open2 문서화
+# Case 05 — Solar Open2 x LangChain OpenWiki로 pilot-upstage-solar-open2 문서화
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -33,7 +33,7 @@ git-ignore된 `scratch/` 디렉토리에 shallow clone한 뒤 그 안에서
 
 `openwiki`는 `anthropic` provider를 지원하지만, 소스코드
 (`src/agent/index.ts`)를 보면 `ChatAnthropic`을 `apiKey`(→ `x-api-key`
-헤더)만으로 생성합니다. Case 01·02의 Python 도구들과 달리 `authToken`(→
+헤더)만으로 생성합니다. Case 01·03의 Python 도구들과 달리 `authToken`(→
 `Authorization: Bearer`)은 전혀 보내지 않습니다.
 
 직접 확인했습니다: raw `@anthropic-ai/sdk` JS 클라이언트로 `apiKey`만
@@ -43,7 +43,7 @@ Upstage의 Anthropic 호환 엔드포인트가 `x-api-key` 인증을 그냥
 거부합니다. 현재 코드로는 확실한 막다른 길입니다.
 
 **사용한 우회책:** 범용 `openai-compatible` provider — Bearer 인증
-방식이라 Upstage의 OpenAI 호환 엔드포인트(Case 03에서 `ChatUpstage`가
+방식이라 Upstage의 OpenAI 호환 엔드포인트(Case 04에서 `ChatUpstage`가
 쓴 것과 동일)와 정확히 맞습니다:
 
 ```bash

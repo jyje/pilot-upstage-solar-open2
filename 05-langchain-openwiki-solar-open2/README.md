@@ -1,4 +1,4 @@
-# Case 04 — Solar Open2 x LangChain OpenWiki, documenting pilot-upstage-solar-open2
+# Case 05 — Solar Open2 x LangChain OpenWiki, documenting pilot-upstage-solar-open2
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -34,7 +34,7 @@ runs `openwiki` there instead of against the live checkout.
 `openwiki` supports an `anthropic` provider, but its source
 (`src/agent/index.ts`) constructs `ChatAnthropic` with only `apiKey` (→
 `x-api-key` header). It never sends `authToken` (→ `Authorization:
-Bearer`), unlike the Python tools in Cases 01-02.
+Bearer`), unlike the Python tools in Case 01 and Case 03.
 
 We confirmed this directly: called Upstage's Anthropic-compatible
 endpoint with the raw `@anthropic-ai/sdk` JS client using `apiKey`, and
@@ -44,7 +44,7 @@ confirmed dead end as currently written.
 
 **Workaround used:** the generic `openai-compatible` provider, which is
 Bearer-authenticated and matches Upstage's OpenAI-compatible endpoint
-exactly (the same one `ChatUpstage` used in Case 03):
+exactly (the same one `ChatUpstage` used in Case 04):
 
 ```bash
 OPENWIKI_PROVIDER=openai-compatible

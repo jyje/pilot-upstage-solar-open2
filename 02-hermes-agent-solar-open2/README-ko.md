@@ -1,4 +1,4 @@
-# Case 05 — Solar Open2 x Hermes Agent
+# Case 02 — Solar Open2 x Hermes Agent
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -47,8 +47,8 @@ model:
 따라서 이 Case는 모든 신규 Upstage 계정에서 `solar-open2`를 선택할
 수 있다고 단정하지 않습니다. 이 리포지토리의 계정에 해당 모델이
 여전히 활성화되어 있는지는 실제 연결 테스트로 확정합니다.
-Case 01–04에 이어 Case 05도 2026-07-20에 `solar-open2`를 다시
-확인했습니다.
+이 리포의 다른 네 Case가 이미 그 계정에서 `solar-open2`를 검증했고,
+이 Case는 2026-07-20에 다시 확인했습니다.
 
 ## 실행
 

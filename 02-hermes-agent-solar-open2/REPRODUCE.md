@@ -1,4 +1,4 @@
-# Case 05 — Use Case Guide
+# Case 02 — Use Case Guide
 
 [English](REPRODUCE.md) / [한국어](REPRODUCE-ko.md)
 
@@ -24,7 +24,7 @@ That's it. No Node, no Python, no `openwiki`.
 From the repo root, `cd` into this directory first, then run its script:
 
 ```bash
-cd 05-hermes-agent-solar-open2
+cd 02-hermes-agent-solar-open2
 export UPSTAGE_API_KEY="up_..."
 ./scripts/verify.sh
 ```
@@ -53,7 +53,7 @@ hermes-ready
 Once the image is verified, this is the same call the script makes,
 runnable directly for your own prompts. Hermes expects a whole
 `/opt/data` directory, not a single mounted file, so set one up first
-(run this from inside `05-hermes-agent-solar-open2/`):
+(run this from inside `02-hermes-agent-solar-open2/`):
 
 ```bash
 hermes_home="$(mktemp -d)"

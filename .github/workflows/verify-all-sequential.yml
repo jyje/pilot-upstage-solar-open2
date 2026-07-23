@@ -17,7 +17,7 @@ name: verify-all-sequential
 # every use case on Solar Open2, not benchmarking Upstage's model
 # lineup. An earlier version of this workflow also ran solar-pro3 for
 # comparison, which surfaced a real, root-caused Tier-0 capacity limit
-# for Case 04 (see PLAN.md's Case 04, Finding 4) — useful as a finding,
+# for Case 05 (see PLAN.md's Case 05, Finding 4) — useful as a finding,
 # but out of scope for this repo's ongoing verification going forward.
 #
 # This assumes the account behind UPSTAGE_API_KEY is on Upstage's
@@ -57,7 +57,7 @@ jobs:
       # The jyje/openwiki fork below adds an opt-in
       # OPENWIKI_DISABLE_STREAMING env var that works around it; that fix
       # hasn't landed upstream yet. See
-      # 04-langchain-openwiki-solar-open2/README.md's Finding 2 for the
+      # 05-langchain-openwiki-solar-open2/README.md's Finding 2 for the
       # full writeup.
       - name: Check out patched openwiki fork
         uses: actions/checkout@v4
@@ -81,33 +81,33 @@ jobs:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 01-solar-open2-harness solar-open2
 
-      - name: "Case 02 — Solar Open2 x Claude Agent SDK"
+      - name: "Case 02 — Solar Open2 x Hermes Agent"
         id: c02
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
-        run: ./scripts/verify-case.sh 02-claude-agent-sdk-local solar-open2
+        run: ./scripts/verify-case.sh 02-hermes-agent-solar-open2 solar-open2
 
-      - name: "Case 03 — Solar Open2 x LangChain Deepagents"
+      - name: "Case 03 — Solar Open2 x Claude Agent SDK"
         id: c03
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
-        run: ./scripts/verify-case.sh 03-langchain-upstage-deepagents solar-open2
+        run: ./scripts/verify-case.sh 03-claude-agent-sdk-local solar-open2
 
-      - name: "Case 04 — Solar Open2 x LangChain OpenWiki"
+      - name: "Case 04 — Solar Open2 x LangChain Deepagents"
         id: c04
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
-        run: ./scripts/verify-case.sh 04-langchain-openwiki-solar-open2 solar-open2
+        run: ./scripts/verify-case.sh 04-langchain-upstage-deepagents solar-open2
 
-      - name: "Case 05 — Solar Open2 x Hermes Agent"
+      - name: "Case 05 — Solar Open2 x LangChain OpenWiki"
         id: c05
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
-        run: ./scripts/verify-case.sh 05-hermes-agent-solar-open2 solar-open2
+        run: ./scripts/verify-case.sh 05-langchain-openwiki-solar-open2 solar-open2
 
       # continue-on-error steps always report conclusion=success at the
       # job level, so this reads each step's real `outcome` (not
@@ -120,10 +120,10 @@ jobs:
         run: |
           names=(
             "Case 01 — Solar Open2 x Claude Code"
-            "Case 02 — Solar Open2 x Claude Agent SDK"
-            "Case 03 — Solar Open2 x LangChain Deepagents"
-            "Case 04 — Solar Open2 x LangChain OpenWiki"
-            "Case 05 — Solar Open2 x Hermes Agent"
+            "Case 02 — Solar Open2 x Hermes Agent"
+            "Case 03 — Solar Open2 x Claude Agent SDK"
+            "Case 04 — Solar Open2 x LangChain Deepagents"
+            "Case 05 — Solar Open2 x LangChain OpenWiki"
           )
           outcomes=(
             "${{ steps.c01.outcome }}"
