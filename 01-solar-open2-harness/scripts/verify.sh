@@ -11,10 +11,11 @@
 #   D. a subagent (Task tool) call, to confirm CLAUDE_CODE_SUBAGENT_MODEL
 #      keeps subagent traffic on the same model too
 #
-# Each method prints a one-line, <=100-char preview of its real response
-# (noise like the "connectors are disabled" warning stripped, newlines
-# collapsed) so the CI log itself carries visible, inspectable evidence
-# instead of just a pass/fail line. Every method retries up to 5 times
+# Each method prints up to a ~700-char, line-wrapped preview of its real
+# response (noise like the "connectors are disabled" warning stripped,
+# real paragraph breaks kept) so the CI log itself carries enough of the
+# actual answer to judge how the model reasoned, not just that it
+# responded. Every method retries up to 5 times
 # with a flat 30s backoff, since this repo's cases share one Upstage
 # account/rate limit — a call can 429 simply because another case just
 # ran.
@@ -42,17 +43,20 @@ SOLAR_MODEL="${SOLAR_MODEL:-solar-open2}"
 fail() { printf '✗ %s\n' "$1" >&2; exit 1; }
 ok()   { printf '✓ %s\n' "$1"; }
 
-# preview <text> — one line, <=100 chars, real content only.
+# preview <text> — up to ~700 chars, wrapped to <=70 cols (was one line,
+# <=100 chars), so a single dense paragraph still renders as 10+ lines.
+# Real paragraph breaks in the response are kept, not collapsed.
 preview() {
   s="$1"
   s="$(printf '%s' "$s" | grep -v 'connectors are disabled' || true)"
-  s="${s//$'\n'/ }"
-  s="$(printf '%s' "$s" | sed -E 's/ +/ /g; s/^ //; s/ $//')"
-  if [ "${#s}" -gt 100 ]; then
-    printf '  -> %s ...(truncated)\n' "${s:0:100}"
-  else
-    printf '  -> %s\n' "$s"
+  truncated=""
+  if [ "${#s}" -gt 700 ]; then
+    s="${s:0:700}"
+    truncated=1
   fi
+  printf '%s\n' "$s" | fold -s -w 70 | sed 's/^/  /'
+  [ -n "$truncated" ] && echo "  ...(truncated)"
+  return 0
 }
 
 # oneline <text> — like preview, minus the "  -> " prefix, for feeding

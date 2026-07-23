@@ -44,15 +44,19 @@ fail() { printf '✗ %s\n' "$1" >&2; exit 1; }
 ok()   { printf '✓ %s\n' "$1"; }
 warn() { printf '⚠ %s\n' "$1" >&2; }
 
-# preview <text> — one line, <=100 chars, real content only.
+# preview <text> — up to ~700 chars, wrapped to <=70 cols (was one line,
+# <=100 chars), so a single dense paragraph still renders as 10+ lines.
+# Real paragraph breaks in the response are kept, not collapsed.
 preview() {
-  s="${1//$'\n'/ }"
-  s="$(printf '%s' "$s" | sed -E 's/ +/ /g; s/^ //; s/ $//')"
-  if [ "${#s}" -gt 100 ]; then
-    printf '  -> %s ...(truncated)\n' "${s:0:100}"
-  else
-    printf '  -> %s\n' "$s"
+  s="$1"
+  truncated=""
+  if [ "${#s}" -gt 700 ]; then
+    s="${s:0:700}"
+    truncated=1
   fi
+  printf '%s\n' "$s" | fold -s -w 70 | sed 's/^/  /'
+  [ -n "$truncated" ] && echo "  ...(truncated)"
+  return 0
 }
 
 [ -n "${UPSTAGE_API_KEY:-}" ] || fail "UPSTAGE_API_KEY is not set"

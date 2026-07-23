@@ -13,6 +13,7 @@ Three methods, each proving a distinct deepagents capability:
 
 import os
 import sys
+import textwrap
 from typing import Any
 
 from deepagents import SubAgent, create_deep_agent
@@ -26,13 +27,20 @@ def solar_model() -> ChatUpstage:
     return ChatUpstage(model=SOLAR_MODEL)
 
 
-def truncate(text: str, limit: int = 100) -> str:
-    """Collapse whitespace and cap at `limit` chars, matching the
-    convention Cases 1-2 use for reporting real evidence."""
+def truncate(text: str, limit: int = 700, width: int = 70) -> str:
+    """Collapse whitespace, cap at `limit` chars, and wrap to `width` cols
+    (was a single <=100-char line) — matching the convention the other
+    cases use, so there's enough real evidence to judge how the model
+    reasoned, not just that it replied."""
     collapsed = " ".join(text.split())
-    if len(collapsed) > limit:
-        return f"{collapsed[:limit]} ...(truncated)"
-    return collapsed
+    was_truncated = len(collapsed) > limit
+    if was_truncated:
+        collapsed = collapsed[:limit]
+    lines = textwrap.wrap(collapsed, width=width) or [""]
+    wrapped = "\n".join(f"  {line}" for line in lines)
+    if was_truncated:
+        wrapped += "\n  ...(truncated)"
+    return wrapped
 
 
 def final_reply(messages: list[Any]) -> str:
@@ -129,7 +137,7 @@ def _main() -> int:
     except Exception as exc:  # noqa: BLE001 - report cleanly, not a raw trace
         print(f"FAIL: Method A raised {type(exc).__name__}: {exc}", file=sys.stderr)
         return 1
-    print(f"  -> {truncate(a_reply)}")
+    print(truncate(a_reply))
     if "sunny" not in a_reply.lower() or "seoul" not in a_reply.lower():
         print(
             f"FAIL: Method A didn't answer the weather question: {a_reply}",
@@ -145,7 +153,7 @@ def _main() -> int:
     except Exception as exc:  # noqa: BLE001
         print(f"FAIL: Method B raised {type(exc).__name__}: {exc}", file=sys.stderr)
         return 1
-    print(f"  -> {truncate(b_content)}")
+    print(truncate(b_content))
     if b_content != "HELLO-DEEPAGENTS":
         print(
             f"FAIL: Method B's file content was wrong: {b_content!r}", file=sys.stderr
@@ -160,7 +168,7 @@ def _main() -> int:
     except Exception as exc:  # noqa: BLE001
         print(f"FAIL: Method C raised {type(exc).__name__}: {exc}", file=sys.stderr)
         return 1
-    print(f"  -> {truncate(c_reply)}")
+    print(truncate(c_reply))
     if "42" not in c_reply:
         print(f"FAIL: Method C's subagent didn't return 42: {c_reply}", file=sys.stderr)
         return 1

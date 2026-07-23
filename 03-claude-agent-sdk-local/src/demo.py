@@ -12,6 +12,7 @@ Three methods, each proving a distinct SDK capability:
 import asyncio
 import os
 import sys
+import textwrap
 
 from claude_agent_sdk import (
     AssistantMessage,
@@ -36,13 +37,20 @@ def solar_options(cwd: str | None = None) -> ClaudeAgentOptions:
     return ClaudeAgentOptions(model=SOLAR_MODEL, env=env, cwd=cwd)
 
 
-def truncate(text: str, limit: int = 100) -> str:
-    """Collapse whitespace and cap at `limit` chars, mirroring topic 01's
-    shell preview() so both topics report evidence the same way."""
+def truncate(text: str, limit: int = 700, width: int = 70) -> str:
+    """Collapse whitespace, cap at `limit` chars, and wrap to `width` cols
+    (was a single <=100-char line) — mirroring topic 01's shell preview()
+    so both topics report enough real evidence to judge how the model
+    reasoned, not just that it replied."""
     collapsed = " ".join(text.split())
-    if len(collapsed) > limit:
-        return f"{collapsed[:limit]} ...(truncated)"
-    return collapsed
+    was_truncated = len(collapsed) > limit
+    if was_truncated:
+        collapsed = collapsed[:limit]
+    lines = textwrap.wrap(collapsed, width=width) or [""]
+    wrapped = "\n".join(f"  {line}" for line in lines)
+    if was_truncated:
+        wrapped += "\n  ...(truncated)"
+    return wrapped
 
 
 async def method_a_query() -> str:
@@ -100,7 +108,7 @@ async def _main() -> int:
     except Exception as exc:  # noqa: BLE001 - report cleanly, not a raw trace
         print(f"FAIL: Method A raised {type(exc).__name__}: {exc}", file=sys.stderr)
         return 1
-    print(f"  -> {truncate(a_reply)}")
+    print(truncate(a_reply))
     if not a_reply:
         print("FAIL: Method A got no reply", file=sys.stderr)
         return 1
@@ -113,7 +121,7 @@ async def _main() -> int:
     except Exception as exc:  # noqa: BLE001
         print(f"FAIL: Method B raised {type(exc).__name__}: {exc}", file=sys.stderr)
         return 1
-    print(f"  -> {truncate(b_reply)}")
+    print(truncate(b_reply))
     if "42" not in b_reply:
         print(f"FAIL: Method B didn't recall 42: {b_reply}", file=sys.stderr)
         return 1
