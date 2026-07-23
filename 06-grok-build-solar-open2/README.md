@@ -87,7 +87,7 @@ something this repo can patch around.
 
 `scripts/verify.sh` still runs this check every time (so the finding
 stays honest, and gets noticed if Upstage ever fixes the underlying
-bug), but doesn't fail the script on it — only the two methods below
+bug), but doesn't fail the script on it — only the three methods below
 gate pass/fail.
 
 ## Three methods
@@ -147,14 +147,81 @@ Run locally with `UPSTAGE_API_KEY` set and `grok` installed
 UPSTAGE_API_KEY="..." ./scripts/verify.sh
 ```
 
-Runs as a step in CI (manual dispatch, solar-open2 only):
-[`.github/workflows/verify-all-sequential.yml`](../.github/workflows/verify-all-sequential.yml) —
-reuses the same `UPSTAGE_API_KEY` repository secret, plus an added
-step that installs `grok` via its official installer.
+Runs in CI (manual dispatch, solar-open2 only) two ways: as a step in
+[`verify-all-sequential.yml`](../.github/workflows/verify-all-sequential.yml)
+alongside every other case, and on its own via
+[`verify-06-grok-build-solar-open2.yml`](../.github/workflows/verify-06-grok-build-solar-open2.yml) —
+both reuse the same `UPSTAGE_API_KEY` repository secret and install
+`grok` via its official installer.
 
 ## Evidence run
 
-_Filled in after this case's first CI run — see
-[the workflow's runs](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)._
+**Evidence run:** [`verify` job, 2026-07-23](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/30018053983/job/89243180618),
+via this case's own single-case workflow,
+[`verify-06-grok-build-solar-open2.yml`](../.github/workflows/verify-06-grok-build-solar-open2.yml)
+(or browse [every run](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml)
+for the latest). Real, unedited output — not hand-picked or edited:
+
+**Method A**
+
+> grok-solar-ready
+
+**Method B**
+
+> This is a classic math problem! Let me walk through why the sum of
+> the first 50 positive integers (1 + 2 + 3 + ... + 50) equals 1275.
+>
+> ## Step 1: Understand the problem
+>
+> We're summing: **1 + 2 + 3 + ... + 48 + 49 + 50**
+>
+> There are 50 terms total, and this is an arithmetic sequence where
+> each term increases by 1.
+>
+> ## Step 2: Use the proven formula
+>
+> The sum of the first **n** positive integers has a well-known formula
+> (discovered by Gauss as a child):
+>
+> $$S = \frac{n(n+1)}{2}$$
+>
+> This formula can be proven by pairing numbers from opposite ends of
+> the sequence.
+>
+> ## Step 3: Apply the formula with n = 50
+>
+> $$S = \frac{50(50+1)}{2}$$
+> $$S = \frac{50 \times 51}{2}$$
+> $$S = \frac{2550}{2}$$
+> $$S = 1275$$
+>
+> ...(truncated)
+
+**Method C**
+
+> ```python
+> def is_prime(n: int) -> bool:
+>     """Return True if n is a prime number, False otherwise."""
+>     if n < 2:
+>         return False
+>     if n == 2:
+>         return True
+>     if n % 2 == 0:
+>         return False
+>     for i in range(3, int(n**0.5) + 1, 2):
+>         if n % i == 0:
+>             return False
+>     return True
+> ```
+
+**Finding check — tool-use (not gated)**
+
+> Internal error: {
+>   "message": "API error (status 400 Bad Request):
+>   invalid_request_error: Invalid function name: ''. Function names can
+>   only include alphanumeric characters (a-z, A-Z, 0-9), underscores
+>   (_), or hyphens (-), and should be no longer than 64 characters.",
+>   "http_status": 400, ...
+> }
 
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.
