@@ -6,13 +6,13 @@
 
 **상태:** 기본 경로 검증 완료 — Docker LiteLLM이 Codex 응답을 Solar Open2로
 성공적으로 라우팅했습니다. Codex → Upstage 직접 Base URL 변경은 여전히 지원되는
-방식이 아니며, 이 Case는 그 대신 브리지를 검증합니다. workspace-file 및 tool-result
+방식이 아니며, 이 Case는 그 대신 브리지의 동작을 검증합니다. workspace-file 및 tool-result
 cycle은 아직 확인 대상입니다.
 
 ## 목표
 
 OpenAI Codex CLI가 Upstage의 **Solar Open2** 모델로 에이전트 코딩 작업을
-수행할 수 있는지 확인하고, 프로토콜 브리지가 end-to-end로 검증된 경우에만
+수행할 수 있는지 확인하고, 프로토콜 브리지의 동작이 종단 간 검증된 경우에만
 작고 재현 가능한 설정을 공개합니다.
 
 ## 공식 호환성 조사 결과
