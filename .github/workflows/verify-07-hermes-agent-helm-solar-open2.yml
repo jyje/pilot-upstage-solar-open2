@@ -1,0 +1,35 @@
+name: verify-07-hermes-agent-helm-solar-open2
+
+# Manual, single-case counterpart to verify-all-sequential.yml — run just
+# this one case without waiting for the other 6. Same
+# scripts/verify-case.sh wrapper (full rate-limit reset wait, solar-open2
+# only), so behavior matches what this case does inside the sequential
+# run. Manual-only by design, same as verify-all-sequential.yml.
+#
+# Case 07 owns its own kind cluster lifecycle inside scripts/verify.sh
+# (create on start, delete on exit), so this workflow only needs to put
+# kind/kubectl/helm on PATH before that script runs.
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  verify:
+    runs-on: ubuntu-26.04-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install kind
+        run: |
+          curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.32.0/kind-linux-arm64
+          chmod +x ./kind
+          sudo mv ./kind /usr/local/bin/kind
+
+      - uses: azure/setup-kubectl@v5
+
+      - uses: azure/setup-helm@v5
+
+      - name: "Case 07 — Solar Open 2 x Hermes Agent Helm"
+        env:
+          UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
+        run: ./scripts/verify-case.sh 07-hermes-agent-helm-solar-open2 solar-open2
