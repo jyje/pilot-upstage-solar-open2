@@ -4,7 +4,7 @@
 
 [← back to this case's README](README.md) · [← all cases' use case guides](../docs/REPRODUCE.md)
 
-Goal: run Claude Code itself against Solar Open2, two independent ways
+Goal: run Claude Code itself against Solar Open 2, two independent ways
 (Case 01A, Case 01B), and confirm its custom skills and subagents still
 work through that backend.
 
@@ -74,7 +74,7 @@ first two cover Case 01B, the rest cover Case 01A:
   this repo (Case 01B only). `claude-upstage` doesn't forward `-p`. The
   script already pipes stdin instead (`echo "hello" | claude-upstage`);
   if you're poking at it manually, do the same.
-- **A response that isn't Solar Open2** — check every `ANTHROPIC_*`
+- **A response that isn't Solar Open 2** — check every `ANTHROPIC_*`
   model-slot variable is set, not just `ANTHROPIC_MODEL` (Case 01A). See
   [`README.md`](README.md#how-it-works)'s Case 01A "How it works" section
   (English) or [`README-ko.md`](README-ko.md#동작-원리)'s Case 01A "동작

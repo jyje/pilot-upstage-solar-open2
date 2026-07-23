@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Verifies that Claude Code can be driven against Upstage's Solar Open2
+# Verifies that Claude Code can be driven against Upstage's Solar Open 2
 # model, and that its skill system works through that backend:
 #   A. the `claude-upstage` convenience wrapper (piped stdin, since it
 #      doesn't pass an interactive `-p`-style flag through to `claude`)
@@ -84,7 +84,7 @@ strip_wrapper_banner() {
   [ -n "$after" ] && printf '%s' "$after" || printf '%s' "$1"
 }
 
-# Runs `claude -p "$1"` against Solar Open2 with the same ANTHROPIC_* env
+# Runs `claude -p "$1"` against Solar Open 2 with the same ANTHROPIC_* env
 # vars claude-upstage sets, so Methods B-D share one recipe. $2 overrides
 # the default timeout — subagent calls (Method D) run a nested agent and
 # need more headroom than a direct completion.

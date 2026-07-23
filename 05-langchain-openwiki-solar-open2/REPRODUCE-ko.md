@@ -5,7 +5,7 @@
 [← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 유즈케이스 가이드](../docs/REPRODUCE-ko.md)
 
 목표: `openwiki`로 이 리포 자체를 문서화하고 질문에 답하게 하되, Solar
-Open2로 구동합니다.
+Open 2로 구동합니다.
 
 전체 이야기, 발견 사항, 검증 로그: [`README-ko.md`](README-ko.md).
 
@@ -40,7 +40,7 @@ npm link
 openwiki --version
 ```
 
-왜 굳이 포크가 필요할까요? Solar Open2는 **스트리밍** 응답에서 tool-call
+왜 굳이 포크가 필요할까요? Solar Open 2는 **스트리밍** 응답에서 tool-call
 함수 이름을 누락시킵니다. 공개 `openwiki`에는 스트리밍을 끄는 스위치가
 없습니다. 이 포크는 그 스위치(`OPENWIKI_DISABLE_STREAMING=true`)를
 추가합니다. 어떻게 이 문제를 진단했는지는

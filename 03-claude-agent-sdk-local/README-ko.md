@@ -1,4 +1,4 @@
-# Case 03 — Solar Open2 x Claude Agent SDK
+# Case 03 — Solar Open 2 x Claude Agent SDK
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -8,7 +8,7 @@
 
 **상태:** 검증 완료 — Python Claude Agent SDK(`claude-agent-sdk`)만으로
 로컬 Claude Code 세션을 완전히 프로그래밍 방식으로 실행하며, Upstage의
-Solar Open2 모델을 기반으로 합니다. 3가지 방식 모두 로컬과 CI에서
+Solar Open 2 모델을 기반으로 합니다. 3가지 방식 모두 로컬과 CI에서
 종단 간 검증되었습니다.
 
 ## 목표
@@ -23,7 +23,7 @@ Solar Open2 모델을 기반으로 합니다. 3가지 방식 모두 로컬과 CI
 `claude-agent-sdk`(PyPI, `pip install claude-agent-sdk` / 이 리포에서는
 `uv add claude-agent-sdk`)는 동일한 `claude` CLI 바이너리를 서브프로세스로
 실행됩니다. 별도 구현체가 아니므로, [Case 01](../01-solar-open2-harness/README-ko.md#동작-원리)에서
-검증한 Solar Open2 env var 레시피가 그대로 적용됩니다 — 셸 `export` 대신
+검증한 Solar Open 2 env var 레시피가 그대로 적용됩니다 — 셸 `export` 대신
 `ClaudeAgentOptions(env={...})`로 전달할 뿐입니다:
 
 ```python
@@ -118,7 +118,7 @@ async for message in query(
 
 | 방식 | 결과 |
 | --- | --- |
-| A — `query()` | 확인된 메시지 타입: `SystemMessage`, `AssistantMessage`, `ResultMessage`; 응답: "Hello! I'm Solar Open2, an AI assistant trained by Upstage AI (a Korean startup). Nice to meet you!  ...(truncated)" |
+| A — `query()` | 확인된 메시지 타입: `SystemMessage`, `AssistantMessage`, `ResultMessage`; 응답: "Hello! I'm Solar Open 2, an AI assistant trained by Upstage AI (a Korean startup). Nice to meet you!  ...(truncated)" |
 | B — `ClaudeSDKClient` 세션 메모리 | `42` (두 번째 턴에서 정확히 회상함) |
 | C — 툴 사용 가시성 | `saw_tool_use=True` (메시지 스트림에 실제 `ToolUseBlock`이 등장함) |
 
@@ -127,7 +127,7 @@ async for message in query(
 ## 검증
 
 [`scripts/verify.sh`](scripts/verify.sh)가 `src/demo.py`를 실행하며,
-이는 Solar Open2를 대상으로 세 가지 방식을 실제로 실행합니다. 하나라도
+이는 Solar Open 2를 대상으로 세 가지 방식을 실제로 실행합니다. 하나라도
 어긋나면(방식 B에서 "42"가 빠지거나, 방식 C에서 `ToolUseBlock`을 보지
 못하면) 즉시 실패합니다.
 

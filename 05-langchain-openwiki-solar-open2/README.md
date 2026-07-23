@@ -1,4 +1,4 @@
-# Case 05 — Solar Open2 x LangChain OpenWiki, documenting pilot-upstage-solar-open2
+# Case 05 — Solar Open 2 x LangChain OpenWiki, documenting pilot-upstage-solar-open2
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -7,13 +7,13 @@ See [`REPRODUCE.md`](REPRODUCE.md) for step-by-step local setup.
 
 **Status:** Verified — [`openwiki`](https://github.com/langchain-ai/openwiki)
 answers real questions about this very repo, powered by Upstage's Solar
-Open2 model, via a patched build that fixes a real streaming bug
+Open 2 model, via a patched build that fixes a real streaming bug
 uncovered along the way.
 
 ## Goal
 
 Use `openwiki` — a CLI that builds and maintains an agent-readable wiki
-for a codebase — configured to run on **Solar Open2** instead of its
+for a codebase — configured to run on **Solar Open 2** instead of its
 typical Anthropic/OpenAI defaults. Target **this repo itself**
 (`pilot-upstage-solar-open2`): document its latest commit, and answer
 questions about it.
@@ -29,7 +29,7 @@ no `openwiki/` folder, no auto-PR bot),
 `pilot-upstage-solar-open2` into a gitignored `scratch/` directory and
 runs `openwiki` there instead of against the live checkout.
 
-## Finding 1: the `anthropic` provider can't reach Solar Open2
+## Finding 1: the `anthropic` provider can't reach Solar Open 2
 
 `openwiki` supports an `anthropic` provider, but its source
 (`src/agent/index.ts`) constructs `ChatAnthropic` with only `apiKey` (→
@@ -53,7 +53,7 @@ OPENAI_COMPATIBLE_BASE_URL=https://api.upstage.ai/v1/solar
 OPENWIKI_MODEL_ID=solar-open2
 ```
 
-## Finding 2: Solar Open2 drops the tool_call function name when streaming
+## Finding 2: Solar Open 2 drops the tool_call function name when streaming
 
 Switching to `openai-compatible` wasn't enough on its own. Every
 tool-using run failed with `400 Invalid function name: ''`. We traced the
@@ -73,7 +73,7 @@ Upstage's API:
   request with `stream: false` comes back with the correct name
   (`"ls"`). **Only the streamed response drops the name.**
 
-This is a genuine Upstage/Solar Open2 streaming bug, or possibly a
+This is a genuine Upstage/Solar Open 2 streaming bug, or possibly a
 client/server chunking mismatch — either way, it's not something in
 `openwiki`'s or `deepagents`'s own code. But `openwiki` had no way to opt
 out of streaming for this provider path.

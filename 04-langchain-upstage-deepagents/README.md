@@ -1,4 +1,4 @@
-# Case 04 — Solar Open2 x LangChain Deepagents
+# Case 04 — Solar Open 2 x LangChain Deepagents
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -7,7 +7,7 @@ See [`REPRODUCE.md`](REPRODUCE.md) for step-by-step local setup.
 
 **Status:** Verified — a `deepagents` agent initialized at the code level
 with `langchain-upstage` as the model backend, against Upstage's Solar
-Open2 model. All three methods confirmed working end to end (locally and
+Open 2 model. All three methods confirmed working end to end (locally and
 in CI).
 
 ## Goal
@@ -15,7 +15,7 @@ in CI).
 Initialize a [`deepagents`](https://pypi.org/project/deepagents/) agent
 purely at the code level, using
 [`langchain-upstage`](https://pypi.org/project/langchain-upstage/) to
-supply Solar Open2 as the model. Unlike Case 01 and Case 03, there's no Claude Code
+supply Solar Open 2 as the model. Unlike Case 01 and Case 03, there's no Claude Code
 CLI involved anywhere in this path — this is LangChain/LangGraph talking
 to Upstage directly.
 
@@ -98,7 +98,7 @@ agent.invoke({"messages": [{"role": "user", "content":
 ```
 
 The main agent delegates arithmetic to a named subagent instead of doing
-it itself — both the main agent and the subagent run on Solar Open2.
+it itself — both the main agent and the subagent run on Solar Open 2.
 
 ## Verified methods
 
@@ -119,7 +119,7 @@ Click through to read the run yourself:
 ## Verification
 
 [`scripts/verify.sh`](scripts/verify.sh) runs `src/demo.py`, which
-executes all three methods for real against Solar Open2. It exits
+executes all three methods for real against Solar Open 2. It exits
 non-zero if any of them don't check out: Method A's answer missing
 "sunny"/"Seoul", Method B's file content wrong, or Method C's reply
 missing "42".

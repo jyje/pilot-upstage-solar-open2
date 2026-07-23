@@ -1,4 +1,4 @@
-# Case 02 — Solar Open2 x Hermes Agent
+# Case 02 — Solar Open 2 x Hermes Agent
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -11,7 +11,7 @@ round trip to `solar-open2` through its built-in Upstage provider.
 ## Goal
 
 Run [Hermes Agent](https://github.com/NousResearch/hermes-agent) directly
-against Upstage's **Solar Open2** model with the official Docker image and no
+against Upstage's **Solar Open 2** model with the official Docker image and no
 protocol-converting proxy.
 
 ## Official-support finding

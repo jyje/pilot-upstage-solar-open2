@@ -1,5 +1,5 @@
 """Initialize a deepagents agent at the code level with langchain-upstage
-as the model backend, against Upstage's Solar Open2 model.
+as the model backend, against Upstage's Solar Open 2 model.
 
 Unlike Cases 1-2, this never shells out to the `claude` CLI: ChatUpstage
 talks to Upstage's OpenAI-compatible endpoint directly, reading

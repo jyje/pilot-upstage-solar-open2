@@ -1,7 +1,7 @@
 # Contributing
 
 This repo hosts several independent agent-harness cases, all built around
-Upstage's Solar Open2 model. See [`AGENTS.md`](AGENTS.md) for the full
+Upstage's Solar Open 2 model. See [`AGENTS.md`](AGENTS.md) for the full
 directory structure and conventions, and [`PLAN.md`](PLAN.md) for the plan
 and findings behind each case — this file focuses on conventions and the
 commands you'll actually run.

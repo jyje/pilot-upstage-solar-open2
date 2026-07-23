@@ -1,4 +1,4 @@
-# Case 05 — Solar Open2 x LangChain OpenWiki로 pilot-upstage-solar-open2 문서화
+# Case 05 — Solar Open 2 x LangChain OpenWiki로 pilot-upstage-solar-open2 문서화
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -7,14 +7,14 @@
 확인하세요.
 
 **상태:** 검증 완료 — [`openwiki`](https://github.com/langchain-ai/openwiki)가
-Upstage의 Solar Open2 모델로 실행되어 이 리포 자체에 대한 실제 질문에
+Upstage의 Solar Open 2 모델로 실행되어 이 리포 자체에 대한 실제 질문에
 답합니다. 그 과정에서 발견한 실제 스트리밍 버그를 고친 패치 빌드를
 사용합니다.
 
 ## 목표
 
 `openwiki`(코드베이스용 에이전트 읽기용 위키를 만들고 유지하는 CLI)를
-평소의 Anthropic/OpenAI 기본값이 아닌 **Solar Open2**로 실행해, **이
+평소의 Anthropic/OpenAI 기본값이 아닌 **Solar Open 2**로 실행해, **이
 리포 자체**(`pilot-upstage-solar-open2`)를 대상으로 최신 커밋을 문서화하고 질문에
 답변합니다.
 
@@ -29,7 +29,7 @@ Upstage의 Solar Open2 모델로 실행되어 이 리포 자체에 대한 실제
 git-ignore된 `scratch/` 디렉토리에 shallow clone한 뒤 그 안에서
 `openwiki`를 실행합니다.
 
-## 발견 1: `anthropic` provider로는 Solar Open2에 도달할 수 없음
+## 발견 1: `anthropic` provider로는 Solar Open 2에 도달할 수 없음
 
 `openwiki`는 `anthropic` provider를 지원하지만, 소스코드
 (`src/agent/index.ts`)를 보면 `ChatAnthropic`을 `apiKey`(→ `x-api-key`
@@ -53,7 +53,7 @@ OPENAI_COMPATIBLE_BASE_URL=https://api.upstage.ai/v1/solar
 OPENWIKI_MODEL_ID=solar-open2
 ```
 
-## 발견 2: 스트리밍 시 Solar Open2가 tool_call의 function name을 누락함
+## 발견 2: 스트리밍 시 Solar Open 2가 tool_call의 function name을 누락함
 
 `openai-compatible`로 바꾸는 것만으로는 부족했습니다. 툴을 쓰는
 실행마다 `400 Invalid function name: ''`로 실패했습니다. Upstage API
@@ -72,7 +72,7 @@ OPENWIKI_MODEL_ID=solar-open2
   이름이 빠집니다.**
 
 이건 `openwiki`나 `deepagents` 자체 코드 문제가 아니라 실제
-Upstage/Solar Open2 스트리밍 버그입니다 — 어쩌면 클라이언트-서버 청킹
+Upstage/Solar Open 2 스트리밍 버그입니다 — 어쩌면 클라이언트-서버 청킹
 불일치일 수도 있지만, 어느 쪽이든 `openwiki`나 `deepagents` 쪽 코드
 문제는 아닙니다. 다만 `openwiki`는 이 provider 경로에서 스트리밍을 끌
 방법을 제공하지 않았습니다.

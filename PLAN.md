@@ -6,15 +6,15 @@ This repo exists to give several independent experiments a shared,
 seminar-ready home:
 
 1. Building a Claude Code harness (skills, etc.) on top of Upstage's
-   **Solar Open2** model.
-2. Running **Solar Open2 x Hermes Agent** through Hermes's officially
+   **Solar Open 2** model.
+2. Running **Solar Open 2 x Hermes Agent** through Hermes's officially
    bundled Upstage provider.
 3. Driving a **local Claude Code** instance programmatically with the
    **Claude Agent SDK**.
 4. Initializing **deepagents** at the code level using the
    **LangChain Upstage SDK**.
 5. Documenting this repo itself with **LangChain OpenWiki**, powered by
-   Solar Open2.
+   Solar Open 2.
 
 Each case is scoped to be independently readable, runnable, and
 presentable — someone should be able to open one case's folder and follow
@@ -24,19 +24,19 @@ it without needing any of the others.
 
 | Case | Goal | Key tech | Status |
 | --- | --- | --- | --- |
-| Case 01 — Solar Open2 x Claude Code | Stand up a minimal Claude Code harness (custom skills, project config) that routes through Upstage's Solar Open2 model | Solar Open2, Claude Code, `.claude/skills/` | Verified |
-| Case 02 — Solar Open2 x Hermes Agent | Run Hermes Agent against Solar Open2 through its officially bundled Upstage provider | Hermes Agent, Docker, Solar Open2 | Verified |
-| Case 03 — Solar Open2 x Claude Agent SDK | Drive a local Claude Code instance programmatically via the Claude Agent SDK (no manual CLI interaction) | Claude Agent SDK, Python | Verified |
-| Case 04 — Solar Open2 x LangChain Deepagents | Initialize a `deepagents`-based agent at the code level using the LangChain Upstage SDK (`langchain-upstage`) as the model backend | LangChain, `langchain-upstage`, `deepagents` | Verified |
-| Case 05 — Solar Open2 x LangChain OpenWiki | Document this repo itself with `openwiki`, configured to run on Solar Open2 | LangChain, `openwiki`, Solar Open2 | Verified |
+| Case 01 — Solar Open 2 x Claude Code | Stand up a minimal Claude Code harness (custom skills, project config) that routes through Upstage's Solar Open 2 model | Solar Open 2, Claude Code, `.claude/skills/` | Verified |
+| Case 02 — Solar Open 2 x Hermes Agent | Run Hermes Agent against Solar Open 2 through its officially bundled Upstage provider | Hermes Agent, Docker, Solar Open 2 | Verified |
+| Case 03 — Solar Open 2 x Claude Agent SDK | Drive a local Claude Code instance programmatically via the Claude Agent SDK (no manual CLI interaction) | Claude Agent SDK, Python | Verified |
+| Case 04 — Solar Open 2 x LangChain Deepagents | Initialize a `deepagents`-based agent at the code level using the LangChain Upstage SDK (`langchain-upstage`) as the model backend | LangChain, `langchain-upstage`, `deepagents` | Verified |
+| Case 05 — Solar Open 2 x LangChain OpenWiki | Document this repo itself with `openwiki`, configured to run on Solar Open 2 | LangChain, `openwiki`, Solar Open 2 | Verified |
 
-## Case 01 — Solar Open2 x Claude Code
+## Case 01 — Solar Open 2 x Claude Code
 
 - **Goal**: show that a Claude Code-style harness (custom skills, project
-  conventions, `.claude/` config) can run against Upstage's Solar Open2
+  conventions, `.claude/` config) can run against Upstage's Solar Open 2
   model instead of Anthropic's own models, and demonstrate a couple of
   simple custom skills built for it.
-- **Approach**: point Claude Code's model routing at Solar Open2 (directly
+- **Approach**: point Claude Code's model routing at Solar Open 2 (directly
   via Upstage's OpenAI-compatible endpoint, or via a proxy such as LiteLLM —
   see `jyje/cluster`'s `clusters/r4spi/apps/litellm.yaml` for a prior
   `upstage/solar-open2` routing config to reference), then build 1-2 small
@@ -55,9 +55,9 @@ it without needing any of the others.
   `01-solar-open2-harness/README.md` for transcripts and the finding about
   `claude-upstage`'s argument passthrough.
 
-## Case 02 — Solar Open2 x Hermes Agent
+## Case 02 — Solar Open 2 x Hermes Agent
 
-- **Goal**: run NousResearch's Hermes Agent against Upstage's Solar Open2
+- **Goal**: run NousResearch's Hermes Agent against Upstage's Solar Open 2
   model with no bridge or proxy in the request path.
 - **Finding**: the current Hermes Agent release includes `upstage` as a
   built-in provider (`solar` is an alias), and its bundled implementation
@@ -83,7 +83,7 @@ it without needing any of the others.
   `hermes doctor` confirmed Upstage connectivity and a non-interactive
   `solar-open2` chat returned the expected `hermes-ready` response.
 
-## Case 03 — Solar Open2 x Claude Agent SDK
+## Case 03 — Solar Open 2 x Claude Agent SDK
 
 - **Goal**: run Claude Code locally driven entirely through the Claude
   Agent SDK, not the interactive CLI — i.e. a program that opens sessions,
@@ -95,7 +95,7 @@ it without needing any of the others.
   `03-claude-agent-sdk-local/src/`, plus a README with setup + a captured
   example run.
 - **Result**: done. `claude-agent-sdk` (Python) drives the same `claude`
-  CLI as a subprocess, so the Solar Open2 env var recipe from Case 01
+  CLI as a subprocess, so the Solar Open 2 env var recipe from Case 01
   carries over unchanged — passed via `ClaudeAgentOptions(env={...})`
   instead of shell `export`.
   Same auth-variable finding surfaced from the SDK side: its own docs
@@ -109,7 +109,7 @@ it without needing any of the others.
   `UPSTAGE_API_KEY` secret from Case 01. See
   `03-claude-agent-sdk-local/README.md` for details.
 
-## Case 04 — Solar Open2 x LangChain Deepagents
+## Case 04 — Solar Open 2 x LangChain Deepagents
 
 - **Goal**: initialize a `deepagents`-based agent at the code level with
   `langchain-upstage` supplying the model, showing how deepagents composes
@@ -125,7 +125,7 @@ it without needing any of the others.
   `04-langchain-upstage-deepagents/src/`, plus a README with setup + a
   captured example run.
 - **Result**: done. `ChatUpstage` (from `langchain-upstage`) supplies
-  Solar Open2 to `create_deep_agent()` — no `claude` CLI, no
+  Solar Open 2 to `create_deep_agent()` — no `claude` CLI, no
   `ANTHROPIC_BASE_URL`/`ANTHROPIC_AUTH_TOKEN` dance, just `UPSTAGE_API_KEY`
   read automatically via Upstage's OpenAI-compatible endpoint.
   Finding: Python 3.14 (this repo's default elsewhere) doesn't work here
@@ -140,23 +140,23 @@ it without needing any of the others.
   reusing the `UPSTAGE_API_KEY` secret, no Node/`claude`-CLI step
   needed). See `04-langchain-upstage-deepagents/README.md` for details.
 
-## Case 05 — Solar Open2 x LangChain OpenWiki
+## Case 05 — Solar Open 2 x LangChain OpenWiki
 
 - **Goal**: use `openwiki` (github.com/langchain-ai/openwiki) — a CLI
   that builds/maintains an agent-readable wiki for a codebase —
-  configured to run on Solar Open2, targeting `pilot-upstage-solar-open2` itself:
+  configured to run on Solar Open 2, targeting `pilot-upstage-solar-open2` itself:
   document its latest commit and answer questions about it.
 - **Approach**: shallow-clone this repo into a gitignored `scratch/`
   directory inside `05-langchain-openwiki-solar-open2/` and run
   `openwiki` there, so the real root `AGENTS.md` is never touched and no
   auto-PR bot goes live on this repo.
 - **Result**: done, with three real findings along the way:
-  1. `openwiki`'s `anthropic` provider can't reach Solar Open2 — its
+  1. `openwiki`'s `anthropic` provider can't reach Solar Open 2 — its
      `ChatAnthropic` construction only supports `apiKey`
      (`x-api-key`), never `authToken` (`Authorization: Bearer`).
      Confirmed via a direct 401 from Upstage. Worked around with the
      generic `openai-compatible` provider instead.
-  2. Solar Open2 drops the `tool_call` function name specifically in
+  2. Solar Open 2 drops the `tool_call` function name specifically in
      **streamed** responses (confirmed via a local logging proxy and a
      minimal `stream: false` vs `stream: true` comparison) — a real
      Upstage-side bug, not an `openwiki`/`deepagents` bug. Patched a

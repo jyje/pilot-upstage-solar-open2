@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Runs src/demo.py end-to-end against Upstage's Solar Open2 model via
+# Runs src/demo.py end-to-end against Upstage's Solar Open 2 model via
 # langchain-upstage + deepagents, and fails loudly if any of its three
 # methods don't check out:
 #   A. tool use            - a plain custom tool, invoked and answered

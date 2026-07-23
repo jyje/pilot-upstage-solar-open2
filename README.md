@@ -2,24 +2,24 @@
 
 # jyje/pilot-upstage-solar-open2
 
-<img height="240" src="https://raw.githubusercontent.com/jyje/pilot-upstage-solar-open2/main/docs/images/pilot-upstage-solar-open2.png" alt="Claude Code × Upstage Solar Open2 × Hermes Agent"/>
+<img height="240" src="https://raw.githubusercontent.com/jyje/pilot-upstage-solar-open2/main/docs/images/pilot-upstage-solar-open2.png" alt="Claude Code × Upstage Solar Open 2 × Hermes Agent"/>
 
-🧪 Claude Code, the Claude Agent SDK, LangChain, OpenWiki, and Hermes Agent — every use case built on Upstage Solar Open2!
+🧪 Claude Code, the Claude Agent SDK, LangChain, OpenWiki, and Hermes Agent — every use case built on Upstage Solar Open 2!
 
 [![verify-all-sequential](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)
 
 External links:<br>
-[![Model on Hugging Face](https://img.shields.io/badge/🤗_Hugging_Face-upstage/solar--open2--250b-yellow)](https://huggingface.co/upstage/Solar-Open2-250B)
-[![Technical Report](https://img.shields.io/badge/📄_Technical_Report-PDF-blue)](https://huggingface.co/upstage/Solar-Open2-250B/blob/main/Solar_Open_2_Tech_Report.pdf)
+[![Model on Hugging Face](https://img.shields.io/badge/🤗_Hugging_Face-upstage/solar--open2--250b-yellow)](https://huggingface.co/upstage/Solar-Open 2-250B)
+[![Technical Report](https://img.shields.io/badge/📄_Technical_Report-PDF-blue)](https://huggingface.co/upstage/Solar-Open 2-250B/blob/main/Solar_Open_2_Tech_Report.pdf)
 [![Launch Event](https://img.shields.io/badge/📺_Launch_Event-YouTube-red)](https://www.youtube.com/live/6XX-yR3qomM)
 
 [English](README.md) / [한국어](README-ko.md)
 
 </div>
 
-## Solar Open2
+## Solar Open 2
 
-[Solar Open2](https://huggingface.co/upstage/Solar-Open2-250B) is Upstage's
+[Solar Open 2](https://huggingface.co/upstage/Solar-Open 2-250B) is Upstage's
 open-weight, 250B-A15B (250B total, 15B active) Mixture-of-Experts model.
 It's purpose-built for long-horizon agentic tasks — tool use, multi-step
 reasoning, end-to-end task execution — over a 1M-token context, via a
@@ -34,17 +34,17 @@ highest average of any model compared, including fast-tier closed APIs.
 | Parameters | 250B total, 15B active (MoE) |
 | Context | 1M tokens |
 | License | Upstage Solar License |
-| Report | [Solar Open 2 Technical Report](https://huggingface.co/upstage/Solar-Open2-250B/blob/main/Solar_Open_2_Tech_Report.pdf) (Jul 22, 2026) |
+| Report | [Solar Open 2 Technical Report](https://huggingface.co/upstage/Solar-Open 2-250B/blob/main/Solar_Open_2_Tech_Report.pdf) (Jul 22, 2026) |
 | Launch event | [Solar Open Weight Day (YouTube Live)](https://www.youtube.com/live/6XX-yR3qomM) |
 
 This repo doesn't re-explain the model itself — see the
-[model card](https://huggingface.co/upstage/Solar-Open2-250B) and
-[technical report](https://huggingface.co/upstage/Solar-Open2-250B/blob/main/Solar_Open_2_Tech_Report.pdf)
+[model card](https://huggingface.co/upstage/Solar-Open 2-250B) and
+[technical report](https://huggingface.co/upstage/Solar-Open 2-250B/blob/main/Solar_Open_2_Tech_Report.pdf)
 for full details. What follows is how to build agent harnesses on top of
 it.
 
 A single repo hosting several independent, seminar-ready use cases around
-building and running agent harnesses on Upstage's Solar Open2 model across
+building and running agent harnesses on Upstage's Solar Open 2 model across
 the Claude, LangChain, OpenWiki, and Hermes Agent ecosystems. Each case
 lives in its own top-level directory and can be read, run, and presented
 independently.
@@ -53,27 +53,27 @@ independently.
 
 | Case | Category | Summary | Status |
 | --- | --- | --- | --- |
-| [Case 01 — Solar Open2 x Claude Code](01-solar-open2-harness/) | Review | Build a Claude Code harness (skills, etc.) backed by Upstage's Solar Open2 model | Verified |
-| [Case 02 — Solar Open2 x Hermes Agent](02-hermes-agent-solar-open2/) | Review | Run Hermes Agent through its officially bundled Upstage provider and the official Docker image | Verified |
-| [Case 03 — Solar Open2 x Claude Agent SDK](03-claude-agent-sdk-local/) | Extend | Drive a local Claude Code instance programmatically with the Claude Agent SDK | Verified |
-| [Case 04 — Solar Open2 x LangChain Deepagents](04-langchain-upstage-deepagents/) | Extend | Initialize deepagents at the code level using the LangChain Upstage SDK | Verified |
-| [Case 05 — Solar Open2 x LangChain OpenWiki](05-langchain-openwiki-solar-open2/) | Extend | Use `openwiki` to document this repo and answer questions about it, powered by Solar Open2 | Verified |
+| [Case 01 — Solar Open 2 x Claude Code](01-solar-open2-harness/) | Review | Build a Claude Code harness (skills, etc.) backed by Upstage's Solar Open 2 model | Verified |
+| [Case 02 — Solar Open 2 x Hermes Agent](02-hermes-agent-solar-open2/) | Review | Run Hermes Agent through its officially bundled Upstage provider and the official Docker image | Verified |
+| [Case 03 — Solar Open 2 x Claude Agent SDK](03-claude-agent-sdk-local/) | Extend | Drive a local Claude Code instance programmatically with the Claude Agent SDK | Verified |
+| [Case 04 — Solar Open 2 x LangChain Deepagents](04-langchain-upstage-deepagents/) | Extend | Initialize deepagents at the code level using the LangChain Upstage SDK | Verified |
+| [Case 05 — Solar Open 2 x LangChain OpenWiki](05-langchain-openwiki-solar-open2/) | Extend | Use `openwiki` to document this repo and answer questions about it, powered by Solar Open 2 | Verified |
 
-**Review** cases validate that Solar Open2 works correctly in an
+**Review** cases validate that Solar Open 2 works correctly in an
 existing, official harness path. **Extend** cases go further, wiring
-Solar Open2 into a broader ecosystem (LangChain, custom agent code)
+Solar Open 2 into a broader ecosystem (LangChain, custom agent code)
 beyond what those harnesses ship out of the box.
 
 ## Composition & intent
 
-Each case demonstrates the same model, Solar Open2, wired into a
+Each case demonstrates the same model, Solar Open 2, wired into a
 *different* existing, popular agent harness or framework — not a custom
 harness built from scratch for this repo. The point is to show that Solar
-Open2 is a drop-in backend for the open agent ecosystem people already
+Open 2 is a drop-in backend for the open agent ecosystem people already
 use, not something that requires bespoke tooling:
 
 - **Case 01/03** — Anthropic's own Claude Code CLI and Claude Agent SDK,
-  routed at Solar Open2 instead of Anthropic's models.
+  routed at Solar Open 2 instead of Anthropic's models.
 - **Case 02** — NousResearch's Hermes Agent, via its own bundled Upstage
   provider.
 - **Case 04** — LangChain's `deepagents`, with `langchain-upstage`
@@ -92,12 +92,12 @@ Want to run a case yourself, step by step, right now? The
 [Use Case Guide](docs/REPRODUCE.md) walks through the exact prerequisites
 and commands for every case, one case at a time (English/Korean).
 
-## Why Solar Open2 fits existing agent harnesses
+## Why Solar Open 2 fits existing agent harnesses
 
-Every case above reached Solar Open2 through a wire-compatible endpoint a
+Every case above reached Solar Open 2 through a wire-compatible endpoint a
 mainstream framework already speaks, not a custom client:
 
-- Case 01/03 route Claude Code / the Claude Agent SDK at Solar Open2's
+- Case 01/03 route Claude Code / the Claude Agent SDK at Solar Open 2's
   Anthropic-compatible endpoint via `ANTHROPIC_BASE_URL` +
   `ANTHROPIC_AUTH_TOKEN`. A real finding along the way: `ANTHROPIC_API_KEY`
   hangs against Upstage, `ANTHROPIC_AUTH_TOKEN` is required.
@@ -106,7 +106,7 @@ mainstream framework already speaks, not a custom client:
 - Case 04's `ChatUpstage` (from `langchain-upstage`) is a thin
   `BaseChatOpenAI` subclass pointed at Upstage's OpenAI-compatible
   endpoint — no bridge, no proxy.
-- Case 05's `openwiki` reaches Solar Open2 through its generic
+- Case 05's `openwiki` reaches Solar Open 2 through its generic
   `openai-compatible` provider. Its `anthropic` provider is a confirmed
   dead end here: the client only ever sends `apiKey` (`x-api-key`), never
   `authToken` (`Authorization: Bearer`). Upstage's Anthropic-compatible
@@ -163,11 +163,11 @@ would make the waits mostly disappear, but nothing here assumes one.
 
 | Case | solar-open2 |
 | --- | --- |
-| Case 01 — Solar Open2 x Claude Code | ✅ |
-| Case 02 — Solar Open2 x Hermes Agent | ✅ |
-| Case 03 — Solar Open2 x Claude Agent SDK | ✅ |
-| Case 04 — Solar Open2 x LangChain Deepagents | ✅ |
-| Case 05 — Solar Open2 x LangChain OpenWiki | ✅ |
+| Case 01 — Solar Open 2 x Claude Code | ✅ |
+| Case 02 — Solar Open 2 x Hermes Agent | ✅ |
+| Case 03 — Solar Open 2 x Claude Agent SDK | ✅ |
+| Case 04 — Solar Open 2 x LangChain Deepagents | ✅ |
+| Case 05 — Solar Open 2 x LangChain OpenWiki | ✅ |
 
 See the badge above for the latest status, or browse
 [every run](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml).

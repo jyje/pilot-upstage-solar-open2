@@ -5,7 +5,7 @@
 [← back to this case's README](README.md) · [← all cases' use case guides](../docs/REPRODUCE.md)
 
 Goal: use `openwiki` to document this very repo and answer questions
-about it, powered by Solar Open2.
+about it, powered by Solar Open 2.
 
 Full narrative, findings, and verified transcripts: [`README.md`](README.md).
 
@@ -40,7 +40,7 @@ Confirm it's the right build:
 openwiki --version
 ```
 
-Why a fork at all? Solar Open2 drops the tool-call function name in
+Why a fork at all? Solar Open 2 drops the tool-call function name in
 **streamed** responses. The public `openwiki` has no switch to turn
 streaming off. This fork adds one (`OPENWIKI_DISABLE_STREAMING=true`).
 Full trace of how that was diagnosed is in

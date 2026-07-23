@@ -14,7 +14,7 @@ name: verify-all-sequential
 # (workflow_dispatch).
 #
 # solar-open2 only, by design: this repo's purpose is demonstrating
-# every use case on Solar Open2, not benchmarking Upstage's model
+# every use case on Solar Open 2, not benchmarking Upstage's model
 # lineup. An earlier version of this workflow also ran solar-pro3 for
 # comparison, which surfaced a real, root-caused Tier-0 capacity limit
 # for Case 05 (see PLAN.md's Case 05, Finding 4) — useful as a finding,
@@ -48,12 +48,12 @@ jobs:
       - name: Install claude-upstage
         run: curl -fsSL https://console.upstage.ai/claude-upstage.sh | sh -s install
 
-      # Why a fork instead of `npm install -g openwiki`: Solar Open2 has a
+      # Why a fork instead of `npm install -g openwiki`: Solar Open 2 has a
       # real, confirmed bug (Upstage-side, not openwiki's or deepagents')
       # where it drops the tool_call function name specifically in
       # *streamed* responses — verified directly via a local logging
       # proxy comparing stream:false vs stream:true. openwiki's public npm
-      # release always streams, so it can't reach Solar Open2 correctly.
+      # release always streams, so it can't reach Solar Open 2 correctly.
       # The jyje/openwiki fork below adds an opt-in
       # OPENWIKI_DISABLE_STREAMING env var that works around it; that fix
       # hasn't landed upstream yet. See
@@ -74,35 +74,35 @@ jobs:
           pnpm run build
           npm link
 
-      - name: "Case 01 — Solar Open2 x Claude Code"
+      - name: "Case 01 — Solar Open 2 x Claude Code"
         id: c01
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 01-solar-open2-harness solar-open2
 
-      - name: "Case 02 — Solar Open2 x Hermes Agent"
+      - name: "Case 02 — Solar Open 2 x Hermes Agent"
         id: c02
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 02-hermes-agent-solar-open2 solar-open2
 
-      - name: "Case 03 — Solar Open2 x Claude Agent SDK"
+      - name: "Case 03 — Solar Open 2 x Claude Agent SDK"
         id: c03
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 03-claude-agent-sdk-local solar-open2
 
-      - name: "Case 04 — Solar Open2 x LangChain Deepagents"
+      - name: "Case 04 — Solar Open 2 x LangChain Deepagents"
         id: c04
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 04-langchain-upstage-deepagents solar-open2
 
-      - name: "Case 05 — Solar Open2 x LangChain OpenWiki"
+      - name: "Case 05 — Solar Open 2 x LangChain OpenWiki"
         id: c05
         continue-on-error: true
         env:
@@ -116,17 +116,17 @@ jobs:
       # the recap renders as a table on the run's summary page, not just
       # in this step's log. Grouped into two tables, Review and Extend,
       # matching the Category column in the root README's Cases table —
-      # Case 01/02 validate Solar Open2 in an existing official harness
+      # Case 01/02 validate Solar Open 2 in an existing official harness
       # path, Case 03-05 wire it into a broader ecosystem beyond that.
       - name: Recap
         if: always()
         run: |
           names=(
-            "Case 01 — Solar Open2 x Claude Code"
-            "Case 02 — Solar Open2 x Hermes Agent"
-            "Case 03 — Solar Open2 x Claude Agent SDK"
-            "Case 04 — Solar Open2 x LangChain Deepagents"
-            "Case 05 — Solar Open2 x LangChain OpenWiki"
+            "Case 01 — Solar Open 2 x Claude Code"
+            "Case 02 — Solar Open 2 x Hermes Agent"
+            "Case 03 — Solar Open 2 x Claude Agent SDK"
+            "Case 04 — Solar Open 2 x LangChain Deepagents"
+            "Case 05 — Solar Open 2 x LangChain OpenWiki"
           )
           categories=(
             "Review"

@@ -5,7 +5,7 @@
 [← back to this case's README](README.md) · [← all cases' use case guides](../docs/REPRODUCE.md)
 
 Goal: drive Claude Code programmatically through the Python
-`claude-agent-sdk`, against Solar Open2.
+`claude-agent-sdk`, against Solar Open 2.
 
 Full narrative, findings, and verified transcripts: [`README.md`](README.md).
 

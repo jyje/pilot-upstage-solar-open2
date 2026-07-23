@@ -45,11 +45,11 @@ response="$(curl -fsS http://127.0.0.1:4000/v1/responses \
   || { cat "$proxy_log" >&2; fail "LiteLLM Responses bridge request failed"; }
 printf '%s' "$response" | grep -q 'bridge-ready' \
   || fail "LiteLLM bridge response did not contain the expected text: $response"
-ok "LiteLLM translated a Responses request for Solar Open2"
+ok "LiteLLM translated a Responses request for Solar Open 2"
 
 output="$(CODEX_HOME="$codex_home" codex exec \
   'Read README.md and reply with only this repository name.' 2>&1)" \
   || { printf '%s\n' "$output" >&2; fail "codex exec failed through LiteLLM"; }
 printf '%s' "$output" | grep -q 'pilot-upstage-solar-open2' \
   || fail "Codex did not report the repository name: $output"
-ok "Codex read README.md through LiteLLM and Solar Open2"
+ok "Codex read README.md through LiteLLM and Solar Open 2"

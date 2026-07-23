@@ -2,13 +2,13 @@
 #
 # Runs `openwiki` (github.com/langchain-ai/openwiki) against a scratch
 # shallow clone of this very repo (pilot-upstage-solar-open2), configured to use
-# Upstage's Solar Open2 model via the `openai-compatible` provider —
+# Upstage's Solar Open 2 model via the `openai-compatible` provider —
 # not `anthropic`, which openwiki's own code can't point at Upstage (see
 # README.md's first Finding). Never touches this repo's real
 # AGENTS.md — everything happens inside scratch/, gitignored.
 #
 # Requires a patched `openwiki` build — see README.md's second Finding:
-# Solar Open2 drops the tool_call function name when streaming, so
+# Solar Open 2 drops the tool_call function name when streaming, so
 # OPENWIKI_DISABLE_STREAMING=true is required (a fix added to
 # jyje/openwiki, not yet upstream). `git`, `openwiki` on PATH,
 # UPSTAGE_API_KEY set.

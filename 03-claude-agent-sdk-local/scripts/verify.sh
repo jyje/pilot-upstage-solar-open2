@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Runs src/demo.py end-to-end against Upstage's Solar Open2 model via the
+# Runs src/demo.py end-to-end against Upstage's Solar Open 2 model via the
 # Claude Agent SDK (claude-agent-sdk), and fails loudly if any of its
 # three methods don't check out:
 #   A. query()          - one-shot call, structured message types

@@ -1,7 +1,7 @@
 [project]
 name = "langchain-upstage-deepagents"
 version = "0.1.0"
-description = "Initialize a deepagents agent at the code level with langchain-upstage (Solar Open2) as the model backend"
+description = "Initialize a deepagents agent at the code level with langchain-upstage (Solar Open 2) as the model backend"
 requires-python = ">=3.13"
 dependencies = [
     "deepagents>=0.6.12",

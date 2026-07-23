@@ -5,7 +5,7 @@
 [← back to this case's README](README.md) · [← all cases' use case guides](../docs/REPRODUCE.md)
 
 Goal: run Hermes Agent's own bundled Upstage provider against Solar
-Open2, through the official Docker image — no bridge, no proxy.
+Open 2, through the official Docker image — no bridge, no proxy.
 
 Full narrative, findings, and verified transcripts: [`README.md`](README.md).
 

@@ -4,7 +4,7 @@
 
 [← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 유즈케이스 가이드](../docs/REPRODUCE-ko.md)
 
-목표: Claude Code 자체를 Solar Open2로, 서로 독립된 두 가지 방식(Case
+목표: Claude Code 자체를 Solar Open 2로, 서로 독립된 두 가지 방식(Case
 01A, Case 01B)으로 구동하고, 커스텀 스킬과 서브에이전트가 이 백엔드에서도
 그대로 동작하는지 확인합니다.
 
@@ -75,7 +75,7 @@ export UPSTAGE_API_KEY="up_..."
   않습니다. 스크립트는 이미 표준입력을 파이프하는 방식(`echo "hello" |
   claude-upstage`)을 쓰고 있습니다 — 직접 손으로 테스트할 때도 똑같이
   하세요.
-- **응답이 Solar Open2가 아닌 것 같다** — `ANTHROPIC_MODEL` 하나만이 아니라
+- **응답이 Solar Open 2가 아닌 것 같다** — `ANTHROPIC_MODEL` 하나만이 아니라
   모든 `ANTHROPIC_*` 모델 슬롯 변수가 설정됐는지 확인하세요(Case 01A).
   전체 목록은 [`README-ko.md`](README-ko.md#동작-원리)의 Case 01A "동작
   원리" 절을 참고하세요.

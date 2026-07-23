@@ -1,7 +1,7 @@
 # pilot-upstage-solar-open2
 
 A repo hosting several independent agent-harness use cases built around
-Upstage's Solar Open2 model and the Claude Code / OpenAI Codex /
+Upstage's Solar Open 2 model and the Claude Code / OpenAI Codex /
 LangChain / Hermes Agent ecosystem. See [`PLAN.md`](PLAN.md) for the full plan and [`README.md`](README.md)
 for the public-facing overview.
 
@@ -13,11 +13,11 @@ pilot-upstage-solar-open2/
 ├── PLAN.md                            # full plan (all cases)
 ├── README.md / README-ko.md           # repo front page
 ├── CONTRIBUTING.md                    # conventions + local dev commands
-├── 01-solar-open2-harness/            # Case 01: Claude Code harness on Solar Open2
+├── 01-solar-open2-harness/            # Case 01: Claude Code harness on Solar Open 2
 ├── 02-hermes-agent-solar-open2/       # Case 02: Hermes Agent via its built-in Upstage provider
 ├── 03-claude-agent-sdk-local/         # Case 03: local Claude Code via Claude Agent SDK
 ├── 04-langchain-upstage-deepagents/   # Case 04: deepagents init via LangChain Upstage SDK
-└── 05-langchain-openwiki-solar-open2/ # Case 05: openwiki documents this repo via Solar Open2
+└── 05-langchain-openwiki-solar-open2/ # Case 05: openwiki documents this repo via Solar Open 2
 ```
 
 Referred to as **Case 01 / Case 02 / ...** in prose and docs — the

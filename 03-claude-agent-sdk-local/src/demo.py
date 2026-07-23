@@ -1,5 +1,5 @@
 """Drive a local Claude Code instance programmatically via claude-agent-sdk,
-against Upstage's Solar Open2 model (same env var recipe verified in
+against Upstage's Solar Open 2 model (same env var recipe verified in
 01-solar-open2-harness).
 
 Three methods, each proving a distinct SDK capability:
@@ -27,7 +27,7 @@ SOLAR_BASE_URL = "https://api.upstage.ai"
 
 
 def solar_options(cwd: str | None = None) -> ClaudeAgentOptions:
-    """Same Solar Open2 recipe verified in topic 01: ANTHROPIC_AUTH_TOKEN,
+    """Same Solar Open 2 recipe verified in topic 01: ANTHROPIC_AUTH_TOKEN,
     not ANTHROPIC_API_KEY (the SDK docs' own example hangs against Upstage)."""
     env = {
         "ANTHROPIC_BASE_URL": SOLAR_BASE_URL,

@@ -1,4 +1,4 @@
-# Case 04 — Solar Open2 x LangChain Deepagents
+# Case 04 — Solar Open 2 x LangChain Deepagents
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -7,7 +7,7 @@
 확인하세요.
 
 **상태:** 검증 완료 — `langchain-upstage`를 모델을 기반으로 사용해 코드
-수준에서 `deepagents` 에이전트를 초기화했으며, Upstage의 Solar Open2
+수준에서 `deepagents` 에이전트를 초기화했으며, Upstage의 Solar Open 2
 모델을 기반으로 합니다. 3가지 방식 모두 로컬과 CI에서
 종단 간 검증되었습니다.
 
@@ -15,7 +15,7 @@
 
 [`deepagents`](https://pypi.org/project/deepagents/) 에이전트를 순수
 코드 수준에서 초기화하되, [`langchain-upstage`](https://pypi.org/project/langchain-upstage/)로
-Solar Open2를 모델로 공급합니다. Case 01·03과 달리 이 경로에는 Claude Code
+Solar Open 2를 모델로 공급합니다. Case 01·03과 달리 이 경로에는 Claude Code
 CLI가 전혀 관여하지 않습니다 — LangChain/LangGraph가 Upstage와 직접
 통신합니다.
 
@@ -100,7 +100,7 @@ agent.invoke({"messages": [{"role": "user", "content":
 ```
 
 메인 에이전트가 산수를 직접 하지 않고 이름이 지정된 서브에이전트에
-위임합니다 — 메인 에이전트와 서브에이전트 모두 Solar Open2에서
+위임합니다 — 메인 에이전트와 서브에이전트 모두 Solar Open 2에서
 동작합니다.
 
 ## 검증된 방식
@@ -122,7 +122,7 @@ agent.invoke({"messages": [{"role": "user", "content":
 ## 검증
 
 [`scripts/verify.sh`](scripts/verify.sh)가 `src/demo.py`를 실행하며,
-이는 Solar Open2를 대상으로 세 가지 방식을 실제로 실행합니다. 하나라도
+이는 Solar Open 2를 대상으로 세 가지 방식을 실제로 실행합니다. 하나라도
 어긋나면(방식 A의 답변에 "sunny"/"Seoul"이 없거나, 방식 B의 파일 내용이
 틀리거나, 방식 C의 응답에 "42"가 없으면) 즉시 실패합니다.
 

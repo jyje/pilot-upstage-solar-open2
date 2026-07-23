@@ -1,5 +1,5 @@
 """Unit tests for demo.py's pure logic. The live SDK methods (A/B/C) call
-Solar Open2 over the network and are exercised end-to-end by
+Solar Open 2 over the network and are exercised end-to-end by
 scripts/verify.sh instead, not here."""
 
 from demo import truncate

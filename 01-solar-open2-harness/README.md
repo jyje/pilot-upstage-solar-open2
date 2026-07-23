@@ -1,18 +1,18 @@
-# Case 01 — Solar Open2 x Claude Code
+# Case 01 — Solar Open 2 x Claude Code
 
 [English](README.md) / [한국어](README-ko.md)
 
 [← back to repo overview](../README.md) · Want to run this yourself?
 See [`REPRODUCE.md`](REPRODUCE.md) for step-by-step local setup.
 
-**Status:** Verified. Claude Code runs on Upstage's Solar Open2 model in
+**Status:** Verified. Claude Code runs on Upstage's Solar Open 2 model in
 two independent ways — Case 01A and Case 01B below. Its custom-skill
 system and its subagent/Task calls both work through that same backend
 too. All four checks are confirmed end to end, locally and in CI.
 
 ## Goal
 
-Show that a Claude Code harness can run on Upstage's **Solar Open2**
+Show that a Claude Code harness can run on Upstage's **Solar Open 2**
 model instead of Anthropic's own models.
 
 This case verifies two independent, self-contained ways to do that. Each
@@ -70,7 +70,7 @@ wrapper leaves open: `ANTHROPIC_DEFAULT_FABLE_MODEL` and
 The wrapper's own `set_claude_env` maps haiku/sonnet/opus/small-fast, but
 it predates both the `fable` alias and the dedicated subagent-model
 variable. That means a `fable`-aliased or subagent/Task-tool call routed
-purely through `claude-upstage` isn't guaranteed to land on Solar Open2.
+purely through `claude-upstage` isn't guaranteed to land on Solar Open 2.
 That's one reason the skill and subagent checks below run against Case
 01A's plain-env-var setup, not Case 01B's wrapper.
 
@@ -114,17 +114,17 @@ claude -p "hello"
 
 This is what `scripts/verify.sh` calls **Method B**. The response reads
 this repo's actual `AGENTS.md`/state — not a canned reply. That confirms
-Solar Open2 answers through the full agentic Claude Code harness, tool
+Solar Open 2 answers through the full agentic Claude Code harness, tool
 access included, not just a raw chat completion.
 
-### Skills through Solar Open2
+### Skills through Solar Open 2
 
 This repo ships three small custom skills under `.claude/skills/`. One
 formats a README's header into a consistent centered layout. One
 enforces a gitmoji + conventional-commit style for every commit message.
 One runs the lint/type-check/test workflow whenever Python code changes.
 
-Do these skills actually get honored when Solar Open2 is the model, not
+Do these skills actually get honored when Solar Open 2 is the model, not
 just when a Claude model is? We tested with `git-commit-helper`, since
 its output format is strict enough to check mechanically:
 `<gitmoji> <type>(<domain>): <title>`.
@@ -134,7 +134,7 @@ is not.**
 
 First, we asked — without naming any skill — "write the commit message"
 for a new file. This was a one-off manual check, not part of the
-automated suite. Solar Open2 produced a plausible-looking message, but it
+automated suite. Solar Open 2 produced a plausible-looking message, but it
 silently dropped the required format:
 
 ```bash
@@ -166,19 +166,19 @@ Correct, once the skill is explicitly invoked: gitmoji, type, and
 `(domain):` are all present.
 
 The gap between these two prompts is small in wording but large in
-outcome. Solar Open2 can follow a skill's contract precisely once it's
+outcome. Solar Open 2 can follow a skill's contract precisely once it's
 told to load it. But it doesn't reliably decide *on its own* that a skill
 applies just because the topic matches the skill's `description` trigger
 phrases — the way Claude models tend to.
 
-**Practical takeaway:** when running Claude Code on Solar Open2, name the
+**Practical takeaway:** when running Claude Code on Solar Open 2, name the
 skill explicitly in any prompt that needs it. Don't rely on automatic
 trigger-phrase matching.
 
-### Subagents stay on Solar Open2 too
+### Subagents stay on Solar Open 2 too
 
 `CLAUDE_CODE_SUBAGENT_MODEL="solar-open2"` is what keeps subagent/Task-tool
-calls — like the Explore agent — on Solar Open2, instead of falling back
+calls — like the Explore agent — on Solar Open 2, instead of falling back
 to whatever the SDK's default subagent model would otherwise be.
 
 We verified this directly: asked the harness to hand a file-listing task

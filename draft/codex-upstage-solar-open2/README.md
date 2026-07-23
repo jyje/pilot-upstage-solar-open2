@@ -1,18 +1,18 @@
-# Case 02 — Codex via Upstage Solar Open2
+# Case 02 — Codex via Upstage Solar Open 2
 
 [English](README.md) / [한국어](README-ko.md)
 
 [← back to repo overview](../README.md)
 
 **Status:** Basic path verified — Docker LiteLLM successfully routed a Codex
-response to Solar Open2. A direct Codex → Upstage Base URL override remains
+response to Solar Open 2. A direct Codex → Upstage Base URL override remains
 unsupported; this case verifies the bridge instead. Workspace-file and
 tool-result cycles remain pending.
 
 ## Goal
 
 Determine whether the OpenAI Codex CLI can run an agentic coding task on
-Upstage's **Solar Open2** model, and publish a small, reproducible setup only
+Upstage's **Solar Open 2** model, and publish a small, reproducible setup only
 if its protocol bridge is verified end to end.
 
 ## Official compatibility finding
@@ -53,7 +53,7 @@ available merely because the protocol bridge works.
 The viable path to test is:
 
 ```text
-Codex (Responses API) → protocol-converting proxy → Upstage (Chat Completions API) → Solar Open2
+Codex (Responses API) → protocol-converting proxy → Upstage (Chat Completions API) → Solar Open 2
 ```
 
 LiteLLM provides this bridge. Its merged `use_chat_completions_api`
@@ -73,7 +73,7 @@ model = "solar-open2"
 model_provider = "solar_proxy"
 
 [model_providers.solar_proxy]
-name = "Solar Open2 through LiteLLM"
+name = "Solar Open 2 through LiteLLM"
 base_url = "http://127.0.0.1:PORT/v1"
 env_key = "LITELLM_MASTER_KEY"
 wire_api = "responses"

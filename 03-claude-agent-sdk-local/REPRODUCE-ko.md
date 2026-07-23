@@ -5,7 +5,7 @@
 [← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 유즈케이스 가이드](../docs/REPRODUCE-ko.md)
 
 목표: Python `claude-agent-sdk`로 Claude Code를 프로그래밍 방식으로
-구동하며, Solar Open2를 상대로 동작을 확인합니다.
+구동하며, Solar Open 2를 상대로 동작을 확인합니다.
 
 전체 이야기, 발견 사항, 검증 로그: [`README-ko.md`](README-ko.md).
 

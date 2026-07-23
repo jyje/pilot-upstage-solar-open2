@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Verifies Hermes Agent -> Upstage -> Solar Open2 with the official Docker
+# Verifies Hermes Agent -> Upstage -> Solar Open 2 with the official Docker
 # image and Hermes's built-in Upstage provider.
 
 set -euo pipefail

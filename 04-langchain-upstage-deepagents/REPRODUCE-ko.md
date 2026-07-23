@@ -4,7 +4,7 @@
 
 [← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 유즈케이스 가이드](../docs/REPRODUCE-ko.md)
 
-목표: `langchain-upstage`가 Solar Open2를 모델로 공급하는 `deepagents`
+목표: `langchain-upstage`가 Solar Open 2를 모델로 공급하는 `deepagents`
 에이전트를 코드 레벨에서 초기화합니다 — 이 경로에는 `claude` CLI가
 전혀 등장하지 않습니다.
 

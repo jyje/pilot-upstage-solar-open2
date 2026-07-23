@@ -1,4 +1,4 @@
-# Case 03 — Solar Open2 x Claude Agent SDK
+# Case 03 — Solar Open 2 x Claude Agent SDK
 
 [English](README.md) / [한국어](README-ko.md)
 
@@ -7,7 +7,7 @@ See [`REPRODUCE.md`](REPRODUCE.md) for step-by-step local setup.
 
 **Status:** Verified — a local Claude Code session driven entirely through
 the Python Claude Agent SDK (`claude-agent-sdk`), against Upstage's Solar
-Open2 model. All three methods confirmed working end to end (locally and
+Open 2 model. All three methods confirmed working end to end (locally and
 in CI).
 
 ## Goal
@@ -21,7 +21,7 @@ typed message objects** instead of scraping text out of stdout.
 
 `claude-agent-sdk` (PyPI, `pip install claude-agent-sdk` / here via
 `uv add claude-agent-sdk`) drives the same `claude` CLI binary as a
-subprocess. It's not a separate implementation, so the exact Solar Open2
+subprocess. It's not a separate implementation, so the exact Solar Open 2
 env var recipe verified in
 [Case 01](../01-solar-open2-harness/README.md#how-it-works) still
 applies — just passed through `ClaudeAgentOptions(env={...})` instead of
@@ -118,7 +118,7 @@ read the untruncated response yourself:
 
 | Method | Result |
 | --- | --- |
-| A — `query()` | message types seen: `SystemMessage`, `AssistantMessage`, `ResultMessage`; reply: "Hello! I'm Solar Open2, an AI assistant trained by Upstage AI (a Korean startup). Nice to meet you!  ...(truncated)" |
+| A — `query()` | message types seen: `SystemMessage`, `AssistantMessage`, `ResultMessage`; reply: "Hello! I'm Solar Open 2, an AI assistant trained by Upstage AI (a Korean startup). Nice to meet you!  ...(truncated)" |
 | B — `ClaudeSDKClient` session memory | `42` (recalled correctly in turn 2) |
 | C — tool-use visibility | `saw_tool_use=True` (a real `ToolUseBlock` appeared in the message stream) |
 
@@ -127,7 +127,7 @@ read the untruncated response yourself:
 ## Verification
 
 [`scripts/verify.sh`](scripts/verify.sh) runs `src/demo.py`, which
-executes all three methods for real against Solar Open2. It exits
+executes all three methods for real against Solar Open 2. It exits
 non-zero if any of them don't check out: Method B's "42" missing, or
 Method C seeing no `ToolUseBlock`.
 

@@ -5,7 +5,7 @@
 [← back to this case's README](README.md) · [← all cases' use case guides](../docs/REPRODUCE.md)
 
 Goal: initialize a `deepagents` agent at the code level, with
-`langchain-upstage` supplying Solar Open2 as the model — no `claude` CLI
+`langchain-upstage` supplying Solar Open 2 as the model — no `claude` CLI
 anywhere in this path.
 
 Full narrative, findings, and verified transcripts: [`README.md`](README.md).
