@@ -4,7 +4,7 @@
 
 <img height="300" src="https://raw.githubusercontent.com/jyje/pilot-upstage-solar-open2/main/docs/images/pilot-upstage-solar-open2.png" alt="Claude Code × Upstage Solar Open 2 × Hermes Agent"/>
 
-✨ 업스테이지 Solar Open 2 모델을 활용한 여러 에이전트 하네스 시험: Claude Code, Hermes Agent, Claude Agent SDK, LangChain Deepagents 그리고 OpenWiki 까지
+✨ 업스테이지 Solar Open 2 모델을 활용한 여러 에이전트 하네스 시험: Claude Code, Hermes Agent, Claude Agent SDK, LangChain Deepagents, OpenWiki 그리고 Grok Build 까지
 
 [![verify-all-sequential](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)
 
