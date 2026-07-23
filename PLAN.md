@@ -35,7 +35,7 @@ it without needing any of the others.
 | Case 04 — Solar Open 2 x LangChain Deepagents | Initialize a `deepagents`-based agent at the code level using the LangChain Upstage SDK (`langchain-upstage`) as the model backend | LangChain, `langchain-upstage`, `deepagents` | Verified |
 | Case 05 — Solar Open 2 x LangChain OpenWiki | Document this repo itself with `openwiki`, configured to run on Solar Open 2 | LangChain, `openwiki`, Solar Open 2 | Verified |
 | Case 06 — Solar Open 2 x Grok Build | Run xAI's Grok Build CLI against Solar Open 2 as a custom model provider | Grok Build, Solar Open 2 | Verified |
-| Case 07 — Solar Open 2 x Hermes Agent Helm | Deploy Hermes Agent via the `hermes-agent-helm` Helm chart onto a kind cluster and verify it reaches Solar Open 2 | Kubernetes, Helm, kind, Hermes Agent | Verified |
+| Case 07 — Solar Open 2 x Hermes Agent Helm | Deploy Hermes Agent onto Kubernetes (via the `hermes-agent-helm` Helm chart, on a kind cluster) and verify it reaches Solar Open 2 | Kubernetes, Helm, kind, Hermes Agent | Verified |
 
 ## Case 01 — Solar Open 2 x Claude Code
 

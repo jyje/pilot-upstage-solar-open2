@@ -97,7 +97,7 @@ UPSTAGE_API_KEY="..." ./scripts/verify-case.sh 01-solar-open2-harness solar-open
 | Case 04 | `langchain-upstage`로 `deepagents`를 코드 레벨에서 초기화 | [`04-langchain-upstage-deepagents/REPRODUCE-ko.md`](../04-langchain-upstage-deepagents/REPRODUCE-ko.md) |
 | Case 05 | `openwiki`가 이 리포를 문서화, Solar Open 2로 구동 | [`05-langchain-openwiki-solar-open2/REPRODUCE-ko.md`](../05-langchain-openwiki-solar-open2/REPRODUCE-ko.md) |
 | Case 06 | Grok Build CLI를 커스텀 모델 provider로 Solar Open 2 구동 | [`06-grok-build-solar-open2/REPRODUCE-ko.md`](../06-grok-build-solar-open2/REPRODUCE-ko.md) |
-| Case 07 | `hermes-agent-helm` 차트로 배포, kind 클러스터에서 검증 | [`07-hermes-agent-helm-solar-open2/REPRODUCE-ko.md`](../07-hermes-agent-helm-solar-open2/REPRODUCE-ko.md) |
+| Case 07 | `hermes-agent-helm` 차트로 Kubernetes에 배포, kind 클러스터에서 검증 | [`07-hermes-agent-helm-solar-open2/REPRODUCE-ko.md`](../07-hermes-agent-helm-solar-open2/REPRODUCE-ko.md) |
 
 각 문서 상단의 `[English]` 링크를 따라가면 영문판도 볼 수 있습니다.
 
