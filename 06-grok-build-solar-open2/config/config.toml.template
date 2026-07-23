@@ -1,0 +1,9 @@
+[model.SOLAR_MODEL_PLACEHOLDER]
+model = "SOLAR_MODEL_PLACEHOLDER"
+base_url = "https://api.upstage.ai/v1/solar"
+name = "Solar Open 2 (Upstage)"
+env_key = "UPSTAGE_API_KEY"
+api_backend = "chat_completions"
+
+[models]
+default = "SOLAR_MODEL_PLACEHOLDER"
