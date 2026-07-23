@@ -52,6 +52,10 @@ repo.
 - Grok Build's `grok` CLI (`curl -fsSL https://x.ai/cli/install.sh | bash`)
   — Case 06 drives it headlessly against a custom Solar Open 2 model
   provider.
+- `kind`, `kubectl`, and `helm` 3+ (Docker's daemon must be running too,
+  since kind runs cluster nodes as containers) — Case 07 creates its own
+  ephemeral kind cluster and installs the `hermes-agent-helm` chart onto
+  it.
 
 ### Running one case
 
@@ -64,6 +68,7 @@ UPSTAGE_API_KEY="..." ./03-claude-agent-sdk-local/scripts/verify.sh
 UPSTAGE_API_KEY="..." ./04-langchain-upstage-deepagents/scripts/verify.sh
 UPSTAGE_API_KEY="..." ./05-langchain-openwiki-solar-open2/scripts/verify.sh
 UPSTAGE_API_KEY="..." ./06-grok-build-solar-open2/scripts/verify.sh
+UPSTAGE_API_KEY="..." ./07-hermes-agent-helm-solar-open2/scripts/verify.sh
 ```
 
 Or through the shared, rate-limit-aware wrapper CI itself uses. It waits
@@ -84,7 +89,8 @@ for case in \
   03-claude-agent-sdk-local \
   04-langchain-upstage-deepagents \
   05-langchain-openwiki-solar-open2 \
-  06-grok-build-solar-open2
+  06-grok-build-solar-open2 \
+  07-hermes-agent-helm-solar-open2
 do
   UPSTAGE_API_KEY="..." ./scripts/verify-case.sh "$case" solar-open2
 done

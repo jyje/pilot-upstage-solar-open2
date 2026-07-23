@@ -17,6 +17,9 @@ seminar-ready home:
    Solar Open 2.
 6. Running xAI's **Grok Build** CLI against Solar Open 2 as a custom
    model provider.
+7. Deploying Hermes Agent onto Kubernetes via the community
+   **`hermes-agent-helm`** chart, verified on an ephemeral **kind**
+   cluster.
 
 Each case is scoped to be independently readable, runnable, and
 presentable — someone should be able to open one case's folder and follow
@@ -32,6 +35,7 @@ it without needing any of the others.
 | Case 04 — Solar Open 2 x LangChain Deepagents | Initialize a `deepagents`-based agent at the code level using the LangChain Upstage SDK (`langchain-upstage`) as the model backend | LangChain, `langchain-upstage`, `deepagents` | Verified |
 | Case 05 — Solar Open 2 x LangChain OpenWiki | Document this repo itself with `openwiki`, configured to run on Solar Open 2 | LangChain, `openwiki`, Solar Open 2 | Verified |
 | Case 06 — Solar Open 2 x Grok Build | Run xAI's Grok Build CLI against Solar Open 2 as a custom model provider | Grok Build, Solar Open 2 | Verified |
+| Case 07 — Solar Open 2 x Hermes Agent Helm | Deploy Hermes Agent via the `hermes-agent-helm` Helm chart onto a kind cluster and verify it reaches Solar Open 2 | Kubernetes, Helm, kind, Hermes Agent | Verified |
 
 ## Case 01 — Solar Open 2 x Claude Code
 
@@ -226,6 +230,38 @@ it without needing any of the others.
   its official installer, reusing the `UPSTAGE_API_KEY` secret). See
   `06-grok-build-solar-open2/README.md` for details.
 
+## Case 07 — Solar Open 2 x Hermes Agent Helm
+
+- **Goal**: check whether the same `upstage` provider path Case 02
+  verified against the plain Docker image still works once Hermes Agent
+  is deployed the way an operator would actually run it long-term — as a
+  Kubernetes workload, installed from the community
+  [`jyje/hermes-agent-helm`](https://github.com/jyje/hermes-agent-helm)
+  Helm chart.
+- **Approach**: install the chart's published OCI artifact
+  (`oci://ghcr.io/jyje/hermes-agent-helm/hermes-agent`, pinned to
+  `v0.12.0`) onto a throwaway `kind` cluster that `scripts/verify.sh`
+  creates and deletes itself, using a values file that mirrors the
+  chart's own `values-upstage.yaml` example with the model swapped to
+  `solar-open2`.
+- **Result**: done, no new findings — this case confirms the deployment
+  layer itself, not a new Solar Open 2 behavior. Three methods verified:
+  the chart's own declarative `tests.chat` Helm-test Job (polled directly
+  rather than trusting `helm test`'s own wait, which can stall on a CI
+  runner), a live `kubectl exec` reasoning round trip against the
+  running gateway pod checked for the correct numeric answer, and a
+  self-reflection prompt asking Hermes (running on Solar Open 2) to
+  describe its own strengths as an agent — gated loosely (10+ non-empty
+  lines) since the point is capturing a real, substantive answer rather
+  than an exact string. Messenger connectivity (Telegram/Discord) is
+  explicitly out of scope for this case's verification — see
+  `07-hermes-agent-helm-solar-open2/README.md` for how to add one via
+  BotFather without changing what this case gates on. Verified locally
+  and in CI
+  (`.github/workflows/verify-all-sequential.yml`, installing
+  `kind`/`kubectl`/`helm`, reusing the `UPSTAGE_API_KEY` secret). See
+  `07-hermes-agent-helm-solar-open2/README.md` for details.
+
 ## Repo structure
 
 See [`AGENTS.md`](AGENTS.md) for the directory tree and repo conventions
@@ -235,7 +271,7 @@ policy).
 
 ## Next steps
 
-Cases 01-06 are implemented and verified (Case 06's tool-calling has a
+Cases 01-07 are implemented and verified (Case 06's tool-calling has a
 known, documented limitation — see its two findings above). Open items:
 - Find or wait for a client-side way to disable streaming (or otherwise
   route around the dropped tool_call name) for Grok Build's custom

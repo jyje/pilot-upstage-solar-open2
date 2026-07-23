@@ -4,7 +4,7 @@
 
 <img height="300" src="https://raw.githubusercontent.com/jyje/pilot-upstage-solar-open2/main/docs/images/pilot-upstage-solar-open2.png" alt="Claude Code × Upstage Solar Open 2 × Hermes Agent"/>
 
-✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent, Claude Agent SDK, LangChain Deepagents, OpenWiki, and Grok Build
+✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent, Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, and Hermes Agent on Kubernetes
 
 [![verify-all-sequential](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)
 [![Python 3.13](https://img.shields.io/badge/python-3.13-3776AB?logo=python&logoColor=white)](https://docs.python.org/3.13/)
@@ -60,6 +60,7 @@ presented independently.
 | [Case 04 — Solar Open 2 x LangChain Deepagents](04-langchain-upstage-deepagents/) | Extend | Initialize deepagents at the code level using the LangChain Upstage SDK | Verified |
 | [Case 05 — Solar Open 2 x LangChain OpenWiki](05-langchain-openwiki-solar-open2/) | Extend | Use `openwiki` to document this repo and answer questions about it, powered by Solar Open 2 | Verified |
 | [Case 06 — Solar Open 2 x Grok Build](06-grok-build-solar-open2/) | Extend | Run xAI's Grok Build CLI against Solar Open 2 as a custom model provider | Verified |
+| [Case 07 — Solar Open 2 x Hermes Agent Helm](07-hermes-agent-helm-solar-open2/) | Extend | Deploy Hermes Agent via the `hermes-agent-helm` Helm chart onto a kind cluster and verify it reaches Solar Open 2 | Verified |
 
 **Review** cases validate that Solar Open 2 works correctly in an
 existing, official harness path. **Extend** cases go further, wiring
@@ -84,6 +85,9 @@ use, not something that requires bespoke tooling:
   generator, documenting this very repo.
 - **Case 06** — xAI's Grok Build CLI, via its own "any custom model"
   config mechanism.
+- **Case 07** — the community `hermes-agent-helm` Helm chart, deploying
+  the same Hermes Agent from Case 02 onto Kubernetes instead of a single
+  `docker run`.
 
 Every case is self-contained: its own `README.md`/`README-ko.md`, its own
 `scripts/verify.sh` that exercises real Upstage API calls (no mocks), and
@@ -125,6 +129,12 @@ mainstream framework already speaks, not a custom client:
   closed-source — see
   [Case 06's README](06-grok-build-solar-open2/README.md) for the full
   trace.
+- Case 07's `hermes-agent-helm` deploys Hermes Agent onto Kubernetes and
+  reaches Solar Open 2 through the exact same `upstage` provider Case 02
+  already verified — the deployment layer changes, the wire path to
+  Solar Open 2 doesn't. See
+  [Case 07's README](07-hermes-agent-helm-solar-open2/README.md) for the
+  full trace.
 
 The practical upshot: adding a new agent harness to this list is mostly
 configuration (base URL, auth style, model ID), not new integration code,
@@ -139,7 +149,7 @@ Every case here runs against Upstage's **default Tier 0** account limits:
 Building a reliable CI verification loop on top of that surfaced three
 real failure modes, and how each is handled:
 
-1. **Leftover budget between cases.** Running all 5 cases back-to-back in
+1. **Leftover budget between cases.** Running all cases back-to-back in
    one sequential job, a case starting right after a heavier one could
    inherit partial headroom. That headroom looked "enough" by a naive
    threshold check, but wasn't. Fixed: every case now waits for the
@@ -162,7 +172,7 @@ real failure modes, and how each is handled:
    [`PLAN.md`](PLAN.md)'s Case 05, Finding 4.
 
 This is why [`verify-all-sequential.yml`](.github/workflows/verify-all-sequential.yml)
-runs the 5 cases **one at a time**, waiting on real Upstage rate-limit
+runs every case **one at a time**, waiting on real Upstage rate-limit
 response headers instead of a fixed guessed delay. Expect a full run to
 take on the order of 10-20+ minutes on a Tier-0 account. A higher tier
 would make the waits mostly disappear, but nothing here assumes one.
