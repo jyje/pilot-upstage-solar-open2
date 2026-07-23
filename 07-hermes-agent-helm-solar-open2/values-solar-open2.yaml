@@ -1,0 +1,37 @@
+# values-solar-open2.yaml
+#
+# Hermes Agent via its built-in Upstage provider, pointed at Solar Open 2,
+# deployed with jyje/hermes-agent-helm. Mirrors that chart's own
+# charts/hermes-agent/values-upstage.yaml
+# (https://github.com/jyje/hermes-agent-helm/blob/v0.12.0/charts/hermes-agent/values-upstage.yaml),
+# with config.model.default swapped from the hosted solar-pro3 to the
+# open-weight solar-open2 (same provider, no other change needed per that
+# file's own comment). env.UPSTAGE_API_KEY is a dummy placeholder,
+# overridden at install time via --set-string; see scripts/verify.sh.
+#
+# tests.chat turns on the chart's built-in Helm-test Job so `helm test`
+# gates on a real, live round trip through Solar Open 2, not just a
+# render/lint check.
+#
+# This case runs the gateway pod directly (Helm test Job + kubectl exec)
+# and does not connect a messenger (Telegram/Discord) -- see this case's
+# README for how to add one via BotFather if you want to go further.
+
+config:
+  model:
+    provider: upstage
+    default: solar-open2
+  terminal:
+    backend: local
+
+env:
+  UPSTAGE_API_KEY: "DUMMY_replace_me_0000000000000000000000"
+  # Unused by the upstage provider; overrides the chart's OpenAI placeholder.
+  OPENAI_API_KEY: "unused"
+
+tests:
+  chat:
+    enabled: true
+    prompt: "Reply with exactly: hermes-k8s-ready"
+    maxTurns: 2
+    failOnError: true
