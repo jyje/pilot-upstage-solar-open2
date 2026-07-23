@@ -4,7 +4,7 @@
 
 <img height="240" src="https://raw.githubusercontent.com/jyje/pilot-upstage-solar-open2/main/docs/images/pilot-upstage-solar-open2.png" alt="Claude Code × Upstage Solar Open 2 × Hermes Agent"/>
 
-✨ Testing multiple agent harnesses on Upstage Solar Open2: Claude Code, Hermes Agent, Claude Agent SDK, LangChain Deepagents, and OpenWiki
+✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent, Claude Agent SDK, LangChain Deepagents, and OpenWiki
 
 [![verify-all-sequential](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)
 
