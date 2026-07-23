@@ -114,7 +114,10 @@ jobs:
       # overridden) to report what actually happened, and fails the job
       # itself if anything did. Also written to GITHUB_STEP_SUMMARY so
       # the recap renders as a table on the run's summary page, not just
-      # in this step's log.
+      # in this step's log. Grouped into two tables, Review and Extend,
+      # matching the Category column in the root README's Cases table —
+      # Case 01/02 validate Solar Open2 in an existing official harness
+      # path, Case 03-05 wire it into a broader ecosystem beyond that.
       - name: Recap
         if: always()
         run: |
@@ -124,6 +127,13 @@ jobs:
             "Case 03 — Solar Open2 x Claude Agent SDK"
             "Case 04 — Solar Open2 x LangChain Deepagents"
             "Case 05 — Solar Open2 x LangChain OpenWiki"
+          )
+          categories=(
+            "Review"
+            "Review"
+            "Extend"
+            "Extend"
+            "Extend"
           )
           outcomes=(
             "${{ steps.c01.outcome }}"
@@ -135,18 +145,30 @@ jobs:
 
           mark() { [ "$1" = success ] && echo "✅" || echo "❌"; }
 
-          {
-            echo "## verify-all-sequential recap"
+          recap_category() {
+            local label="$1"
+            echo "### $label"
             echo
             echo "| Case | solar-open2 |"
             echo "| --- | --- |"
+            for i in "${!names[@]}"; do
+              [ "${categories[$i]}" = "$label" ] || continue
+              outcome="${outcomes[$i]}"
+              echo "| ${names[$i]} | $(mark "$outcome") $outcome |"
+            done
+            echo
+          }
+
+          {
+            echo "## verify-all-sequential recap"
+            echo
+            recap_category "Review"
+            recap_category "Extend"
           } | tee -a "$GITHUB_STEP_SUMMARY"
 
           any_failed=false
           for i in "${!names[@]}"; do
-            outcome="${outcomes[$i]}"
-            echo "| ${names[$i]} | $(mark "$outcome") $outcome |" | tee -a "$GITHUB_STEP_SUMMARY"
-            [ "$outcome" = success ] || any_failed=true
+            [ "${outcomes[$i]}" = success ] || any_failed=true
           done
 
           if [ "$any_failed" = true ]; then
