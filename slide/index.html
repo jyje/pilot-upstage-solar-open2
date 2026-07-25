@@ -1,0 +1,57 @@
+<body>
+<div id="app-splash">
+  <div class="app-splash-eyebrow">UPSTAGE × OPEN SOURCE AGENTS</div>
+  <div class="app-splash-title">Solar Open 2</div>
+</div>
+<style>
+  #app-splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: #11111f;
+    color: #f8f7fb;
+    font-family: Inter, system-ui, sans-serif;
+  }
+  .app-splash-eyebrow {
+    padding: 0.38rem 0.62rem;
+    color: #11111f;
+    background: #c6ff72;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.105em;
+  }
+  .app-splash-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+  }
+</style>
+<script>
+  (function () {
+    var splash = document.getElementById('app-splash');
+    if (!splash) return;
+    var appEl = document.getElementById('app');
+    var removed = false;
+    function remove() {
+      if (removed) return;
+      removed = true;
+      splash.remove();
+    }
+    if (appEl) {
+      var observer = new MutationObserver(function () {
+        if (appEl.childElementCount > 0) {
+          remove();
+          observer.disconnect();
+        }
+      });
+      observer.observe(appEl, { childList: true });
+    }
+    setTimeout(remove, 4000);
+  })();
+</script>
+</body>

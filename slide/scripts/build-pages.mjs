@@ -19,14 +19,15 @@ const selectorPage = `<!doctype html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Solar Open 2 Agent Harnesses</title>
     <style>
+      *, *::before, *::after { box-sizing: border-box; }
       :root { color: #f8f7fb; background: #11111f; font-family: Inter, system-ui, sans-serif; }
       body { display: grid; min-height: 100vh; margin: 0; place-items: center; }
       main { width: min(42rem, calc(100% - 3rem)); }
       .eyebrow { display: inline-block; padding: .4rem .65rem; color: #11111f; background: #c6ff72; font-size: .72rem; font-weight: 800; letter-spacing: .08em; }
       h1 { margin: 1.2rem 0 .7rem; font-size: clamp(2.5rem, 8vw, 5rem); letter-spacing: -.07em; line-height: .95; }
       p { max-width: 43rem; color: #c6c3d1; line-height: 1.6; }
-      nav { display: flex; gap: .8rem; margin-top: 2rem; }
-      a { min-width: 8rem; padding: .9rem 1.1rem; border: 1px solid #4c2fff; color: #fff; text-align: center; text-decoration: none; }
+      nav { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+      a { flex: 1 1 8rem; min-width: 0; padding: .9rem 1.1rem; border: 1px solid #4c2fff; color: #fff; text-align: center; text-decoration: none; }
       a:hover, a:focus { color: #11111f; background: #c6ff72; border-color: #c6ff72; }
     </style>
   </head>
