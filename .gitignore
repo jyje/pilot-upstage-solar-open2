@@ -16,3 +16,6 @@ __pycache__/
 slide/node_modules/
 slide/dist/
 slide/pages/
+
+# Playwright MCP
+.playwright-mcp/
