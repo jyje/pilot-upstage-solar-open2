@@ -302,14 +302,14 @@
 
 .locale-switch {
   position: fixed;
+  top: 1.2rem;
   right: 1.45rem;
-  bottom: 1.2rem;
-  z-index: 20;
-  padding: 0.34rem 0.54rem;
+  z-index: 100;
+  padding: 0.5rem 0.85rem;
   border: 1px solid var(--upstage-line);
   color: var(--upstage-cyan);
   background: rgba(17, 17, 31, 0.82);
-  font-size: 0.6rem;
+  font-size: 0.9375rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   text-decoration: none;
