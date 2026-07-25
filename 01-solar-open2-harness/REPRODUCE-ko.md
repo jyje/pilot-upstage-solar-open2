@@ -4,9 +4,9 @@
 
 [← 이 케이스의 README로 돌아가기](README-ko.md) · [← 전체 케이스 유즈케이스 가이드](../docs/REPRODUCE-ko.md)
 
-목표: Claude Code 자체를 Solar Open 2로, 서로 독립된 두 가지 방식(Case
-01A, Case 01B)으로 구동하고, 커스텀 스킬과 서브에이전트가 이 백엔드에서도
-그대로 동작하는지 확인합니다.
+목표: Claude Code 자체를 Solar Open 2로, 서로 독립된 세 가지 방식(Case
+01A, Case 01B, Case 01C)으로 구동하고, 커스텀 스킬과 서브에이전트가 이
+백엔드에서도 그대로 동작하는지 확인합니다.
 
 전체 이야기, 발견 사항, 검증 로그: [`README-ko.md`](README-ko.md).
 
@@ -14,7 +14,7 @@
 [`docs/REPRODUCE-ko.md`](../docs/REPRODUCE-ko.md)를 먼저 읽어보세요 — 이
 문서는 둘 다 이미 준비됐다고 가정합니다.
 
-`scripts/verify.sh`는 두 서브 케이스를 한 번에 실행합니다 — 로컬에서
+`scripts/verify.sh`는 세 서브 케이스를 한 번에 실행합니다 — 로컬에서
 따로 골라 실행할 필요는 없습니다.
 
 ## 필요한 것
@@ -22,6 +22,7 @@
 - Node.js 18 이상
 - 공식 Claude Code CLI (Case 01A)
 - Upstage의 `claude-upstage` 래퍼 (Case 01B)
+- Docker (Case 01C)
 
 ## 설치 — Case 01A: 공식 Claude Code CLI
 
@@ -44,6 +45,12 @@ less claude-upstage.sh
 sh claude-upstage.sh
 ```
 
+## 설치 — Case 01C: `jyje/claude-docker`
+
+```bash
+docker pull ghcr.io/jyje/claude-docker
+```
+
 ## 실행
 
 리포 루트에서 먼저 이 디렉토리로 이동한 뒤, 스크립트를 실행하세요:
@@ -56,8 +63,9 @@ export UPSTAGE_API_KEY="up_..."
 
 ## 성공했을 때 화면
 
-스크립트는 여섯 개의 체크 결과를 한 줄씩, 각각 `✓`로 시작하게
-출력합니다 — 앞의 두 줄은 Case 01B, 나머지는 Case 01A에 대한 것입니다:
+스크립트는 일곱 개의 체크 결과를 한 줄씩, 각각 `✓`로 시작하게
+출력합니다 — 앞의 두 줄은 Case 01B, 가운데 네 줄은 Case 01A, 마지막
+한 줄은 Case 01C에 대한 것입니다:
 
 ```
 ✓ claude-upstage doctor passed
@@ -65,6 +73,7 @@ export UPSTAGE_API_KEY="up_..."
 ✓ claude -p "hello" (official CLI, alternate API) produced a response
 ✓ git-commit-helper skill format honored via solar-open2
 ✓ subagent call completed on solar-open2 and saw the real directory
+✓ claude-docker "hello" (containerized official CLI) produced a response
 ✓ All checks passed.
 ```
 

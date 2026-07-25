@@ -10,6 +10,10 @@
 #      checked against its gitmoji + type(domain) format contract
 #   D. a subagent (Task tool) call, to confirm CLAUDE_CODE_SUBAGENT_MODEL
 #      keeps subagent traffic on the same model too
+#   E. the same official `claude` CLI, but run inside the community
+#      `jyje/claude-docker` image instead of a bare npm install — the
+#      same ANTHROPIC_* env vars just passed through `docker run -e`,
+#      confirming Case 01A's recipe survives a containerized install too
 #
 # Each method prints up to a ~700-char, line-wrapped preview of its real
 # response (noise like the "connectors are disabled" warning stripped,
@@ -27,7 +31,8 @@
 # keep answering as whatever model that wrapper defaults to; this script
 # doesn't assert Method A's model, only that it responds.
 #
-# Requires: `claude` and `claude-upstage` on PATH, UPSTAGE_API_KEY set.
+# Requires: `claude` and `claude-upstage` on PATH, `docker` on PATH,
+# UPSTAGE_API_KEY set.
 
 set -euo pipefail
 
@@ -109,6 +114,7 @@ claude_solar() {
 [ -n "${UPSTAGE_API_KEY:-}" ] || fail "UPSTAGE_API_KEY is not set"
 command -v claude >/dev/null 2>&1 || fail "claude CLI not found (npm install -g @anthropic-ai/claude-code)"
 command -v claude-upstage >/dev/null 2>&1 || fail "claude-upstage not found (see README.md Installation)"
+command -v docker >/dev/null 2>&1 || fail "docker not found (Method E needs jyje/claude-docker)"
 
 echo "== Model under test: $SOLAR_MODEL =="
 
@@ -185,6 +191,32 @@ printf '%s' "$method_d_out" | grep -q 'README.md' \
   || fail "subagent call didn't report README.md after 5 attempts: $method_d_out"
 ok "subagent call completed on $SOLAR_MODEL and saw the real directory"
 preview "$method_d_out"
+
+echo
+echo "== Method E: jyje/claude-docker (community Docker image) =="
+docker pull ghcr.io/jyje/claude-docker >/dev/null 2>&1 \
+  || fail "docker pull ghcr.io/jyje/claude-docker failed"
+method_e_out=""
+for attempt in 1 2 3 4 5; do
+  if method_e_out="$(docker run --rm \
+    -e ANTHROPIC_BASE_URL="https://api.upstage.ai" \
+    -e ANTHROPIC_AUTH_TOKEN="$UPSTAGE_API_KEY" \
+    -e ANTHROPIC_MODEL="$SOLAR_MODEL" \
+    -e ANTHROPIC_SMALL_FAST_MODEL="$SOLAR_MODEL" \
+    -e ANTHROPIC_DEFAULT_HAIKU_MODEL="$SOLAR_MODEL" \
+    -e ANTHROPIC_DEFAULT_SONNET_MODEL="$SOLAR_MODEL" \
+    -e ANTHROPIC_DEFAULT_OPUS_MODEL="$SOLAR_MODEL" \
+    -e ANTHROPIC_DEFAULT_FABLE_MODEL="$SOLAR_MODEL" \
+    -e CLAUDE_CODE_SUBAGENT_MODEL="$SOLAR_MODEL" \
+    -e CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
+    ghcr.io/jyje/claude-docker claude -p "hello" 2>&1)" && [ -n "$method_e_out" ]; then
+    break
+  fi
+  [ "$attempt" -lt 5 ] && backoff
+done
+[ -n "$method_e_out" ] || fail "claude-docker \"hello\" produced no output after 5 attempts"
+ok "claude-docker \"hello\" (containerized official CLI) produced a response"
+preview "$method_e_out"
 
 echo
 ok "All checks passed."

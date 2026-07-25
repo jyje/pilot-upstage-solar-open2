@@ -4,9 +4,9 @@
 
 [← back to this case's README](README.md) · [← all cases' use case guides](../docs/REPRODUCE.md)
 
-Goal: run Claude Code itself against Solar Open 2, two independent ways
-(Case 01A, Case 01B), and confirm its custom skills and subagents still
-work through that backend.
+Goal: run Claude Code itself against Solar Open 2, three independent
+ways (Case 01A, Case 01B, Case 01C), and confirm its custom skills and
+subagents still work through that backend.
 
 Full narrative, findings, and verified transcripts: [`README.md`](README.md).
 
@@ -14,14 +14,15 @@ Haven't set up `UPSTAGE_API_KEY` or read about the shared Tier-0 rate
 limit yet? Start at [`docs/REPRODUCE.md`](../docs/REPRODUCE.md) first —
 this page assumes both are already handled.
 
-`scripts/verify.sh` runs both sub-cases in one pass — there's no need to
-pick just one to try locally.
+`scripts/verify.sh` runs all three sub-cases in one pass — there's no
+need to pick just one to try locally.
 
 ## What you need
 
 - Node.js 18+
 - the official Claude Code CLI (Case 01A)
 - Upstage's `claude-upstage` wrapper (Case 01B)
+- Docker (Case 01C)
 
 ## Install — Case 01A: official Claude Code CLI
 
@@ -44,6 +45,12 @@ less claude-upstage.sh
 sh claude-upstage.sh
 ```
 
+## Install — Case 01C: `jyje/claude-docker`
+
+```bash
+docker pull ghcr.io/jyje/claude-docker
+```
+
 ## Run it
 
 From the repo root, `cd` into this directory first, then run its script:
@@ -56,8 +63,9 @@ export UPSTAGE_API_KEY="up_..."
 
 ## What success looks like
 
-The script prints six checks, one per line, each starting with `✓` — the
-first two cover Case 01B, the rest cover Case 01A:
+The script prints seven checks, one per line, each starting with `✓` —
+the first two cover Case 01B, the middle four cover Case 01A, the last
+covers Case 01C:
 
 ```
 ✓ claude-upstage doctor passed
@@ -65,6 +73,7 @@ first two cover Case 01B, the rest cover Case 01A:
 ✓ claude -p "hello" (official CLI, alternate API) produced a response
 ✓ git-commit-helper skill format honored via solar-open2
 ✓ subagent call completed on solar-open2 and saw the real directory
+✓ claude-docker "hello" (containerized official CLI) produced a response
 ✓ All checks passed.
 ```
 

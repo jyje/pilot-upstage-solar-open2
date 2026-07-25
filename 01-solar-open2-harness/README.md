@@ -6,24 +6,29 @@
 See [`REPRODUCE.md`](REPRODUCE.md) for step-by-step local setup.
 
 **Status:** Verified. Claude Code runs on Upstage's Solar Open 2 model in
-two independent ways — Case 01A and Case 01B below. Its custom-skill
-system and its subagent/Task calls both work through that same backend
-too. All four checks are confirmed end to end, locally and in CI.
+three independent ways — Case 01A, Case 01B, and Case 01C below. Its
+custom-skill system and its subagent/Task calls both work through that
+same backend too. All five checks are confirmed end to end, locally and
+in CI.
 
 ## Goal
 
 Show that a Claude Code harness can run on Upstage's **Solar Open 2**
 model instead of Anthropic's own models.
 
-This case verifies two independent, self-contained ways to do that. Each
-one gets its own sub-case below, with its own setup steps and its own
-verified transcript:
+This case verifies three independent, self-contained ways to do that.
+Each one gets its own sub-case below, with its own setup steps and its
+own verified transcript:
 
 - **[Case 01A](#case-01a--official-claude-code-cli)** — the **official**
   `claude` CLI, configured with plain environment variables. No wrapper,
   no proxy.
 - **[Case 01B](#case-01b--claude-upstage-wrapper)** — Upstage's own
   `claude-upstage` convenience wrapper.
+- **[Case 01C](#case-01c--jyjeclaude-docker)** — the official `claude`
+  CLI again, but run inside
+  [`jyje/claude-docker`](https://github.com/jyje/claude-docker), a
+  community-maintained Docker image, instead of a bare npm install.
 
 Case 01A's configuration is also what the rest of the harness runs on.
 This repo's custom `.claude/skills/` and its subagent/Task-tool support
@@ -31,7 +36,7 @@ are both verified against Case 01A specifically, further down in that
 section.
 
 You'll need an API key from <https://console.upstage.ai/api-keys> for
-either sub-case.
+any of the three sub-cases.
 
 ---
 
@@ -293,14 +298,87 @@ chat completion.
 
 ---
 
+## Case 01C — `jyje/claude-docker`
+
+### How it works
+
+[`jyje/claude-docker`](https://github.com/jyje/claude-docker) is a
+community-maintained Docker image (`ghcr.io/jyje/claude-docker`) that
+packages the official `@anthropic-ai/claude-code` npm release on top of
+Node.js, with no Anthropic affiliation and no changes to the `claude`
+binary itself. Its entrypoint just runs `claude` (or whatever command you
+pass after the image name), so any environment variable passed through
+`docker run -e` reaches the same stock CLI Case 01A talks to directly —
+including the full `ANTHROPIC_*` model-slot recipe.
+
+That means Case 01C needs the exact same env var list as Case 01A, just
+supplied to `docker run` instead of the host shell:
+
+```bash
+docker run --rm \
+  -e ANTHROPIC_BASE_URL="https://api.upstage.ai" \
+  -e ANTHROPIC_AUTH_TOKEN="$UPSTAGE_API_KEY" \
+  -e ANTHROPIC_MODEL="solar-open2" \
+  -e ANTHROPIC_SMALL_FAST_MODEL="solar-open2" \
+  -e ANTHROPIC_DEFAULT_HAIKU_MODEL="solar-open2" \
+  -e ANTHROPIC_DEFAULT_SONNET_MODEL="solar-open2" \
+  -e ANTHROPIC_DEFAULT_OPUS_MODEL="solar-open2" \
+  -e ANTHROPIC_DEFAULT_FABLE_MODEL="solar-open2" \
+  -e CLAUDE_CODE_SUBAGENT_MODEL="solar-open2" \
+  ghcr.io/jyje/claude-docker claude -p "hello"
+```
+
+No fork, no patch, no image customization. `ghcr.io/jyje/claude-docker`
+is used exactly as published — the same image anyone can `docker pull`
+from its GitHub Container Registry listing.
+
+### Installation
+
+Requires Docker:
+
+```bash
+docker pull ghcr.io/jyje/claude-docker
+```
+
+This repo doesn't pin a tag, so `docker pull` always grabs whatever
+`ghcr.io/jyje/claude-docker:latest` resolves to at verification time —
+same policy as Case 01A/01B's unpinned CLI installs.
+
+### Verified: containerized hello check
+
+**Evidence run:** [browse every run](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)
+for the latest.
+
+```bash
+docker run --rm \
+  -e ANTHROPIC_BASE_URL="https://api.upstage.ai" \
+  -e ANTHROPIC_AUTH_TOKEN="$UPSTAGE_API_KEY" \
+  -e ANTHROPIC_MODEL="solar-open2" \
+  ghcr.io/jyje/claude-docker claude -p "hello"
+```
+> Hello! 👋 I'm Solar Open2, an AI assistant built by Upstage AI. I'm
+> here to help you with coding tasks, research, analysis, and more.
+> What can I help you with today?
+
+This is what `scripts/verify.sh` calls **Method E**. Same backend, same
+model, same `claude` binary as Case 01A — the only variable being
+exercised here is the install path: a container instead of a bare
+`npm install -g`. Confirms Case 01A's env var recipe isn't relying on
+anything specific to a host npm install (a local config file, a cached
+credential, etc.) — it survives an isolated, disposable container
+unchanged.
+
+---
+
 ## Verification
 
-[`scripts/verify.sh`](scripts/verify.sh) runs both sub-cases and the
+[`scripts/verify.sh`](scripts/verify.sh) runs all three sub-cases and the
 skill/subagent checks in one pass: `claude-upstage doctor`, Case 01B's
 piped-stdin check (Method A), Case 01A's hello check (Method B), the
-explicit `git-commit-helper` skill invocation (Method C), and a subagent
-call gated on `CLAUDE_CODE_SUBAGENT_MODEL` (Method D). It fails loudly if
-any of them don't hold up.
+explicit `git-commit-helper` skill invocation (Method C), a subagent
+call gated on `CLAUDE_CODE_SUBAGENT_MODEL` (Method D), and Case 01C's
+containerized hello check (Method E). It fails loudly if any of them
+don't hold up.
 
 The skill check doesn't pin exact wording, since the title text isn't
 deterministic. Instead it checks the two structural things the skill's

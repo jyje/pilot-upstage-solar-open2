@@ -53,11 +53,13 @@ it without needing any of the others.
 - **Expected output**: a working `.claude/skills/` setup in
   `01-solar-open2-harness/`, plus a README documenting the setup and a
   short demo transcript/recording.
-- **Result**: done. Verified two ways — the official `claude-upstage`
+- **Result**: done. Verified three ways — the official `claude-upstage`
   wrapper (piped stdin, since it doesn't forward a `-p`-style flag to
-  `claude`) and the plain `claude` CLI pointed at Upstage's
-  Anthropic-compatible endpoint via `ANTHROPIC_BASE_URL`/`ANTHROPIC_AUTH_TOKEN`.
-  Both confirmed locally and wired into CI
+  `claude`), the plain `claude` CLI pointed at Upstage's
+  Anthropic-compatible endpoint via `ANTHROPIC_BASE_URL`/`ANTHROPIC_AUTH_TOKEN`,
+  and that same plain-env-var recipe run inside the community
+  `jyje/claude-docker` image instead of a bare npm install (Case 01C).
+  All three confirmed locally and wired into CI
   (`.github/workflows/verify-all-sequential.yml`). See
   `01-solar-open2-harness/README.md` for transcripts and the finding about
   `claude-upstage`'s argument passthrough.

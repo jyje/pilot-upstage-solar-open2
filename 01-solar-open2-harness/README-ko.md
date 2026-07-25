@@ -6,10 +6,10 @@
 [`REPRODUCE-ko.md`](REPRODUCE-ko.md)에서 단계별 로컬 실행 방법을
 확인하세요.
 
-**상태:** 검증 완료. Claude Code는 Upstage의 Solar Open 2 모델을 사용하여 두
-가지 독립된 방식으로 동작합니다 — 아래의 Case 01A와 Case 01B입니다.
-커스텀 스킬 시스템과 서브에이전트/Task 호출도 같은 환경에서 잘
-동작합니다. 이 네 가지 체크는 모두 로컬과 CI에서 종단 간
+**상태:** 검증 완료. Claude Code는 Upstage의 Solar Open 2 모델을 사용하여 세
+가지 독립된 방식으로 동작합니다 — 아래의 Case 01A, Case 01B, Case
+01C입니다. 커스텀 스킬 시스템과 서브에이전트/Task 호출도 같은
+환경에서 잘 동작합니다. 이 다섯 가지 체크는 모두 로컬과 CI에서 종단 간
 확인했습니다.
 
 ## 목표
@@ -17,18 +17,22 @@
 Claude Code 하네스가 Anthropic 자체 모델이 아니라 Upstage의 **Solar
 Open 2** 모델로도 동작함을 보여주는 것이 목표입니다.
 
-이를 위해 서로 독립된 두 가지 방식을 검증합니다. 각 방식은 아래에서 별도
+이를 위해 서로 독립된 세 가지 방식을 검증합니다. 각 방식은 아래에서 별도
 서브 케이스로 다루며, 각자 자기만의 설치 방법과 검증 로그를 갖습니다:
 
 - **[Case 01A](#case-01a--공식-claude-code-cli)** — **공식** `claude`
   CLI를 순수 환경변수만으로 설정합니다. 래퍼도, 프록시도 없습니다.
 - **[Case 01B](#case-01b--claude-upstage-래퍼)** — Upstage 공식
   `claude-upstage` 편의 래퍼입니다.
+- **[Case 01C](#case-01c--jyjeclaude-docker)** — 다시 공식 `claude`
+  CLI지만, 순정 npm 설치 대신 커뮤니티가 관리하는 Docker 이미지
+  [`jyje/claude-docker`](https://github.com/jyje/claude-docker) 안에서
+  실행합니다.
 
 이 리포의 커스텀 `.claude/skills/`와 서브에이전트/Task-tool 지원은 Case
 01A의 설정을 기준으로 검증합니다. 자세한 내용은 해당 절에서 다룹니다.
 
-두 서브 케이스 모두 <https://console.upstage.ai/api-keys>에서 발급받은
+세 서브 케이스 모두 <https://console.upstage.ai/api-keys>에서 발급받은
 API 키가 필요합니다.
 
 ---
@@ -292,14 +296,86 @@ Case 01A와 마찬가지로 이 리포의 실제 `AGENTS.md`/상태를 읽고 �
 
 ---
 
+## Case 01C — `jyje/claude-docker`
+
+### 동작 원리
+
+[`jyje/claude-docker`](https://github.com/jyje/claude-docker)는
+`@anthropic-ai/claude-code`의 공식 npm 릴리스를 Node.js 위에 그대로
+패키징한, 커뮤니티가 관리하는 Docker 이미지입니다
+(`ghcr.io/jyje/claude-docker`). Anthropic과 무관하며, `claude` 바이너리
+자체를 전혀 바꾸지 않습니다. 엔트리포인트는 그저 `claude`(또는 이미지
+이름 뒤에 넘긴 다른 명령)를 실행할 뿐이라, `docker run -e`로 넘긴 모든
+환경변수가 Case 01A가 직접 이야기하는 것과 동일한 순정 CLI에 그대로
+전달됩니다 — 전체 `ANTHROPIC_*` 모델-슬롯 레시피까지 포함해서요.
+
+즉 Case 01C도 Case 01A와 완전히 같은 환경변수 목록이 필요하며, 다만
+호스트 셸이 아니라 `docker run`에 넘긴다는 점만 다릅니다:
+
+```bash
+docker run --rm \
+  -e ANTHROPIC_BASE_URL="https://api.upstage.ai" \
+  -e ANTHROPIC_AUTH_TOKEN="$UPSTAGE_API_KEY" \
+  -e ANTHROPIC_MODEL="solar-open2" \
+  -e ANTHROPIC_SMALL_FAST_MODEL="solar-open2" \
+  -e ANTHROPIC_DEFAULT_HAIKU_MODEL="solar-open2" \
+  -e ANTHROPIC_DEFAULT_SONNET_MODEL="solar-open2" \
+  -e ANTHROPIC_DEFAULT_OPUS_MODEL="solar-open2" \
+  -e ANTHROPIC_DEFAULT_FABLE_MODEL="solar-open2" \
+  -e CLAUDE_CODE_SUBAGENT_MODEL="solar-open2" \
+  ghcr.io/jyje/claude-docker claude -p "hello"
+```
+
+포크도, 패치도, 이미지 커스터마이징도 없습니다.
+`ghcr.io/jyje/claude-docker`는 누구나 GitHub Container Registry에서
+`docker pull`할 수 있는, 게시된 그대로의 이미지입니다.
+
+### 설치
+
+Docker가 필요합니다:
+
+```bash
+docker pull ghcr.io/jyje/claude-docker
+```
+
+이 리포는 태그를 고정하지 않습니다. 그래서 `docker pull`은 항상 검증
+시점의 `ghcr.io/jyje/claude-docker:latest`가 가리키는 이미지를
+받습니다 — Case 01A/01B의 버전 미고정 정책과 동일합니다.
+
+### 검증: 컨테이너 hello 체크
+
+**검증 실행:** [최신 결과를 보려면 전체 실행 목록](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)을
+확인하세요.
+
+```bash
+docker run --rm \
+  -e ANTHROPIC_BASE_URL="https://api.upstage.ai" \
+  -e ANTHROPIC_AUTH_TOKEN="$UPSTAGE_API_KEY" \
+  -e ANTHROPIC_MODEL="solar-open2" \
+  ghcr.io/jyje/claude-docker claude -p "hello"
+```
+> Hello! 👋 I'm Solar Open2, an AI assistant built by Upstage AI. I'm
+> here to help you with coding tasks, research, analysis, and more.
+> What can I help you with today?
+
+`scripts/verify.sh`에서는 이를 **방식 E**라고 부릅니다. Case 01A와
+동일한 백엔드, 동일한 모델, 동일한 `claude` 바이너리입니다 — 여기서
+바뀌는 유일한 변수는 설치 경로입니다: 순정 `npm install -g` 대신
+컨테이너입니다. Case 01A의 환경변수 레시피가 호스트 npm 설치 특유의
+무언가(로컬 설정 파일, 캐시된 자격 증명 등)에 의존하지 않는다는 것을
+확인해줍니다 — 격리된 일회용 컨테이너에서도 그대로 동작합니다.
+
+---
+
 ## 검증
 
-[`scripts/verify.sh`](scripts/verify.sh)는 두 서브 케이스와
+[`scripts/verify.sh`](scripts/verify.sh)는 세 서브 케이스와
 스킬/서브에이전트 체크를 한 번에 실행합니다: `claude-upstage doctor`,
 Case 01B의 파이프 stdin 체크(방식 A), Case 01A의 hello 체크(방식 B),
-명시적 `git-commit-helper` 스킬 호출(방식 C), 그리고
-`CLAUDE_CODE_SUBAGENT_MODEL`로 게이팅된 서브에이전트 호출(방식 D)까지
-입니다. 하나라도 어긋나면 체크에 실패합니다.
+명시적 `git-commit-helper` 스킬 호출(방식 C),
+`CLAUDE_CODE_SUBAGENT_MODEL`로 게이팅된 서브에이전트 호출(방식 D),
+그리고 Case 01C의 컨테이너 hello 체크(방식 E)까지입니다. 하나라도
+어긋나면 체크에 실패합니다.
 
 스킬 체크는 정확한 문구를 고정하지 않습니다. 타이틀 텍스트는
 결정론적이지 않기 때문입니다. 대신 스킬 형식 규약이 요구하는 두 가지
