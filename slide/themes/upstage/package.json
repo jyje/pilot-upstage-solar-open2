@@ -1,0 +1,8 @@
+{
+  "name": "slidev-theme-upstage",
+  "private": true,
+  "version": "0.1.0",
+  "engines": {
+    "slidev": ">=52.0.0"
+  }
+}

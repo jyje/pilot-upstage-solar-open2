@@ -11,3 +11,8 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# Slidev
+slide/node_modules/
+slide/dist/
+slide/pages/

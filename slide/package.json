@@ -1,0 +1,28 @@
+{
+  "name": "pilot-upstage-solar-open2-slides",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "slidev --open",
+    "dev:en": "slidev slides.md --base /en/ --router-mode hash --port 3030 --open",
+    "dev:ko": "slidev slides.md --base /ko/ --router-mode hash --port 3031 --open",
+    "build": "slidev build",
+    "build:pages": "node scripts/build-pages.mjs",
+    "preview": "slidev build && npx serve dist",
+    "preview:pages": "npm run build:pages && vite preview --outDir dist --port 3030",
+    "test:e2e": "node test-slidev.mjs"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^52.18.0",
+    "@slidev/client": "^52.18.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17"
+  },
+  "packageManager": "npm@10.0.0",
+  "overrides": {
+    "@hono/node-server": "^2.0.5",
+    "dompurify": "^3.4.12"
+  }
+}
