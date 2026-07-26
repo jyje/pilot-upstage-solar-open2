@@ -369,90 +369,21 @@ fonts:
 
 ---
 
-# Cross-Cutting Learnings
+# <Localized en="Verification & CI" ko="검증 & CI" />
 
-## Patterns that emerged across all 7 cases
-
-<v-click>
-
-### 🔑 Authentication: Bearer, not x-api-key
-
-Upstage's Anthropic-compatible endpoint **rejects `x-api-key`** with 401.
-
-Required: `Authorization: Bearer <key>` via `ANTHROPIC_AUTH_TOKEN`.
-
-| Context | What to set |
-|---|---|
-| Claude Code CLI / SDK | `ANTHROPIC_AUTH_TOKEN` |
-| LangChain `ChatAnthropic` | ❌ Don't use — it sends `x-api-key` |
-| LangChain `ChatOpenAI` / `ChatUpstage` | ✅ `OPENAI_COMPATIBLE_API_KEY` (Bearer) |
-| Grok Build / Hermes Agent | `UPSTAGE_API_KEY` → Bearer via provider |
-
-</v-click>
+## <Localized en="Every case, automatically verified on every relevant commit" ko="관련 커밋마다 모든 케이스를 자동으로 검증합니다" />
 
 <v-click>
 
-### 🐛 Streaming bug: tool call function names dropped
+### <Localized en="Verification architecture" ko="검증 아키텍처" />
 
-Upstage's **streamed** Chat Completions responses return `function.name = ""`
-for tool calls. Non-streamed responses are correct.
+<span><Localized en="Each case is" ko="각 케이스는" /> **<Localized en="self-contained" ko="독립적으로 완결" />**<Localized en=":" ko="되어 있습니다:" /></span>
 
-Affected cases: **05** (openwiki — patched with `OPENWIKI_DISABLE_STREAMING`),
-**06** (Grok Build — no workaround, closed-source).
+- <Localized en="Own" ko="자체" /> `scripts/verify.sh` — <Localized en="runs all checks for that case" ko="해당 케이스의 모든 검증을 실행" />
+- <Localized en="Own" ko="자체" /> `README.md` / `README-ko.md` — <Localized en="documentation and evidence" ko="문서와 증거" />
+- <Localized en="Own" ko="자체" /> `.github/workflows/verify-XX-*.yml` (<Localized en="where applicable" ko="해당하는 경우" />) — <Localized en="standalone CI" ko="독립 실행 CI" />
 
-</v-click>
-
-<v-click>
-
-### 🐍 Python 3.14 ecosystem gap
-
-`langchain-upstage` depends on `tokenizers` — no `cp314` wheel exists.
-Source build fails with a real `cargo`/PyO3 compile error.
-
-**All Python cases pin to 3.13** until an upstream wheel ships.
-
-</v-click>
-
-<v-click>
-
-### 🎯 Skill / tool invocation: explicit beats autonomous
-
-Solar Open 2 follows a skill's contract precisely **when explicitly told to load it**.
-But it doesn't reliably decide on its own that a skill applies from trigger phrases alone.
-
-**Takeaway:** name the skill explicitly in prompts.
-
-</v-click>
-
-<v-click>
-
-### 🌐 Two wire paths to the same model
-
-| Wire path | Endpoint | Used by |
-|---|---|---|
-| **Anthropic Messages API** (compat layer) | `https://api.upstage.ai` | Case 01, Case 03 |
-| **OpenAI Chat Completions** (native) | `https://api.upstage.ai/v1/solar` | Case 04, Case 05, Case 06, Case 07 |
-
-Both reach Solar Open 2. The OpenAI path avoids the `ANTHROPIC_AUTH_TOKEN` dance.
-
-</v-click>
-
----
-
-# Verification & CI
-
-## Every case, automatically verified on every relevant commit
-
-<v-click>
-
-### Verification architecture
-
-Each case is **self-contained**:
-- Own `scripts/verify.sh` — runs all checks for that case
-- Own `README.md` / `README-ko.md` — documentation and evidence
-- Own `.github/workflows/verify-XX-*.yml` (where applicable) — standalone CI
-
-All cases also run together in:
+<span><Localized en="All cases also run together in:" ko="모든 케이스는 다음에서도 함께 실행됩니다:" /></span>
 
 ```yaml
 # .github/workflows/verify-all-sequential.yml
@@ -466,124 +397,182 @@ jobs:
 
 <v-click>
 
-### Two execution modes
+### <Localized en="Two execution modes" ko="두 가지 실행 모드" />
 
-| Mode | Trigger | Use case |
+| <Localized en="Mode" ko="모드" /> | <Localized en="Trigger" ko="트리거" /> | <Localized en="Use case" ko="용도" /> |
 |---|---|---|
-| **Sequential (all cases)** | Push to `main`, PRs | Catch regressions across the full matrix |
-| **Single-case manual dispatch** | GitHub Actions UI | Debug one case without waiting for the full run |
+| **<Localized en="Sequential (all cases)" ko="순차 실행 (전체 케이스)" />** | `main` <Localized en="push, PRs" ko="브랜치 푸시, PR" /> | <Localized en="Catch regressions across the full matrix" ko="전체 매트릭스의 회귀를 감지" /> |
+| **<Localized en="Single-case manual dispatch" ko="단일 케이스 수동 실행" />** | GitHub Actions UI | <Localized en="Debug one case without waiting for the full run" ko="전체 실행을 기다리지 않고 케이스 하나만 디버깅" /> |
 
-All workflows reuse the **same `UPSTAGE_API_KEY` repository secret** —
-no per-case secrets, no per-case cost overhead.
+<span><Localized en="All workflows reuse the" ko="모든 워크플로우는" /> **<Localized en="same" ko="동일한" />** `UPSTAGE_API_KEY` <Localized en="repository secret — no per-case secrets, no per-case cost overhead." ko="저장소 시크릿을 재사용합니다 — 케이스별 시크릿도, 케이스별 비용 부담도 없습니다." /></span>
 
 </v-click>
 
 <v-click>
 
-### Evidence: real, unedited CI transcripts
+### <Localized en="Evidence: real, unedited CI transcripts" ko="증거: 가공하지 않은 실제 CI 로그" />
 
-Every case's README links to the actual CI run — not a curated extract:
+<span><Localized en="Every case's README links to the actual CI run — not a curated extract:" ko="모든 케이스의 README는 가공한 발췌가 아니라 실제 CI 실행 링크를 담고 있습니다:" /></span>
 
 ```
 Evidence run: verify job, 2026-07-23
 https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 ```
 
-Output is shown **up to ~700 characters** (10+ wrapped lines), specifically
-so you can judge how the model *reasons*, not just that it responded.
-Nothing is hand-picked or edited.
+<span><Localized en="Output is shown" ko="출력은" /> **<Localized en="up to ~700 characters" ko="최대 약 700자" />** <Localized en="(10+ wrapped lines), specifically so you can judge how the model" ko="(10줄 이상)까지 보여줍니다. 응답했다는 사실만이 아니라 모델이 어떻게" /> *<Localized en="reasons" ko="추론하는지" />*<Localized en=", not just that it responded. Nothing is hand-picked or edited." ko="를 판단할 수 있게 하기 위해서입니다. 임의로 고르거나 편집한 부분은 없습니다." /></span>
 
 </v-click>
 
 ---
 
-# Verification & CI
+# <Localized en="Verification & CI" ko="검증 & CI" />
 
-## Status dashboard
+## <Localized en="Status dashboard" ko="상태 대시보드" />
 
-| Case | Status | Category | Workflow |
+| <Localized en="Case" ko="케이스" /> | <Localized en="Status" ko="상태" /> | <Localized en="Category" ko="구분" /> | <Localized en="Workflow" ko="워크플로우" /> |
 |---|---|---|---|
-| 01 — Claude Code | ✅ Verified | Review | `verify-all-sequential` |
-| 02 — Hermes Agent | ✅ Verified | Review | `verify-all-sequential` |
-| 03 — Claude Agent SDK | ✅ Verified | Extend | `verify-all-sequential` |
-| 04 — LangChain DeepAgents | ✅ Verified | Extend | `verify-all-sequential` |
-| 05 — LangChain OpenWiki | ✅ Verified | Extend | `verify-all-sequential` |
-| 06 — Grok Build | ✅ Verified | Extend | `verify-all-sequential` + standalone |
-| 07 — Hermes Agent Helm | ✅ Verified | Extend | `verify-all-sequential` + standalone |
+| 01 — Claude Code | ✅ <Localized en="Verified" ko="검증 완료" /> | Review | `verify-all-sequential` |
+| 02 — Hermes Agent | ✅ <Localized en="Verified" ko="검증 완료" /> | Review | `verify-all-sequential` |
+| 03 — Claude Agent SDK | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` |
+| 04 — LangChain DeepAgents | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` |
+| 05 — LangChain OpenWiki | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` |
+| 06 — Grok Build | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` <Localized en="+ standalone" ko="+ 단독 실행" /> |
+| 07 — Hermes Agent Helm | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` <Localized en="+ standalone" ko="+ 단독 실행" /> |
 
 ---
 
-# Future Directions
+# <Localized en="Cross-Cutting Learnings" ko="공통 패턴" />
 
-## What's next for Solar Open 2 × agent harnesses
+## <Localized en="Patterns that emerged across all 7 cases" ko="7개 케이스 전반에서 나타난 패턴" />
 
 <v-click>
 
-### Immediate
+### <Localized en="🔑 Authentication: Bearer, not x-api-key" ko="🔑 인증: x-api-key가 아니라 Bearer" />
 
-- **Python 3.14 support** — track `tokenizers` `cp314` wheel availability;
-  move Cases 03 and 04 back to 3.14 once it ships
-- **OpenWiki streaming fix upstream** — `OPENWIKI_DISABLE_STREAMING` is
-  currently in a `jyje/openwiki` fork; getting it merged into `langchain-ai/openwiki`
-  would unblock the public npm release
-- **Upstage streaming bug resolution** — the `function.name = ""` bug affects
-  Cases 05 and 06; getting it fixed upstream unblocks tool-calling for the
-  entire ecosystem
+<span><Localized en="Upstage's Anthropic-compatible endpoint rejects" ko="Upstage의 Anthropic 호환 엔드포인트는" /> `x-api-key` <Localized en="with a" ko="를" /> **401**<Localized en="." ko="로 거부합니다." /></span>
+
+<span><Localized en="Required:" ko="필요한 설정:" /> `Authorization: Bearer <key>` (<Localized en="via" ko="" />`ANTHROPIC_AUTH_TOKEN`)<Localized en="." ko="" /></span>
+
+| <Localized en="Context" ko="맥락" /> | <Localized en="What to set" ko="설정할 값" /> |
+|---|---|
+| Claude Code CLI / SDK | `ANTHROPIC_AUTH_TOKEN` |
+| LangChain `ChatAnthropic` | ❌ <Localized en="Don't use — it sends " ko="" />`x-api-key`<Localized en="" ko="를 전송하므로 사용 금지" /> |
+| LangChain `ChatOpenAI` / `ChatUpstage` | ✅ `OPENAI_COMPATIBLE_API_KEY` (Bearer) |
+| Grok Build / Hermes Agent | `UPSTAGE_API_KEY` → <Localized en="Bearer via provider" ko="공급자를 거쳐 Bearer로 변환" /> |
 
 </v-click>
 
 <v-click>
 
-### Near-term
+### <Localized en="🐛 Streaming bug: tool call function names dropped" ko="🐛 스트리밍 버그: 툴 콜 함수 이름 누락" />
 
-- **Case 08+** — new harness integrations (more Kubernetes operators, more
-  LangChain ecosystem tools, more IDE integrations)
-- **Telegram/Discord for Case 07** — messenger integration on top of the
-  verified Helm deployment (currently documented but not gated)
-- **Rate-limit-aware verification** — Case 05's Finding 3 (50K tokens/min
-  ceiling) could be addressed with batched/parallel verification strategies
+<span><Localized en="Upstage's" ko="Upstage의" /> **<Localized en="streamed" ko="스트리밍" />** <Localized en="Chat Completions responses return" ko="Chat Completions 응답은 툴 콜에서" /> `function.name = ""` <Localized en="for tool calls. Non-streamed responses are correct." ko="을 반환합니다. 스트리밍을 쓰지 않으면 정상입니다." /></span>
+
+<span><Localized en="Affected cases:" ko="영향받는 케이스:" /> **05** (openwiki — <Localized en="patched with " ko="" />`OPENWIKI_DISABLE_STREAMING`<Localized en="" ko="로 패치" />), **06** (Grok Build — <Localized en="no workaround, closed-source" ko="우회 불가, 클로즈드 소스" />).</span>
 
 </v-click>
 
 <v-click>
 
-### Ecosystem growth
+### <Localized en="🐍 Python 3.14 ecosystem gap" ko="🐍 Python 3.14 생태계 공백" />
 
-- **More agent frameworks** — AutoGen, CrewAI, LlamaIndex, SWE-agent
-- **More deployment targets** — EKS, GKE, cloud-managed Kubernetes
-- **More model variants** — `solar-pro3`, future Solar Open releases
-- **Community contributions** — every case is designed to be independently
-  reproducible, extendable, and verifiable by anyone with an Upstage API key
+`langchain-upstage`<Localized en=" pins " ko="는 " />`tokenizers`<Localized en=" to " ko="를 " />`^0.20.0`<Localized en=" — no release in that range ships a Python 3.14 wheel, and building from source fails with a real " ko="으로 고정하고 있습니다. 이 범위에는 Python 3.14용 wheel이 없고, 소스 빌드는 실제 " />`cargo`/PyO3<Localized en=" compile error." ko=" 컴파일 오류로 실패합니다." />
 
-</v-click>
+**<Localized en="All Python cases pin to 3.13" ko="모든 Python 케이스는 3.13에 고정되어 있습니다" />** <Localized en="until this lands upstream." ko="— 업스트림에서 해결될 때까지입니다." />
 
-<v-click>
-
-### The bigger picture
-
-This pilot started with a single question:
-
-> *Can Upstage's Solar Open 2 model run through real, production-grade agent
-> harnesses — not just a raw API call?*
-
-Seven cases later, the answer is **yes** — across Claude Code, Hermes Agent,
-Claude Agent SDK, LangChain, OpenWiki, Grok Build, and Kubernetes/Helm.
-The remaining work is scaling that answer to more harnesses, more models,
-and more operators.
+<span><Localized en="A fix is already open — submitted by jyje:" ko="해결 PR을 jyje가 이미 제출해 두었습니다:" /> [langchain-ai/langchain-upstage#99](https://github.com/langchain-ai/langchain-upstage/pull/99)</span>
 
 </v-click>
 
 ---
 
-# Appendix
+# <Localized en="Cross-Cutting Learnings" ko="공통 패턴" />
 
-## Quick reference for running any case
+## <Localized en="Tool invocation & API routing" ko="스킬·도구 호출과 API 경로" />
 
 <v-click>
 
-### Prerequisites (per case)
+### <Localized en="🎯 Skill / tool invocation: explicit beats autonomous" ko="🎯 스킬·도구 호출: 자율 판단보다 명시적 지시" />
 
-| Tool | Used by |
+<span><Localized en="Solar Open 2 follows a skill's contract precisely" ko="Solar Open 2는 스킬을" /> **<Localized en="when explicitly told to load it" ko="명시적으로 지목했을 때" />**<Localized en=". But it doesn't reliably decide on its own that a skill applies from trigger phrases alone." ko=" 그 규약을 정확히 따릅니다. 하지만 트리거 문구만으로 스킬이 적용된다고 스스로 판단하는 것은 신뢰하기 어렵습니다." /></span>
+
+**<Localized en="Takeaway:" ko="시사점:" />** <Localized en="name the skill explicitly in prompts." ko="프롬프트에서 스킬 이름을 직접 지목하세요." />
+
+</v-click>
+
+<v-click>
+
+### <Localized en="🌐 Two wire paths to the same model" ko="🌐 같은 모델로 향하는 두 가지 경로" />
+
+| <Localized en="Wire path" ko="경로" /> | <Localized en="Endpoint" ko="엔드포인트" /> | <Localized en="Used by" ko="사용 케이스" /> |
+|---|---|---|
+| **Anthropic Messages API** (<Localized en="compat layer" ko="호환 레이어" />) | `https://api.upstage.ai` | Case 01, Case 03 |
+| **OpenAI Chat Completions** (<Localized en="native" ko="네이티브" />) | `https://api.upstage.ai/v1/solar` | Case 04, Case 05, Case 06, Case 07 |
+
+<span><Localized en="Both reach Solar Open 2. The OpenAI path avoids the" ko="둘 다 Solar Open 2에 도달합니다. OpenAI 경로는" /> `ANTHROPIC_AUTH_TOKEN` <Localized en="dance." ko="설정을 거치지 않아도 됩니다." /></span>
+
+</v-click>
+
+---
+
+# <Localized en="Future Directions" ko="향후 계획" />
+
+## <Localized en="What's next for Solar Open 2 × agent harnesses" ko="Solar Open 2 × 에이전트 하네스, 다음 단계" />
+
+<v-click>
+
+### <Localized en="Immediate" ko="당장" />
+
+- **<Localized en="Python 3.14 support" ko="Python 3.14 지원" />** — <Localized en="track " ko="" />`tokenizers` `cp314`<Localized en=" wheel availability; move Cases 03 and 04 back to 3.14 once it ships" ko=" wheel 제공 여부를 추적하고, 배포되면 Case 03·04를 다시 3.14로 옮깁니다" />
+- **<Localized en="OpenWiki streaming fix upstream" ko="OpenWiki 스트리밍 수정 업스트림 반영" />** — `OPENWIKI_DISABLE_STREAMING`<Localized en=" is currently in a " ko="는 현재 " />`jyje/openwiki`<Localized en=" fork; getting it merged into " ko=" 포크에 있습니다. 이를 " />`langchain-ai/openwiki`<Localized en=" would unblock the public npm release" ko="에 병합해야 공식 npm 릴리스가 가능합니다" />
+- **<Localized en="Upstage streaming bug resolution" ko="Upstage 스트리밍 버그 해결" />** — <Localized en="the " ko="" />`function.name = ""`<Localized en=" bug affects Cases 05 and 06; getting it fixed upstream unblocks tool-calling for the entire ecosystem" ko=" 버그는 Case 05·06에 영향을 줍니다. 업스트림에서 고쳐야 생태계 전체의 툴 콜링이 풀립니다" />
+
+</v-click>
+
+<v-click>
+
+### <Localized en="Near-term" ko="단기" />
+
+- **Case 08+** — <Localized en="new harness integrations (more Kubernetes operators, more LangChain ecosystem tools, more IDE integrations)" ko="새로운 하네스 통합 (쿠버네티스 오퍼레이터, LangChain 생태계 도구, IDE 통합 확대)" />
+- **<Localized en="Telegram/Discord for Case 07" ko="Case 07의 텔레그램·디스코드 연동" />** — <Localized en="messenger integration on top of the verified Helm deployment (currently documented but not gated)" ko="검증된 Helm 배포 위에 메신저를 연동합니다 (현재는 문서화만 되어 있고 CI 게이트는 없음)" />
+- **<Localized en="Rate-limit-aware verification" ko="레이트 리밋을 고려한 검증" />** — <Localized en="Case 05's Finding 3 (50K tokens/min ceiling) could be addressed with batched/parallel verification strategies" ko="Case 05의 Finding 3(분당 5만 토큰 한도)은 배치·병렬 검증 전략으로 완화할 수 있습니다" />
+
+</v-click>
+
+<v-click>
+
+### <Localized en="Ecosystem growth" ko="생태계 확장" />
+
+- **<Localized en="More agent frameworks" ko="더 많은 에이전트 프레임워크" />** — AutoGen, CrewAI, LlamaIndex, SWE-agent
+- **<Localized en="More deployment targets" ko="더 많은 배포 대상" />** — EKS, GKE, <Localized en="cloud-managed Kubernetes" ko="클라우드 관리형 쿠버네티스" />
+- **<Localized en="More model variants" ko="더 많은 모델 변형" />** — `solar-pro3`, <Localized en="future Solar Open releases" ko="향후 Solar Open 릴리스" />
+- **<Localized en="Community contributions" ko="커뮤니티 기여" />** — <Localized en="every case is designed to be independently reproducible, extendable, and verifiable by anyone with an Upstage API key" ko="모든 케이스는 Upstage API 키만 있으면 누구나 독립적으로 재현·확장·검증할 수 있도록 설계되어 있습니다" />
+
+</v-click>
+
+<v-click>
+
+### <Localized en="The bigger picture" ko="더 큰 그림" />
+
+<span><Localized en="This pilot started with a single question:" ko="이 파일럿은 하나의 질문에서 시작했습니다:" /></span>
+
+> *<Localized en="Can Upstage's Solar Open 2 model run through real, production-grade agent harnesses — not just a raw API call?" ko="Upstage의 Solar Open 2 모델이 API 호출 하나가 아니라, 실제 프로덕션급 에이전트 하네스를 통해서도 동작할 수 있을까?" />*
+
+<span><Localized en="Seven cases later, the answer is" ko="일곱 개의 케이스를 거친 지금, 답은" /> **<Localized en="yes" ko="그렇다" />** — <Localized en="across Claude Code, Hermes Agent, Claude Agent SDK, LangChain, OpenWiki, Grok Build, and Kubernetes/Helm." ko="Claude Code, Hermes Agent, Claude Agent SDK, LangChain, OpenWiki, Grok Build, Kubernetes/Helm 전반에 걸쳐서입니다." /> <Localized en="The remaining work is scaling that answer to more harnesses, more models, and more operators." ko="남은 과제는 이 결과를 더 많은 하네스, 더 많은 모델, 더 많은 오퍼레이터로 확장하는 것입니다." /></span>
+
+</v-click>
+
+---
+
+# <Localized en="Appendix" ko="부록" />
+
+## <Localized en="Quick reference for running any case" ko="케이스 실행 빠른 참고" />
+
+<v-click>
+
+### <Localized en="Prerequisites (per case)" ko="사전 준비물 (케이스별)" />
+
+| <Localized en="Tool" ko="도구" /> | <Localized en="Used by" ko="사용 케이스" /> |
 |---|---|
 | `Node.js 18+` | Case 01, Case 03 |
 | `Docker` | Case 01C, Case 02 |
@@ -591,42 +580,43 @@ and more operators.
 | `kind` + `kubectl` + `helm` | Case 07 |
 | `grok` CLI | Case 06 |
 
-All cases require: **`UPSTAGE_API_KEY`** — get one at
-<https://console.upstage.ai/api-keys>
+<span><Localized en="All cases require:" ko="모든 케이스에 공통으로 필요합니다:" /> **`UPSTAGE_API_KEY`** — <Localized en="get one at" ko="발급:" /> <https://console.upstage.ai/api-keys></span>
 
 </v-click>
 
 ---
 
-# Appendix
+# <Localized en="Appendix" ko="부록" />
 
-## Rate limits and API endpoints
+## <Localized en="Rate limits and API endpoints" ko="레이트 리밋과 API 엔드포인트" />
 
-### Rate limits (Tier 0)
+### <Localized en="Rate limits (Tier 0)" ko="레이트 리밋 (Tier 0)" />
 
-| Limit | Value |
+| <Localized en="Limit" ko="한도" /> | <Localized en="Value" ko="값" /> |
 |---|---|
-| Requests/minute | 100 |
-| Tokens/minute | 50,000 |
+| <Localized en="Requests/minute" ko="분당 요청 수" /> | 100 |
+| <Localized en="Tokens/minute" ko="분당 토큰 수" /> | 50,000 |
 
-Rolling window. Case 05's full doc generation can exceed the token limit
-in a single run — see Finding 3 in that case's README.
+<span><Localized en="Rolling window. Case 05's full doc generation can exceed the token limit in a single run — see Finding 3 in that case's README." ko="롤링 윈도우 기준입니다. Case 05의 전체 문서 생성은 한 번의 실행에서 이 토큰 한도를 초과할 수 있습니다 — 해당 케이스 README의 Finding 3를 참고하세요." /></span>
 
-### API endpoints reference
+### <Localized en="API endpoints reference" ko="API 엔드포인트 참고" />
 
-| Protocol | Endpoint | Used by |
+| <Localized en="Protocol" ko="프로토콜" /> | <Localized en="Endpoint" ko="엔드포인트" /> | <Localized en="Used by" ko="사용 케이스" /> |
 |---|---|---|
-| Anthropic Messages API (compat) | `https://api.upstage.ai` | Case 01, Case 03 |
-| OpenAI Chat Completions (native) | `https://api.upstage.ai/v1/solar` | Case 04, Case 05, Case 06, Case 07 |
+| Anthropic Messages API (<Localized en="compat" ko="호환" />) | `https://api.upstage.ai` | Case 01, Case 03 |
+| OpenAI Chat Completions (<Localized en="native" ko="네이티브" />) | `https://api.upstage.ai/v1/solar` | Case 04, Case 05, Case 06, Case 07 |
 
-**Auth:** `Authorization: Bearer <key>` (`ANTHROPIC_AUTH_TOKEN`) — **not**
-`x-api-key`.
+**<Localized en="Auth:" ko="인증:" />** `Authorization: Bearer <key>` (`ANTHROPIC_AUTH_TOKEN`) — **<Localized en="not" ko="아님" />** `x-api-key`.
 
 ---
 
-# Appendix
+# <Localized en="Appendix" ko="부록" />
 
-## Reproduce any case locally
+## <Localized en="Reproduce any case locally" ko="로컬에서 케이스 재현하기" />
+
+<v-click>
+
+### <Localized en="Steps" ko="절차" />
 
 ```bash
 # Clone the repo
@@ -643,16 +633,18 @@ cat REPRODUCE.md
 UPSTAGE_API_KEY="your-key" ./scripts/verify.sh
 ```
 
----
+</v-click>
 
-# Appendix
+<v-click>
 
-## Glossary
+### <Localized en="Glossary" ko="용어 정리" />
 
-| Term | Meaning |
+| <Localized en="Term" ko="용어" /> | <Localized en="Meaning" ko="의미" /> |
 |---|---|
-| **Solar Open 2** | Upstage's 250B-A15B MoE open-weight model, 1M context |
-| **`ANTHROPIC_AUTH_TOKEN`** | Bearer token for Upstage's Anthropic-compatible endpoint |
-| **`OPENWIKI_DISABLE_STREAMING`** | Opt-in flag to disable streaming (workaround for tool-calling bug) |
-| **`api_backend`** | Grok Build config key choosing wire protocol (`chat_completions`, `responses`, `messages`) |
-| **`CLAUDE_CODE_SUBAGENT_MODEL`** | Env var ensuring subagent/Task-tool calls stay on Solar Open 2 |
+| **Solar Open 2** | Upstage<Localized en="'s 250B-A15B MoE open-weight model, 1M context" ko="의 250B-A15B MoE 오픈 웨이트 모델, 1M 컨텍스트" /> |
+| **`ANTHROPIC_AUTH_TOKEN`** | <Localized en="Bearer token for Upstage's Anthropic-compatible endpoint" ko="Upstage의 Anthropic 호환 엔드포인트용 Bearer 토큰" /> |
+| **`OPENWIKI_DISABLE_STREAMING`** | <Localized en="Opt-in flag to disable streaming (workaround for tool-calling bug)" ko="스트리밍을 비활성화하는 옵션 플래그 (툴 콜링 버그 우회용)" /> |
+| **`api_backend`** | <Localized en="Grok Build config key choosing wire protocol" ko="와이어 프로토콜을 선택하는 Grok Build 설정 키" /> (`chat_completions`, `responses`, `messages`) |
+| **`CLAUDE_CODE_SUBAGENT_MODEL`** | <Localized en="Env var ensuring subagent/Task-tool calls stay on Solar Open 2" ko="서브에이전트·Task 툴 호출이 Solar Open 2를 계속 쓰도록 보장하는 환경변수" /> |
+
+</v-click>
