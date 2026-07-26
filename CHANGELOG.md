@@ -1,6 +1,53 @@
 # Changelog
 
 All notable changes to this repo are documented here.
+## [1.2] - 2026-07-26
+
+### Features
+
+- ✨ feat(case-01): add Case 01C — Claude Code via jyje/claude-docker ([`d272443`](https://github.com/jyje/pilot-upstage-solar-open2/commit/d272443d3deb5c7fad3fa1df0b460576f9815988)) — @jyje
+- ✨ feat(slides): add portrait bilingual deck and Pages deployment ([`18289bb`](https://github.com/jyje/pilot-upstage-solar-open2/commit/18289bb010ef6a576f238a905bc1f9f31063a8d1)) — @jyje
+- ✨ feat(slides): redesign cover slide, turn case slides into cards, add boot splash ([`66e499a`](https://github.com/jyje/pilot-upstage-solar-open2/commit/66e499a5650c9f512e5c40cded0a12aa6df51a29)) — @jyje
+- ✨ feat(slides): redesign the language-selector landing page and add jyje × Upstage branding ([`f8cce6f`](https://github.com/jyje/pilot-upstage-solar-open2/commit/f8cce6f0b2ae2a1c22d3844975bea9a8789ce6b9)) — @jyje
+- ✨ feat(slides): rewrite case cards around insights and slim the landing page badges ([`6425b12`](https://github.com/jyje/pilot-upstage-solar-open2/commit/6425b128e83bc6f74fc08a872215d2fd21535a30)) — @jyje
+- ✨ feat(slides): show each case's verification results on its own card ([`589fe18`](https://github.com/jyje/pilot-upstage-solar-open2/commit/589fe182fdb33e4824a861931946a7033229de3f)) — @jyje
+- ✨ feat(slides): add prompt-and-reply examples to each case's verification block ([`79c517a`](https://github.com/jyje/pilot-upstage-solar-open2/commit/79c517a161592c1c0669cdad2d71b289929d782c)) — @jyje
+- ✨ feat(slides): show the jyje × Upstage brand on every slide and align the boot splash ([`16ba966`](https://github.com/jyje/pilot-upstage-solar-open2/commit/16ba9664afc74d5459158167c06ae481ed6e8439)) — @jyje
+- ✨ feat(slides): rebuild the cover, model intro, and case slides; add a global brand bar ([`9c6b646`](https://github.com/jyje/pilot-upstage-solar-open2/commit/9c6b646437a7d0cf3ec06485a766b7823bcfce66)) — @jyje
+- ✨ feat(slides): reorder Verification & CI ahead of Cross-Cutting Learnings and localize the rest of the deck ([`d635380`](https://github.com/jyje/pilot-upstage-solar-open2/commit/d6353801d8eb8fa6a4105d0057ad8bbf5db7b462)) — @jyje
+- ✨ feat(slides): add a project-goal line to the cover ([`9494946`](https://github.com/jyje/pilot-upstage-solar-open2/commit/9494946050cda3ae9bd4d86a7c2478fe34add3d2)) — @jyje
+- ✨ feat(slides): scale up typography, split the cover from the model intro, and refresh model links ([`59abbf9`](https://github.com/jyje/pilot-upstage-solar-open2/commit/59abbf9739d8005fabd6b3c4473584f4286c2ac9)) — @jyje
+- ✨ feat(slides): enlarge the brand lockup and restore the footer on every slide ([`32d889b`](https://github.com/jyje/pilot-upstage-solar-open2/commit/32d889b51c1610dee522b58d810b3bd4d91fa69b)) — @jyje
+- ✨ feat(slides): label the landing page's language picker ([`59ec86d`](https://github.com/jyje/pilot-upstage-solar-open2/commit/59ec86d9a34af0551b3c6b863802f6b11f5d7316)) — @jyje
+
+
+### Bug Fixes
+
+- 🛠️ fix(slides): move language switch to top-right and enlarge it ([`accad0e`](https://github.com/jyje/pilot-upstage-solar-open2/commit/accad0e6aed789e978864733eeeb7cca22713f7a)) — @jyje
+- 🛠️ fix(slides): match the language switch to the brand lockup's type and add a button outline ([`3ef6e48`](https://github.com/jyje/pilot-upstage-solar-open2/commit/3ef6e48c3010a6a1db27186cec7500623b4a2d92)) — @jyje
+
+
+<details>
+<summary>Documentation (4)</summary>
+
+- 📄 docs(readme): replace the Status column with live per-case CI badges ([`faa6347`](https://github.com/jyje/pilot-upstage-solar-open2/commit/faa6347658f3359bb042cc3798fe40471a5aa312)) — @jyje
+- 📄 docs(readme): update the README header logo image ([`4c01422`](https://github.com/jyje/pilot-upstage-solar-open2/commit/4c0142275a36485053b17cc0961aeabc6140037b)) — @jyje
+- 📄 docs(case-01): fix Korean phrasing for the claude-upstage wrapper ([`06a5342`](https://github.com/jyje/pilot-upstage-solar-open2/commit/06a534200cc1b7c19d8f0ff7676dada29681d9e3)) — @jyje
+- 📄 docs(slides): document how to preview the landing page locally ([`b8218fb`](https://github.com/jyje/pilot-upstage-solar-open2/commit/b8218fb8de6086021a7b8a3d00e5af37ee047709)) — @jyje
+
+</details>
+
+
+<details>
+<summary>Miscellaneous (3)</summary>
+
+- 🔧 chore(slides): ignore playwright-mcp verification artifacts ([`ff34f80`](https://github.com/jyje/pilot-upstage-solar-open2/commit/ff34f80dc688329446814ad69b22e4f7129d2479)) — @jyje
+- 🔧 chore(repo): ignore the scratch workspace directory ([`40ec88d`](https://github.com/jyje/pilot-upstage-solar-open2/commit/40ec88da9ad99ec414cf6e8b0325ee0f474d1a5b)) — @jyje
+- 🎨 style(slides): scale up the landing page's brand lockup and typography ([`486ceb1`](https://github.com/jyje/pilot-upstage-solar-open2/commit/486ceb107d9803cf9e42535b8a959441a4d72115)) — @jyje
+
+</details>
+
+
 ## [1.1] - 2026-07-23
 
 ### Features
@@ -69,6 +116,7 @@ All notable changes to this repo are documented here.
 
 - 🔨 build(ci): split the recap into Review/Extend category tables ([`356206a`](https://github.com/jyje/pilot-upstage-solar-open2/commit/356206a47253f8063d9417f89b165bcc65d900a1)) — @jyje
 - 🔨 build(ci): move the runner to ubuntu-26.04-arm ([`6e2ed3f`](https://github.com/jyje/pilot-upstage-solar-open2/commit/6e2ed3fd5b925799c2d58082d5213e4d3d25374b)) — @jyje
+- 🔨 build(release): add git-cliff config and generate CHANGELOG.md for v1.1 ([`b60e6d9`](https://github.com/jyje/pilot-upstage-solar-open2/commit/b60e6d90af41a8a9893492bfc4a669d8ee20a33c)) — @jyje
 
 
 <details>
