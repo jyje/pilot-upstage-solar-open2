@@ -113,12 +113,17 @@ fonts:
   <div class="case-card-highlights">
     <div class="case-chip"><span class="case-chip-icon">🔓</span><span><Localized en="Vendor lock-in is thinner than assumed — an open model runs inside Anthropic's own harness untouched" ko="벤더 종속은 생각보다 얕습니다 — 오픈 모델이 Anthropic 하네스 안에서 그대로 동작" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">🎯</span><span><Localized en="Solar Open 2 honors a skill's contract precisely once named — capability is there, discovery needs a nudge" ko="스킬을 지목하면 규약을 정확히 지킵니다 — 능력은 충분하고, 발동만 유도하면 됨" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧩</span><span><Localized en="Subagents stay on Solar Open 2 and return real files, not hallucinations — delegation holds" ko="서브에이전트도 Solar Open 2를 유지하며 실제 파일을 반환 — 위임이 무너지지 않음" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
     <div class="case-evidence-row"><span class="case-evidence-method">A</span><span class="case-evidence-result"><Localized en="Identifies itself as Solar Open2 by Upstage through the official CLI" ko="공식 CLI로 Upstage의 Solar Open2임을 스스로 식별" /></span></div>
-    <div class="case-evidence-row"><span class="case-evidence-method">B</span><span class="case-evidence-result"><Localized en="Reads this repo's real AGENTS.md — full harness with tool access, not a canned reply" ko="이 리포의 실제 AGENTS.md를 읽음 — 정해진 응답이 아닌 툴 접근 포함 완전한 하네스" /></span></div>
-    <div class="case-evidence-row"><span class="case-evidence-method">C</span><span class="case-evidence-result"><Localized en="Subagent listed real directory files under CLAUDE_CODE_SUBAGENT_MODEL" ko="CLAUDE_CODE_SUBAGENT_MODEL로 서브에이전트가 실제 디렉터리 파일을 나열" /></span></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">B</span><span class="case-evidence-result"><Localized en="Reads this repo's real AGENTS.md — full harness with tool access" ko="이 리포의 실제 AGENTS.md를 읽음 — 툴 접근 포함 완전한 하네스" /></span></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">C</span><span class="case-evidence-result"><Localized en="Subagent listed real directory files, matching disk exactly" ko="서브에이전트가 실제 디렉터리 파일을 디스크와 정확히 일치하게 나열" /></span></div>
+    <div class="case-qa">
+      <div class="case-qa-line is-prompt"><span class="case-qa-tag">Ask</span><span class="case-qa-text"><Localized en="&quot;Use the git-commit-helper skill … output only the commit message.&quot;" ko="&quot;git-commit-helper 스킬을 사용해서 … 커밋 메시지만 출력해줘.&quot;" /></span></div>
+      <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">📄 docs(docs): add hello greeting</span></div>
+    </div>
   </div>
 </div>
 
@@ -135,12 +140,17 @@ fonts:
   <div class="case-card-highlights">
     <div class="case-chip"><span class="case-chip-icon">🏅</span><span><Localized en="Solar Open 2 is a first-class citizen upstream — Hermes ships the provider, no community patch needed" ko="업스트림이 Solar Open 2를 1급 시민으로 대우 — 커뮤니티 패치 없이 제공자 기본 탑재" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">🧾</span><span><Localized en="The untruncated reasoning trace shows the model deliberating, not just emitting — real agentic behavior" ko="잘리지 않은 추론 트레이스가 숙고 과정을 보여줍니다 — 출력이 아닌 진짜 에이전트 행동" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🔁</span><span><Localized en="Same result locally and in CI — reproducibility is what turns a demo into a platform claim" ko="로컬과 CI 결과가 동일 — 재현성이 데모를 플랫폼 주장으로 바꿉니다" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
     <div class="case-evidence-row"><span class="case-evidence-method">A</span><span class="case-evidence-result"><Localized en="Image reports Hermes Agent v0.18.2, pinned by digest" ko="이미지가 Hermes Agent v0.18.2 보고, 다이제스트로 고정" /></span></div>
     <div class="case-evidence-row"><span class="case-evidence-method">B</span><span class="case-evidence-result"><Localized en="hermes doctor reports Upstage Solar connectivity healthy" ko="hermes doctor가 Upstage Solar 연결 정상 보고" /></span></div>
-    <div class="case-evidence-row"><span class="case-evidence-method">C</span><span class="case-evidence-result"><Localized en="Round trip returns hermes-ready after a visible reasoning pass" ko="추론 과정이 보인 뒤 hermes-ready 응답 반환" /></span></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">C</span><span class="case-evidence-result"><Localized en="Round trip returns the exact string after a visible reasoning pass" ko="추론 과정이 보인 뒤 정확한 문자열 반환" /></span></div>
+    <div class="case-qa">
+      <div class="case-qa-line is-prompt"><span class="case-qa-tag">Ask</span><span class="case-qa-text">"Reply with exactly: hermes-ready"</span></div>
+      <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">hermes-ready</span></div>
+    </div>
   </div>
 </div>
 
@@ -157,12 +167,18 @@ fonts:
   <div class="case-card-highlights">
     <div class="case-chip"><span class="case-chip-icon">🏗️</span><span><Localized en="Solar Open 2 can sit under application code, not just a terminal — the SDK path opens real product surfaces" ko="터미널을 넘어 애플리케이션 코드 아래에 놓입니다 — SDK 경로가 실제 제품 표면을 엽니다" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">🔍</span><span><Localized en="Tool use is observable as structured messages — you can build guardrails on it, not guess from stdout" ko="툴 사용이 구조화된 메시지로 관측됩니다 — stdout 추측이 아닌 가드레일 구축이 가능" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧠</span><span><Localized en="Multi-turn state holds across a session — long-horizon agent work is viable, not just single shots" ko="세션 전반에 걸쳐 상태를 유지 — 단발성이 아닌 장기 에이전트 작업이 가능" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
     <div class="case-evidence-row"><span class="case-evidence-method">A</span><span class="case-evidence-result"><Localized en="Structured types returned: AssistantMessage, ResultMessage, SystemMessage" ko="구조화된 타입 반환: AssistantMessage, ResultMessage, SystemMessage" /></span></div>
-    <div class="case-evidence-row"><span class="case-evidence-method">B</span><span class="case-evidence-result"><Localized en="Session memory — turn 2 recalled 42 from turn 1" ko="세션 메모리 — 2번째 턴이 1번째 턴의 42를 회상" /></span></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">B</span><span class="case-evidence-result"><Localized en="Session memory held across two separate turns" ko="두 개의 분리된 턴에 걸쳐 세션 메모리 유지" /></span></div>
     <div class="case-evidence-row"><span class="case-evidence-method">C</span><span class="case-evidence-result"><Localized en="saw_tool_use=True — a real ToolUseBlock in the message stream" ko="saw_tool_use=True — 메시지 스트림에 실제 ToolUseBlock" /></span></div>
+    <div class="case-qa">
+      <div class="case-qa-line is-prompt"><span class="case-qa-tag">Turn 1</span><span class="case-qa-text">"Remember the number 42. Reply with just OK."</span></div>
+      <div class="case-qa-line is-prompt"><span class="case-qa-tag">Turn 2</span><span class="case-qa-text">"What number did I just ask you to remember?"</span></div>
+      <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">42</span></div>
+    </div>
   </div>
 </div>
 
@@ -179,12 +195,17 @@ fonts:
   <div class="case-card-highlights">
     <div class="case-chip"><span class="case-chip-icon">🌉</span><span><Localized en="No Claude runtime anywhere — the OpenAI-compatible endpoint makes Solar Open 2 a drop-in for the LangChain ecosystem" ko="Claude 런타임이 전혀 없습니다 — OpenAI 호환 엔드포인트가 LangChain 생태계의 드롭인 대체재로 만듭니다" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">🐍</span><span><Localized en="The only blocker was the Python ecosystem, not the model — a missing wheel, resolved by pinning 3.13" ko="유일한 블로커는 모델이 아니라 Python 생태계였습니다 — 휠 부재, 3.13 고정으로 해결" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🤝</span><span><Localized en="The model plans, delegates to a named subagent, and reconciles the result — orchestration, not autocomplete" ko="계획하고, 지정한 서브에이전트에 위임하고, 결과를 종합합니다 — 자동완성이 아닌 오케스트레이션" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
-    <div class="case-evidence-row"><span class="case-evidence-method">A</span><span class="case-evidence-result"><Localized en="Custom tool called correctly — It's sunny in Seoul!" ko="커스텀 툴 정상 호출 — It's sunny in Seoul!" /></span></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">A</span><span class="case-evidence-result"><Localized en="Custom get_weather tool invoked correctly" ko="커스텀 get_weather 툴 정상 호출" /></span></div>
     <div class="case-evidence-row"><span class="case-evidence-method">B</span><span class="case-evidence-result"><Localized en="Wrote HELLO-DEEPAGENTS into the mock filesystem at /note.txt" ko="가상 파일시스템 /note.txt에 HELLO-DEEPAGENTS 기록" /></span></div>
-    <div class="case-evidence-row"><span class="case-evidence-method">C</span><span class="case-evidence-result"><Localized en="Delegated to math-agent, which returned 17 + 25 = 42" ko="math-agent에 위임해 17 + 25 = 42 반환" /></span></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">C</span><span class="case-evidence-result"><Localized en="Delegated arithmetic to a named math-agent subagent" ko="산술 연산을 math-agent 서브에이전트에 위임" /></span></div>
+    <div class="case-qa">
+      <div class="case-qa-line is-prompt"><span class="case-qa-tag">Ask</span><span class="case-qa-text">"What is the weather in Seoul?"</span></div>
+      <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">It's sunny in Seoul!</span></div>
+    </div>
   </div>
 </div>
 
@@ -201,12 +222,17 @@ fonts:
   <div class="case-card-highlights">
     <div class="case-chip"><span class="case-chip-icon">📖</span><span><Localized en="The model reads an unfamiliar codebase and answers accurately about its latest commit — comprehension at repo scale" ko="처음 보는 코드베이스를 읽고 최신 커밋까지 정확히 답합니다 — 리포 단위의 이해력" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">🐛</span><span><Localized en="Found a real upstream bug: streaming drops tool call names — open models let you trace and fix, not just file a ticket" ko="실제 업스트림 버그 발견: 스트리밍이 툴콜 이름을 누락 — 오픈 모델은 티켓 제출이 아니라 추적과 수정을 허용합니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">📊</span><span><Localized en="Hitting the Tier-0 token ceiling is a quota story, not a capability one — the work itself completed" ko="Tier-0 토큰 한도 도달은 능력이 아니라 쿼터의 문제 — 작업 자체는 완수되었습니다" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI — 3 live Q&amp;A rounds" ko="CI 검증 결과 — 실제 Q&amp;A 3라운드" /></div>
     <div class="case-evidence-row"><span class="case-evidence-method">Q1</span><span class="case-evidence-result"><Localized en="Explored the repo and summarized every case in a structured table" ko="리포를 탐색해 모든 케이스를 표로 정리해 요약" /></span></div>
     <div class="case-evidence-row"><span class="case-evidence-method">Q2</span><span class="case-evidence-result"><Localized en="Named the most recent commit — hash, message, intent, co-authors" ko="최신 커밋 특정 — 해시, 메시지, 의도, 공동 작성자" /></span></div>
     <div class="case-evidence-row"><span class="case-evidence-method">Q3</span><span class="case-evidence-result"><Localized en="Counted the cases and explained what each one demonstrates" ko="케이스 개수를 세고 각각이 무엇을 증명하는지 설명" /></span></div>
+    <div class="case-qa">
+      <div class="case-qa-line is-prompt"><span class="case-qa-tag">Ask</span><span class="case-qa-text"><Localized en="&quot;What is this repository about?&quot;" ko="&quot;이 리포지터리는 무엇에 관한 것인가?&quot;" /></span></div>
+      <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text"><Localized en="&quot;…Upstage's Solar Open 2, a 250B-A15B MoE open-weight model with 1M-token context…&quot;" ko="&quot;…1M 토큰 컨텍스트를 가진 250B-A15B MoE 오픈 웨이트 모델 Solar Open 2…&quot;" /></span></div>
+    </div>
   </div>
 </div>
 
@@ -223,12 +249,17 @@ fonts:
   <div class="case-card-highlights">
     <div class="case-chip"><span class="case-chip-icon">🔌</span><span><Localized en="A rival's own coding agent accepts Solar Open 2 as a custom model — the ecosystem is more open than the branding suggests" ko="경쟁사 코딩 에이전트가 Solar Open 2를 커스텀 모델로 수용 — 브랜딩보다 생태계가 훨씬 개방적입니다" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">🚧</span><span><Localized en="Where the harness is closed, one upstream bug ends the story — a case for open weights and open clients" ko="하네스가 닫혀 있으면 업스트림 버그 하나로 끝납니다 — 오픈 웨이트와 오픈 클라이언트가 필요한 이유" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧮</span><span><Localized en="Reasoning and coding land cleanly — it derives 1275 by two methods and writes working is_prime" ko="추론과 코딩은 깔끔하게 통과 — 1275를 두 가지 방법으로 도출하고 동작하는 is_prime을 작성" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
     <div class="case-evidence-row"><span class="case-evidence-method">A</span><span class="case-evidence-result"><Localized en="Exact-string round trip returned grok-solar-ready" ko="정확한 문자열 라운드트립이 grok-solar-ready 반환" /></span></div>
     <div class="case-evidence-row"><span class="case-evidence-method">B</span><span class="case-evidence-result"><Localized en="Derived 1275 via both the Gauss formula and the pairing method" ko="가우스 공식과 짝짓기 방법 양쪽으로 1275 도출" /></span></div>
     <div class="case-evidence-row"><span class="case-evidence-method">C</span><span class="case-evidence-result"><Localized en="Wrote a correct, working is_prime(n) with a docstring" ko="독스트링 포함 정상 동작하는 is_prime(n) 작성" /></span></div>
+    <div class="case-qa">
+      <div class="case-qa-line is-prompt"><span class="case-qa-tag">Ask</span><span class="case-qa-text"><Localized en="&quot;Explain step by step why the sum of the first 50 integers equals 1275.&quot;" ko="&quot;1부터 50까지의 합이 왜 1275인지 단계별로 설명해줘.&quot;" /></span></div>
+      <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text"><Localized en="n(n+1)/2 = 50·51/2 = 1275, cross-checked by pairing" ko="n(n+1)/2 = 50·51/2 = 1275, 짝짓기로 교차 검증" /></span></div>
+    </div>
   </div>
 </div>
 
@@ -245,12 +276,17 @@ fonts:
   <div class="case-card-highlights">
     <div class="case-chip"><span class="case-chip-icon">☸️</span><span><Localized en="It survives the way operators actually ship — a published Helm chart on a real cluster, not a laptop demo" ko="운영자가 실제로 배포하는 방식에서 살아남습니다 — 노트북 데모가 아닌 공개 Helm 차트와 실제 클러스터" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">🔬</span><span><Localized en="The chart's own test Job gates the model — verification becomes declarative infrastructure, not a manual step" ko="차트 자체 테스트 Job이 모델을 게이트합니다 — 검증이 수동 절차가 아닌 선언적 인프라가 됩니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">💬</span><span><Localized en="Asked inside the pod, the model articulates its own strengths for agentic work over 76 lines" ko="파드 안에서 물었을 때, 모델이 에이전트 작업에 대한 자기 강점을 76줄로 설명합니다" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
     <div class="case-evidence-row"><span class="case-evidence-method">A</span><span class="case-evidence-result"><Localized en="Helm-test Job returned hermes-k8s-ready with a full doctor report" ko="Helm 테스트 Job이 doctor 리포트와 함께 hermes-k8s-ready 반환" /></span></div>
     <div class="case-evidence-row"><span class="case-evidence-method">B</span><span class="case-evidence-result"><Localized en="Live kubectl exec — the running pod derived 1275 via Gauss" ko="실시간 kubectl exec — 구동 중인 파드가 가우스 공식으로 1275 도출" /></span></div>
     <div class="case-evidence-row"><span class="case-evidence-method">C</span><span class="case-evidence-result"><Localized en="76 lines on its own strengths in reasoning, tool use, and coding" ko="추론·툴 사용·코딩 강점에 대해 76줄 자체 서술" /></span></div>
+    <div class="case-qa">
+      <div class="case-qa-line is-prompt"><span class="case-qa-tag">Ask</span><span class="case-qa-text">"Reply with exactly: hermes-k8s-ready"</span></div>
+      <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">hermes-k8s-ready</span></div>
+    </div>
   </div>
 </div>
 

@@ -306,6 +306,47 @@
   font-size: 0.74rem;
 }
 
+.case-qa {
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(198, 255, 114, 0.22);
+}
+
+.case-qa-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.case-qa-line + .case-qa-line {
+  margin-top: 0.22rem;
+}
+
+.case-qa-tag {
+  flex-shrink: 0;
+  min-width: 1.5rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.case-qa-line.is-prompt .case-qa-tag { color: var(--upstage-muted); }
+.case-qa-line.is-reply .case-qa-tag { color: var(--upstage-lime); }
+
+.case-qa-text {
+  color: #cfccd9;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+}
+
+.case-qa-line.is-reply .case-qa-text {
+  color: #fff;
+  font-weight: 600;
+}
+
 .case-cta {
   display: inline-flex;
   align-items: center;
