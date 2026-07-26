@@ -1,7 +1,20 @@
 <body>
 <div id="app-splash">
-  <div class="app-splash-eyebrow">UPSTAGE × OPEN SOURCE AGENTS</div>
-  <div class="app-splash-title">Solar Open 2</div>
+  <div class="app-splash-inner">
+    <div class="app-splash-brand">
+      <span class="app-splash-jyje">
+        <img src="https://jyje.online/assets/icons/icon-128x128.png" alt="" />
+        <span>jyje</span>
+      </span>
+      <span class="app-splash-x">×</span>
+      <span class="app-splash-upstage">
+        <img src="https://raw.githubusercontent.com/lobehub/lobe-icons/f07e9be35aef452ce735f95ea8204a14ecc513f7/packages/static-svg/icons/upstage-color.svg" alt="" />
+        <img class="app-splash-upstage-text" src="https://raw.githubusercontent.com/lobehub/lobe-icons/f07e9be35aef452ce735f95ea8204a14ecc513f7/packages/static-svg/icons/upstage-text.svg" alt="Upstage" />
+      </span>
+    </div>
+    <div class="app-splash-title">jyje/pilot-upstage-solar-open2</div>
+    <img id="app-splash-hero" class="app-splash-hero" alt="" />
+  </div>
 </div>
 <style>
   #app-splash {
@@ -9,32 +22,83 @@
     inset: 0;
     z-index: 9999;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
+    padding: 2rem 1.5rem;
     background: #11111f;
     color: #f8f7fb;
     font-family: Inter, system-ui, sans-serif;
+    text-align: center;
   }
-  .app-splash-eyebrow {
-    padding: 0.38rem 0.62rem;
-    color: #11111f;
-    background: #c6ff72;
-    font-size: 0.72rem;
+  .app-splash-inner {
+    width: min(30rem, 100%);
+  }
+  .app-splash-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    margin-bottom: 1.1rem;
+  }
+  .app-splash-jyje,
+  .app-splash-upstage {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32rem;
+  }
+  .app-splash-jyje img {
+    height: 1.15rem;
+    width: 1.15rem;
+    border-radius: 0.25rem;
+  }
+  .app-splash-jyje span {
+    font-size: 0.85rem;
     font-weight: 800;
-    letter-spacing: 0.105em;
+    letter-spacing: -0.02em;
+  }
+  .app-splash-x {
+    color: #a7a5b8;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .app-splash-upstage img {
+    height: 1.05rem;
+    width: auto;
+  }
+  .app-splash-upstage-text {
+    height: 0.8rem !important;
+    filter: brightness(0) invert(1);
   }
   .app-splash-title {
-    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    font-size: clamp(1.1rem, 5vw, 1.6rem);
     font-weight: 800;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+  .app-splash-hero {
+    width: 90%;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.7rem 1.8rem rgba(0, 0, 0, 0.22);
+  }
+  .app-splash-hero:not([src]) {
+    display: none;
   }
 </style>
 <script>
   (function () {
     var splash = document.getElementById('app-splash');
     if (!splash) return;
+
+    // The deck is served under a locale base such as /en/ or /repo/en/,
+    // so derive the hero image path from wherever this shell was loaded.
+    var hero = document.getElementById('app-splash-hero');
+    if (hero) {
+      var base = window.location.pathname.replace(/[^/]*$/, '');
+      hero.src = base + 'images/agent-ecosystem.png';
+    }
+
     var appEl = document.getElementById('app');
     var removed = false;
     function remove() {
