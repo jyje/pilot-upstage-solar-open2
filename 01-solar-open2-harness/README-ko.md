@@ -23,7 +23,7 @@ Open 2** 모델로도 동작함을 보여주는 것이 목표입니다.
 - **[Case 01A](#case-01a--공식-claude-code-cli)** — **공식** `claude`
   CLI를 순수 환경변수만으로 설정합니다. 래퍼도, 프록시도 없습니다.
 - **[Case 01B](#case-01b--claude-upstage-래퍼)** — Upstage 공식
-  `claude-upstage` 편의 래퍼입니다.
+  `claude-upstage` 커스텀 래퍼입니다.
 - **[Case 01C](#case-01c--jyjeclaude-docker)** — 다시 공식 `claude`
   CLI지만, 순정 npm 설치 대신 커뮤니티가 관리하는 Docker 이미지
   [`jyje/claude-docker`](https://github.com/jyje/claude-docker) 안에서
@@ -79,7 +79,7 @@ Upstage는 이 모델 하나만 서빙하기 때문에, 매핑되지 않은 슬�
 포크도, 패치도, 프록시도 없습니다. `@anthropic-ai/claude-code`의 순정
 `claude` 바이너리는 그저 요청을 어디로 보낼지만 알려주면 됩니다.
 `claude-upstage`(아래 Case 01B)는 이 변수들 대부분을 대신 설정해준 뒤
-`claude`를 `exec`하는 편의 래퍼일 뿐입니다.
+`claude`를 `exec`하는 커스텀 래퍼일 뿐입니다.
 
 ### 설치
 

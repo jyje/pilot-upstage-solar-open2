@@ -14,7 +14,7 @@
 
 <v-click>
 
-### 익스텐드 케이스 (Extend)
+### 확장 케이스 (Extend)
 
 - **Case 03** — Claude Agent SDK로 Claude Code 제어
 - **Case 04** — LangChain Deepagents + langchain-upstage
