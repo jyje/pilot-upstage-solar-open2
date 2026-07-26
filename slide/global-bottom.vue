@@ -69,4 +69,9 @@ onBeforeUnmount(closeMenu);
       </a>
     </div>
   </div>
+  <div class="global-footer" aria-hidden="true">
+    <a href="https://github.com/jyje/pilot-upstage-solar-open2" target="_blank" rel="noreferrer">github.com/jyje/pilot-upstage-solar-open2</a>
+    <span class="global-footer-dot">&middot;</span>
+    <span>Built with Claude and Upstage's Solar Open 2 model.</span>
+  </div>
 </template>

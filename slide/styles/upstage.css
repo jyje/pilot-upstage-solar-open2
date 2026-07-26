@@ -555,32 +555,64 @@
 }
 
 .global-brand-jyje img {
-  height: 1.15rem;
-  width: 1.15rem;
+  height: 1.5rem;
+  width: 1.5rem;
   border-radius: 0.25rem;
 }
 
 .global-brand-jyje span {
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
 
 .global-brand-x {
   color: var(--upstage-muted);
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
 .global-brand-upstage img {
-  height: 1.05rem;
+  height: 1.47rem;
   width: auto;
 }
 
 .global-brand-upstage-text {
-  height: 0.8rem !important;
+  height: 1.12rem !important;
   filter: brightness(0) invert(1);
+}
+
+.global-footer {
+  display: flex;
+  position: fixed;
+  bottom: 0.85rem;
+  left: 0;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.4rem;
+  pointer-events: none;
+  color: var(--upstage-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.global-footer a {
+  color: var(--upstage-muted);
+  pointer-events: auto;
+  text-decoration: none;
+}
+
+.global-footer a:hover,
+.global-footer a:focus {
+  color: var(--upstage-lime);
+}
+
+.global-footer-dot {
+  opacity: 0.6;
 }
 
 .locale-menu-wrap {
