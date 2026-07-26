@@ -18,6 +18,8 @@ fonts:
 
 # jyje/pilot-upstage-solar-open2
 
+<a class="cover-repo-link" href="https://github.com/jyje/pilot-upstage-solar-open2" target="_blank" rel="noreferrer">github.com/jyje/pilot-upstage-solar-open2</a>
+
 <div class="cover-readme-hero">
   <img class="cover-readme-image" src="/images/agent-ecosystem.png" alt="Solar Open 2 agent ecosystem" />
   <p class="cover-readme-tagline"><Localized en="✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, and Grok Build" ko="✨ Upstage Solar Open 2 기반의 다양한 에이전트 하네스를 검증합니다: Claude Code, Hermes Agent(쿠버네티스 배포도 검증), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build" /></p>
@@ -25,7 +27,7 @@ fonts:
     <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg" alt="verify all sequential status" /></a>
     <a href="https://docs.python.org/3.13/" target="_blank" rel="noreferrer"><img src="https://img.shields.io/badge/python-3.13-3776AB?logo=python&amp;logoColor=white" alt="Python 3.13" /></a>
   </div>
-  <p class="cover-goal-note"><Localized en="Verifying Solar Open 2 in practice, sharing it with the community, and opening the door to more use cases together." ko="Upstage Solar Open 2의 사용성을 검증하여 커뮤니티에 소개해드리고 더 많은 활용 사례를 서로 공유하도록 함" /></p>
+  <p class="cover-goal-note"><strong><Localized en="Project goal:" ko="프로젝트 목표:" /></strong> <Localized en="Verifying Solar Open 2 in practice, sharing it with the community, and opening the door to more use cases together." ko="Upstage Solar Open 2의 사용성을 검증하여 커뮤니티에 소개해드리고 더 많은 활용 사례를 서로 공유하도록 함" /></p>
 </div>
 
 ---

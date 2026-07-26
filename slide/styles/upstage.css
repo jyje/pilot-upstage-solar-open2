@@ -95,6 +95,23 @@
   z-index: 2;
 }
 
+.cover-repo-link {
+  display: block;
+  position: relative;
+  z-index: 2;
+  margin: 0.35rem 0 0;
+  color: var(--upstage-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.94rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.cover-repo-link:hover,
+.cover-repo-link:focus {
+  color: var(--upstage-lime);
+}
+
 .cover-readme-hero {
   display: flex;
   position: relative;
