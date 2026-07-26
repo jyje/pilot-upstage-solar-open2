@@ -261,6 +261,51 @@
   line-height: 1.4;
 }
 
+.case-evidence {
+  margin-top: 0.15rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid rgba(198, 255, 114, 0.3);
+  border-radius: 0.5rem;
+  background: rgba(198, 255, 114, 0.06);
+}
+
+.case-evidence-label {
+  margin-bottom: 0.4rem;
+  color: var(--upstage-lime);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.case-evidence-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.case-evidence-method {
+  flex-shrink: 0;
+  min-width: 1.15rem;
+  color: var(--upstage-cyan);
+  font-weight: 800;
+}
+
+.case-evidence-result {
+  color: #e2e0e9;
+}
+
+.case-evidence-result code {
+  padding: 0.05rem 0.28rem;
+  border-radius: 0.22rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+}
+
 .case-cta {
   display: inline-flex;
   align-items: center;
