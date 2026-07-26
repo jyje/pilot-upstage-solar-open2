@@ -19,3 +19,6 @@ slide/pages/
 
 # Playwright MCP
 .playwright-mcp/
+
+# Scratch workspace (agent skill runs, etc.)
+_workspace/
