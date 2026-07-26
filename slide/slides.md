@@ -25,66 +25,127 @@ fonts:
     <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg" alt="verify all sequential status" /></a>
     <a href="https://docs.python.org/3.13/" target="_blank" rel="noreferrer"><img src="https://img.shields.io/badge/python-3.13-3776AB?logo=python&amp;logoColor=white" alt="Python 3.13" /></a>
   </div>
-  <p class="cover-external-links-label"><Localized en="External links:" ko="외부 링크:" /></p>
-  <div class="cover-badges" aria-label="External links">
+</div>
+
+<hr class="model-section-divider" />
+
+# <Localized en="Model Introduction" ko="모델 소개" />
+
+<div class="model-intro-heading">
+  <img src="https://raw.githubusercontent.com/lobehub/lobe-icons/f07e9be35aef452ce735f95ea8204a14ecc513f7/packages/static-svg/icons/upstage-color.svg" alt="" />
+  <img src="https://raw.githubusercontent.com/lobehub/lobe-icons/f07e9be35aef452ce735f95ea8204a14ecc513f7/packages/static-svg/icons/upstage-text.svg" alt="Upstage" />
+  <span>Solar Open 2</span>
+</div>
+
+<div class="model-links">
+  <div class="cover-badges" aria-label="Model links">
     <a href="https://huggingface.co/upstage/Solar-Open2-250B" target="_blank" rel="noreferrer"><img src="https://img.shields.io/badge/%F0%9F%A4%97_Hugging_Face-upstage/solar--open2--250b-yellow" alt="Model on Hugging Face" /></a>
     <a href="https://huggingface.co/upstage/Solar-Open2-250B/blob/main/Solar_Open_2_Tech_Report.pdf" target="_blank" rel="noreferrer"><img src="https://img.shields.io/badge/%F0%9F%93%84_Technical_Report-PDF-blue" alt="Technical Report" /></a>
     <a href="https://www.youtube.com/live/6XX-yR3qomM" target="_blank" rel="noreferrer"><img src="https://img.shields.io/badge/%F0%9F%93%BA_Launch_Event-YouTube-red" alt="Launch Event" /></a>
   </div>
+  <a class="model-links-url" href="https://huggingface.co/upstage/Solar-Open2-250B" target="_blank" rel="noreferrer">https://huggingface.co/upstage/Solar-Open2-250B</a>
+  <a class="model-links-note" href="https://console.upstage.ai/api-keys" target="_blank" rel="noreferrer"><Localized en="Anyone can use it through the official Upstage API." ko="업스테이지 공식 API를 이용하면 누구나 사용할 수 있습니다." /><br/><Localized en="Currently free with no usage limit (subject to change)" ko="현재는 무제한 무료 사용 (추후 변경 가능)" /></a>
 </div>
 
----
-
-# Solar Open 2
-
-## Upstage's 250B MoE Model
-
 <v-click>
 
-### <Localized en="Model specification" ko="모델 스펙" />
-
-| <Localized en="Attribute" ko="항목" /> | <Localized en="Value" ko="내용" /> |
-|------|------|
-| **<Localized en="Parameters" ko="파라미터" />** | 250B total / 15B active (MoE) |
-| **<Localized en="Context" ko="컨텍스트" />** | 1M tokens |
-| **<Localized en="License" ko="라이선스" />** | Upstage Solar License |
+<div class="model-card-grid">
+  <div class="model-card">
+    <div class="model-card-icon">🧠</div>
+    <div class="model-card-value">250B · 15B</div>
+    <div class="model-card-label"><Localized en="Total / active params (MoE)" ko="전체 / 활성 파라미터 (MoE)" /></div>
+  </div>
+  <div class="model-card">
+    <div class="model-card-icon">📚</div>
+    <div class="model-card-value">1M tokens</div>
+    <div class="model-card-label"><Localized en="Context window via hybrid attention" ko="하이브리드 어텐션 기반 컨텍스트" /></div>
+  </div>
+  <div class="model-card">
+    <div class="model-card-icon">📅</div>
+    <div class="model-card-value">Jul 22, 2026</div>
+    <div class="model-card-label"><Localized en="Release date" ko="공개일" /></div>
+  </div>
+  <div class="model-card">
+    <div class="model-card-icon">🔤</div>
+    <div class="model-card-value"><Localized en="Text in / text out" ko="텍스트 입력 / 출력" /></div>
+    <div class="model-card-label"><Localized en="Modality — no image or audio I/O" ko="모달리티 — 이미지·오디오 입출력 없음" /></div>
+  </div>
+  <div class="model-card">
+    <div class="model-card-icon">🌐</div>
+    <div class="model-card-value">EN · KO · JA</div>
+    <div class="model-card-label"><Localized en="Officially supported languages" ko="공식 지원 언어" /></div>
+  </div>
+  <div class="model-card">
+    <div class="model-card-icon">🖥️</div>
+    <div class="model-card-value">2× H200</div>
+    <div class="model-card-label"><Localized en="Runs quantized on two GPUs" ko="양자화 시 GPU 2대로 구동" /></div>
+  </div>
+  <div class="model-card">
+    <div class="model-card-icon">🇰🇷</div>
+    <div class="model-card-value">85.4 <Localized en="avg" ko="평균" /></div>
+    <div class="model-card-label"><Localized en="Tops Korean benchmarks, beats DeepSeek-V4-Flash" ko="한국어 벤치마크 1위, DeepSeek-V4-Flash 상회" /></div>
+  </div>
+  <div class="model-card">
+    <div class="model-card-icon">💻</div>
+    <div class="model-card-value">92.4</div>
+    <div class="model-card-label"><Localized en="LiveCodeBench — best in class among open models" ko="LiveCodeBench — 오픈 모델 중 최고" /></div>
+  </div>
+  <div class="model-card">
+    <div class="model-card-icon">🤖</div>
+    <div class="model-card-value">86.8</div>
+    <div class="model-card-label"><Localized en="Ko-GDPval — near DeepSeek-V4-Pro at 1/3 the active params" ko="Ko-GDPval — 활성 파라미터 1/3로 DeepSeek-V4-Pro에 근접" /></div>
+  </div>
+</div>
 
 </v-click>
 
-<v-click>
-
-### <Localized en="Design goals" ko="설계 목적" />
-
-- **Long-horizon agentic tasks** — <Localized en="tool use, multi-step reasoning, and end-to-end task execution" ko="툴 사용, 다단계 추론, 엔드투엔드 태스크 실행" />
-- **Hybrid linear/softmax attention** — <Localized en="efficient processing at 1M context" ko="1M 컨텍스트에서 효율적 처리" />
-- **Korean-first** — <Localized en="top Korean benchmark performance" ko="한국어 벤치마크 최상위 성능" />
-
-</v-click>
-
 ---
 
-# <Localized en="Project structure" ko="프로젝트 구조" />
-
-## <Localized en="Seven independent cases, one repository" ko="7개 독립 케이스, 1개 리포" />
+# <Localized en="This Project's Structure" ko="이 프로젝트의 구조" />
 
 <v-click>
 
 ### <Localized en="Review cases" ko="리뷰 케이스 (Review)" />
 
-- **Case 01** — <Localized en="Route the Claude Code harness to Solar Open 2" ko="Claude Code harness를 Solar Open 2로 라우팅" />
-- **Case 02** — <Localized en="Run through the official Hermes Agent provider" ko="Hermes Agent 공식 제공자로 실행" />
+<p class="structure-category-desc"><Localized en="Re-verify use cases that Upstage itself has already published." ko="업스테이지에서 공개한 사용 사례를 다시 검증하는 케이스입니다." /></p>
+
+<div class="structure-case">
+  <span class="structure-case-num">Case 01</span><span class="structure-case-dash">—</span>
+  <span class="structure-case-body"><Localized en="Use Solar Open 2 in the Claude Code environment" ko="Solar Open 2 모델을 클로드 코드 환경에서 사용하기" /><em class="structure-case-sub"><Localized en="Official Claude Code, Upstage-wrapped Claude Code, containerized Claude Code" ko="공식 클로드 코드, 업스테이지 래핑 클로드 코드, 컨테이너 환경의 클로드 코드" /></em></span>
+</div>
+<div class="structure-case">
+  <span class="structure-case-num">Case 02</span><span class="structure-case-dash">—</span>
+  <span class="structure-case-body"><Localized en="Use Solar Open 2 with Hermes Agent" ko="Solar Open 2 모델을 Hermes Agent에서 사용하기" /></span>
+</div>
 
 </v-click>
 
 <v-click>
 
-### <Localized en="Extended cases" ko="익스텐드 케이스 (Extend)" />
+### <Localized en="Extended cases" ko="확장 케이스 (Extend)" />
 
-- **Case 03** — <Localized en="Control Claude Code with the Claude Agent SDK" ko="Claude Agent SDK로 Claude Code 제어" />
-- **Case 04** — LangChain Deepagents + langchain-upstage
-- **Case 05** — <Localized en="Self-document the repository with OpenWiki" ko="OpenWiki로 리포 자기 문서화" />
-- **Case 06** — <Localized en="Connect Grok Build CLI to a custom model" ko="Grok Build CLI를 커스텀 모델로 연결" />
-- **Case 07** — <Localized en="Deploy the Hermes Agent Helm chart to a kind cluster" ko="Hermes Agent Helm 차트, kind 클러스터 배포" />
+<p class="structure-category-desc"><Localized en="Apply Upstage's own cases to new contexts, or explore other cases that can use the official API." ko="업스테이지 사례를 응용하거나, 공식 API를 활용할 수 있는 다른 사례를 조사하는 케이스입니다." /></p>
+
+<div class="structure-case">
+  <span class="structure-case-num">Case 03</span><span class="structure-case-dash">—</span>
+  <span class="structure-case-body"><Localized en="Use Solar Open 2 with the Claude Agent SDK" ko="Solar Open 2 모델을 Claude Agent SDK로 사용하기" /><em class="structure-case-sub"><Localized en="Using the model in a code-level pipeline" ko="코드 레벨의 파이프라인으로 모델 사용하기" /></em></span>
+</div>
+<div class="structure-case">
+  <span class="structure-case-num">Case 04</span><span class="structure-case-dash">—</span>
+  <span class="structure-case-body"><Localized en="Use Solar Open 2 with LangChain Deepagents" ko="Solar Open 2 모델을 LangChain Deepagents에서 사용하기" /><em class="structure-case-sub"><Localized en="Controlling the harness at the code level" ko="코드 레벨에서 하네스 제어하기" /></em></span>
+</div>
+<div class="structure-case">
+  <span class="structure-case-num">Case 05</span><span class="structure-case-dash">—</span>
+  <span class="structure-case-body"><Localized en="Use Solar Open 2 with LangChain OpenWiki" ko="Solar Open 2 모델을 LangChain OpenWiki에서 사용하기" /><em class="structure-case-sub"><Localized en="Using a cutting-edge open source project that builds an LLM wiki" ko="LLM 위키를 구축하는 최신 오픈소스 활용" /></em></span>
+</div>
+<div class="structure-case">
+  <span class="structure-case-num">Case 06</span><span class="structure-case-dash">—</span>
+  <span class="structure-case-body"><Localized en="Use Solar Open 2 with Grok Build" ko="Solar Open 2 모델을 Grok Build에서 사용하기" /><em class="structure-case-sub"><Localized en="Using the Anthropic- and OpenAI-compatible providers" ko="Anthropic, OpenAI 호환 공급자 사용" /></em></span>
+</div>
+<div class="structure-case">
+  <span class="structure-case-num">Case 07</span><span class="structure-case-dash">—</span>
+  <span class="structure-case-body"><Localized en="Use Solar Open 2 with Hermes Agent on Kubernetes" ko="Solar Open 2 모델을 쿠버네티스의 Hermes Agent에서 사용하기" /><em class="structure-case-sub"><Localized en="Usable as an agent fleet in the cloud" ko="클라우드에서 에이전트 팀으로 사용 가능" /></em></span>
+</div>
 
 </v-click>
 
@@ -94,14 +155,14 @@ fonts:
 
 # Claude Code
 
-## <Localized en="Route Anthropic's own CLI through Solar Open 2 — three ways, zero forks" ko="Claude 공식 CLI를 Solar Open 2로 라우팅 — 3가지 방법, 포크 없이" />
+## <Localized en="Use Solar Open 2 in the Claude Code environment" ko="Solar Open 2 모델을 클로드 코드 환경에서 사용하기" /><em class="case-h2-sub"><Localized en="Official Claude Code, Upstage-wrapped Claude Code, containerized Claude Code" ko="공식 클로드 코드, 업스테이지 래핑 클로드 코드, 컨테이너 환경의 클로드 코드" /></em>
 
 <div class="case-card">
-  <p class="case-card-desc"><Localized en="Plain env vars redirect the official claude binary to Upstage. No fork, no patch, no proxy." ko="환경변수만으로 공식 claude 바이너리를 Upstage로 리다이렉트합니다. 포크도, 패치도, 프록시도 필요 없습니다." /></p>
+  <p class="case-card-desc"><Localized en="Claude Code runs on Solar Open 2 through three independent setups — the official CLI, Upstage's convenience wrapper, and a community Docker image. Custom skills and subagent calls were checked in the same environment." ko="클로드 코드는 공식 CLI, 업스테이지 커스텀 래퍼, 커뮤니티 Docker 이미지 — 세 가지 독립된 방식으로 Solar Open 2 위에서 동작합니다. 커스텀 스킬과 서브에이전트 호출도 같은 환경에서 확인했습니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip"><span class="case-chip-icon">🔓</span><span><Localized en="Vendor lock-in is thinner than assumed — an open model runs inside Anthropic's own harness untouched" ko="벤더 종속은 생각보다 얕습니다 — 오픈 모델이 Anthropic 하네스 안에서 그대로 동작" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🎯</span><span><Localized en="Solar Open 2 honors a skill's contract precisely once named — capability is there, discovery needs a nudge" ko="스킬을 지목하면 규약을 정확히 지킵니다 — 능력은 충분하고, 발동만 유도하면 됨" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🧩</span><span><Localized en="Subagents stay on Solar Open 2 and return real files, not hallucinations — delegation holds" ko="서브에이전트도 Solar Open 2를 유지하며 실제 파일을 반환 — 위임이 무너지지 않음" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🔓</span><span><Localized en="An open model runs inside Anthropic's own harness without modification" ko="오픈 모델이 Anthropic 하네스 안에서 수정 없이 그대로 동작합니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🎯</span><span><Localized en="A skill's contract is honored precisely once the skill is explicitly named" ko="스킬을 명시적으로 지목하면 규약을 정확히 따릅니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧩</span><span><Localized en="A subagent call under the same model setting returns real files, not hallucinations" ko="동일한 모델 설정에서 서브에이전트 호출이 실제 파일을 반환합니다" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
@@ -113,6 +174,10 @@ fonts:
       <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">📄 docs(docs): add hello greeting</span></div>
     </div>
   </div>
+  <div class="case-cta-row">
+    <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-01-solar-open2-harness.yml" target="_blank" rel="noreferrer"><img class="case-cta-badge" src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-01-solar-open2-harness.yml/badge.svg" alt="verify-01 status" /></a>
+    <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/01-solar-open2-harness/README.md" target="_blank" rel="noreferrer"><Localized en="Read more" ko="자세히 보기" /></a>
+  </div>
 </div>
 
 ---
@@ -121,14 +186,14 @@ fonts:
 
 # Hermes Agent
 
-## <Localized en="Official Docker image, built-in Upstage provider" ko="공식 Docker 이미지, 내장 Upstage 프로바이더" />
+## <Localized en="Use Solar Open 2 with Hermes Agent" ko="Solar Open 2 모델을 Hermes Agent에서 사용하기" />
 
 <div class="case-card">
-  <p class="case-card-desc"><Localized en="Hermes Agent v0.18.2 ships an upstage provider out of the box — no local plugin, no LiteLLM proxy." ko="Hermes Agent v0.18.2는 upstage 프로바이더를 기본 내장합니다 — 로컬 플러그인도, LiteLLM 프록시도 필요 없습니다." /></p>
+  <p class="case-card-desc"><Localized en="The official Hermes Agent Docker image ships a built-in Upstage provider. No protocol-conversion proxy was needed to connect it to Solar Open 2." ko="공식 Hermes Agent Docker 이미지에는 Upstage 프로바이더가 내장되어 있습니다. Solar Open 2와 연결하는 데 별도의 프로토콜 변환 프록시가 필요하지 않았습니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip"><span class="case-chip-icon">🏅</span><span><Localized en="Solar Open 2 is a first-class citizen upstream — Hermes ships the provider, no community patch needed" ko="업스트림이 Solar Open 2를 1급 시민으로 대우 — 커뮤니티 패치 없이 제공자 기본 탑재" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🧾</span><span><Localized en="The untruncated reasoning trace shows the model deliberating, not just emitting — real agentic behavior" ko="잘리지 않은 추론 트레이스가 숙고 과정을 보여줍니다 — 출력이 아닌 진짜 에이전트 행동" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🔁</span><span><Localized en="Same result locally and in CI — reproducibility is what turns a demo into a platform claim" ko="로컬과 CI 결과가 동일 — 재현성이 데모를 플랫폼 주장으로 바꿉니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🏅</span><span><Localized en="Solar Open 2 support is bundled upstream, in the officially published image" ko="Solar Open 2 지원이 공식 배포 이미지에 기본 포함되어 있습니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧾</span><span><Localized en="The full reasoning trace was captured before the model settled on its reply" ko="모델이 응답을 확정하기 전의 추론 과정 전체가 기록됩니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🔁</span><span><Localized en="The same round trip was confirmed both locally and in CI" ko="동일한 라운드트립을 로컬과 CI 양쪽에서 확인했습니다" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
@@ -140,6 +205,10 @@ fonts:
       <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">hermes-ready</span></div>
     </div>
   </div>
+  <div class="case-cta-row">
+    <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-02-hermes-agent-solar-open2.yml" target="_blank" rel="noreferrer"><img class="case-cta-badge" src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-02-hermes-agent-solar-open2.yml/badge.svg" alt="verify-02 status" /></a>
+    <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/02-hermes-agent-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="Read more" ko="자세히 보기" /></a>
+  </div>
 </div>
 
 ---
@@ -148,14 +217,14 @@ fonts:
 
 # Claude Agent SDK
 
-## <Localized en="Drive Claude Code programmatically from Python" ko="Python에서 Claude Code를 프로그래밍 방식으로 제어" />
+## <Localized en="Use Solar Open 2 with the Claude Agent SDK" ko="Solar Open 2 모델을 Claude Agent SDK로 사용하기" /><em class="case-h2-sub"><Localized en="Using the model in a code-level pipeline" ko="코드 레벨의 파이프라인으로 모델 사용하기" /></em>
 
 <div class="case-card">
-  <p class="case-card-desc"><Localized en="Same env var recipe as Case 01, passed through ClaudeAgentOptions — proves the SDK, not just the CLI." ko="Case 01과 동일한 환경변수 레시피를 ClaudeAgentOptions로 전달 — CLI뿐 아니라 SDK까지 증명." /></p>
+  <p class="case-card-desc"><Localized en="The Python claude-agent-sdk runs a local Claude Code session entirely programmatically, on Solar Open 2. Instead of parsing stdout text, it receives typed message objects." ko="Python claude-agent-sdk는 로컬 Claude Code 세션을 Solar Open 2 위에서 완전히 프로그래밍 방식으로 실행합니다. stdout 텍스트를 파싱하는 대신 타입이 있는 메시지 객체를 받습니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip"><span class="case-chip-icon">🏗️</span><span><Localized en="Solar Open 2 can sit under application code, not just a terminal — the SDK path opens real product surfaces" ko="터미널을 넘어 애플리케이션 코드 아래에 놓입니다 — SDK 경로가 실제 제품 표면을 엽니다" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🔍</span><span><Localized en="Tool use is observable as structured messages — you can build guardrails on it, not guess from stdout" ko="툴 사용이 구조화된 메시지로 관측됩니다 — stdout 추측이 아닌 가드레일 구축이 가능" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🧠</span><span><Localized en="Multi-turn state holds across a session — long-horizon agent work is viable, not just single shots" ko="세션 전반에 걸쳐 상태를 유지 — 단발성이 아닌 장기 에이전트 작업이 가능" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🏗️</span><span><Localized en="Solar Open 2 sits under application code through the SDK, not just a terminal" ko="SDK를 통해 애플리케이션 코드 아래에 Solar Open 2가 놓입니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🔍</span><span><Localized en="Tool use is observable as a structured message, not inferred from stdout" ko="툴 사용이 stdout 추측이 아닌 구조화된 메시지로 관측됩니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧠</span><span><Localized en="Session state was recalled correctly across two separate turns" ko="세션 상태가 두 개의 분리된 턴에 걸쳐 정확히 유지됩니다" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
@@ -168,6 +237,10 @@ fonts:
       <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">42</span></div>
     </div>
   </div>
+  <div class="case-cta-row">
+    <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-03-claude-agent-sdk-local.yml" target="_blank" rel="noreferrer"><img class="case-cta-badge" src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-03-claude-agent-sdk-local.yml/badge.svg" alt="verify-03 status" /></a>
+    <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/03-claude-agent-sdk-local/README.md" target="_blank" rel="noreferrer"><Localized en="Read more" ko="자세히 보기" /></a>
+  </div>
 </div>
 
 ---
@@ -176,14 +249,14 @@ fonts:
 
 # LangChain DeepAgents
 
-## <Localized en="Pure code-level agent, no Claude CLI involved" ko="Claude CLI 없이 순수 코드 레벨 에이전트로 동작" />
+## <Localized en="Use Solar Open 2 with LangChain Deepagents" ko="Solar Open 2 모델을 LangChain Deepagents에서 사용하기" /><em class="case-h2-sub"><Localized en="Controlling the harness at the code level" ko="코드 레벨에서 하네스 제어하기" /></em>
 
 <div class="case-card">
-  <p class="case-card-desc"><Localized en="ChatUpstage talks to Upstage's OpenAI-compatible endpoint directly — no ANTHROPIC_BASE_URL dance." ko="ChatUpstage가 Upstage의 OpenAI 호환 엔드포인트와 직접 통신 — ANTHROPIC_BASE_URL 설정이 필요 없습니다." /></p>
+  <p class="case-card-desc"><Localized en="deepagents is initialized at the code level with langchain-upstage supplying Solar Open 2 as the model. No Claude Code CLI is involved — LangChain talks to Upstage directly." ko="deepagents는 langchain-upstage가 Solar Open 2를 모델로 공급하는 코드 레벨에서 초기화됩니다. Claude Code CLI는 전혀 관여하지 않으며, LangChain이 Upstage와 직접 통신합니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip"><span class="case-chip-icon">🌉</span><span><Localized en="No Claude runtime anywhere — the OpenAI-compatible endpoint makes Solar Open 2 a drop-in for the LangChain ecosystem" ko="Claude 런타임이 전혀 없습니다 — OpenAI 호환 엔드포인트가 LangChain 생태계의 드롭인 대체재로 만듭니다" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🐍</span><span><Localized en="The only blocker was the Python ecosystem, not the model — a missing wheel, resolved by pinning 3.13" ko="유일한 블로커는 모델이 아니라 Python 생태계였습니다 — 휠 부재, 3.13 고정으로 해결" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🤝</span><span><Localized en="The model plans, delegates to a named subagent, and reconciles the result — orchestration, not autocomplete" ko="계획하고, 지정한 서브에이전트에 위임하고, 결과를 종합합니다 — 자동완성이 아닌 오케스트레이션" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🌉</span><span><Localized en="Solar Open 2 is reached through Upstage's OpenAI-compatible endpoint, with no Claude runtime involved" ko="Claude 런타임 없이 Upstage의 OpenAI 호환 엔드포인트로 Solar Open 2에 도달합니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🐍</span><span><Localized en="Python 3.13 was pinned because tokenizers has no cp314 wheel yet" ko="tokenizers의 cp314 휠이 아직 없어 Python 3.13으로 고정했습니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🤝</span><span><Localized en="A task was delegated to a named subagent and the result was reconciled correctly" ko="지정한 서브에이전트에 작업을 위임하고 결과를 정확히 종합했습니다" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
@@ -195,6 +268,10 @@ fonts:
       <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">It's sunny in Seoul!</span></div>
     </div>
   </div>
+  <div class="case-cta-row">
+    <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-04-langchain-upstage-deepagents.yml" target="_blank" rel="noreferrer"><img class="case-cta-badge" src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-04-langchain-upstage-deepagents.yml/badge.svg" alt="verify-04 status" /></a>
+    <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/04-langchain-upstage-deepagents/README.md" target="_blank" rel="noreferrer"><Localized en="Read more" ko="자세히 보기" /></a>
+  </div>
 </div>
 
 ---
@@ -203,14 +280,14 @@ fonts:
 
 # LangChain OpenWiki
 
-## <Localized en="Self-documenting this very repository" ko="이 리포 자체를 스스로 문서화" />
+## <Localized en="Use Solar Open 2 with LangChain OpenWiki" ko="Solar Open 2 모델을 LangChain OpenWiki에서 사용하기" /><em class="case-h2-sub"><Localized en="Using a cutting-edge open source project that builds an LLM wiki" ko="LLM 위키를 구축하는 최신 오픈소스 활용" /></em>
 
 <div class="case-card">
-  <p class="case-card-desc"><Localized en="openwiki builds an agent-readable wiki for the codebase and answers real questions about it." ko="openwiki가 코드베이스를 위한 에이전트 친화적 위키를 만들고, 그에 대한 실제 질문에 답합니다." /></p>
+  <p class="case-card-desc"><Localized en="openwiki was run on Solar Open 2 instead of its usual Anthropic/OpenAI defaults, to document this repository's latest commit and answer questions about it." ko="openwiki를 평소의 Anthropic/OpenAI 기본값 대신 Solar Open 2로 실행해, 이 리포지토리의 최신 커밋을 문서화하고 그에 대한 질문에 답하도록 했습니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip"><span class="case-chip-icon">📖</span><span><Localized en="The model reads an unfamiliar codebase and answers accurately about its latest commit — comprehension at repo scale" ko="처음 보는 코드베이스를 읽고 최신 커밋까지 정확히 답합니다 — 리포 단위의 이해력" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🐛</span><span><Localized en="Found a real upstream bug: streaming drops tool call names — open models let you trace and fix, not just file a ticket" ko="실제 업스트림 버그 발견: 스트리밍이 툴콜 이름을 누락 — 오픈 모델은 티켓 제출이 아니라 추적과 수정을 허용합니다" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">📊</span><span><Localized en="Hitting the Tier-0 token ceiling is a quota story, not a capability one — the work itself completed" ko="Tier-0 토큰 한도 도달은 능력이 아니라 쿼터의 문제 — 작업 자체는 완수되었습니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">📖</span><span><Localized en="The model read this codebase and answered accurately about its latest commit" ko="모델이 이 코드베이스를 읽고 최신 커밋에 대해 정확히 답했습니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🐛</span><span><Localized en="A streaming issue that drops tool call names was found and traced during the run" ko="실행 도중 스트리밍 응답이 툴콜 이름을 누락하는 문제를 발견하고 원인을 추적했습니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">📊</span><span><Localized en="A full documentation run can exceed the Tier-0 token-per-minute limit" ko="전체 문서화 실행은 Tier-0의 분당 토큰 한도를 초과할 수 있습니다" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI — 3 live Q&amp;A rounds" ko="CI 검증 결과 — 실제 Q&amp;A 3라운드" /></div>
@@ -222,6 +299,10 @@ fonts:
       <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text"><Localized en="&quot;…Upstage's Solar Open 2, a 250B-A15B MoE open-weight model with 1M-token context…&quot;" ko="&quot;…1M 토큰 컨텍스트를 가진 250B-A15B MoE 오픈 웨이트 모델 Solar Open 2…&quot;" /></span></div>
     </div>
   </div>
+  <div class="case-cta-row">
+    <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-05-langchain-openwiki-solar-open2.yml" target="_blank" rel="noreferrer"><img class="case-cta-badge" src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-05-langchain-openwiki-solar-open2.yml/badge.svg" alt="verify-05 status" /></a>
+    <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/05-langchain-openwiki-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="Read more" ko="자세히 보기" /></a>
+  </div>
 </div>
 
 ---
@@ -230,14 +311,14 @@ fonts:
 
 # Grok Build
 
-## <Localized en="xAI's terminal coding agent as a custom model" ko="xAI의 터미널 코딩 에이전트를 커스텀 모델로 연결" />
+## <Localized en="Use Solar Open 2 with Grok Build" ko="Solar Open 2 모델을 Grok Build에서 사용하기" /><em class="case-h2-sub"><Localized en="Using the Anthropic- and OpenAI-compatible providers" ko="Anthropic, OpenAI 호환 공급자 사용" /></em>
 
 <div class="case-card">
-  <p class="case-card-desc"><Localized en="A user-level config.toml entry lets Grok Build pick chat_completions as its wire protocol." ko="사용자 레벨 config.toml 설정만으로 Grok Build가 chat_completions 프로토콜을 선택하도록 만듭니다." /></p>
+  <p class="case-card-desc"><Localized en="xAI's Grok Build reached Solar Open 2 through its own documented custom-model mechanism, with no protocol bridge in between." ko="xAI의 Grok Build는 자체 문서화된 커스텀 모델 메커니즘만으로, 별도의 프로토콜 브리지 없이 Solar Open 2에 도달했습니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip"><span class="case-chip-icon">🔌</span><span><Localized en="A rival's own coding agent accepts Solar Open 2 as a custom model — the ecosystem is more open than the branding suggests" ko="경쟁사 코딩 에이전트가 Solar Open 2를 커스텀 모델로 수용 — 브랜딩보다 생태계가 훨씬 개방적입니다" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🚧</span><span><Localized en="Where the harness is closed, one upstream bug ends the story — a case for open weights and open clients" ko="하네스가 닫혀 있으면 업스트림 버그 하나로 끝납니다 — 오픈 웨이트와 오픈 클라이언트가 필요한 이유" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🧮</span><span><Localized en="Reasoning and coding land cleanly — it derives 1275 by two methods and writes working is_prime" ko="추론과 코딩은 깔끔하게 통과 — 1275를 두 가지 방법으로 도출하고 동작하는 is_prime을 작성" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🔌</span><span><Localized en="A separate vendor's coding agent accepted Solar Open 2 as a custom model" ko="다른 회사의 코딩 에이전트가 Solar Open 2를 커스텀 모델로 수용했습니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🚧</span><span><Localized en="Built-in tool calling hits the same streaming issue seen in Case 05, without a client-side fix available" ko="내장 툴 콜링에서 Case 05와 동일한 스트리밍 문제가 발생하며, 클라이언트 쪽 해결 방법은 없습니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧮</span><span><Localized en="Reasoning and coding tasks completed correctly across all three checks" ko="추론과 코딩 과제 모두 세 가지 검증에서 정상적으로 완료됐습니다" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
@@ -249,6 +330,10 @@ fonts:
       <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text"><Localized en="n(n+1)/2 = 50·51/2 = 1275, cross-checked by pairing" ko="n(n+1)/2 = 50·51/2 = 1275, 짝짓기로 교차 검증" /></span></div>
     </div>
   </div>
+  <div class="case-cta-row">
+    <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml" target="_blank" rel="noreferrer"><img class="case-cta-badge" src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml/badge.svg" alt="verify-06 status" /></a>
+    <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/06-grok-build-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="Read more" ko="자세히 보기" /></a>
+  </div>
 </div>
 
 ---
@@ -257,14 +342,14 @@ fonts:
 
 # Hermes Agent Helm
 
-## <Localized en="Kubernetes deployment on an ephemeral kind cluster" ko="일회성 kind 클러스터 위 쿠버네티스 배포" />
+## <Localized en="Use Solar Open 2 with Hermes Agent on Kubernetes" ko="Solar Open 2 모델을 쿠버네티스의 Hermes Agent에서 사용하기" /><em class="case-h2-sub"><Localized en="Usable as an agent fleet in the cloud" ko="클라우드에서 에이전트 팀으로 사용 가능" /></em>
 
 <div class="case-card">
-  <p class="case-card-desc"><Localized en="Case 02 proved the Docker image. This proves the same provider path survives a real Helm/Kubernetes deployment." ko="Case 02가 Docker 이미지를 증명했다면, 이 케이스는 동일한 프로바이더 경로가 실제 Helm/쿠버네티스 배포에서도 살아남음을 증명합니다." /></p>
+  <p class="case-card-desc"><Localized en="The community jyje/hermes-agent-helm chart deploys Hermes Agent onto a real, ephemeral Kubernetes cluster and completes a round trip to Solar Open 2 — both from the chart's own test Job and from the running gateway pod." ko="커뮤니티 차트 jyje/hermes-agent-helm이 실제 임시 쿠버네티스 클러스터에 Hermes Agent를 배포하고, 차트 자체의 테스트 Job과 실행 중인 게이트웨이 파드 양쪽에서 Solar Open 2와의 라운드트립을 완료합니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip"><span class="case-chip-icon">☸️</span><span><Localized en="It survives the way operators actually ship — a published Helm chart on a real cluster, not a laptop demo" ko="운영자가 실제로 배포하는 방식에서 살아남습니다 — 노트북 데모가 아닌 공개 Helm 차트와 실제 클러스터" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">🔬</span><span><Localized en="The chart's own test Job gates the model — verification becomes declarative infrastructure, not a manual step" ko="차트 자체 테스트 Job이 모델을 게이트합니다 — 검증이 수동 절차가 아닌 선언적 인프라가 됩니다" /></span></div>
-    <div class="case-chip"><span class="case-chip-icon">💬</span><span><Localized en="Asked inside the pod, the model articulates its own strengths for agentic work over 76 lines" ko="파드 안에서 물었을 때, 모델이 에이전트 작업에 대한 자기 강점을 76줄로 설명합니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">☸️</span><span><Localized en="The deployment used a published Helm chart on a real cluster, not a single docker run" ko="단발성 docker run이 아닌 공개된 Helm 차트로 실제 클러스터에 배포했습니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🔬</span><span><Localized en="The chart's own test Job checks the round trip as part of the deployment itself" ko="차트 자체의 테스트 Job이 배포 과정 안에서 라운드트립을 확인합니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">💬</span><span><Localized en="Asked from inside the pod, the model described its own strengths for agentic work" ko="파드 내부에서 질문했을 때 모델이 에이전트 작업에서의 자기 강점을 설명했습니다" /></span></div>
   </div>
   <div class="case-evidence">
     <div class="case-evidence-label"><Localized en="Verified in CI" ko="CI 검증 결과" /></div>
@@ -275,6 +360,10 @@ fonts:
       <div class="case-qa-line is-prompt"><span class="case-qa-tag">Ask</span><span class="case-qa-text">"Reply with exactly: hermes-k8s-ready"</span></div>
       <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">hermes-k8s-ready</span></div>
     </div>
+  </div>
+  <div class="case-cta-row">
+    <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml" target="_blank" rel="noreferrer"><img class="case-cta-badge" src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml/badge.svg" alt="verify-07 status" /></a>
+    <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/07-hermes-agent-helm-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="Read more" ko="자세히 보기" /></a>
   </div>
 </div>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onBeforeUnmount, ref } from 'vue';
 import { useNav } from '@slidev/client';
 
 const { currentSlideNo } = useNav();
@@ -9,12 +9,17 @@ const isKorean = computed(() => {
   return /(^|\/)ko(?:\/|$)/.test(window.location.pathname);
 });
 
-const localeHref = computed(() => {
-  const targetLocale = isKorean.value ? 'en' : 'ko';
-  return `../${targetLocale}/#${currentSlideNo.value}`;
-});
+const localeHref = (targetLocale: 'en' | 'ko') => `../${targetLocale}/#${currentSlideNo.value}`;
 
-const localeLabel = computed(() => (isKorean.value ? 'English' : '한국어'));
+const menuOpen = ref(false);
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
+};
+const closeMenu = () => {
+  menuOpen.value = false;
+};
+
+onBeforeUnmount(closeMenu);
 </script>
 
 <template>
@@ -33,7 +38,35 @@ const localeLabel = computed(() => (isKorean.value ? 'English' : '한국어'));
       />
     </span>
   </div>
-  <a class="locale-switch" :href="localeHref" :lang="isKorean ? 'en' : 'ko'">
-    {{ localeLabel }}
-  </a>
+  <div class="locale-menu-wrap">
+    <button
+      type="button"
+      class="locale-switch locale-switch-btn"
+      aria-label="Change language"
+      :aria-expanded="menuOpen"
+      @click="toggleMenu"
+    >
+      🌐
+    </button>
+    <div v-if="menuOpen" class="locale-menu" @mouseleave="closeMenu">
+      <a
+        class="locale-menu-item"
+        :class="{ 'is-active': !isKorean }"
+        :href="localeHref('en')"
+        lang="en"
+        @click="closeMenu"
+      >
+        English
+      </a>
+      <a
+        class="locale-menu-item"
+        :class="{ 'is-active': isKorean }"
+        :href="localeHref('ko')"
+        lang="ko"
+        @click="closeMenu"
+      >
+        한국어
+      </a>
+    </div>
+  </div>
 </template>
