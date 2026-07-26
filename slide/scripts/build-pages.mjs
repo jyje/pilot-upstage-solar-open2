@@ -34,19 +34,19 @@ const selectorPage = `<!doctype html>
       main { width: min(38rem, 100%); }
       .brand { display: flex; align-items: center; justify-content: center; gap: .55rem; margin-bottom: 1.45rem; }
       .brand-jyje { display: inline-flex; align-items: center; gap: .32rem; }
-      .brand-jyje img { height: 1.15rem; width: 1.15rem; border-radius: .25rem; }
-      .brand-jyje span { font-size: .85rem; font-weight: 800; letter-spacing: -.02em; }
-      .brand-x { color: #a7a5b8; font-size: .85rem; font-weight: 600; }
+      .brand-jyje img { height: 1.5rem; width: 1.5rem; border-radius: .25rem; }
+      .brand-jyje span { font-size: 1.1rem; font-weight: 800; letter-spacing: -.02em; }
+      .brand-x { color: #a7a5b8; font-size: 1.1rem; font-weight: 600; }
       .brand-upstage { display: inline-flex; align-items: center; gap: .42rem; }
-      .brand-upstage img:first-child { height: 1.05rem; width: auto; }
-      .brand-upstage img:last-child { height: .8rem; width: auto; filter: brightness(0) invert(1); }
-      h1 { margin: 1.2rem 0 .95rem; font-size: clamp(1.5rem, 4.6vw, 2.5rem); letter-spacing: -.04em; line-height: 1.1; white-space: nowrap; }
+      .brand-upstage img:first-child { height: 1.47rem; width: auto; }
+      .brand-upstage img:last-child { height: 1.12rem; width: auto; filter: brightness(0) invert(1); }
+      h1 { margin: 1.2rem 0 .95rem; font-size: clamp(1.92rem, 5.89vw, 3.2rem); letter-spacing: -.04em; line-height: 1.1; white-space: nowrap; }
       .hero-image { width: 90%; margin: 0 auto 1rem; border: 1px solid rgba(255,255,255,.13); border-radius: .5rem; box-shadow: 0 .7rem 1.8rem rgba(0,0,0,.22); }
-      p.tagline { max-width: 100%; margin: 0 0 1.3rem; color: #fff; font-size: .94rem; font-weight: 600; line-height: 1.4; }
+      p.tagline { max-width: 100%; margin: 0 0 1.3rem; color: #fff; font-size: 1.203rem; font-weight: 600; line-height: 1.4; }
 .cases-scroll { width: 100%; margin: 0 0 1rem; overflow-x: auto; border: 1px solid rgba(255,255,255,.14); border-radius: .5rem; background: rgba(255,255,255,.035); }
       table.cases { width: 100%; min-width: 30rem; border-collapse: separate; border-spacing: 0; text-align: left; }
-      table.cases th, table.cases td { padding: .5rem .65rem; border-bottom: 1px solid rgba(255,255,255,.14); font-size: .8rem; white-space: nowrap; vertical-align: middle; }
-      table.cases th { color: #c6ff72; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: .68rem; }
+      table.cases th, table.cases td { padding: .5rem .65rem; border-bottom: 1px solid rgba(255,255,255,.14); font-size: 1.024rem; white-space: nowrap; vertical-align: middle; }
+      table.cases th { color: #c6ff72; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: .87rem; }
       table.cases tr:last-child td { border-bottom: 0; }
       table.cases td.case-name { color: #fff; font-weight: 600; white-space: normal; }
       table.cases td.case-category { color: #a7a5b8; }
@@ -54,7 +54,7 @@ const selectorPage = `<!doctype html>
       nav { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; margin-top: 1.6rem; width: 100%; }
       a.lang { flex: 1 1 8rem; min-width: 0; padding: .9rem 1.1rem; border: 1px solid #4c2fff; color: #fff; text-align: center; text-decoration: none; }
       a.lang:hover, a.lang:focus { color: #11111f; background: #c6ff72; border-color: #c6ff72; }
-      footer { margin-top: 2.5rem; padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,.14); color: #a7a5b8; font-size: .8rem; }
+      footer { margin-top: 2.5rem; padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,.14); color: #a7a5b8; font-size: 1.024rem; }
       footer p { margin: 0 0 .4rem; }
       footer p:last-child { margin-bottom: 0; }
       footer a { color: #a7a5b8; text-decoration: underline; text-decoration-color: rgba(167,165,184,.5); }
