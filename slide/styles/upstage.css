@@ -146,6 +146,16 @@
   max-width: 100%;
 }
 
+.cover-goal-note {
+  max-width: 28rem;
+  margin: 0.75rem auto 0 !important;
+  color: var(--upstage-lime) !important;
+  font-size: 0.998rem !important;
+  font-weight: 600;
+  line-height: 1.5 !important;
+  text-align: center;
+}
+
 .slidev-layout h2 {
   max-width: 100%;
   margin: 0 0 1.5rem;

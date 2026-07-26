@@ -25,6 +25,7 @@ fonts:
     <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg" alt="verify all sequential status" /></a>
     <a href="https://docs.python.org/3.13/" target="_blank" rel="noreferrer"><img src="https://img.shields.io/badge/python-3.13-3776AB?logo=python&amp;logoColor=white" alt="Python 3.13" /></a>
   </div>
+  <p class="cover-goal-note"><Localized en="Verifying Solar Open 2 in practice, sharing it with the community, and opening the door to more use cases together." ko="Upstage Solar Open 2의 사용성을 검증하여 커뮤니티에 소개해드리고 더 많은 활용 사례를 서로 공유하도록 함" /></p>
 </div>
 
 <hr class="model-section-divider" />
