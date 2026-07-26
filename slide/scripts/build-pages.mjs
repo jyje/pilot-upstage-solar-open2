@@ -51,7 +51,8 @@ const selectorPage = `<!doctype html>
       table.cases td.case-name { color: #fff; font-weight: 600; white-space: normal; }
       table.cases td.case-category { color: #a7a5b8; }
       table.cases td.case-ci img { height: 1.15rem; }
-      nav { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; margin-top: 1.6rem; width: 100%; }
+      p.nav-label { margin: 1.6rem 0 0; color: #a7a5b8; font-size: .87rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+      nav { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; margin-top: .7rem; width: 100%; }
       a.lang { flex: 1 1 8rem; min-width: 0; padding: .9rem 1.1rem; border: 1px solid #4c2fff; color: #fff; text-align: center; text-decoration: none; }
       a.lang:hover, a.lang:focus { color: #11111f; background: #c6ff72; border-color: #c6ff72; }
       footer { margin-top: 2.5rem; padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,.14); color: #a7a5b8; font-size: 1.024rem; }
@@ -121,6 +122,7 @@ const selectorPage = `<!doctype html>
           </tbody>
         </table>
       </div>
+      <p class="nav-label">Start the slides — choose a language</p>
       <nav aria-label="Presentation language">
         <a class="lang" href="./en/#1" lang="en">English</a>
         <a class="lang" href="./ko/#1" lang="ko">한국어</a>
