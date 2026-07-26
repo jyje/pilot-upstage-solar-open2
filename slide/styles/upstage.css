@@ -56,7 +56,7 @@
   max-width: 100%;
   margin: 0 0 0.72rem;
   color: #fff;
-  font-size: 2.45rem;
+  font-size: 3.136rem;
   font-weight: 800;
   letter-spacing: -0.065em;
   line-height: 1.03;
@@ -85,7 +85,7 @@
 .slidev-layout.cover h1 {
   position: relative;
   z-index: 2;
-  font-size: 2.7rem;
+  font-size: 3.456rem;
   max-width: 100%;
   text-align: center;
 }
@@ -117,7 +117,7 @@
   max-width: 100%;
   margin: 0 0 0.55rem !important;
   color: #fff !important;
-  font-size: 0.94rem !important;
+  font-size: 1.203rem !important;
   font-weight: 600;
   line-height: 1.32 !important;
 }
@@ -125,7 +125,7 @@
 .cover-external-links-label {
   margin: 0.5rem 0 0.4rem !important;
   color: var(--upstage-muted) !important;
-  font-size: 0.75rem !important;
+  font-size: 0.96rem !important;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -160,7 +160,7 @@
   max-width: 100%;
   margin: 0 0 1.5rem;
   color: var(--upstage-cyan);
-  font-size: 1.45rem;
+  font-size: 1.856rem;
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.35;
@@ -173,7 +173,7 @@
   display: block;
   margin-top: 0.3rem;
   color: var(--upstage-muted);
-  font-size: 0.85rem;
+  font-size: 1.088rem;
   font-style: italic;
   font-weight: 500;
 }
@@ -181,7 +181,7 @@
 .slidev-layout h3 {
   margin: 1.15rem 0 0.55rem;
   color: var(--upstage-lime);
-  font-size: 1.15rem;
+  font-size: 1.472rem;
   font-weight: 700;
   letter-spacing: 0.055em;
   line-height: 1.25;
@@ -194,16 +194,16 @@
 .structure-category-desc {
   margin: 0 0 0.6rem !important;
   color: var(--upstage-muted) !important;
-  font-size: 0.85rem !important;
+  font-size: 1.088rem !important;
   font-style: italic;
   line-height: 1.4 !important;
 }
 
 .structure-case {
   display: grid;
-  grid-template-columns: 3.7rem 1.2rem 1fr;
+  grid-template-columns: 4.75rem 1.5rem 1fr;
   align-items: baseline;
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
 }
 
 .structure-case:first-of-type {
@@ -229,7 +229,7 @@
   display: flex;
   flex-direction: column;
   color: #e2e0e9;
-  font-size: 0.9375rem;
+  font-size: 1.2rem;
   line-height: 1.4;
 }
 
@@ -237,7 +237,7 @@
   display: block;
   margin-top: 0.15rem;
   color: var(--upstage-muted);
-  font-size: 0.85rem;
+  font-size: 1.088rem;
   font-style: italic;
 }
 
@@ -246,7 +246,7 @@
 .slidev-layout li,
 .slidev-layout td {
   color: #e2e0e9;
-  font-size: 0.9375rem;
+  font-size: 1.2rem;
   line-height: 1.4;
 }
 
@@ -269,7 +269,7 @@
 
 .slidev-layout th,
 .slidev-layout td { padding: 0.48rem 0.56rem; border-bottom: 1px solid var(--upstage-line); }
-.slidev-layout th { color: var(--upstage-lime); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.055em; text-align: left; text-transform: uppercase; }
+.slidev-layout th { color: var(--upstage-lime); font-size: 0.998rem; font-weight: 700; letter-spacing: 0.055em; text-align: left; text-transform: uppercase; }
 .slidev-layout tr:last-child td { border-bottom: 0; }
 
 .slidev-layout pre,
@@ -305,7 +305,7 @@
 .case-card-desc {
   max-width: 32rem;
   color: #fff !important;
-  font-size: 1.05rem !important;
+  font-size: 1.344rem !important;
   font-weight: 600;
   line-height: 1.5 !important;
 }
@@ -325,13 +325,13 @@
   border-radius: 0.5rem;
   background: rgba(255, 255, 255, 0.06);
   color: #e2e0e9;
-  font-size: 0.88rem;
+  font-size: 1.126rem;
   line-height: 1.4;
 }
 
 .case-chip-icon {
   flex-shrink: 0;
-  font-size: 1.05rem;
+  font-size: 1.344rem;
   line-height: 1.4;
 }
 
@@ -346,7 +346,7 @@
 .case-evidence-label {
   margin-bottom: 0.4rem;
   color: var(--upstage-lime);
-  font-size: 0.66rem;
+  font-size: 0.845rem;
   font-weight: 800;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -356,7 +356,7 @@
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 1.024rem;
   line-height: 1.5;
 }
 
@@ -377,7 +377,7 @@
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.74rem;
+  font-size: 0.947rem;
 }
 
 .case-qa {
@@ -390,7 +390,7 @@
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
-  font-size: 0.78rem;
+  font-size: 0.998rem;
   line-height: 1.5;
 }
 
@@ -400,8 +400,8 @@
 
 .case-qa-tag {
   flex-shrink: 0;
-  min-width: 1.5rem;
-  font-size: 0.62rem;
+  min-width: 1.9rem;
+  font-size: 0.794rem;
   font-weight: 800;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -413,7 +413,7 @@
 .case-qa-text {
   color: #cfccd9;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
+  font-size: 0.922rem;
 }
 
 .case-qa-line.is-reply .case-qa-text {
@@ -436,14 +436,14 @@
 .case-cta {
   display: inline-flex;
   align-items: center;
-  height: 1.9rem;
+  height: 2.1rem;
   padding: 0 0.75rem;
   border: 1px solid var(--upstage-line);
   border-radius: 0.35rem;
   box-sizing: border-box;
   background: rgba(17, 17, 31, 0.82);
   color: var(--upstage-cyan) !important;
-  font-size: 0.85rem;
+  font-size: 0.998rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   text-decoration: none !important;
@@ -652,12 +652,6 @@
   color: var(--upstage-lime);
 }
 
-.model-section-divider {
-  margin: 3.4rem 0 2.5rem;
-  border: none;
-  border-top: 1px solid var(--upstage-line);
-}
-
 .model-intro-heading {
   display: flex;
   align-items: center;
@@ -677,7 +671,7 @@
 .model-links-url {
   color: var(--upstage-muted);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
+  font-size: 0.922rem;
   text-decoration: none;
 }
 
@@ -688,20 +682,13 @@
 }
 
 .model-links-note {
-  display: inline-block;
   max-width: 26rem;
   margin: 0.2rem 0 0 !important;
   color: var(--upstage-lime) !important;
-  font-size: 0.78rem !important;
+  font-size: 0.998rem !important;
   font-weight: 600;
   line-height: 1.5 !important;
   text-align: center;
-  text-decoration: none !important;
-}
-
-.model-links-note:hover,
-.model-links-note:focus {
-  text-decoration: underline !important;
 }
 
 .model-intro-heading img:nth-child(1) {
@@ -717,7 +704,7 @@
 
 .model-intro-heading span {
   color: var(--upstage-cyan);
-  font-size: 1.15rem;
+  font-size: 1.472rem;
   font-weight: 800;
   letter-spacing: -0.03em;
 }
@@ -739,13 +726,13 @@
 }
 
 .model-card-icon {
-  font-size: 1.1rem;
+  font-size: 1.408rem;
   line-height: 1;
 }
 
 .model-card-value {
   color: var(--upstage-lime);
-  font-size: 1.05rem;
+  font-size: 1.344rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -753,7 +740,7 @@
 
 .model-card-label {
   color: #cfccd9;
-  font-size: 0.72rem;
+  font-size: 0.922rem;
   font-weight: 600;
   line-height: 1.3;
 }

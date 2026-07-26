@@ -28,7 +28,7 @@ fonts:
   <p class="cover-goal-note"><Localized en="Verifying Solar Open 2 in practice, sharing it with the community, and opening the door to more use cases together." ko="Upstage Solar Open 2의 사용성을 검증하여 커뮤니티에 소개해드리고 더 많은 활용 사례를 서로 공유하도록 함" /></p>
 </div>
 
-<hr class="model-section-divider" />
+---
 
 # <Localized en="Model Introduction" ko="모델 소개" />
 
@@ -45,7 +45,8 @@ fonts:
     <a href="https://www.youtube.com/live/6XX-yR3qomM" target="_blank" rel="noreferrer"><img src="https://img.shields.io/badge/%F0%9F%93%BA_Launch_Event-YouTube-red" alt="Launch Event" /></a>
   </div>
   <a class="model-links-url" href="https://huggingface.co/upstage/Solar-Open2-250B" target="_blank" rel="noreferrer">https://huggingface.co/upstage/Solar-Open2-250B</a>
-  <a class="model-links-note" href="https://console.upstage.ai/api-keys" target="_blank" rel="noreferrer"><Localized en="Anyone can use it through the official Upstage API." ko="업스테이지 공식 API를 이용하면 누구나 사용할 수 있습니다." /><br/><Localized en="Currently free with no usage limit (subject to change)" ko="현재는 무제한 무료 사용 (추후 변경 가능)" /></a>
+  <a class="model-links-url" href="https://console.upstage.ai/ko/docs/models/solar-open2" target="_blank" rel="noreferrer">https://console.upstage.ai/ko/docs/models/solar-open2</a>
+  <p class="model-links-note"><Localized en="Anyone can use it for free through the Upstage Console and API." ko="업스테이지 콘솔과 API에서 누구나 무료로 사용할 수 있습니다." /><br/><Localized en="Currently free with no usage limit (subject to change)" ko="현재는 무제한 무료 사용 (추후 변경 가능)" /></p>
 </div>
 
 <v-click>
