@@ -55,6 +55,8 @@ const selectorPage = `<!doctype html>
       a.lang { flex: 1 1 8rem; min-width: 0; padding: .9rem 1.1rem; border: 1px solid #4c2fff; color: #fff; text-align: center; text-decoration: none; }
       a.lang:hover, a.lang:focus { color: #11111f; background: #c6ff72; border-color: #c6ff72; }
       footer { margin-top: 2.5rem; padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,.14); color: #a7a5b8; font-size: .8rem; }
+      footer p { margin: 0 0 .4rem; }
+      footer p:last-child { margin-bottom: 0; }
       footer a { color: #a7a5b8; text-decoration: underline; text-decoration-color: rgba(167,165,184,.5); }
       footer a:hover, footer a:focus { color: #fff; }
     </style>
@@ -84,37 +86,37 @@ const selectorPage = `<!doctype html>
             <tr>
               <td class="case-name">01 — Claude Code</td>
               <td class="case-category">Review</td>
-              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-01-solar-open2-harness.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-01-solar-open2-harness.yml/badge.svg" alt="verify-01 status" /></a></td>
+              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-01-solar-open2-harness.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-01-solar-open2-harness.yml?label=&logo=github&logoColor=white" alt="verify-01 status" /></a></td>
             </tr>
             <tr>
               <td class="case-name">02 — Hermes Agent</td>
               <td class="case-category">Review</td>
-              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-02-hermes-agent-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-02-hermes-agent-solar-open2.yml/badge.svg" alt="verify-02 status" /></a></td>
+              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-02-hermes-agent-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-02-hermes-agent-solar-open2.yml?label=&logo=github&logoColor=white" alt="verify-02 status" /></a></td>
             </tr>
             <tr>
               <td class="case-name">03 — Claude Agent SDK</td>
               <td class="case-category">Extend</td>
-              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-03-claude-agent-sdk-local.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-03-claude-agent-sdk-local.yml/badge.svg" alt="verify-03 status" /></a></td>
+              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-03-claude-agent-sdk-local.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-03-claude-agent-sdk-local.yml?label=&logo=github&logoColor=white" alt="verify-03 status" /></a></td>
             </tr>
             <tr>
               <td class="case-name">04 — LangChain DeepAgents</td>
               <td class="case-category">Extend</td>
-              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-04-langchain-upstage-deepagents.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-04-langchain-upstage-deepagents.yml/badge.svg" alt="verify-04 status" /></a></td>
+              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-04-langchain-upstage-deepagents.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-04-langchain-upstage-deepagents.yml?label=&logo=github&logoColor=white" alt="verify-04 status" /></a></td>
             </tr>
             <tr>
               <td class="case-name">05 — LangChain OpenWiki</td>
               <td class="case-category">Extend</td>
-              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-05-langchain-openwiki-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-05-langchain-openwiki-solar-open2.yml/badge.svg" alt="verify-05 status" /></a></td>
+              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-05-langchain-openwiki-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-05-langchain-openwiki-solar-open2.yml?label=&logo=github&logoColor=white" alt="verify-05 status" /></a></td>
             </tr>
             <tr>
               <td class="case-name">06 — Grok Build</td>
               <td class="case-category">Extend</td>
-              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml/badge.svg" alt="verify-06 status" /></a></td>
+              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-06-grok-build-solar-open2.yml?label=&logo=github&logoColor=white" alt="verify-06 status" /></a></td>
             </tr>
             <tr>
               <td class="case-name">07 — Hermes Agent Helm</td>
               <td class="case-category">Extend</td>
-              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml/badge.svg" alt="verify-07 status" /></a></td>
+              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-07-hermes-agent-helm-solar-open2.yml?label=&logo=github&logoColor=white" alt="verify-07 status" /></a></td>
             </tr>
           </tbody>
         </table>
@@ -124,8 +126,11 @@ const selectorPage = `<!doctype html>
         <a class="lang" href="./ko/#1" lang="ko">한국어</a>
       </nav>
       <footer>
-        <a href="https://github.com/jyje/pilot-upstage-solar-open2" target="_blank" rel="noreferrer">github.com/jyje/pilot-upstage-solar-open2</a>
-        &middot; by <a href="https://github.com/jyje" target="_blank" rel="noreferrer">jyje</a>
+        <p>
+          <a href="https://github.com/jyje/pilot-upstage-solar-open2" target="_blank" rel="noreferrer">github.com/jyje/pilot-upstage-solar-open2</a>
+          &middot; by <a href="https://github.com/jyje" target="_blank" rel="noreferrer">jyje</a>
+        </p>
+        <p>Built with Claude and Upstage's Solar Open 2 model.</p>
       </footer>
     </main>
   </body>

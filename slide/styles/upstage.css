@@ -222,9 +222,14 @@
   flex-direction: column;
   gap: 1.15rem;
   margin-top: 1.3rem;
+  padding: 1.35rem 1.5rem;
+  border: 1px solid var(--upstage-line);
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.035);
 }
 
 .case-card-desc {
+  max-width: 32rem;
   color: #fff !important;
   font-size: 1.05rem !important;
   font-weight: 600;
@@ -238,13 +243,22 @@
 }
 
 .case-chip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
   padding: 0.65rem 0.85rem;
-  border: 1px solid var(--upstage-line);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.5rem;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.06);
   color: #e2e0e9;
-  font-size: 0.9rem;
-  line-height: 1.35;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.case-chip-icon {
+  flex-shrink: 0;
+  font-size: 1.05rem;
+  line-height: 1.4;
 }
 
 .case-cta {

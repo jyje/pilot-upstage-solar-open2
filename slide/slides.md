@@ -111,10 +111,10 @@ fonts:
 <div class="case-card">
   <p class="case-card-desc"><Localized en="Plain env vars redirect the official claude binary to Upstage. No fork, no patch, no proxy." ko="환경변수만으로 공식 claude 바이너리를 Upstage로 리다이렉트합니다. 포크도, 패치도, 프록시도 필요 없습니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip">🧭 <Localized en="3 routes verified: official CLI, claude-upstage wrapper, jyje/claude-docker" ko="공식 CLI, claude-upstage 래퍼, jyje/claude-docker — 3가지 경로 모두 검증" /></div>
-    <div class="case-chip">🎯 <Localized en="Finding: name the skill explicitly — Solar Open 2 won't infer it autonomously" ko="발견: 스킬은 명시적으로 호출해야 함 — 자율 추론으로는 놓침" /></div>
+    <div class="case-chip"><span class="case-chip-icon">🔓</span><span><Localized en="Vendor lock-in is thinner than assumed — an open model runs inside Anthropic's own harness untouched" ko="벤더 종속은 생각보다 얕습니다 — 오픈 모델이 Anthropic 하네스 안에서 그대로 동작" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🎯</span><span><Localized en="Solar Open 2 honors a skill's contract precisely once named — capability is there, discovery needs a nudge" ko="스킬을 지목하면 규약을 정확히 지킵니다 — 능력은 충분하고, 발동만 유도하면 됨" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧩</span><span><Localized en="Subagents stay on Solar Open 2 and return real files, not hallucinations — delegation holds" ko="서브에이전트도 Solar Open 2를 유지하며 실제 파일을 반환 — 위임이 무너지지 않음" /></span></div>
   </div>
-  <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/01-solar-open2-harness/README.md" target="_blank" rel="noreferrer"><Localized en="See full case →" ko="자세히 보기 →" /></a>
 </div>
 
 ---
@@ -128,10 +128,10 @@ fonts:
 <div class="case-card">
   <p class="case-card-desc"><Localized en="Hermes Agent v0.18.2 ships an upstage provider out of the box — no local plugin, no LiteLLM proxy." ko="Hermes Agent v0.18.2는 upstage 프로바이더를 기본 내장합니다 — 로컬 플러그인도, LiteLLM 프록시도 필요 없습니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip">✅ <Localized en="hermes chat round trip verified locally and in CI" ko="hermes chat 라운드트립을 로컬·CI 양쪽에서 검증" /></div>
-    <div class="case-chip">🧾 <Localized en="Full, untruncated reasoning trace before the final reply" ko="최종 응답 이전의 추론 과정을 잘라내지 않고 그대로 확인" /></div>
+    <div class="case-chip"><span class="case-chip-icon">🏅</span><span><Localized en="Solar Open 2 is a first-class citizen upstream — Hermes ships the provider, no community patch needed" ko="업스트림이 Solar Open 2를 1급 시민으로 대우 — 커뮤니티 패치 없이 제공자 기본 탑재" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧾</span><span><Localized en="The untruncated reasoning trace shows the model deliberating, not just emitting — real agentic behavior" ko="잘리지 않은 추론 트레이스가 숙고 과정을 보여줍니다 — 출력이 아닌 진짜 에이전트 행동" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🔁</span><span><Localized en="Same result locally and in CI — reproducibility is what turns a demo into a platform claim" ko="로컬과 CI 결과가 동일 — 재현성이 데모를 플랫폼 주장으로 바꿉니다" /></span></div>
   </div>
-  <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/02-hermes-agent-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="See full case →" ko="자세히 보기 →" /></a>
 </div>
 
 ---
@@ -145,10 +145,10 @@ fonts:
 <div class="case-card">
   <p class="case-card-desc"><Localized en="Same env var recipe as Case 01, passed through ClaudeAgentOptions — proves the SDK, not just the CLI." ko="Case 01과 동일한 환경변수 레시피를 ClaudeAgentOptions로 전달 — CLI뿐 아니라 SDK까지 증명." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip">🔑 <Localized en="Finding: SDK docs example hangs — needs ANTHROPIC_AUTH_TOKEN, not ANTHROPIC_API_KEY" ko="발견: SDK 문서 예제는 멈춤 — ANTHROPIC_API_KEY 대신 ANTHROPIC_AUTH_TOKEN 필요" /></div>
-    <div class="case-chip">🧠 <Localized en="3 methods proved: structured messages, session memory, tool visibility" ko="3가지 방법으로 검증: 구조화된 메시지, 세션 메모리, 툴 사용 가시성" /></div>
+    <div class="case-chip"><span class="case-chip-icon">🏗️</span><span><Localized en="Solar Open 2 can sit under application code, not just a terminal — the SDK path opens real product surfaces" ko="터미널을 넘어 애플리케이션 코드 아래에 놓입니다 — SDK 경로가 실제 제품 표면을 엽니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧠</span><span><Localized en="Multi-turn state holds across a session — long-horizon agent work is viable, not just single shots" ko="세션 전반에 걸쳐 상태를 유지 — 단발성이 아닌 장기 에이전트 작업이 가능" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🔍</span><span><Localized en="Tool use is observable as structured messages — you can build guardrails on it, not guess from stdout" ko="툴 사용이 구조화된 메시지로 관측됩니다 — stdout 추측이 아닌 가드레일 구축이 가능" /></span></div>
   </div>
-  <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/03-claude-agent-sdk-local/README.md" target="_blank" rel="noreferrer"><Localized en="See full case →" ko="자세히 보기 →" /></a>
 </div>
 
 ---
@@ -162,10 +162,10 @@ fonts:
 <div class="case-card">
   <p class="case-card-desc"><Localized en="ChatUpstage talks to Upstage's OpenAI-compatible endpoint directly — no ANTHROPIC_BASE_URL dance." ko="ChatUpstage가 Upstage의 OpenAI 호환 엔드포인트와 직접 통신 — ANTHROPIC_BASE_URL 설정이 필요 없습니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip">🛠️ <Localized en="3 methods proved: tool use, virtual filesystem, subagent delegation" ko="3가지 방법으로 검증: 툴 사용, 가상 파일시스템, 서브에이전트 위임" /></div>
-    <div class="case-chip">🐍 <Localized en="Finding: Python 3.14 blocked — tokenizers has no cp314 wheel yet" ko="발견: Python 3.14 미지원 — tokenizers cp314 휠이 아직 없음" /></div>
+    <div class="case-chip"><span class="case-chip-icon">🌉</span><span><Localized en="No Claude runtime anywhere — the OpenAI-compatible endpoint makes Solar Open 2 a drop-in for the LangChain ecosystem" ko="Claude 런타임이 전혀 없습니다 — OpenAI 호환 엔드포인트가 LangChain 생태계의 드롭인 대체재로 만듭니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🤝</span><span><Localized en="The model plans, delegates to a named subagent, and reconciles the result — orchestration, not autocomplete" ko="계획하고, 지정한 서브에이전트에 위임하고, 결과를 종합합니다 — 자동완성이 아닌 오케스트레이션" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🐍</span><span><Localized en="The only blocker was the Python ecosystem, not the model — a missing wheel, resolved by pinning 3.13" ko="유일한 블로커는 모델이 아니라 Python 생태계였습니다 — 휠 부재, 3.13 고정으로 해결" /></span></div>
   </div>
-  <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/04-langchain-upstage-deepagents/README.md" target="_blank" rel="noreferrer"><Localized en="See full case →" ko="자세히 보기 →" /></a>
 </div>
 
 ---
@@ -179,10 +179,10 @@ fonts:
 <div class="case-card">
   <p class="case-card-desc"><Localized en="openwiki builds an agent-readable wiki for the codebase and answers real questions about it." ko="openwiki가 코드베이스를 위한 에이전트 친화적 위키를 만들고, 그에 대한 실제 질문에 답합니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip">🐛 <Localized en="Finding: streaming drops the tool call function name — a Solar Open 2 bug" ko="발견: 스트리밍 응답에서 툴콜 함수 이름이 누락됨 — Solar Open 2 버그" /></div>
-    <div class="case-chip">💬 <Localized en="3 Q&A rounds verified against the live repo, including the latest commit" ko="최신 커밋을 포함해 실제 리포 대상 Q&A 3라운드 검증" /></div>
+    <div class="case-chip"><span class="case-chip-icon">📖</span><span><Localized en="The model reads an unfamiliar codebase and answers accurately about its latest commit — comprehension at repo scale" ko="처음 보는 코드베이스를 읽고 최신 커밋까지 정확히 답합니다 — 리포 단위의 이해력" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🐛</span><span><Localized en="Found a real upstream bug: streaming drops tool call names — open models let you trace and fix, not just file a ticket" ko="실제 업스트림 버그 발견: 스트리밍이 툴콜 이름을 누락 — 오픈 모델은 티켓 제출이 아니라 추적과 수정을 허용합니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">📊</span><span><Localized en="Hitting the Tier-0 token ceiling is a quota story, not a capability one — the work itself completed" ko="Tier-0 토큰 한도 도달은 능력이 아니라 쿼터의 문제 — 작업 자체는 완수되었습니다" /></span></div>
   </div>
-  <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/05-langchain-openwiki-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="See full case →" ko="자세히 보기 →" /></a>
 </div>
 
 ---
@@ -196,10 +196,10 @@ fonts:
 <div class="case-card">
   <p class="case-card-desc"><Localized en="A user-level config.toml entry lets Grok Build pick chat_completions as its wire protocol." ko="사용자 레벨 config.toml 설정만으로 Grok Build가 chat_completions 프로토콜을 선택하도록 만듭니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip">✅ <Localized en="3 methods proved: exact-string reply, reasoning (1275), coding (is_prime)" ko="3가지 방법으로 검증: 정확한 문자열 응답, 추론(1275), 코딩(is_prime)" /></div>
-    <div class="case-chip">🚧 <Localized en="Same streaming bug as Case 05 blocks tool use — closed-source, no workaround" ko="Case 05와 동일한 스트리밍 버그로 툴 사용 차단 — 폐쇄 소스라 우회 불가" /></div>
+    <div class="case-chip"><span class="case-chip-icon">🔌</span><span><Localized en="A rival's own coding agent accepts Solar Open 2 as a custom model — the ecosystem is more open than the branding suggests" ko="경쟁사 코딩 에이전트가 Solar Open 2를 커스텀 모델로 수용 — 브랜딩보다 생태계가 훨씬 개방적입니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧮</span><span><Localized en="Reasoning and coding land cleanly — it derives 1275 by two methods and writes working is_prime" ko="추론과 코딩은 깔끔하게 통과 — 1275를 두 가지 방법으로 도출하고 동작하는 is_prime을 작성" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🚧</span><span><Localized en="Where the harness is closed, one upstream bug ends the story — a case for open weights and open clients" ko="하네스가 닫혀 있으면 업스트림 버그 하나로 끝납니다 — 오픈 웨이트와 오픈 클라이언트가 필요한 이유" /></span></div>
   </div>
-  <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/06-grok-build-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="See full case →" ko="자세히 보기 →" /></a>
 </div>
 
 ---
@@ -213,10 +213,10 @@ fonts:
 <div class="case-card">
   <p class="case-card-desc"><Localized en="Case 02 proved the Docker image. This proves the same provider path survives a real Helm/Kubernetes deployment." ko="Case 02가 Docker 이미지를 증명했다면, 이 케이스는 동일한 프로바이더 경로가 실제 Helm/쿠버네티스 배포에서도 살아남음을 증명합니다." /></p>
   <div class="case-card-highlights">
-    <div class="case-chip">☸️ <Localized en="Installed from a published OCI Helm chart, gated by the chart's own tests.chat Job" ko="공개 OCI Helm 차트로 설치, 차트 내장 tests.chat Job으로 게이트" /></div>
-    <div class="case-chip">🔍 <Localized en="Verified via kubectl exec reasoning round trip and Hermes' own self-reflection" ko="kubectl exec 추론 라운드트립과 Hermes 자체 self-reflection으로 검증" /></div>
+    <div class="case-chip"><span class="case-chip-icon">☸️</span><span><Localized en="It survives the way operators actually ship — a published Helm chart on a real cluster, not a laptop demo" ko="운영자가 실제로 배포하는 방식에서 살아남습니다 — 노트북 데모가 아닌 공개 Helm 차트와 실제 클러스터" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🔬</span><span><Localized en="The chart's own test Job gates the model — verification becomes declarative infrastructure, not a manual step" ko="차트 자체 테스트 Job이 모델을 게이트합니다 — 검증이 수동 절차가 아닌 선언적 인프라가 됩니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">💬</span><span><Localized en="Asked inside the pod, the model articulates its own strengths for agentic work over 76 lines" ko="파드 안에서 물었을 때, 모델이 에이전트 작업에 대한 자기 강점을 76줄로 설명합니다" /></span></div>
   </div>
-  <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/07-hermes-agent-helm-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="See full case →" ko="자세히 보기 →" /></a>
 </div>
 
 ---
