@@ -105,14 +105,21 @@ workflow uploads that directory to GitHub Pages after a change under
 `slide/` lands on `main`. In CI it automatically adds the repository-name
 base path required by a GitHub project Pages URL.
 
-To serve both language paths locally from one port, run:
+To serve the language selector and both language paths locally from one
+port, run:
 
 ```bash
 npm run preview:pages
 ```
 
-Then open `http://localhost:3030/en/#1` or
+Then open `http://localhost:3030/` for the language-selector landing
+page (what `jyje.github.io/pilot-upstage-solar-open2` serves), or go
+straight to a deck with `http://localhost:3030/en/#1` or
 `http://localhost:3030/ko/#1`.
+
+`npm run dev` does not produce this landing page — it always jumps
+straight into slide 1 of the live-editable deck. Use `preview:pages`
+whenever you need to check the landing page itself.
 
 ## Verification notes
 
@@ -136,7 +143,7 @@ public presentation release.
 | `npm run dev:ko` | Start the Korean route on port 3031 |
 | `npm run build` | Produce a static Slidev build in `dist/` |
 | `npm run build:pages` | Build the language selector plus `/en/` and `/ko/` Pages output |
-| `npm run preview:pages` | Serve both localized Pages builds on port 3030 |
+| `npm run preview:pages` | Serve the language-selector landing page plus both localized Pages builds on port 3030 |
 | `npm run preview` | Build, then serve the static output |
 | `npm run test:e2e` | Reserved for a future slide-level browser test |
 

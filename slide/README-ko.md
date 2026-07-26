@@ -83,14 +83,21 @@ npm run build:pages
 워크플로는 `main`의 `slide/` 변경을 GitHub Pages에 배포하며, CI에서는 GitHub
 프로젝트 Pages URL에 필요한 저장소 이름 base 경로를 자동으로 추가합니다.
 
-두 언어 경로를 하나의 포트로 로컬에서 확인하려면 다음을 실행합니다.
+언어 선택 화면과 두 언어 경로를 하나의 포트로 로컬에서 확인하려면 다음을
+실행합니다.
 
 ```bash
 npm run preview:pages
 ```
 
-그런 다음 `http://localhost:3030/en/#1` 또는
-`http://localhost:3030/ko/#1`을 엽니다.
+그런 다음 `http://localhost:3030/`을 열면 언어 선택 랜딩 페이지(실제
+`jyje.github.io/pilot-upstage-solar-open2`가 보여주는 화면)를 볼 수 있고,
+`http://localhost:3030/en/#1` 또는 `http://localhost:3030/ko/#1`로 바로
+특정 언어의 덱으로 들어갈 수도 있습니다.
+
+`npm run dev`는 이 랜딩 페이지를 만들지 않습니다 — 항상 실시간 편집용 덱의
+1번 슬라이드로 바로 진입합니다. 랜딩 페이지 자체를 확인하려면 반드시
+`preview:pages`를 사용하세요.
 
 ## 스크립트
 
@@ -101,7 +108,7 @@ npm run preview:pages
 | `npm run dev:ko` | 포트 3031에서 한국어 경로 실행 |
 | `npm run build` | `dist/`에 정적 Slidev 빌드 생성 |
 | `npm run build:pages` | 언어 선택 화면과 `/en/`, `/ko/` Pages 산출물 생성 |
-| `npm run preview:pages` | 포트 3030에서 두 언어 Pages 빌드 제공 |
+| `npm run preview:pages` | 포트 3030에서 언어 선택 랜딩 페이지와 두 언어 Pages 빌드 제공 |
 | `npm run preview` | 빌드 후 정적 산출물 제공 |
 | `npm run test:e2e` | 향후 브라우저 수준 슬라이드 테스트용 예약 명령 |
 
