@@ -1,6 +1,13 @@
 # Changelog
 
 All notable changes to this repo are documented here.
+## [1.3] - 2026-07-26
+
+### Features
+
+- ✨ feat(slides): add the repo link and a "Project goal" label to the cover ([`1c64c4e`](https://github.com/jyje/pilot-upstage-solar-open2/commit/1c64c4ee41f16e75ed568d2e8cbf34173154d3aa)) — @jyje
+
+
 ## [1.2] - 2026-07-26
 
 ### Features
@@ -36,6 +43,11 @@ All notable changes to this repo are documented here.
 - 📄 docs(slides): document how to preview the landing page locally ([`b8218fb`](https://github.com/jyje/pilot-upstage-solar-open2/commit/b8218fb8de6086021a7b8a3d00e5af37ee047709)) — @jyje
 
 </details>
+
+
+### Build
+
+- 🔨 build(release): generate CHANGELOG.md for v1.2 ([`fd93319`](https://github.com/jyje/pilot-upstage-solar-open2/commit/fd93319b9c7cae6d589cacdc7291344440bd8c75)) — @jyje
 
 
 <details>
