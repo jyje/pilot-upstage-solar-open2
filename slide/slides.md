@@ -16,7 +16,17 @@ fonts:
       global: 'JetBrains Mono'
 ---
 
-<div class="upstage-eyebrow">UPSTAGE × OPEN SOURCE AGENTS</div>
+<div class="upstage-brand">
+  <div class="upstage-brand-jyje">
+    <img class="upstage-brand-jyje-logo" src="https://jyje.online/assets/icons/icon-128x128.png" alt="" />
+    <span class="upstage-brand-jyje-text">jyje</span>
+  </div>
+  <span class="upstage-brand-x">×</span>
+  <div class="upstage-brand-upstage">
+    <img class="upstage-brand-logo" src="https://raw.githubusercontent.com/lobehub/lobe-icons/f07e9be35aef452ce735f95ea8204a14ecc513f7/packages/static-svg/icons/upstage-color.svg" alt="" />
+    <img class="upstage-brand-text" src="https://raw.githubusercontent.com/lobehub/lobe-icons/f07e9be35aef452ce735f95ea8204a14ecc513f7/packages/static-svg/icons/upstage-text.svg" alt="Upstage" />
+  </div>
+</div>
 
 # jyje/pilot-upstage-solar-open2
 

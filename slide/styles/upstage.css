@@ -110,7 +110,7 @@
 }
 
 .cover-readme-tagline {
-  max-width: 19rem;
+  max-width: 100%;
   margin: 0 0 0.55rem !important;
   color: #fff !important;
   font-size: 0.94rem !important;
@@ -268,6 +268,55 @@
 .case-cta:focus {
   background: #fff;
   border-color: #fff;
+}
+
+.upstage-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.45rem;
+}
+
+.upstage-brand-jyje {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+}
+
+.upstage-brand-jyje-logo {
+  height: 1.15rem;
+  width: 1.15rem;
+  border-radius: 0.25rem;
+}
+
+.upstage-brand-jyje-text {
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.upstage-brand-x {
+  color: var(--upstage-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.upstage-brand-upstage {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+}
+
+.upstage-brand-logo {
+  height: 1.05rem;
+  width: auto;
+}
+
+.upstage-brand-text {
+  height: 0.8rem;
+  width: auto;
+  filter: brightness(0) invert(1);
 }
 
 .upstage-eyebrow {
