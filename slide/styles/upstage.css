@@ -498,16 +498,16 @@
 
 .locale-switch {
   position: fixed;
-  top: 1.2rem;
+  top: 1.03rem;
   right: 1.45rem;
   z-index: 100;
-  padding: 0.5rem 0.85rem;
+  padding: 0.32rem 0.6rem;
   border: 1px solid var(--upstage-line);
+  border-radius: 0.35rem;
   color: var(--upstage-cyan);
-  background: rgba(17, 17, 31, 0.82);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   text-decoration: none;
 }
 
