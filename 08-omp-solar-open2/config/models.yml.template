@@ -17,4 +17,10 @@ providers:
       - id: OMP_MODEL_PLACEHOLDER
         name: Solar Open 2 (Upstage)
         contextWindow: 1000000
-        maxTokens: 8192
+        maxTokens: 32768
+        # 8192 was tried first and is enough for Methods A-C, but Method D
+        # can hit the ceiling mid-response (stopReason: "length", no tool
+        # call emitted, no file written) once a single turn has to emit a
+        # large HTML file as one tool-call argument -- observed directly
+        # while iterating on this case's gallery sample. 32768 gives that
+        # enough headroom.
