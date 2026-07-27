@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<!--
+  6x6 Mini Sudoku — single-file self-contained web app
+  Design choices:
+  - Soft off-white background with a centered card container
+  - Dark charcoal (#2d2d3f) for grid lines, text, and given-cell backgrounds
+  - Amber-gold accent for editable cells and "New Puzzle" button
+  - Green "Solved!" status with celebratory sizing
+  - Mobile-friendly: max-width ~440px, large 24px cell font
+  - Backtracking solver tries shuffled digits 1-6 row-major over all 36 cells
+  - ~18 cells removed (half) for the playable puzzle
+  - Live conflict highlighting on every keystroke
+  - Win detection checks Sudoku rules dynamically (no stored solution comparison)
+  - Borders: each cell gets border-left + border-top; 3px dark at box boundaries,
+    1px light elsewhere; grid container has 3px dark border on all edges
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Sudoku 6×6</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(145deg, #f5f3ee 0%, #eae7df 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06);
+    padding: 32px 28px 28px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #2d2d3f;
+    letter-spacing: -.02em;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-size: .9rem;
+    color: #8888a0;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 0;
+    border: 3px solid #2d2d3f;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 auto;
+    aspect-ratio: 1;
+    max-width: 400px;
+  }
+
+  .cell-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .cell-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #2d2d3f;
+    background: transparent;
+    outline: none;
+    text-align: center;
+    -moz-appearance: textfield;
+    appearance: none;
+    caret-color: #e8a838;
+    border-left: 1px solid #d4d4e0;
+    border-top: 1px solid #d4d4e0;
+  }
+
+  /* Box boundaries: thick dark borders */
+  .cell-inner.bl { border-left: 3px solid #2d2d3f; }  /* box-left boundary */
+  .cell-inner.bt { border-top: 3px solid #2d2d3f; }   /* box-top boundary */
+
+  .cell-inner::-webkit-outer-spin-button,
+  .cell-inner::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .cell-inner[data-given="true"] {
+    background: #2d2d3f;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .cell-inner.conflict {
+    background: #fde8e8;
+    color: #c0392b;
+    font-weight: 700;
+    animation: conflictPulse 1s ease-in-out infinite;
+  }
+
+  .cell-inner.editable:not([data-given="true"]):not(.conflict):not(:-moz-placeholder-shown):not(:placeholder-shown) {
+    color: #e8a838;
+  }
+
+  .cell-inner.editable:not([data-given="true"]):not(.conflict):-moz-placeholder-shown {
+    color: transparent;
+  }
+  .cell-inner.editable:not([data-given="true"]):not(.conflict):placeholder-shown {
+    color: transparent;
+  }
+
+  @keyframes conflictPulse {
+    0%, 100% { background: #fde8e8; }
+    50% { background: #f9d0d0; }
+  }
+
+  .status-area {
+    margin-top: 20px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #status {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #8888a0;
+    transition: color .3s, font-size .3s;
+  }
+
+  #status.solved {
+    color: #27ae60;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+  }
+
+  .controls {
+    margin-top: 16px;
+  }
+
+  #new-puzzle {
+    background: #2d2d3f;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+    letter-spacing: .02em;
+  }
+
+  #new-puzzle:hover { background: #3d3d55; }
+  #new-puzzle:active { transform: scale(.97); }
+
+  @media (max-width: 420px) {
+    .card { padding: 20px 14px 18px; border-radius: 14px; }
+    h1 { font-size: 1.4rem; }
+    .cell-inner { font-size: 20px; }
+    #new-puzzle { padding: 10px 24px; font-size: .9rem; }
+    #status.solved { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Mini Sudoku</h1>
+  <p class="subtitle">Fill every row, column &amp; 2×3 box with 1–6</p>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="status-area">
+    <div id="status"></div>
+  </div>
+
+  <div class="controls">
+    <button id="new-puzzle">New Puzzle</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ---------- helpers ---------- */
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  /* ---------- backtracking grid generator ---------- */
+  function generateSolvedGrid() {
+    const grid = Array.from({ length: 6 }, () => Array(6).fill(0));
+
+    function isValid(grid, r, c, val) {
+      for (let cc = 0; cc < 6; cc++) {
+        if (cc !== c && grid[r][cc] === val) return false;
+      }
+      for (let rr = 0; rr < 6; rr++) {
+        if (rr !== r && grid[rr][c] === val) return false;
+      }
+      const br = Math.floor(r / 2) * 2;
+      const bc = Math.floor(c / 3) * 3;
+      for (let dr = 0; dr < 2; dr++) {
+        for (let dc = 0; dc < 3; dc++) {
+          const rr = br + dr, cc = bc + dc;
+          if ((rr !== r || cc !== c) && grid[rr][cc] === val) return false;
+        }
+      }
+      return true;
+    }
+
+    function solve(idx) {
+      if (idx === 36) return true;
+      const r = Math.floor(idx / 6);
+      const c = idx % 6;
+      const candidates = shuffle([1, 2, 3, 4, 5, 6]);
+      for (const v of candidates) {
+        if (isValid(grid, r, c, v)) {
+          grid[r][c] = v;
+          if (solve(idx + 1)) return true;
+          grid[r][c] = 0;
+        }
+      }
+      return false;
+    }
+
+    solve(0);
+    return grid;
+  }
+
+  /* ---------- puzzle generation ---------- */
+  function generatePuzzle() {
+    const solved = generateSolvedGrid();
+    const positions = [];
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 6; c++) {
+        positions.push([r, c]);
+      }
+    }
+    const shuffledPositions = shuffle(positions);
+    const givenSet = new Set();
+    // Keep the first 18 positions as given (roughly half)
+    for (let i = 0; i < 18; i++) {
+      givenSet.add(`${shuffledPositions[i][0]},${shuffledPositions[i][1]}`);
+    }
+    return { grid: solved, givenSet };
+  }
+
+  /* ---------- rendering ---------- */
+  const gridEl = document.getElementById('grid');
+  const statusEl = document.getElementById('status');
+  const newBtn = document.getElementById('new-puzzle');
+
+  let puzzleData = null;
+
+  function buildGrid() {
+    gridEl.innerHTML = '';
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 6; c++) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'cell-wrapper';
+
+        const input = document.createElement('input');
+        input.id = `cell-${r}-${c}`;
+        input.className = 'cell-inner editable';
+        input.type = 'text';
+        input.maxLength = 1;
+        input.inputMode = 'none';
+        input.spellcheck = false;
+        input.autocomplete = 'off';
+        input.placeholder = '·';
+
+        // Box-boundary borders: only left & top; grid container handles right/bottom edges
+        if (c > 0 && c % 3 === 0) input.classList.add('bl');   // box-left boundary
+        if (r > 0 && r % 2 === 0) input.classList.add('bt');   // box-top boundary
+
+        const isGiven = puzzleData.givenSet.has(`${r},${c}`);
+        if (isGiven) {
+          input.setAttribute('readonly', '');
+          input.setAttribute('data-given', 'true');
+          input.value = puzzleData.grid[r][c];
+        } else {
+          input.setAttribute('data-given', 'false');
+          input.dataset.row = r;
+          input.dataset.col = c;
+          input.addEventListener('input', onCellInput);
+          input.addEventListener('keydown', onCellKeydown);
+          input.addEventListener('focus', function() { this.select(); });
+        }
+
+        wrapper.appendChild(input);
+        gridEl.appendChild(wrapper);
+      }
+    }
+  }
+
+  function refreshDisplay() {
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 6; c++) {
+        const input = document.getElementById(`cell-${r}-${c}`);
+        if (puzzleData.givenSet.has(`${r},${c}`)) {
+          input.value = puzzleData.grid[r][c];
+          input.setAttribute('readonly', '');
+          input.setAttribute('data-given', 'true');
+        }
+      }
+    }
+    clearConflicts();
+    checkWin();
+  }
+
+  /* ---------- conflict detection ---------- */
+  function isConflicting(r, c, val) {
+    if (!val) return false;
+    for (let cc = 0; cc < 6; cc++) {
+      if (cc !== c) {
+        const other = document.getElementById(`cell-${r}-${cc}`);
+        if (other.value === val) return true;
+      }
+    }
+    for (let rr = 0; rr < 6; rr++) {
+      if (rr !== r) {
+        const other = document.getElementById(`cell-${rr}-${c}`);
+        if (other.value === val) return true;
+      }
+    }
+    const br = Math.floor(r / 2) * 2;
+    const bc = Math.floor(c / 3) * 3;
+    for (let dr = 0; dr < 2; dr++) {
+      for (let dc = 0; dc < 3; dc++) {
+        const rr = br + dr, cc = bc + dc;
+        if ((rr !== r || cc !== c) && document.getElementById(`cell-${rr}-${cc}`).value === val) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function markConflicts() {
+    const editableCells = [];
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 6; c++) {
+        if (!puzzleData.givenSet.has(`${r},${c}`)) {
+          editableCells.push([r, c]);
+        }
+      }
+    }
+
+    const conflictKeys = new Set();
+
+    for (const [r, c] of editableCells) {
+      const input = document.getElementById(`cell-${r}-${c}`);
+      const val = input.value;
+      if (!val) continue;
+      if (isConflicting(r, c, val)) {
+        conflictKeys.add(`${r},${c}`);
+        // Also mark the conflicting peers
+        for (let cc = 0; cc < 6; cc++) {
+          if (cc !== c && document.getElementById(`cell-${r}-${cc}`).value === val) {
+            conflictKeys.add(`${r},${cc}`);
+          }
+        }
+        for (let rr = 0; rr < 6; rr++) {
+          if (rr !== r && document.getElementById(`cell-${rr}-${c}`).value === val) {
+            conflictKeys.add(`${rr},${c}`);
+          }
+        }
+        const br = Math.floor(r / 2) * 2;
+        const bc = Math.floor(c / 3) * 3;
+        for (let dr = 0; dr < 2; dr++) {
+          for (let dc = 0; dc < 3; dc++) {
+            const rr = br + dr, cc = bc + dc;
+            if ((rr !== r || cc !== c) && document.getElementById(`cell-${rr}-${cc}`).value === val) {
+              conflictKeys.add(`${rr},${cc}`);
+            }
+          }
+        }
+      }
+    }
+
+    for (const [r, c] of editableCells) {
+      const input = document.getElementById(`cell-${r}-${c}`);
+      if (conflictKeys.has(`${r},${c}`)) {
+        input.classList.add('conflict');
+      } else {
+        input.classList.remove('conflict');
+      }
+    }
+  }
+
+  function clearConflicts() {
+    document.querySelectorAll('.cell-inner.conflict').forEach(el => el.classList.remove('conflict'));
+  }
+
+  /* ---------- win detection (dynamic, rule-based) ---------- */
+  function checkWin() {
+    // Every cell must be non-empty
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 6; c++) {
+        const input = document.getElementById(`cell-${r}-${c}`);
+        if (!input.value || input.value.trim() === '') { clearStatus(); return; }
+      }
+    }
+
+    // Check no conflicts exist anywhere
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 6; c++) {
+        const input = document.getElementById(`cell-${r}-${c}`);
+        if (isConflicting(r, c, input.value)) { clearStatus(); return; }
+      }
+    }
+
+    // All checks pass
+    statusEl.textContent = 'Solved!';
+    statusEl.classList.add('solved');
+  }
+
+  function clearStatus() {
+    statusEl.textContent = '';
+    statusEl.classList.remove('solved');
+  }
+
+  /* ---------- input handling ---------- */
+  function onCellInput(e) {
+    const input = e.target;
+    let val = input.value.replace(/[^1-6]/g, '');
+    if (val.length > 1) val = val[0];
+    input.value = val;
+
+    if (val === '') {
+      clearConflicts();
+      clearStatus();
+    } else {
+      markConflicts();
+    checkWin();
+    }
+  }
+
+  function onCellKeydown(e) {
+    const input = e.target;
+    if (e.key === 'Backspace' && input.value === '') {
+      e.preventDefault();
+      navigateEditable(-1, input);
+      return;
+    }
+    if (e.key === 'Delete' && input.value === '') {
+      e.preventDefault();
+      navigateEditable(1, input);
+      return;
+    }
+    if (e.key === 'Escape') {
+      input.value = '';
+      clearConflicts();
+      clearStatus();
+      input.blur();
+      return;
+    }
+    if (e.key === 'Tab') return;
+    if (!/^[1-6]$/.test(e.key)) {
+      e.preventDefault();
+    }
+  }
+
+  function navigateEditable(delta, currentInput) {
+    const editables = [];
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 6; c++) {
+        if (!puzzleData.givenSet.has(`${r},${c}`)) {
+          editables.push([r, c]);
+        }
+      }
+    }
+    const r = parseInt(currentInput.dataset.row);
+    const c = parseInt(currentInput.dataset.col);
+    const idx = editables.findIndex(([er, ec]) => er === r && ec === c);
+    let nextIdx = (idx + delta + editables.length) % editables.length;
+    const [nr, nc] = editables[nextIdx];
+    document.getElementById(`cell-${nr}-${nc}`).focus();
+  }
+
+  /* ---------- new puzzle ---------- */
+  function newPuzzle() {
+    puzzleData = generatePuzzle();
+    buildGrid();
+    clearConflicts();
+    clearStatus();
+    const firstEditable = document.querySelector('.cell-inner.editable:not([data-given="true"])');
+    if (firstEditable) firstEditable.focus();
+  }
+
+  newBtn.addEventListener('click', newPuzzle);
+
+  /* ---------- init ---------- */
+  newPuzzle();
+})();
+</script>
+</body>
+</html>
