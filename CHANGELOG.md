@@ -1,11 +1,55 @@
 # Changelog
 
 All notable changes to this repo are documented here.
+## [1.4] - 2026-07-27
+
+### Features
+
+- ✨ feat(omp): add Case 08 — omp against Solar Open 2 ([`58b6216`](https://github.com/jyje/pilot-upstage-solar-open2/commit/58b621600b61cb687c9e7cb4135d8295fcb881f3)) — @jyje
+- ✨ feat(ci): wire Case 08 into CI and add its manual workflow ([`2e16bda`](https://github.com/jyje/pilot-upstage-solar-open2/commit/2e16bda145eb065f3a1f7de6b39d04be76bc760d)) — @jyje
+- ✨ feat(gallery): add a public gallery of real Solar Open 2 x omp builds ([`d671876`](https://github.com/jyje/pilot-upstage-solar-open2/commit/d6718767b743ef353b5f3ba85481f62ac4f4bea1)) — @jyje
+- ✨ feat(slides): add Case 08 to the landing page and presentation deck ([`73d281f`](https://github.com/jyje/pilot-upstage-solar-open2/commit/73d281fa5562e9e5a2317958c075949f797bfd06)) — @jyje
+
+
+### Bug Fixes
+
+- 🛠️ fix(omp): raise Method D's maxTokens ceiling to fit a full HTML file ([`13c742f`](https://github.com/jyje/pilot-upstage-solar-open2/commit/13c742f1ad423e00cfd3f0821cabf49dcd6ec68e)) — @jyje
+
+
+<details>
+<summary>Documentation (2)</summary>
+
+- 📄 docs(cases): reference Case 08 across repo-level docs ([`e4868b8`](https://github.com/jyje/pilot-upstage-solar-open2/commit/e4868b82d0a981c9b0544f103f421cc768916269)) — @jyje
+- 📄 docs(omp): fill in Case 08's evidence-run CI link ([`9e6dbd1`](https://github.com/jyje/pilot-upstage-solar-open2/commit/9e6dbd1b38d7f9564e2efc1ee68468503c48ad22)) — @jyje
+
+</details>
+
+
+### Build
+
+- 🔨 build(ci): skip Case 08's Method D in CI, verify it locally instead ([`b22390c`](https://github.com/jyje/pilot-upstage-solar-open2/commit/b22390cf6a5a59f36ca44f1b9e9dc3ebe9cc3c05)) — @jyje
+
+
+<details>
+<summary>Miscellaneous (3)</summary>
+
+- 🎨 style(slides): refine Case 08 branding and copy ([`f6903c8`](https://github.com/jyje/pilot-upstage-solar-open2/commit/f6903c856d370e56effce5c9b005bb291841b0f9)) — @jyje
+- 🎨 style(slides): add case logos and refine bilingual Case 08 copy ([`da5e5ea`](https://github.com/jyje/pilot-upstage-solar-open2/commit/da5e5eaa64922bf257dca3e673d39c2bc907da5c)) — @jyje
+- 🔧 chore(repo): add an MIT license ([`f9e8648`](https://github.com/jyje/pilot-upstage-solar-open2/commit/f9e86485e9d10bbda75704cdef6e4818e6ade82e)) — @jyje
+
+</details>
+
+
 ## [1.3] - 2026-07-26
 
 ### Features
 
 - ✨ feat(slides): add the repo link and a "Project goal" label to the cover ([`1c64c4e`](https://github.com/jyje/pilot-upstage-solar-open2/commit/1c64c4ee41f16e75ed568d2e8cbf34173154d3aa)) — @jyje
+
+
+### Build
+
+- 🔨 build(release): generate CHANGELOG.md for v1.3 ([`b5fef5d`](https://github.com/jyje/pilot-upstage-solar-open2/commit/b5fef5d4885c33168fa3d533b0e976a48bd15f18)) — @jyje
 
 
 ## [1.2] - 2026-07-26
