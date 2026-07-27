@@ -56,6 +56,11 @@ repo.
   since kind runs cluster nodes as containers) — Case 07 creates its own
   ephemeral kind cluster and installs the `hermes-agent-helm` chart onto
   it.
+- omp's `omp` CLI (`curl -fsSL https://omp.sh/install | sh`) and Node
+  18+ — Case 08 drives it headlessly against a custom Solar Open 2
+  model provider, then grades its build output (Method D) with
+  Playwright in a headless browser. `scripts/verify.sh` installs the
+  Playwright package and Chromium itself on first run.
 
 ### Running one case
 
@@ -69,6 +74,7 @@ UPSTAGE_API_KEY="..." ./04-langchain-upstage-deepagents/scripts/verify.sh
 UPSTAGE_API_KEY="..." ./05-langchain-openwiki-solar-open2/scripts/verify.sh
 UPSTAGE_API_KEY="..." ./06-grok-build-solar-open2/scripts/verify.sh
 UPSTAGE_API_KEY="..." ./07-hermes-agent-helm-solar-open2/scripts/verify.sh
+UPSTAGE_API_KEY="..." ./08-omp-solar-open2/scripts/verify.sh
 ```
 
 Or through the shared, rate-limit-aware wrapper CI itself uses. It waits
@@ -90,7 +96,8 @@ for case in \
   04-langchain-upstage-deepagents \
   05-langchain-openwiki-solar-open2 \
   06-grok-build-solar-open2 \
-  07-hermes-agent-helm-solar-open2
+  07-hermes-agent-helm-solar-open2 \
+  08-omp-solar-open2
 do
   UPSTAGE_API_KEY="..." ./scripts/verify-case.sh "$case" solar-open2
 done

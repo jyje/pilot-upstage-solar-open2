@@ -20,6 +20,10 @@ seminar-ready home:
 7. Deploying Hermes Agent onto Kubernetes via the community
    **`hermes-agent-helm`** chart, verified on an ephemeral **kind**
    cluster.
+8. Running **omp** (oh-my-pi), a terminal coding agent forked from
+   **Pi**, against Solar Open 2 as a custom OpenAI-compatible model
+   provider — and asking it to actually build a working app, not just
+   answer a prompt.
 
 Each case is scoped to be independently readable, runnable, and
 presentable — someone should be able to open one case's folder and follow
@@ -36,6 +40,7 @@ it without needing any of the others.
 | Case 05 — Solar Open 2 x LangChain OpenWiki | Document this repo itself with `openwiki`, configured to run on Solar Open 2 | LangChain, `openwiki`, Solar Open 2 | Verified |
 | Case 06 — Solar Open 2 x Grok Build | Run xAI's Grok Build CLI against Solar Open 2 as a custom model provider | Grok Build, Solar Open 2 | Verified |
 | Case 07 — Solar Open 2 x Hermes Agent Helm | Deploy Hermes Agent onto Kubernetes (via the `hermes-agent-helm` Helm chart, on a kind cluster) and verify it reaches Solar Open 2 | Kubernetes, Helm, kind, Hermes Agent | Verified |
+| Case 08 — Solar Open 2 x omp | Run omp (oh-my-pi) against Solar Open 2 as a custom model provider, including a real build task graded by a headless browser | omp, Playwright, Solar Open 2 | Verified |
 
 ## Case 01 — Solar Open 2 x Claude Code
 
@@ -264,6 +269,43 @@ it without needing any of the others.
   `kind`/`kubectl`/`helm`, reusing the `UPSTAGE_API_KEY` secret). See
   `07-hermes-agent-helm-solar-open2/README.md` for details.
 
+## Case 08 — Solar Open 2 x omp
+
+- **Goal**: determine whether omp (oh-my-pi, ~20k-star terminal coding
+  agent forked from [Pi](https://github.com/badlogic/pi-mono)) can run
+  against Solar Open 2 as a custom model provider, and whether its "IDE
+  wired in" claim holds up under a real build task rather than a
+  one-line reply.
+- **Approach**: register `solar-open2` as a custom `openai-completions`
+  provider in a generated `models.yml`/`config.yml` pair, isolated via
+  `$PI_CODING_AGENT_DIR` for the run (same pattern as Case 02's Hermes
+  home and Case 06's `$GROK_HOME`). Three text-only methods (single-turn
+  reply, reasoning prompt, small coding task) plus a fourth, heavier
+  method: ask omp to build a working 6x6 Mini Sudoku web app through its
+  own `write`/`edit`/`bash` tools, then grade the actual output in a
+  headless browser (Playwright) rather than by grepping source text.
+- **Result**: done, with two real findings along the way.
+  1. Every request 400s with `Unrecognized request arguments supplied:
+     store` until `compat.supportsStore: false` is set on the provider
+     entry — omp's OpenAI-compatible client defaults to sending a
+     `store` field Upstage's endpoint doesn't recognize. Documented as
+     `compat.supportsStore` in omp's own docs; one line fixes it.
+  2. Method D's win-detection requirement was originally underspecified
+     ("no conflicts and the board is full"), and the app Solar Open 2
+     built for that wording checked the filled board against one
+     remembered solution instead of the rules themselves — since a 6x6
+     puzzle with cells removed can have more than one valid completion,
+     a different (but still correct) fill was wrongly rejected.
+     Rewriting the requirement to explicitly require dynamic rule
+     checking instead of a stored-solution comparison fixed it on the
+     next attempt, including the negative-test check that a broken
+     board doesn't still claim "Solved!".
+  All four methods verified locally and in CI
+  (`.github/workflows/verify-all-sequential.yml`, installing `omp` via
+  its official installer and Playwright/Chromium for Method D, reusing
+  the `UPSTAGE_API_KEY` secret). See `08-omp-solar-open2/README.md` for
+  details.
+
 ## Repo structure
 
 See [`AGENTS.md`](AGENTS.md) for the directory tree and repo conventions
@@ -273,7 +315,7 @@ policy).
 
 ## Next steps
 
-Cases 01-07 are implemented and verified (Case 06's tool-calling has a
+Cases 01-08 are implemented and verified (Case 06's tool-calling has a
 known, documented limitation — see its two findings above). Open items:
 - Find or wait for a client-side way to disable streaming (or otherwise
   route around the dropped tool_call name) for Grok Build's custom

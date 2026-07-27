@@ -4,7 +4,7 @@
 
 <img height="300" src="https://raw.githubusercontent.com/jyje/pilot-upstage-solar-open2/main/docs/images/pilot-upstage-solar-open2.png" alt="Claude Code × Upstage Solar Open 2 × Hermes Agent"/>
 
-✨ 업스테이지 Solar Open 2 모델을 활용한 여러 에이전트 하네스 시험: Claude Code, Hermes Agent(Kubernetes에서도 검증), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build
+✨ 업스테이지 Solar Open 2 모델을 활용한 여러 에이전트 하네스 시험: Claude Code, Hermes Agent(Kubernetes에서도 검증), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, omp
 
 [![verify-all-sequential](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)
 
@@ -45,7 +45,7 @@ fast-tier 폐쇄형 API를 포함한 비교 대상 중 가장 높은 평균 점�
 방법입니다.
 
 Upstage의 Solar Open 2 모델을 Claude, LangChain, OpenWiki, Hermes Agent,
-Grok Build 생태계의 에이전트 하네스로 구축하고 실행해보는 여러 독립적인
+Grok Build, omp 생태계의 에이전트 하네스로 구축하고 실행해보는 여러 독립적인
 유즈케이스를 한 리포에 모았습니다. 세미나 공유를 염두에 두고 구성했으며,
 각 Case는 최상위 디렉토리 하나씩을 차지하고 독립적으로 읽고 실행하고
 발표할 수 있습니다.
@@ -61,6 +61,7 @@ Grok Build 생태계의 에이전트 하네스로 구축하고 실행해보는 �
 | [Case 05 — Solar Open 2 x LangChain OpenWiki](05-langchain-openwiki-solar-open2/) | Extend | `openwiki`로 이 리포를 문서화하고 질문에 답변 — Solar Open 2로 실행 | [![verify-05](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-05-langchain-openwiki-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-05-langchain-openwiki-solar-open2.yml) |
 | [Case 06 — Solar Open 2 x Grok Build](06-grok-build-solar-open2/) | Extend | xAI의 Grok Build CLI를 커스텀 모델 provider로 Solar Open 2 실행 | [![verify-06](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml) |
 | [Case 07 — Solar Open 2 x Hermes Agent Helm](07-hermes-agent-helm-solar-open2/) | Extend | Hermes Agent를 Kubernetes에 배포(`hermes-agent-helm` Helm 차트, kind 클러스터)하고 Solar Open 2 활용성 검증 | [![verify-07](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml) |
+| [Case 08 — Solar Open 2 x omp](08-omp-solar-open2/) | Extend | omp(oh-my-pi)를 커스텀 모델 provider로 Solar Open 2 실행 — 헤드리스 브라우저로 채점하는 실제 개발 과제 포함 | [![verify-08](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml) |
 
 **Review** Case는 기존 공식 하네스 경로에서 Solar Open 2가 올바르게
 동작하는지 검증합니다. **Extend** Case는 한 걸음 더 나아가, 그
@@ -86,6 +87,9 @@ Grok Build 생태계의 에이전트 하네스로 구축하고 실행해보는 �
   메커니즘으로 실행.
 - **Case 07** — 커뮤니티 `hermes-agent-helm` Helm 차트가 Case 02와 같은
   Hermes Agent를 단발성 `docker run` 대신 Kubernetes 위에 배포.
+- **Case 08** — Pi에서 포크된 터미널 코딩 에이전트 omp(oh-my-pi)가
+  자체 커스텀 OpenAI 호환 provider 메커니즘으로 실행 — 단순히 프롬프트에
+  답하는 게 아니라 실제로 뭔가를 만들어보라고 요청한 유일한 Case.
 
 모든 Case는 독립적입니다 — 각자 `README.md`/`README-ko.md`, 실제 Upstage
 API를 호출하는(모킹 없음) 자체 `scripts/verify.sh`, 그리고 공유 CI
@@ -133,6 +137,12 @@ Case 추가나 로컬 실행 방법은 [`CONTRIBUTING.md`](CONTRIBUTING.md)를
   경로는 그대로입니다. 전체 추적 과정은
   [Case 07의 README](07-hermes-agent-helm-solar-open2/README-ko.md)를
   참고하세요.
+- Case 08의 omp는 자체 `models.yml`에 Solar Open 2를 커스텀
+  `openai-completions` provider로 등록합니다 — Case 04/05/06과 동일한
+  OpenAI 호환 와이어 경로이며 브리지가 필요 없습니다. 필수 수정 사항
+  하나: `compat.supportsStore: false` — omp가 기본으로 보내는 `store`
+  필드를 Upstage 엔드포인트가 거부하기 때문입니다. 전체 추적 과정은
+  [Case 08의 README](08-omp-solar-open2/README-ko.md)를 참고하세요.
 
 실질적인 결론: 프레임워크가 이미 OpenAI 또는 Anthropic 형태의 와이어
 포맷을 구사한다면, 새 에이전트 하네스를 이 목록에 추가하는 작업은 대부분
