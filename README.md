@@ -4,7 +4,7 @@
 
 <img height="300" src="https://raw.githubusercontent.com/jyje/pilot-upstage-solar-open2/main/docs/images/pilot-upstage-solar-open2.png" alt="Claude Code × Upstage Solar Open 2 × Hermes Agent"/>
 
-✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, and Grok Build
+✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, and omp
 
 [![verify-all-sequential](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)
 [![Python 3.13](https://img.shields.io/badge/python-3.13-3776AB?logo=python&logoColor=white)](https://docs.python.org/3.13/)
@@ -46,7 +46,7 @@ it.
 
 A single repo hosting several independent, seminar-ready use cases around
 building and running agent harnesses on Upstage's Solar Open 2 model across
-the Claude, LangChain, OpenWiki, Hermes Agent, and Grok Build ecosystems.
+the Claude, LangChain, OpenWiki, Hermes Agent, Grok Build, and omp ecosystems.
 Each case lives in its own top-level directory and can be read, run, and
 presented independently.
 
@@ -61,6 +61,7 @@ presented independently.
 | [Case 05 — Solar Open 2 x LangChain OpenWiki](05-langchain-openwiki-solar-open2/) | Extend | Use `openwiki` to document this repo and answer questions about it, powered by Solar Open 2 | [![verify-05](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-05-langchain-openwiki-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-05-langchain-openwiki-solar-open2.yml) |
 | [Case 06 — Solar Open 2 x Grok Build](06-grok-build-solar-open2/) | Extend | Run xAI's Grok Build CLI against Solar Open 2 as a custom model provider | [![verify-06](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml) |
 | [Case 07 — Solar Open 2 x Hermes Agent Helm](07-hermes-agent-helm-solar-open2/) | Extend | Deploy Hermes Agent onto Kubernetes (via the `hermes-agent-helm` Helm chart, on a kind cluster) and verify it reaches Solar Open 2 | [![verify-07](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml) |
+| [Case 08 — Solar Open 2 x omp](08-omp-solar-open2/) | Extend | Run omp (oh-my-pi) against Solar Open 2 as a custom model provider, including a real build task graded by a headless browser | [![verify-08](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml) |
 
 **Review** cases validate that Solar Open 2 works correctly in an
 existing, official harness path. **Extend** cases go further, wiring
@@ -88,6 +89,9 @@ use, not something that requires bespoke tooling:
 - **Case 07** — the community `hermes-agent-helm` Helm chart, deploying
   the same Hermes Agent from Case 02 onto Kubernetes instead of a single
   `docker run`.
+- **Case 08** — omp (oh-my-pi), a terminal coding agent forked from Pi,
+  via its own custom OpenAI-compatible provider mechanism — the only
+  case asked to actually build something, not just answer a prompt.
 
 Every case is self-contained: its own `README.md`/`README-ko.md`, its own
 `scripts/verify.sh` that exercises real Upstage API calls (no mocks), and
@@ -135,6 +139,12 @@ mainstream framework already speaks, not a custom client:
   Solar Open 2 doesn't. See
   [Case 07's README](07-hermes-agent-helm-solar-open2/README.md) for the
   full trace.
+- Case 08's omp registers Solar Open 2 as a custom `openai-completions`
+  provider in its own `models.yml` — same OpenAI-compatible wire path as
+  Case 04/05/06, no bridge. One required fix: `compat.supportsStore:
+  false`, since omp defaults to sending a `store` field Upstage's
+  endpoint rejects. See
+  [Case 08's README](08-omp-solar-open2/README.md) for the full trace.
 
 The practical upshot: adding a new agent harness to this list is mostly
 configuration (base URL, auth style, model ID), not new integration code,

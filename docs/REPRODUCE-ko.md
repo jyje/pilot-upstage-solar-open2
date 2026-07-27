@@ -42,7 +42,7 @@ export UPSTAGE_API_KEY="up_..."
 
 ### 2. 공유 레이트리밋 이해하기
 
-7개 케이스 모두 하나의 Upstage 계정을 공유합니다.
+8개 케이스 모두 하나의 Upstage 계정을 공유합니다.
 
 기본 계정 등급(**Tier 0**)은 Solar 챗 모델 기준 분당 100 요청, 분당
 5만 토큰까지 허용합니다.
@@ -98,10 +98,11 @@ UPSTAGE_API_KEY="..." ./scripts/verify-case.sh 01-solar-open2-harness solar-open
 | Case 05 | `openwiki`가 이 리포를 문서화, Solar Open 2로 구동 | [`05-langchain-openwiki-solar-open2/REPRODUCE-ko.md`](../05-langchain-openwiki-solar-open2/REPRODUCE-ko.md) |
 | Case 06 | Grok Build CLI를 커스텀 모델 provider로 Solar Open 2 구동 | [`06-grok-build-solar-open2/REPRODUCE-ko.md`](../06-grok-build-solar-open2/REPRODUCE-ko.md) |
 | Case 07 | `hermes-agent-helm` 차트로 Kubernetes에 배포, kind 클러스터에서 검증 | [`07-hermes-agent-helm-solar-open2/REPRODUCE-ko.md`](../07-hermes-agent-helm-solar-open2/REPRODUCE-ko.md) |
+| Case 08 | omp(oh-my-pi) CLI를 커스텀 모델 provider로 Solar Open 2 구동 — 헤드리스 브라우저로 채점하는 실제 개발 과제 포함 | [`08-omp-solar-open2/REPRODUCE-ko.md`](../08-omp-solar-open2/REPRODUCE-ko.md) |
 
 각 문서 상단의 `[English]` 링크를 따라가면 영문판도 볼 수 있습니다.
 
-## CI처럼 7개를 순차로 전부 실행하기
+## CI처럼 8개를 순차로 전부 실행하기
 
 CI와 동일한 순서로, 각 케이스가 시작 전에 레이트리밋이 완전히 리셋될
 때까지 기다립니다:
@@ -116,7 +117,8 @@ for case in \
   04-langchain-upstage-deepagents \
   05-langchain-openwiki-solar-open2 \
   06-grok-build-solar-open2 \
-  07-hermes-agent-helm-solar-open2
+  07-hermes-agent-helm-solar-open2 \
+  08-omp-solar-open2
 do
   ./scripts/verify-case.sh "$case" solar-open2
 done
