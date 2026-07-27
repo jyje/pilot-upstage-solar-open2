@@ -1,12 +1,13 @@
 import { execFile } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { copyFile, mkdir, rm, writeFile } from 'node:fs/promises';
+import { cp, copyFile, mkdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { promisify } from 'node:util';
 
 const run = promisify(execFile);
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const slideDirectory = resolve(scriptDirectory, '..');
+const repoRootDirectory = resolve(slideDirectory, '..');
 const outputDirectory = join(slideDirectory, 'dist');
 const slidevBinary = join(slideDirectory, 'node_modules', '.bin', 'slidev');
 const configuredBasePath = process.env.SLIDEV_BASE_PATH ?? '/';
@@ -164,5 +165,12 @@ await Promise.all([
   copyFile(
     join(slideDirectory, 'public', 'images', 'agent-ecosystem.png'),
     join(selectorImagesDirectory, 'agent-ecosystem.png'),
+  ),
+  // Real, playable apps built by Solar Open 2 through this repo's cases
+  // (see ../gallery/README.md) -- static files, copied as-is.
+  cp(
+    join(repoRootDirectory, 'gallery'),
+    join(outputDirectory, 'gallery'),
+    { recursive: true },
   ),
 ]);

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gallery — jyje/pilot-upstage-solar-open2</title>
+    <meta
+      name="description"
+      content="Real, playable apps built by Solar Open 2 through this repo's agent-harness cases -- not mocked, not hand-edited."
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      :root {
+        color: #f8f7fb;
+        background: #11111f;
+        font-family: Inter, system-ui, sans-serif;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 3rem 1.5rem;
+        text-align: center;
+      }
+      main {
+        width: min(38rem, 100%);
+      }
+      a.back {
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        color: #a7a5b8;
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+      a.back:hover,
+      a.back:focus {
+        color: #fff;
+      }
+      h1 {
+        margin: 0 0 0.6rem;
+        font-size: clamp(1.8rem, 5.5vw, 2.6rem);
+        letter-spacing: -0.03em;
+      }
+      p.lede {
+        margin: 0 0 2.2rem;
+        color: #cfccd9;
+        font-size: 1.05rem;
+        line-height: 1.5;
+      }
+      .card {
+        display: block;
+        margin-bottom: 1.2rem;
+        padding: 1.4rem 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 0.65rem;
+        background: rgba(255, 255, 255, 0.035);
+        color: inherit;
+        text-align: left;
+        text-decoration: none;
+        transition: border-color 0.15s, background 0.15s;
+      }
+      .card:hover,
+      .card:focus {
+        border-color: #c6ff72;
+        background: rgba(198, 255, 114, 0.06);
+      }
+      .card-title {
+        margin: 0 0 0.35rem;
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      .card-desc {
+        margin: 0 0 0.7rem;
+        color: #cfccd9;
+        font-size: 0.95rem;
+        line-height: 1.45;
+      }
+      .card-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        font-size: 0.78rem;
+      }
+      .tag {
+        padding: 0.2rem 0.55rem;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 999px;
+        color: #8fe7d1;
+      }
+      footer {
+        margin-top: 2.5rem;
+        padding-top: 1.4rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        color: #a7a5b8;
+        font-size: 0.8rem;
+      }
+      footer a {
+        color: #a7a5b8;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="../">&larr; back to jyje/pilot-upstage-solar-open2</a>
+      <h1>Gallery</h1>
+      <p class="lede">
+        Real apps that Solar Open 2 actually built through this repo's agent-harness
+        cases &mdash; played and functionally checked in a real browser, not just a
+        text reply. Nothing here is hand-written or hand-edited beyond a couple of
+        openly-noted, minimal bugfixes (see each entry).
+      </p>
+
+      <a class="card" href="case-08-omp-sudoku/">
+        <p class="card-title">6&times;6 Mini Sudoku</p>
+        <p class="card-desc">
+          Built by <strong>Solar Open 2</strong> through
+          <strong>omp (oh-my-pi)</strong>, asked only for a written requirements
+          spec &mdash; puzzle generation, live conflict highlighting, real win
+          detection, and a working "New Puzzle" button, all self-contained in
+          one HTML file.
+        </p>
+        <div class="card-meta">
+          <span class="tag">Case 08 &mdash; omp</span>
+          <span class="tag">solar-open2</span>
+        </div>
+      </a>
+
+      <footer>
+        <p>
+          Every case's own verification runs the model's raw, unedited output.
+          See <a href="../08-omp-solar-open2/">Case 08's README</a> for the full
+          story, findings, and how this one was generated and checked.
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>
