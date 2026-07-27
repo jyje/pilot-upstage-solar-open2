@@ -52,6 +52,9 @@ const selectorPage = `<!doctype html>
       table.cases td.case-name { color: #fff; font-weight: 600; white-space: normal; }
       table.cases td.case-category { color: #a7a5b8; }
       table.cases td.case-ci img { height: 1.15rem; }
+      p.gallery-link { margin: 1.1rem 0 0; font-size: 1.024rem; }
+      p.gallery-link a { color: #c6ff72; text-decoration: none; font-weight: 600; }
+      p.gallery-link a:hover, p.gallery-link a:focus { text-decoration: underline; }
       p.nav-label { margin: 1.6rem 0 0; color: #a7a5b8; font-size: .87rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
       nav { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; margin-top: .7rem; width: 100%; }
       a.lang { flex: 1 1 8rem; min-width: 0; padding: .9rem 1.1rem; border: 1px solid #4c2fff; color: #fff; text-align: center; text-decoration: none; }
@@ -78,7 +81,7 @@ const selectorPage = `<!doctype html>
       </div>
       <h1>jyje/pilot-upstage-solar-open2</h1>
       <img class="hero-image" src="./images/agent-ecosystem.png" alt="Solar Open 2 agent ecosystem" />
-      <p class="tagline">✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, and Grok Build</p>
+      <p class="tagline">✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, and omp</p>
       <div class="cases-scroll">
         <table class="cases" aria-label="Use cases">
           <thead>
@@ -120,9 +123,15 @@ const selectorPage = `<!doctype html>
               <td class="case-category">Extend</td>
               <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-07-hermes-agent-helm-solar-open2.yml?label=&logo=github&logoColor=white" alt="verify-07 status" /></a></td>
             </tr>
+            <tr>
+              <td class="case-name">08 — omp</td>
+              <td class="case-category">Extend</td>
+              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-08-omp-solar-open2.yml?label=&logo=github&logoColor=white" alt="verify-08 status" /></a></td>
+            </tr>
           </tbody>
         </table>
       </div>
+      <p class="gallery-link"><a href="./gallery/">→ Gallery: real, playable apps Solar Open 2 built</a></p>
       <p class="nav-label">Start the slides — choose a language</p>
       <nav aria-label="Presentation language">
         <a class="lang" href="./en/#1" lang="en">English</a>

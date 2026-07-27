@@ -22,7 +22,7 @@ fonts:
 
 <div class="cover-readme-hero">
   <img class="cover-readme-image" src="/images/agent-ecosystem.png" alt="Solar Open 2 agent ecosystem" />
-  <p class="cover-readme-tagline"><Localized en="✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, and Grok Build" ko="✨ Upstage Solar Open 2 기반의 다양한 에이전트 하네스를 검증합니다: Claude Code, Hermes Agent(쿠버네티스 배포도 검증), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build" /></p>
+  <p class="cover-readme-tagline"><Localized en="✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, and omp" ko="✨ Upstage Solar Open 2 기반의 다양한 에이전트 하네스를 검증합니다: Claude Code, Hermes Agent(쿠버네티스 배포도 검증), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, omp" /></p>
   <div class="cover-badges" aria-label="Project status badges">
     <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg" alt="verify all sequential status" /></a>
     <a href="https://docs.python.org/3.13/" target="_blank" rel="noreferrer"><img src="https://img.shields.io/badge/python-3.13-3776AB?logo=python&amp;logoColor=white" alt="Python 3.13" /></a>
@@ -149,6 +149,10 @@ fonts:
 <div class="structure-case">
   <span class="structure-case-num">Case 07</span><span class="structure-case-dash">—</span>
   <span class="structure-case-body"><Localized en="Use Solar Open 2 with Hermes Agent on Kubernetes" ko="Solar Open 2 모델을 쿠버네티스의 Hermes Agent에서 사용하기" /><em class="structure-case-sub"><Localized en="Usable as an agent fleet in the cloud" ko="클라우드에서 에이전트 팀으로 사용 가능" /></em></span>
+</div>
+<div class="structure-case">
+  <span class="structure-case-num">Case 08</span><span class="structure-case-dash">—</span>
+  <span class="structure-case-body"><Localized en="Use Solar Open 2 with omp (oh-my-pi)" ko="Solar Open 2 모델을 omp(oh-my-pi)에서 사용하기" /><em class="structure-case-sub"><Localized en="Asked to actually build something, not just answer a prompt" ko="응답만이 아니라 실제로 무언가를 만들도록 요청" /></em></span>
 </div>
 
 </v-click>
@@ -373,6 +377,41 @@ fonts:
 
 ---
 
+<div class="case-pill">CASE 08</div>
+
+<div class="case-brand-logo"><img src="https://raw.githubusercontent.com/can1357/oh-my-pi/main/assets/icon.svg" alt="oh-my-pi" /></div>
+
+# oh-my-pi (omp)
+
+## <Localized en="Use Solar Open 2 with omp (oh-my-pi)" ko="Solar Open 2 모델을 omp(oh-my-pi)에서 사용하기" /><em class="case-h2-sub"><Localized en="Asked to actually build something, not just answer a prompt" ko="응답만이 아니라 실제로 무언가를 만들도록 요청" /></em>
+
+<div class="case-card">
+  <p class="case-card-desc"><Localized en="omp (oh-my-pi) — a ~20k-star terminal coding agent that markets itself as &quot;IDE wired in&quot; — reached Solar Open 2 through its own custom-provider mechanism, then proved that claim by actually building a working app instead of just replying to a prompt." ko="&quot;IDE가 내장된 에이전트&quot;를 표방하는 약 2만 스타짜리 터미널 코딩 에이전트 omp(oh-my-pi)가, 자체 커스텀 provider 메커니즘만으로 Solar Open 2에 도달한 뒤, 응답 대신 실제로 동작하는 앱을 만들어 그 주장을 증명했습니다." /></p>
+  <div class="case-card-highlights">
+    <div class="case-chip"><span class="case-chip-icon">🔌</span><span><Localized en="A third coding agent (after Grok Build) registered Solar Open 2 as a custom OpenAI-compatible provider, no bridge needed" ko="Grok Build에 이어 세 번째 코딩 에이전트가 브리지 없이 Solar Open 2를 커스텀 OpenAI 호환 provider로 등록했습니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🧩</span><span><Localized en="Asked to build a real 6x6 Sudoku app, and the result was verified by actually playing it in a headless browser" ko="실제 6x6 스도쿠 앱 제작을 요청했고, 그 결과물을 헤드리스 브라우저로 직접 플레이해 검증했습니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🚧</span><span><Localized en="Every request 400s without one required, non-obvious fix: compat.supportsStore: false" ko="필수적이지만 눈에 잘 안 띄는 설정 하나 (compat.supportsStore: false) 없이는 모든 요청이 400으로 거부됩니다" /></span></div>
+  </div>
+  <div class="case-evidence">
+    <div class="case-evidence-label"><Localized en="Verified in CI (A-C) + locally (D)" ko="CI 검증(A-C) + 로컬 검증(D)" /></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">A</span><span class="case-evidence-result"><Localized en="Exact-string round trip returned omp-solar-ready" ko="정확한 문자열 라운드트립이 omp-solar-ready 반환" /></span></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">B</span><span class="case-evidence-result"><Localized en="Correctly derived 1275 via the Gauss formula" ko="가우스 공식으로 1275를 정확히 도출" /></span></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">C</span><span class="case-evidence-result"><Localized en="Wrote a correct, working is_prime(n) with a docstring" ko="독스트링 포함 정상 동작하는 is_prime(n) 작성" /></span></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">D</span><span class="case-evidence-result"><Localized en="Built a real Sudoku app — verified locally, published in the gallery" ko="실제 스도쿠 앱을 빌드 — 로컬 검증 후 갤러리에 게시" /></span></div>
+    <div class="case-qa">
+      <div class="case-qa-line is-prompt"><span class="case-qa-tag">Ask</span><span class="case-qa-text"><Localized en="&quot;Build a working 6x6 Sudoku app — puzzle generation, live conflict checking, real win detection.&quot;" ko="&quot;동작하는 6x6 스도쿠 앱을 만들어줘 — 퍼즐 생성, 실시간 충돌 표시, 실제 승리 판정까지.&quot;" /></span></div>
+      <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text"><Localized en="A real index.html, proven by actually playing it in a headless browser — 6/6 checks passed" ko="실제 index.html — 헤드리스 브라우저로 직접 플레이해 6/6개 검증 통과" /></span></div>
+    </div>
+  </div>
+  <div class="case-cta-row">
+    <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml" target="_blank" rel="noreferrer"><img class="case-cta-badge" src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml/badge.svg" alt="verify-08 status" /></a>
+    <a class="case-cta" href="https://jyje.github.io/pilot-upstage-solar-open2/gallery/case-08-omp-sudoku/" target="_blank" rel="noreferrer"><Localized en="Play it" ko="플레이해보기" /></a>
+    <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/08-omp-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="Read more" ko="자세히 보기" /></a>
+  </div>
+</div>
+
+---
+
 # <Localized en="Verification & CI" ko="검증 & CI" />
 
 ## <Localized en="Every case, automatically verified on every relevant commit" ko="관련 커밋마다 모든 케이스를 자동으로 검증합니다" />
@@ -394,7 +433,7 @@ fonts:
 jobs:
   c01: { steps: [./scripts/verify-case.sh 01-...] }
   c02: { steps: [./scripts/verify-case.sh 02-...] }
-  # ... through c07
+  # ... through c08
 ```
 
 </v-click>
@@ -442,12 +481,13 @@ https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 | 05 — LangChain OpenWiki | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` |
 | 06 — Grok Build | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` <Localized en="+ standalone" ko="+ 단독 실행" /> |
 | 07 — Hermes Agent Helm | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` <Localized en="+ standalone" ko="+ 단독 실행" /> |
+| 08 — omp | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` <Localized en="+ standalone (A-C; D verified locally)" ko="+ 단독 실행 (A-C만; D는 로컬 검증)" /> |
 
 ---
 
 # <Localized en="Cross-Cutting Learnings" ko="공통 패턴" />
 
-## <Localized en="Patterns that emerged across all 7 cases" ko="7개 케이스 전반에서 나타난 패턴" />
+## <Localized en="Patterns that emerged across all 8 cases" ko="8개 케이스 전반에서 나타난 패턴" />
 
 <v-click>
 
@@ -511,7 +551,7 @@ https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 | <Localized en="Wire path" ko="경로" /> | <Localized en="Endpoint" ko="엔드포인트" /> | <Localized en="Used by" ko="사용 케이스" /> |
 |---|---|---|
 | **Anthropic Messages API** (<Localized en="compat layer" ko="호환 레이어" />) | `https://api.upstage.ai` | Case 01, Case 03 |
-| **OpenAI Chat Completions** (<Localized en="native" ko="네이티브" />) | `https://api.upstage.ai/v1/solar` | Case 04, Case 05, Case 06, Case 07 |
+| **OpenAI Chat Completions** (<Localized en="native" ko="네이티브" />) | `https://api.upstage.ai/v1/solar` | Case 04, Case 05, Case 06, Case 07, Case 08 |
 
 <span><Localized en="Both reach Solar Open 2. The OpenAI path avoids the" ko="둘 다 Solar Open 2에 도달합니다. OpenAI 경로는" /> `ANTHROPIC_AUTH_TOKEN` <Localized en="dance." ko="설정을 거치지 않아도 됩니다." /></span>
 
@@ -537,7 +577,7 @@ https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 
 ### <Localized en="Near-term" ko="단기" />
 
-- **Case 08+** — <Localized en="new harness integrations (more Kubernetes operators, more LangChain ecosystem tools, more IDE integrations)" ko="새로운 하네스 통합 (쿠버네티스 오퍼레이터, LangChain 생태계 도구, IDE 통합 확대)" />
+- **Case 09+** — <Localized en="new harness integrations (more Kubernetes operators, more LangChain ecosystem tools, more IDE integrations)" ko="새로운 하네스 통합 (쿠버네티스 오퍼레이터, LangChain 생태계 도구, IDE 통합 확대)" />
 - **<Localized en="Telegram/Discord for Case 07" ko="Case 07의 텔레그램·디스코드 연동" />** — <Localized en="messenger integration on top of the verified Helm deployment (currently documented but not gated)" ko="검증된 Helm 배포 위에 메신저를 연동합니다 (현재는 문서화만 되어 있고 CI 게이트는 없음)" />
 - **<Localized en="Rate-limit-aware verification" ko="레이트 리밋을 고려한 검증" />** — <Localized en="Case 05's Finding 3 (50K tokens/min ceiling) could be addressed with batched/parallel verification strategies" ko="Case 05의 Finding 3(분당 5만 토큰 한도)은 배치·병렬 검증 전략으로 완화할 수 있습니다" />
 
@@ -562,7 +602,7 @@ https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 
 > *<Localized en="Can Upstage's Solar Open 2 model run through real, production-grade agent harnesses — not just a raw API call?" ko="Upstage의 Solar Open 2 모델이 API 호출 하나가 아니라, 실제 프로덕션급 에이전트 하네스를 통해서도 동작할 수 있을까?" />*
 
-<span><Localized en="Seven cases later, the answer is" ko="일곱 개의 케이스를 거친 지금, 답은" /> **<Localized en="yes" ko="그렇다" />** — <Localized en="across Claude Code, Hermes Agent, Claude Agent SDK, LangChain, OpenWiki, Grok Build, and Kubernetes/Helm." ko="Claude Code, Hermes Agent, Claude Agent SDK, LangChain, OpenWiki, Grok Build, Kubernetes/Helm 전반에 걸쳐서입니다." /> <Localized en="The remaining work is scaling that answer to more harnesses, more models, and more operators." ko="남은 과제는 이 결과를 더 많은 하네스, 더 많은 모델, 더 많은 오퍼레이터로 확장하는 것입니다." /></span>
+<span><Localized en="Eight cases later, the answer is" ko="여덟 개의 케이스를 거친 지금, 답은" /> **<Localized en="yes" ko="그렇다" />** — <Localized en="across Claude Code, Hermes Agent, Claude Agent SDK, LangChain, OpenWiki, Grok Build, omp, and Kubernetes/Helm." ko="Claude Code, Hermes Agent, Claude Agent SDK, LangChain, OpenWiki, Grok Build, omp, Kubernetes/Helm 전반에 걸쳐서입니다." /> <Localized en="The remaining work is scaling that answer to more harnesses, more models, and more operators." ko="남은 과제는 이 결과를 더 많은 하네스, 더 많은 모델, 더 많은 오퍼레이터로 확장하는 것입니다." /></span>
 
 </v-click>
 
@@ -583,6 +623,7 @@ https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 | `Python 3.13` + `uv` | Case 03, Case 04 |
 | `kind` + `kubectl` + `helm` | Case 07 |
 | `grok` CLI | Case 06 |
+| `omp` CLI + Playwright | Case 08 |
 
 <span><Localized en="All cases require:" ko="모든 케이스에 공통으로 필요합니다:" /> **`UPSTAGE_API_KEY`** — <Localized en="get one at" ko="발급:" /> <https://console.upstage.ai/api-keys></span>
 
@@ -608,7 +649,7 @@ https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 | <Localized en="Protocol" ko="프로토콜" /> | <Localized en="Endpoint" ko="엔드포인트" /> | <Localized en="Used by" ko="사용 케이스" /> |
 |---|---|---|
 | Anthropic Messages API (<Localized en="compat" ko="호환" />) | `https://api.upstage.ai` | Case 01, Case 03 |
-| OpenAI Chat Completions (<Localized en="native" ko="네이티브" />) | `https://api.upstage.ai/v1/solar` | Case 04, Case 05, Case 06, Case 07 |
+| OpenAI Chat Completions (<Localized en="native" ko="네이티브" />) | `https://api.upstage.ai/v1/solar` | Case 04, Case 05, Case 06, Case 07, Case 08 |
 
 **<Localized en="Auth:" ko="인증:" />** `Authorization: Bearer <key>` (`ANTHROPIC_AUTH_TOKEN`) — **<Localized en="not" ko="아님" />** `x-api-key`.
 
@@ -650,5 +691,6 @@ UPSTAGE_API_KEY="your-key" ./scripts/verify.sh
 | **`OPENWIKI_DISABLE_STREAMING`** | <Localized en="Opt-in flag to disable streaming (workaround for tool-calling bug)" ko="스트리밍을 비활성화하는 옵션 플래그 (툴 콜링 버그 우회용)" /> |
 | **`api_backend`** | <Localized en="Grok Build config key choosing wire protocol" ko="와이어 프로토콜을 선택하는 Grok Build 설정 키" /> (`chat_completions`, `responses`, `messages`) |
 | **`CLAUDE_CODE_SUBAGENT_MODEL`** | <Localized en="Env var ensuring subagent/Task-tool calls stay on Solar Open 2" ko="서브에이전트·Task 툴 호출이 Solar Open 2를 계속 쓰도록 보장하는 환경변수" /> |
+| **`PI_CODING_AGENT_DIR`** | <Localized en="Env var relocating omp's config directory (models.yml, config.yml) for isolated test runs" ko="omp의 설정 디렉터리(models.yml, config.yml)를 격리된 테스트 실행용으로 재배치하는 환경변수" /> |
 
 </v-click>
