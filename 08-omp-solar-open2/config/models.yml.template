@@ -1,0 +1,20 @@
+providers:
+  upstage:
+    baseUrl: https://api.upstage.ai/v1/solar
+    api: openai-completions
+    apiKey: UPSTAGE_API_KEY
+    # This is the literal env var *name*, not a $UPSTAGE_API_KEY
+    # interpolation -- omp resolves apiKey as "env var name, else the
+    # literal string" (docs/models.md), so the real secret never has to
+    # be written into this file.
+    compat:
+      supportsStore: false
+      # Required. omp's openai-completions client defaults to sending
+      # store: false on requests to endpoints it thinks look
+      # "standard", and Upstage's endpoint rejects that unknown field
+      # with a 400. Every request fails without this line.
+    models:
+      - id: OMP_MODEL_PLACEHOLDER
+        name: Solar Open 2 (Upstage)
+        contextWindow: 1000000
+        maxTokens: 8192
