@@ -642,17 +642,20 @@
 .case-brand-logo {
   display: inline-flex;
   position: fixed;
-  top: 1.15rem;
-  right: 3.85rem;
+  top: calc(3.6rem + 50px);
+  right: calc(3.85rem + 60px);
   z-index: 90;
   align-items: center;
-  height: 1.9rem;
+  justify-content: center;
+  width: 7.6rem;
+  height: 7.6rem;
   pointer-events: none;
   opacity: 0.92;
 }
 
 .case-brand-logo img {
-  height: 1.9rem;
+  height: 7.6rem;
+  max-width: 7.6rem;
   width: auto;
   filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.4));
 }

@@ -381,12 +381,12 @@ fonts:
 
 <div class="case-brand-logo"><img src="https://raw.githubusercontent.com/can1357/oh-my-pi/main/assets/icon.svg" alt="oh-my-pi" /></div>
 
-# oh-my-pi (omp)
+# omp: oh-my-pi
 
-## <Localized en="Use Solar Open 2 with omp (oh-my-pi)" ko="Solar Open 2 모델을 omp(oh-my-pi)에서 사용하기" /><em class="case-h2-sub"><Localized en="Asked to actually build something, not just answer a prompt" ko="응답만이 아니라 실제로 무언가를 만들도록 요청" /></em>
+## <Localized en="Use Solar Open 2 with omp" ko="Solar Open 2 모델을 omp에서 사용하기" /><em class="case-h2-sub"><Localized en="Asked to actually build something, not just answer a prompt" ko="응답만이 아니라 실제로 무언가를 만들도록 요청" /></em>
 
 <div class="case-card">
-  <p class="case-card-desc"><Localized en="omp (oh-my-pi) — a ~20k-star terminal coding agent that markets itself as &quot;IDE wired in&quot; — reached Solar Open 2 through its own custom-provider mechanism, then proved that claim by actually building a working app instead of just replying to a prompt." ko="&quot;IDE가 내장된 에이전트&quot;를 표방하는 약 2만 스타짜리 터미널 코딩 에이전트 omp(oh-my-pi)가, 자체 커스텀 provider 메커니즘만으로 Solar Open 2에 도달한 뒤, 응답 대신 실제로 동작하는 앱을 만들어 그 주장을 증명했습니다." /></p>
+  <p class="case-card-desc"><Localized en="" ko="&quot;IDE가 내장된 에이전트&quot;를 표방하는 약 2만 스타짜리 터미널 코딩 에이전트 " /><a href="https://github.com/can1357/oh-my-pi" target="_blank" rel="noreferrer"><Localized en="omp (oh-my-pi)" ko="omp(oh-my-pi)" /></a><Localized en=" — a ~20k-star terminal coding agent that markets itself as &quot;IDE wired in&quot; — reached Solar Open 2 through its own custom-provider mechanism, then proved that claim by actually building a working app instead of just replying to a prompt." ko="가, 자체 커스텀 provider 메커니즘만으로 Solar Open 2에 도달한 뒤, 응답 대신 실제로 동작하는 앱을 만들어 그 주장을 증명했습니다." /></p>
   <div class="case-card-highlights">
     <div class="case-chip"><span class="case-chip-icon">🔌</span><span><Localized en="A third coding agent (after Grok Build) registered Solar Open 2 as a custom OpenAI-compatible provider, no bridge needed" ko="Grok Build에 이어 세 번째 코딩 에이전트가 브리지 없이 Solar Open 2를 커스텀 OpenAI 호환 provider로 등록했습니다" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">🧩</span><span><Localized en="Asked to build a real 6x6 Sudoku app, and the result was verified by actually playing it in a headless browser" ko="실제 6x6 스도쿠 앱 제작을 요청했고, 그 결과물을 헤드리스 브라우저로 직접 플레이해 검증했습니다" /></span></div>
