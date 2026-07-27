@@ -300,11 +300,14 @@ it without needing any of the others.
      checking instead of a stored-solution comparison fixed it on the
      next attempt, including the negative-test check that a broken
      board doesn't still claim "Solved!".
-  All four methods verified locally and in CI
+  Methods A-C verified in CI
   (`.github/workflows/verify-all-sequential.yml`, installing `omp` via
-  its official installer and Playwright/Chromium for Method D, reusing
-  the `UPSTAGE_API_KEY` secret). See `08-omp-solar-open2/README.md` for
-  details.
+  its official installer, reusing the `UPSTAGE_API_KEY` secret). Method
+  D (the Sudoku build) is a multi-minute agentic build that CI skips
+  (`SKIP_METHOD_D=1`) rather than re-running on every dispatch -- it's
+  verified locally instead, and its output is published as a playable
+  app in `gallery/case-08-omp-sudoku/`. See `08-omp-solar-open2/README.md`
+  for details.
 
 ## Repo structure
 

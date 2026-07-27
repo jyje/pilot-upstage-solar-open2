@@ -7,9 +7,12 @@ See [`REPRODUCE.md`](REPRODUCE.md) for step-by-step local setup.
 
 **Status:** Verified — [omp (oh-my-pi)](https://github.com/can1357/oh-my-pi)
 runs real prompts against Solar Open 2 as a custom model provider, and
-actually builds a working, spec-compliant app when asked to; all four
-methods below pass in CI. One required, non-obvious fix: without
-`compat.supportsStore: false` on the provider entry, every request 400s.
+actually builds a working, spec-compliant app when asked to. Methods A-C
+pass in CI; Method D (the Sudoku build) is a multi-minute agentic build
+that's verified locally instead and published as a playable app in
+[`../gallery/`](../gallery/) rather than re-run on every CI pass. One
+required, non-obvious fix: without `compat.supportsStore: false` on the
+provider entry, every request 400s.
 
 ## Goal
 
@@ -175,7 +178,7 @@ case's own testing triggered.
 ## Verification
 
 [`scripts/verify.sh`](scripts/verify.sh) runs `omp` headlessly against
-Solar Open 2 four times (Methods A–D, all gated). It exits non-zero if
+Solar Open 2 (Methods A–D, all gated by default). It exits non-zero if
 Method A's reply doesn't contain `omp-solar-ready`, Method B's answer
 doesn't contain `1275`, Method C's code doesn't contain `def is_prime`,
 or Method D's generated app fails any of the Playwright checks above.
@@ -185,17 +188,29 @@ to 3 times only on an omp-process-level failure (auth/rate-limit
 shaped) — once omp itself succeeds, a Playwright check failure is
 treated as a real result, not retried away.
 
+Setting `SKIP_METHOD_D` (any non-empty value) skips Method D entirely
+and gates only on A–C. **CI always sets this** — Method D is a
+multi-minute agentic build needing a headless browser, which doesn't
+fit a step meant to run alongside seven other cases on every dispatch.
+It's still verified, just locally rather than in CI, and its result is
+published as a playable app in [`../gallery/`](../gallery/) instead of
+being re-run each time. See [Evidence run](#evidence-run) below for
+that local transcript.
+
 Run locally with `UPSTAGE_API_KEY` set, `omp` installed
 (`curl -fsSL https://omp.sh/install | sh`), and Node 18+ on `PATH`:
 
 ```bash
-UPSTAGE_API_KEY="..." ./scripts/verify.sh
+UPSTAGE_API_KEY="..." ./scripts/verify.sh              # Methods A-D
+UPSTAGE_API_KEY="..." SKIP_METHOD_D=1 ./scripts/verify.sh  # Methods A-C only, matches CI
 ```
 
 The script installs its own Playwright dependency and Chromium browser
-on first run (see [`scripts/package.json`](scripts/package.json)).
+on first run (see [`scripts/package.json`](scripts/package.json)) unless
+`SKIP_METHOD_D` is set.
 
-Runs in CI (manual dispatch, solar-open2 only) two ways: as a step in
+Runs in CI (manual dispatch, solar-open2 only, Methods A-C only) two
+ways: as a step in
 [`verify-all-sequential.yml`](../.github/workflows/verify-all-sequential.yml)
 alongside every other case, and on its own via
 [`verify-08-omp-solar-open2.yml`](../.github/workflows/verify-08-omp-solar-open2.yml) —
@@ -205,8 +220,10 @@ both reuse the same `UPSTAGE_API_KEY` repository secret and install
 ## Evidence run
 
 **Evidence run:** [`verify` job](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml)
-(link filled in after the first CI run of this case). Real, unedited
-output from a local run against the live Upstage API:
+(link filled in after the first CI run of this case; covers Methods A-C
+only, see [Verification](#verification) above for why Method D isn't
+in that run). Real, unedited output from a local run against the live
+Upstage API, all four methods:
 
 **Method A**
 
