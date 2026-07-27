@@ -20,5 +20,8 @@ slide/pages/
 # Playwright MCP
 .playwright-mcp/
 
+# Case 08 (omp) Playwright deps
+08-omp-solar-open2/scripts/node_modules/
+
 # Scratch workspace (agent skill runs, etc.)
 _workspace/

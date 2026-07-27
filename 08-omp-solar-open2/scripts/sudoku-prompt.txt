@@ -1,0 +1,23 @@
+Build a single self-contained web app for a 6x6 Mini Sudoku puzzle using digits 1-6.
+
+1. Output exactly one file named index.html in the current directory. All HTML, CSS, and JavaScript must be inline in that one file - no external files, no CDN links, no build step, no network calls. It must run correctly just by opening it directly in a browser.
+
+2. Grid: 6 rows x 6 columns (0-indexed), divided into six boxes of 2 rows x 3 columns each (rows {0,1}, {2,3}, {4,5} each split into columns {0,1,2} and {3,4,5}). Render a visibly thicker border between boxes than between ordinary adjacent cells.
+
+3. On page load, generate a NEW valid, solvable 6x6 puzzle: a full grid where every row, column, and 2x3 box contains each of 1-6 exactly once, then remove roughly half the cells at random to form the playable puzzle.
+
+4. Every cell is an <input> element with id="cell-R-C" (R, C are 0-indexed row/column, e.g. id="cell-0-0" through id="cell-5-5"). Given (pre-filled) cells: readonly attribute set, and data-given="true". Visually distinct from editable cells. Empty (user-editable) cells: no readonly, data-given="false", start empty. The given cells must never conflict with each other.
+
+5. Users can type a digit 1-6 into any editable cell, and clear it. Reject/ignore any other input.
+
+6. Live validation: on every change to any cell value, immediately check whether it conflicts with any other value in the same row, column, or 2x3 box, and visually mark every cell involved in a conflict for as long as the conflict exists. Must update on every keystroke/edit.
+
+7. Win detection: implement this by DYNAMICALLY checking the current board state against the Sudoku rules themselves (every row, column, and 2x3 box contains the digits 1-6 with no repeats, and no cell is empty) each time a cell changes. Do NOT implement this by comparing the current values to a single internally-remembered solution array from generation time - a 6x6 puzzle with cells removed can have more than one valid completion, and any completion that satisfies the rules must be accepted as solved, even if it differs from whichever specific solution was used to generate the puzzle. As soon as the rule-based check passes, set the text content of an element with id="status" to exactly "Solved!" (exact string, case sensitive) and add the CSS class "solved" to that element. Before fully and correctly solved, #status must never contain "Solved!".
+
+8. A button with id="new-puzzle" that discards all current entries and generates a brand-new puzzle.
+
+9. No external dependencies of any kind. Must work fully offline, opened directly from disk (a file:// URL).
+
+10. Keep the visual design simple and readable.
+
+Write only the code. Do not ask clarifying questions - make reasonable choices for anything not specified and note them briefly in an HTML comment at the top of the file.
