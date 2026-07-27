@@ -219,10 +219,10 @@ both reuse the same `UPSTAGE_API_KEY` repository secret and install
 
 ## Evidence run
 
-**Evidence run:** [`verify` job](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml)
-(link filled in after the first CI run of this case; covers Methods A-C
-only, see [Verification](#verification) above for why Method D isn't
-in that run). Real, unedited output from a local run against the live
+**Evidence run:** [`verify` job, 2026-07-27](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/30267245461)
+(covers Methods A-C only, see [Verification](#verification) above for
+why Method D isn't in that run). Real, unedited output from a local run
+against the live
 Upstage API, all four methods:
 
 **Method A**

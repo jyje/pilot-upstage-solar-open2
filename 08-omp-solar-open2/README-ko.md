@@ -218,10 +218,9 @@ CI에서는 두 가지 방식으로 실행됩니다(둘 다 수동 실행, `sola
 
 ## 증거 실행
 
-**증거 실행:** [`verify` job](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml)
-(링크는 이 Case의 첫 CI 실행 뒤 채워 넣습니다. 이 CI 실행은 방식
-A~C만 다루며, 방식 D가 왜 거기 없는지는 위 [검증](#검증) 절 참고).
-실제 Upstage API를 상대로 로컬에서 실행한, 네 방식 전부의 편집 없는
+**증거 실행:** [`verify` job, 2026-07-27](https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/30267245461)
+(이 CI 실행은 방식 A~C만 다루며, 방식 D가 왜 거기 없는지는 위
+[검증](#검증) 절 참고). 실제 Upstage API를 상대로 로컬에서 실행한, 네 방식 전부의 편집 없는
 결과입니다:
 
 **방식 A**
