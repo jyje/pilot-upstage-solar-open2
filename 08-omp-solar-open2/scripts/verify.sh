@@ -34,6 +34,12 @@
 #
 # Requires: `omp` on PATH (curl -fsSL https://omp.sh/install | sh),
 # Node 18+ on PATH (for Method D's Playwright check), UPSTAGE_API_KEY set.
+#
+# Method D runs a full agentic build (minutes, not seconds) and installs
+# a headless browser, so CI skips it (SKIP_METHOD_D=1) and only gates on
+# Methods A-C; its result is verified locally instead and published as
+# a playable artifact in ../gallery/ rather than re-run on every CI pass.
+# Set SKIP_METHOD_D to any non-empty value to reproduce that locally.
 
 set -euo pipefail
 
@@ -139,6 +145,14 @@ preview "$method_c_out"
 
 echo
 echo "== Method D: real development task -- 6x6 Mini Sudoku =="
+
+if [ -n "${SKIP_METHOD_D:-}" ]; then
+  echo "  skipped (SKIP_METHOD_D set) -- see ../gallery/case-08-omp-sudoku/"
+  echo "  for the verified, published result of this method."
+  echo
+  ok "All checks passed (Method D skipped)."
+  exit 0
+fi
 
 # Playwright needs to be installed once. Fast no-op on repeat runs.
 if [ ! -d "$script_dir/node_modules/playwright" ]; then

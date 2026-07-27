@@ -8,8 +8,11 @@
 
 **상태:** 검증 완료 — [omp(oh-my-pi)](https://github.com/can1357/oh-my-pi)가
 커스텀 모델 provider로 Solar Open 2를 상대로 실제 응답을 생성하고,
-실제로 요청하면 스펙대로 동작하는 앱까지 만들어냅니다. 아래 네 가지
-방식 모두 CI를 통과합니다. 필수로 확인된 설정 하나: provider 항목에
+실제로 요청하면 스펙대로 동작하는 앱까지 만들어냅니다. 방식 A~C는
+CI를 통과하고, 방식 D(스도쿠 앱 만들기)는 여러 분 걸리는 에이전틱
+빌드라 CI마다 다시 돌리는 대신 로컬에서 검증한 뒤
+[`../gallery/`](../gallery/)에 실제 플레이 가능한 앱으로 게시해뒀습니다.
+필수로 확인된 설정 하나: provider 항목에
 `compat.supportsStore: false`가 없으면 모든 요청이 400으로 거부됩니다.
 
 ## 목표
@@ -173,7 +176,7 @@ D는 omp에게 — 이 리포가 파일을 직접 쓰는 게 아니라 omp 자�
 ## 검증
 
 [`scripts/verify.sh`](scripts/verify.sh)가 `omp`를 Solar Open 2 상대로
-네 번(방식 A~D 모두 게이트) headless로 실행합니다. 방식 A의 응답에
+headless로 실행합니다(기본값은 방식 A~D 전부 게이트). 방식 A의 응답에
 `omp-solar-ready`가 없거나, 방식 B의 답변에 `1275`가 없거나, 방식
 C의 코드에 `def is_prime`가 없거나, 방식 D의 결과물이 위 Playwright
 검증 중 하나라도 실패하면 0이 아닌 코드로 종료합니다. 방식 A~C는
@@ -183,20 +186,30 @@ C의 코드에 `def is_prime`가 없거나, 방식 D의 결과물이 위 Playwri
 재시도합니다 — omp가 일단 성공적으로 끝났는데 Playwright 검증이
 실패한 경우는 재시도 없이 그대로 실제 결과로 기록합니다.
 
+`SKIP_METHOD_D`를 비어있지 않은 값으로 설정하면 방식 D를 통째로
+건너뛰고 A~C만으로 게이트합니다. **CI는 항상 이 값을 설정합니다** —
+방식 D는 헤드리스 브라우저까지 필요한 여러 분짜리 에이전틱 빌드라,
+다른 7개 Case와 함께 매번 도는 스텝에는 맞지 않습니다. 검증 자체는
+빠지지 않고 로컬에서 이루어지며, 그 결과는 매번 다시 돌리는 대신
+[`../gallery/`](../gallery/)에 실제 플레이 가능한 앱으로 게시해
+둡니다. 그 로컬 실행 결과는 아래 [증거 실행](#증거-실행)에서 확인할
+수 있습니다.
+
 `UPSTAGE_API_KEY`를 설정하고 `omp`를 설치한 뒤
 (`curl -fsSL https://omp.sh/install | sh`), `PATH`에 Node 18+가 있는
 상태로 로컬에서 실행하세요.
 
 ```bash
-UPSTAGE_API_KEY="..." ./scripts/verify.sh
+UPSTAGE_API_KEY="..." ./scripts/verify.sh                  # 방식 A-D
+UPSTAGE_API_KEY="..." SKIP_METHOD_D=1 ./scripts/verify.sh   # 방식 A-C만, CI와 동일
 ```
 
-스크립트는 첫 실행 시 자체적으로 Playwright 의존성과 Chromium
-브라우저를 설치합니다([`scripts/package.json`](scripts/package.json)
-참고).
+스크립트는 `SKIP_METHOD_D`가 없을 때 첫 실행 시 자체적으로 Playwright
+의존성과 Chromium 브라우저를 설치합니다
+([`scripts/package.json`](scripts/package.json) 참고).
 
-CI에서는 두 가지 방식으로 실행됩니다(둘 다 수동 실행, `solar-open2`만):
-다른 모든 Case와 함께
+CI에서는 두 가지 방식으로 실행됩니다(둘 다 수동 실행, `solar-open2`만,
+방식 A~C만): 다른 모든 Case와 함께
 [`verify-all-sequential.yml`](../.github/workflows/verify-all-sequential.yml)의
 한 스텝으로, 그리고 단독으로
 [`verify-08-omp-solar-open2.yml`](../.github/workflows/verify-08-omp-solar-open2.yml)로 —
@@ -206,8 +219,10 @@ CI에서는 두 가지 방식으로 실행됩니다(둘 다 수동 실행, `sola
 ## 증거 실행
 
 **증거 실행:** [`verify` job](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml)
-(링크는 이 Case의 첫 CI 실행 뒤 채워 넣습니다). 실제 Upstage API를
-상대로 로컬에서 실행한, 편집 없는 결과입니다:
+(링크는 이 Case의 첫 CI 실행 뒤 채워 넣습니다. 이 CI 실행은 방식
+A~C만 다루며, 방식 D가 왜 거기 없는지는 위 [검증](#검증) 절 참고).
+실제 Upstage API를 상대로 로컬에서 실행한, 네 방식 전부의 편집 없는
+결과입니다:
 
 **방식 A**
 

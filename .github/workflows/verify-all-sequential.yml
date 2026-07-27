@@ -97,16 +97,6 @@ jobs:
           curl -fsSL https://omp.sh/install | sh
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
-      # Case 08's Method D verifies its output in a real headless
-      # browser (see 08-omp-solar-open2/scripts/verify-sudoku.mjs) since
-      # it's the only case whose output is a UI, not text. Pre-installed
-      # here as a visible, cacheable step; scripts/verify.sh does the
-      # same install as a no-op fallback if this step is ever skipped.
-      - name: Install Playwright (Case 08)
-        run: |
-          npm install --prefix 08-omp-solar-open2/scripts --no-audit --no-fund
-          npx --prefix 08-omp-solar-open2/scripts playwright install --with-deps chromium
-
       - name: "Case 01 — Solar Open 2 x Claude Code"
         id: c01
         continue-on-error: true
@@ -156,11 +146,16 @@ jobs:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 07-hermes-agent-helm-solar-open2 solar-open2
 
+      # Method D (the Sudoku build) is skipped here -- it's a multi-minute
+      # agentic build needing a headless browser, verified locally
+      # instead and published as a playable artifact in gallery/ rather
+      # than re-run on every CI pass. Methods A-C still gate this step.
       - name: "Case 08 — Solar Open 2 x omp"
         id: c08
         continue-on-error: true
         env:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
+          SKIP_METHOD_D: "1"
         run: ./scripts/verify-case.sh 08-omp-solar-open2 solar-open2
 
       # continue-on-error steps always report conclusion=success at the
