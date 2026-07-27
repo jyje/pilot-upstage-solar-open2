@@ -7,6 +7,7 @@
 ✨ 업스테이지 Solar Open 2 모델을 활용한 여러 에이전트 하네스 시험: Claude Code, Hermes Agent(Kubernetes에서도 검증), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, omp
 
 [![verify-all-sequential](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-c6ff72)](LICENSE)
 
 External links:<br>
 [![Model on Hugging Face](https://img.shields.io/badge/🤗_Hugging_Face-upstage/solar--open2--250b-yellow)](https://huggingface.co/upstage/Solar-Open2-250B)
@@ -206,3 +207,11 @@ Solar 챗 모델 기준 분당 100 요청, 분당 5만 토큰([Upstage rate-limi
 
 > 소스 코드와 코드 주석은 영문 전용이며, README는 루트를 포함한 모든
 > Case가 EN+KO 쌍으로 제공됩니다.
+
+## 라이선스
+
+이 리포 자체의 코드와 문서는 [MIT](LICENSE) 라이선스입니다. 단, Solar
+Open 2 모델 자체는 별도의
+[Upstage Solar License](https://huggingface.co/upstage/Solar-Open2-250B)를
+따르고, Claude Code·Hermes Agent·Grok Build·omp 등 각 서드파티 하네스는
+각자의 업스트림 라이선스를 따릅니다.
