@@ -152,7 +152,7 @@ fonts:
 </div>
 <div class="structure-case">
   <span class="structure-case-num">Case 08</span><span class="structure-case-dash">—</span>
-  <span class="structure-case-body"><Localized en="Use Solar Open 2 with omp (oh-my-pi)" ko="Solar Open 2 모델을 omp(oh-my-pi)에서 사용하기" /><em class="structure-case-sub"><Localized en="Asked to actually build something, not just answer a prompt" ko="응답만이 아니라 실제로 무언가를 만들도록 요청" /></em></span>
+  <span class="structure-case-body"><Localized en="Use Solar Open 2 with omp (oh-my-pi)" ko="Solar Open 2 모델을 omp(oh-my-pi)에서 사용하기" /><em class="structure-case-sub"><Localized en="Authenticate through a custom provider, then build an app" ko="커스텀 공급자로 인증하고, 앱 개발까지 가능" /></em></span>
 </div>
 
 </v-click>
@@ -160,6 +160,8 @@ fonts:
 ---
 
 <div class="case-pill">CASE 01</div>
+
+<div class="case-brand-logo"><img src="https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-png/dark/claudecode-color.png" alt="Claude Code" /></div>
 
 # Claude Code
 
@@ -192,6 +194,8 @@ fonts:
 
 <div class="case-pill">CASE 02</div>
 
+<div class="case-brand-logo"><img src="https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-png/dark/hermesagent.png" alt="Hermes Agent" /></div>
+
 # Hermes Agent
 
 ## <Localized en="Use Solar Open 2 with Hermes Agent" ko="Solar Open 2 모델을 Hermes Agent에서 사용하기" />
@@ -222,6 +226,8 @@ fonts:
 ---
 
 <div class="case-pill">CASE 03</div>
+
+<div class="case-brand-logo"><img src="https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-png/dark/claude-color.png" alt="Claude Agent SDK" /></div>
 
 # Claude Agent SDK
 
@@ -255,6 +261,8 @@ fonts:
 
 <div class="case-pill">CASE 04</div>
 
+<div class="case-brand-logo"><img src="https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-png/dark/langchain-color.png" alt="LangChain" /></div>
+
 # LangChain DeepAgents
 
 ## <Localized en="Use Solar Open 2 with LangChain Deepagents" ko="Solar Open 2 모델을 LangChain Deepagents에서 사용하기" /><em class="case-h2-sub"><Localized en="Controlling the harness at the code level" ko="코드 레벨에서 하네스 제어하기" /></em>
@@ -285,6 +293,8 @@ fonts:
 ---
 
 <div class="case-pill">CASE 05</div>
+
+<div class="case-brand-logo"><img src="https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-png/dark/langchain-color.png" alt="LangChain" /></div>
 
 # LangChain OpenWiki
 
@@ -317,6 +327,8 @@ fonts:
 
 <div class="case-pill">CASE 06</div>
 
+<div class="case-brand-logo"><img src="https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-png/dark/grok.png" alt="Grok Build" /></div>
+
 # Grok Build
 
 ## <Localized en="Use Solar Open 2 with Grok Build" ko="Solar Open 2 모델을 Grok Build에서 사용하기" /><em class="case-h2-sub"><Localized en="Using the Anthropic- and OpenAI-compatible providers" ko="Anthropic, OpenAI 호환 공급자 사용" /></em>
@@ -347,6 +359,8 @@ fonts:
 ---
 
 <div class="case-pill">CASE 07</div>
+
+<div class="case-brand-logo"><img src="https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-png/dark/hermesagent.png" alt="Hermes Agent" /></div>
 
 # Hermes Agent Helm
 
@@ -383,10 +397,10 @@ fonts:
 
 # omp: oh-my-pi
 
-## <Localized en="Use Solar Open 2 with omp" ko="Solar Open 2 모델을 omp에서 사용하기" /><em class="case-h2-sub"><Localized en="Asked to actually build something, not just answer a prompt" ko="응답만이 아니라 실제로 무언가를 만들도록 요청" /></em>
+## <Localized en="Use Solar Open 2 with omp" ko="Solar Open 2 모델을 omp에서 사용하기" /><em class="case-h2-sub"><Localized en="Authenticate through a custom provider, then build an app" ko="커스텀 공급자로 인증하고, 앱 개발까지 가능" /></em>
 
 <div class="case-card">
-  <p class="case-card-desc"><Localized en="" ko="&quot;IDE가 내장된 에이전트&quot;를 표방하는 약 2만 스타짜리 터미널 코딩 에이전트 " /><a href="https://github.com/can1357/oh-my-pi" target="_blank" rel="noreferrer"><Localized en="omp (oh-my-pi)" ko="omp(oh-my-pi)" /></a><Localized en=" — a ~20k-star terminal coding agent that markets itself as &quot;IDE wired in&quot; — reached Solar Open 2 through its own custom-provider mechanism, then proved that claim by actually building a working app instead of just replying to a prompt." ko="가, 자체 커스텀 provider 메커니즘만으로 Solar Open 2에 도달한 뒤, 응답 대신 실제로 동작하는 앱을 만들어 그 주장을 증명했습니다." /></p>
+  <p class="case-card-desc"><Localized en="" ko="약 2만 개의 GitHub 스타를 받은 터미널 코딩 에이전트 " /><a href="https://github.com/can1357/oh-my-pi" target="_blank" rel="noreferrer"><Localized en="omp (oh-my-pi)" ko="omp(oh-my-pi)" /></a><Localized en=" is a ~20k-star terminal coding agent built around the idea of an &quot;IDE wired in.&quot; It connected to Solar Open 2 with a custom provider configuration, answered prompts, and built a working app." ko="는 &quot;IDE가 내장된 에이전트&quot;라는 콘셉트를 가집니다. 별도 브리지 없이 커스텀 프로바이더 설정만으로 Solar Open 2와 연결했고, 질문에도 답한 데다 실제로 실행되는 앱까지 만들었습니다." /></p>
   <div class="case-card-highlights">
     <div class="case-chip"><span class="case-chip-icon">🔌</span><span><Localized en="A third coding agent (after Grok Build) registered Solar Open 2 as a custom OpenAI-compatible provider, no bridge needed" ko="Grok Build에 이어 세 번째 코딩 에이전트가 브리지 없이 Solar Open 2를 커스텀 OpenAI 호환 provider로 등록했습니다" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">🧩</span><span><Localized en="Asked to build a real 6x6 Sudoku app, and the result was verified by actually playing it in a headless browser" ko="실제 6x6 스도쿠 앱 제작을 요청했고, 그 결과물을 헤드리스 브라우저로 직접 플레이해 검증했습니다" /></span></div>
@@ -649,7 +663,7 @@ https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 | <Localized en="Protocol" ko="프로토콜" /> | <Localized en="Endpoint" ko="엔드포인트" /> | <Localized en="Used by" ko="사용 케이스" /> |
 |---|---|---|
 | Anthropic Messages API (<Localized en="compat" ko="호환" />) | `https://api.upstage.ai` | Case 01, Case 03 |
-| OpenAI Chat Completions (<Localized en="native" ko="네이티브" />) | `https://api.upstage.ai/v1/solar` | Case 04, Case 05, Case 06, Case 07, Case 08 |
+| OpenAI Chat Completions (<Localized en="native" ko="네이티브" />) | `https://api.upstage.ai/v1/solar` | Case 04, Case 05<br />Case 06, Case 07<br />Case 08 |
 
 **<Localized en="Auth:" ko="인증:" />** `Authorization: Bearer <key>` (`ANTHROPIC_AUTH_TOKEN`) — **<Localized en="not" ko="아님" />** `x-api-key`.
 
