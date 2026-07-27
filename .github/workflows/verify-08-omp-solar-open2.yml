@@ -1,0 +1,35 @@
+name: verify-08-omp-solar-open2
+
+# Manual, single-case counterpart to verify-all-sequential.yml — run just
+# this one case without waiting for the other 7. Same
+# scripts/verify-case.sh wrapper (full rate-limit reset wait, solar-open2
+# only), so behavior matches what this case does inside the sequential
+# run. Manual-only by design, same as verify-all-sequential.yml.
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  verify:
+    runs-on: ubuntu-26.04-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install omp CLI
+        run: |
+          curl -fsSL https://omp.sh/install | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Install Playwright
+        run: |
+          npm install --prefix 08-omp-solar-open2/scripts --no-audit --no-fund
+          npx --prefix 08-omp-solar-open2/scripts playwright install --with-deps chromium
+
+      - name: "Case 08 — Solar Open 2 x omp"
+        env:
+          UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
+        run: ./scripts/verify-case.sh 08-omp-solar-open2 solar-open2

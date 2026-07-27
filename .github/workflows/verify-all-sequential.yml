@@ -1,7 +1,7 @@
 name: verify-all-sequential
 
-# The single verification workflow for this repo. Runs all 7 cases
-# against solar-open2, one at a time as one of 7 steps — each step is
+# The single verification workflow for this repo. Runs all 8 cases
+# against solar-open2, one at a time as one of 8 steps — each step is
 # scripts/verify-case.sh (shared with local ad-hoc runs), which waits
 # until Upstage's rate-limit budget for the model is *fully* reset (see
 # scripts/wait-for-upstage-full-reset.sh, 10-minute cap) before that
@@ -92,6 +92,21 @@ jobs:
 
       - uses: azure/setup-helm@v5
 
+      - name: Install omp CLI
+        run: |
+          curl -fsSL https://omp.sh/install | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      # Case 08's Method D verifies its output in a real headless
+      # browser (see 08-omp-solar-open2/scripts/verify-sudoku.mjs) since
+      # it's the only case whose output is a UI, not text. Pre-installed
+      # here as a visible, cacheable step; scripts/verify.sh does the
+      # same install as a no-op fallback if this step is ever skipped.
+      - name: Install Playwright (Case 08)
+        run: |
+          npm install --prefix 08-omp-solar-open2/scripts --no-audit --no-fund
+          npx --prefix 08-omp-solar-open2/scripts playwright install --with-deps chromium
+
       - name: "Case 01 — Solar Open 2 x Claude Code"
         id: c01
         continue-on-error: true
@@ -141,6 +156,13 @@ jobs:
           UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
         run: ./scripts/verify-case.sh 07-hermes-agent-helm-solar-open2 solar-open2
 
+      - name: "Case 08 — Solar Open 2 x omp"
+        id: c08
+        continue-on-error: true
+        env:
+          UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
+        run: ./scripts/verify-case.sh 08-omp-solar-open2 solar-open2
+
       # continue-on-error steps always report conclusion=success at the
       # job level, so this reads each step's real `outcome` (not
       # overridden) to report what actually happened, and fails the job
@@ -161,10 +183,12 @@ jobs:
             "Case 05 — Solar Open 2 x LangChain OpenWiki"
             "Case 06 — Solar Open 2 x Grok Build"
             "Case 07 — Solar Open 2 x Hermes Agent Helm"
+            "Case 08 — Solar Open 2 x omp"
           )
           categories=(
             "Review"
             "Review"
+            "Extend"
             "Extend"
             "Extend"
             "Extend"
@@ -179,6 +203,7 @@ jobs:
             "${{ steps.c05.outcome }}"
             "${{ steps.c06.outcome }}"
             "${{ steps.c07.outcome }}"
+            "${{ steps.c08.outcome }}"
           )
 
           mark() { [ "$1" = success ] && echo "✅" || echo "❌"; }
