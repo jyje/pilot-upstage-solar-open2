@@ -147,4 +147,19 @@ Runs as a step in CI (manual dispatch, solar-open2 only):
 reusing the same `UPSTAGE_API_KEY` repository secret Case 01 set up —
 no new secret, no cost for a separate Anthropic key.
 
+## Solar Pro4
+
+Same gap as Case 01: Upstage's Anthropic-compatible endpoint has no
+model mapping for `solar-pro4`. [`docker/`](../docker/)'s litellm-proxy
+bridges it — point `ClaudeAgentOptions(env={...})`'s
+`ANTHROPIC_BASE_URL` at the proxy instead of Upstage directly.
+
+Locally verified 2026-08-03 (full log:
+[`logs/local-verification/2026-08-03/case-03-solar-pro4.log`](../logs/local-verification/2026-08-03/case-03-solar-pro4.log)):
+`query()` against `solar-pro4` through the proxy returned a real reply
+on the first try — the SDK's isolated subprocess environment doesn't hit
+the local credential-precedence artifact noted in Case 01's Solar Pro4
+section for a bare `claude` CLI call from inside a nested Claude Code
+session.
+
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.

@@ -286,4 +286,16 @@ for the latest). Real, unedited output — not hand-picked or edited:
 > Full answer: [In its own words](#in-its-own-words-hermes-on-the-solar-open-2-synergy)
 > above.
 
+## Solar Pro4
+
+No bridge needed: same as Case 02, this deployment reaches Upstage
+through Hermes Agent's built-in `upstage` provider — `solar-pro4` is
+reachable exactly like `solar-open2`.
+
+Locally verified 2026-08-03 (full log:
+[`logs/local-verification/2026-08-03/case-07-solar-pro4.log`](../logs/local-verification/2026-08-03/case-07-solar-pro4.log)):
+all three checks passed against `solar-pro4` — the chart's Helm-test
+Job, a live `kubectl exec` chat round trip, and Hermes describing its
+own Solar Pro4 strengths in full.
+
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.

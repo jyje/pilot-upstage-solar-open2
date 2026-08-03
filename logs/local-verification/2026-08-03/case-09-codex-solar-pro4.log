@@ -1,0 +1,29 @@
+Case 09 (draft) — Codex x Solar Pro4 — local verification
+Date: 2026-08-03
+Model: solar-pro4, via bare litellm-proxy container on :4001 (openai/chat_completions/<model> Responses bridge, same as solar-open2)
+
+== raw /v1/responses bridge check ==
+{"id":"resp_BVad61LeozWUFwAfZmM4F0dt5Vqbt1XoBnf5VKDUfXZQ7Q9zHzibWKym-2sSwsNe-ORplx-GsmrBEqc3bokha_vceFxgfQLpTHYpHiVFSHOFoPDWB7nJQdvKRSIsXFLIz--p3UDvj-w479i6pvVbN0C9Hz4ecQpXXzGX1Ne1ACbRNge7Fe61NjO9iE_vjKXKY5GcoN8-L0shE1wUlsVCW0sR3-qoEJN5jlfzd_ubV_RjD1vhxZdkqpdST_LYexv9fMNI651rK65wk9UodhXAS2fhXocJuzWVF5yXKf8gWCT2VcXR8G25hIFv1MhIcKKGGJGnZCSh9Lb-f_t0E6HvpgI6vXXNFn9uVerJa6oCnnEPKqU0h7WJDZXV7IEU7zd2s_6HO3aZoCtkQ6IbOvocSjseKdeVAkLsz2qzwGKJb8df0nWha014iQiP","created_at":1785767439,"error":null,"incomplete_details":null,"instructions":null,"metadata":{},"model":"solar-pro4","object":"response","output":[{"type":"reasoning","id":"rs_-2738438511577751964","status":"completed","role":"assistant","content":[{"type":"output_text","text":"The user wants me to reply with exactly \"bridge-ready\" and not call any tools. This is a straightforward instruction.","annotations":[]}],"phase":null},{"type":"message","id":"19a477ef-9149-4a06-95c2-ac8a52dd89b6","status":"completed","role":"assistant","content":[{"type":"output_text","text":"bridge-ready","annotations":[]}],"phase":null}],"parallel_tool_calls":false,"temperature":0.0,"tool_choice":"auto","tools":[],"top_p":null,"max_output_tokens":null,"previous_response_id":null,"reasoning":null,"status":"completed","text":{},"truncation":null,"usage":{"input_tokens":214,"input_tokens_details":{"audio_tokens":0,"cached_tokens":0,"text_tokens":null},"output_tokens":28,"output_tokens_details":{"reasoning_tokens":24,"text_tokens":null},"total_tokens":242,"cost":null},"user":null,"store":null}
+
+== codex exec, no-tool-call prompt ==
+Reading additional input from stdin...
+OpenAI Codex v0.146.0
+--------
+workdir: /Users/jyje/repo/jyje/pilot-upstage-solar-open2/draft/codex-upstage-solar-open2
+model: solar-pro4
+provider: solar_proxy
+approval: never
+sandbox: read-only
+reasoning effort: none
+reasoning summaries: none
+session id: 019fc808-af63-7332-93a2-aae28772f0bd
+--------
+user
+Reply with only this exact text, no tool calls: codex-ready
+warning: Model metadata for `solar-pro4` not found. Defaulting to fallback metadata; this can degrade performance and cause issues.
+warning: Skill descriptions were shortened to fit the 2% skills context budget. Codex can still see every skill, but some descriptions are shorter. Disable unused skills or plugins to leave more room for the rest.
+codex
+codex-ready
+tokens used
+9,269
+codex-ready

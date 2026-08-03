@@ -1,0 +1,31 @@
+Case 03 — Solar Open 2 x Claude Agent SDK — solar-pro4 local verification
+Date: 2026-08-03
+Model: solar-pro4 (via docker/litellm-proxy)
+
+Ad-hoc script (mirrors 03-claude-agent-sdk-local/src/demo.py's
+solar_options(), pointed at the local proxy instead of Upstage directly):
+
+  env = {
+      "ANTHROPIC_BASE_URL": "http://127.0.0.1:4000",
+      "ANTHROPIC_AUTH_TOKEN": "sk-local-solar-proxy",
+  }
+  opts = ClaudeAgentOptions(model="solar-pro4", env=env)
+  async for msg in query(prompt="hello", options=opts): ...
+
+== Output ==
+
+⚠ claude.ai connectors are disabled because ANTHROPIC_API_KEY or another
+  auth source is set and takes precedence over your claude.ai login ·
+  Unset it to load your organization's connectors
+REPLY: Hello! I'm here to help you with your coding tasks. What would
+you like to work on today?
+
+RESULT: PASS — the Claude Agent SDK reaches solar-pro4 cleanly through
+the litellm-proxy. Unlike a bare `claude -p` CLI invocation from within
+this same nested Claude Code session (see case-01-solar-pro4.log), the
+SDK's explicit ClaudeAgentOptions(env=...) builds an isolated subprocess
+environment that doesn't inherit the host session's own OAuth vars, so
+it authenticates to the proxy correctly on the first try.
+
+VERDICT: solar-pro4 works end to end through Case 03's actual code path
+(claude-agent-sdk) via the litellm-proxy bridge.

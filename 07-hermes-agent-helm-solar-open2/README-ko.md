@@ -293,4 +293,16 @@ CI에서는 두 가지 방식으로 실행됩니다(둘 다 수동 실행, `sola
 > 전체 답변: [헤르메스 자신의 말로](#헤르메스-자신의-말로-solar-open-2와의-시너지)
 > 참고.
 
+## Solar Pro4
+
+브릿지가 필요 없습니다: Case 02와 마찬가지로 이 배포도 Hermes Agent의
+내장 `upstage` provider로 Upstage에 도달합니다 — `solar-pro4`도
+`solar-open2`와 정확히 같은 방식으로 도달 가능합니다.
+
+2026-08-03에 로컬로 검증했습니다(전체 로그:
+[`logs/local-verification/2026-08-03/case-07-solar-pro4.log`](../logs/local-verification/2026-08-03/case-07-solar-pro4.log)):
+차트의 Helm-test Job, 실행 중인 파드에 대한 실시간 `kubectl exec` 대화
+왕복, 그리고 Hermes가 자신의 Solar Pro4 강점을 전체 설명하는 것까지 세
+체크 모두 `solar-pro4`로 통과했습니다.
+
 전체 맥락은 리포 레벨의 [`PLAN.md`](../PLAN.md)를 참고하세요.

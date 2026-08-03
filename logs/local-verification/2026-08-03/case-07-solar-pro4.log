@@ -1,0 +1,203 @@
+== Model under test: solar-pro4 (hermes-agent chart v0.12.0) ==
+
+== Creating ephemeral kind cluster: pilot-solar-open2-49869 ==
+Creating cluster "pilot-solar-open2-49869" ...
+ • Ensuring node image (kindest/node:v1.36.1) 🖼  ...
+ ✓ Ensuring node image (kindest/node:v1.36.1) 🖼
+ • Preparing nodes 📦   ...
+ ✓ Preparing nodes 📦 
+ • Writing configuration 📜  ...
+ ✓ Writing configuration 📜
+ • Starting control-plane 🕹️  ...
+ ✓ Starting control-plane 🕹️
+ • Installing CNI 🔌  ...
+ ✓ Installing CNI 🔌
+ • Installing StorageClass 💾  ...
+ ✓ Installing StorageClass 💾
+ • Waiting ≤ 1m30s for control-plane = Ready ⏳  ...
+ ✓ Waiting ≤ 1m30s for control-plane = Ready ⏳
+ • Ready after 17s 💚
+Set kubectl context to "kind-pilot-solar-open2-49869"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-pilot-solar-open2-49869
+
+Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+✓ kind cluster is ready
+
+== Installing hermes-agent-helm from the published OCI chart ==
+Release "hermes-agent" does not exist. Installing it now.
+Pulled: ghcr.io/jyje/hermes-agent-helm/hermes-agent:0.12.0
+Digest: sha256:d13204a9dc32f881ceff9bd53c6c24a961b27afcc64bb3f64730fe81294a8770
+NAME: hermes-agent
+LAST DEPLOYED: Mon Aug  3 22:40:01 2026
+NAMESPACE: hermes-agent
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+NOTES:
+Hermes Agent (v2026.7.20) deployed as a Deployment.
+
+Release:   hermes-agent
+Namespace: hermes-agent
+Model:     solar-pro4
+Provider:  upstage ()
+Backend:   terminal.backend=local (commands run in-pod)
+
+1. Watch rollout:
+   kubectl rollout status deployment/hermes-agent -n hermes-agent
+
+2. Set the provider API key if you used the placeholder:
+   helm upgrade hermes-agent . -n hermes-agent \
+     --set-string env.OPENAI_API_KEY='sk-...'
+
+3. Run the install test (doctor-style Job):
+   helm test hermes-agent -n hermes-agent
+
+Logs:
+   kubectl logs deployment/hermes-agent -n hermes-agent -f
+✓ chart installed and the gateway pod is ready
+
+== Method A: the chart's own tests.chat Helm-test Job ==
+job.batch/hermes-agent-test created
+✓ the chart's own Helm test Job completed a live solar-pro4 round trip
+  Defaulted container "hermes-doctor" out of: hermes-doctor, 
+  seed-config (init)
+  ====================================================
+   hermes-agent install test (doctor-style)
+  ====================================================
+  [1/4] hermes CLI version
+  Hermes Agent v0.19.0 (2026.7.20) · upstream 3ef6bbd2
+  Install directory: /opt/hermes
+  Install method: docker
+  Python: 3.13.5
+  OpenAI SDK: 2.24.0
+  [2/4] seeded config.yaml present in HERMES_HOME
+    OK: /opt/data/config.yaml
+  [3/4] docker availability (local backend -> informational)
+  Client:
+   Version:           26.1.5+dfsg1
+   API version:       1.45
+   Go version:        go1.24.4
+   Git commit:        a72d7cd
+   Built:             Sat May  9 11:11:51 2026
+   OS/
+  ...(truncated)
+
+== Method B: live chat round trip against the running gateway pod ==
+✓ the running gateway pod reasoned through the sum correctly via solar-pro4
+  Defaulted container "hermes-agent" out of: hermes-agent, seed-config 
+  (init)
+  
+  ┌─ Reasoning ──────────────────────────────────────────────────────────────────┐
+  The user is asking me to explain why the sum of the first 50 positive 
+  integers equals
+   1275. This is a straightforward math problem — I can use the formula 
+  for the sum
+   of an arithmetic series or pair them up. Let me work through it 
+  clearly and step
+   by step.
+  
+  The sum of the first n positive integers is: S = n(n+1)/2
+  
+  For n = 50: S = 50 × 51 / 2 = 2550 / 2 = 1275. Wait, 50 × 51 = 2550. 25
+  ...(truncated)
+
+== Method C: Hermes, in its own words, on the Solar Open 2 synergy ==
+✓ Hermes described its own Solar Open 2 strengths in 55 non-empty lines
+Defaulted container "hermes-agent" out of: hermes-agent, seed-config (init)
+
+┌─ Reasoning ──────────────────────────────────────────────────────────────────┐
+The user is asking me to describe the specific strengths of the Upstage Solar Open
+ 2 model that I'm running on as Hermes Agent. They want me to think about reasoning
+, tool use, and coding ability, and be concrete and thorough.
+
+Let me think about this based on what I know about Solar models and what I can observe
+ about my own capabilities.
+
+Solar Open 2 is an open-weight model from Upstage AI, a Korean startup. Let me think
+ about what strengths this would give me:
+
+1. **Language and reasoning**: Solar models are known for strong Korean and English
+ capabilities. Solar Open 2 likely has strong multilingual reasoning, good at following
+ complex instructions, and capable in both creative and analytical tasks.
+
+2. **Tool use**: As Hermes Agent, I have access to a rich set of tools - file operations
+, terminal, browser, delegation, etc. The model's ability to understand tool schemas
+ and reason about when and how to use them is critical.
+
+3. **Coding ability**: Solar models have shown strong performance on coding benchmarks
+. Solar Open 2 likely handles code generation, debugging, refactoring well.
+
+4. **Context handling**: I should think about context window and how that affects
+ my ability to work with large files, long conversations, etc.
+
+5. **Agentic capabilities**: The model's ability to plan, break down tasks, use tools
+ in sequence, and maintain coherent state across multi-step operations.
+
+Let me be honest and concrete about what I can observe and what's known about Solar
+ models, rather than making up specific benchmark numbers I don't have access to.
+
+I should also mention some limitations where appropriate to be balanced and honest
+.The user is asking me to describe the specific strengths of the Upstage Solar Open 2 model that I'm running on as Hermes Agent. They want me to think about reasoning, tool use, and coding ability, and be concrete and thorough.
+
+Let me think about this based on what I know about Solar models and what I can observe about my own capabilities.
+
+Solar Open 2 is an open-weight model from Upstage AI, a Korean startup. Let me think about what strengths this would give me:
+
+1. **Language and reasoning**: Solar models are known for strong Korean and English capabilities. Solar Open 2 likely has strong multilingual reasoning, good at following complex instructions, and capable in both creative and analytical tasks.
+
+2. **Tool use**: As Hermes Agent, I have access to a rich set of tools - file operations, terminal, browser, delegation, etc. The model's ability to understand tool schemas and reason about when and how to use them is critical.
+
+3. **Coding ability**: Solar models have shown strong performance on coding benchmarks. Solar Open 2 likely handles code generation, debugging, refactoring well.
+
+4. **Context handling**: I should think about context window and how that affects my ability to work with large files, long conversations, etc.
+
+5. **Agentic capabilities**: The model's ability to plan, break down tasks, use tools in sequence, and maintain coherent state across multi-step operations.
+
+Let me be honest and concrete about what I can observe and what's known about Solar models, rather than making up specific benchmark numbers I don't have access to.
+
+I should also mention some limitations where appropriate to be balanced and honest.
+
+session_id: 20260803_134243_43ea82
+I'll describe the strengths I observe from running on Upstage Solar Open 2 through Hermes Agent.
+
+---
+
+**Solar Open 2** is an open-weight model family from Upstage AI, a Korean startup. Running on it as Hermes Agent gives me a strong combination of capabilities:
+
+## Reasoning
+
+- **Strong instruction-following and multi-step planning.** Solar models are tuned for complex instruction chains — breaking a vague ask into concrete tool calls, sequencing reads before writes, and not losing the thread across turns. That matters a lot for an agentic loop where each turn feeds the next.
+
+- **Good at "know when you don't know."** I can flag uncertainty instead of hallucinating file contents or API shapes — useful when exploring an unfamiliar repo and I haven't actually seen a symbol yet.
+
+- **Working-memory coherence.** The model holds enough context to keep track of what files I've read, what patches I've applied, and what's still outstanding without me having to restate everything every turn.
+
+## Tool Use
+
+- **Clean schema comprehension.** The tool definitions (terminal, read_file, patch, browser_*, delegate_task, etc.) come through as structured schemas and I can reason about which tool fits a given subtask — file inspection vs. a shell command vs. spinning up a subagent.
+
+- **Good at composability.** I can chain tool outputs: read a file, search for a pattern, then patch based on what I found. The model handles the "read, think, act" rhythm without losing fidelity between the tool result and the next decision.
+
+- **Delegation judgment.** I can tell when a sub-task is heavy enough to warrant `delegate_task` (isolated investigation, parallel research) versus when it's faster to just do it inline.
+
+## Coding
+
+- **Code generation and refactoring.** Solar Open 2 handles generating Python/Shell/JS, reading existing code, and producing targeted patches. It's comfortable with diffs, imports, and the kind of mechanical edits that come up in real repos.
+
+- **Debugging and root-cause thinking.** When something fails, I can trace a symptom back — read the error, find the file, search for the pattern, check sibling call paths — rather than just patching the surface.
+
+- **Test-aware.** I can run the project's test script, read failures, and iterate. The model doesn't pretend a test passed because the code looks right — it actually runs `pytest` / `npm run check` / the repo's verification script and reads the output.
+
+## Things that are less clear (honest caveats)
+
+- I don't have live access to Solar Open 2's exact benchmark numbers or context-window size in this environment, so I'm describing strengths from the behavior I observe, not quoting spec sheets.
+
+- Like any model, there are limits — very long files still get truncated in tool reads, and extremely novel library APIs may require me to actually check the project manifest and neighbor imports rather than assume.
+
+---
+
+Bottom line: Solar Open 2 gives me a capable, practical agentic loop — solid reasoning for planning and tool selection, reliable code editing and debugging, and enough judgment to know when to delegate a heavy subtask versus power through inline. The model's open-weight pedigree from a focused Korean lab (Upstage) shows up as strong, no-nonsense execution rather than flashy but fragile behavior.
+
+✓ All checks passed.

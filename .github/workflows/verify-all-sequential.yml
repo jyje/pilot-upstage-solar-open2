@@ -1,7 +1,7 @@
 name: verify-all-sequential
 
-# The single verification workflow for this repo. Runs all 8 cases
-# against solar-open2, one at a time as one of 8 steps — each step is
+# The single verification workflow for this repo. Runs all 9 cases
+# against solar-open2, one at a time as one of 9 steps — each step is
 # scripts/verify-case.sh (shared with local ad-hoc runs), which waits
 # until Upstage's rate-limit budget for the model is *fully* reset (see
 # scripts/wait-for-upstage-full-reset.sh, 10-minute cap) before that
@@ -36,11 +36,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
 
       - uses: astral-sh/setup-uv@v5
+
+      - name: Install LiteLLM and Codex
+        run: |
+          pip install 'litellm[proxy]'
+          npm install -g @openai/codex
 
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
@@ -158,6 +167,13 @@ jobs:
           SKIP_METHOD_D: "1"
         run: ./scripts/verify-case.sh 08-omp-solar-open2 solar-open2
 
+      - name: "Case 09 — Solar Open 2 x Codex"
+        id: c09
+        continue-on-error: true
+        env:
+          UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
+        run: ./scripts/verify-case.sh 09-codex-upstage-solar-open2 solar-open2
+
       # continue-on-error steps always report conclusion=success at the
       # job level, so this reads each step's real `outcome` (not
       # overridden) to report what actually happened, and fails the job
@@ -179,10 +195,12 @@ jobs:
             "Case 06 — Solar Open 2 x Grok Build"
             "Case 07 — Solar Open 2 x Hermes Agent Helm"
             "Case 08 — Solar Open 2 x omp"
+            "Case 09 — Solar Open 2 x Codex"
           )
           categories=(
             "Review"
             "Review"
+            "Extend"
             "Extend"
             "Extend"
             "Extend"
@@ -199,6 +217,7 @@ jobs:
             "${{ steps.c06.outcome }}"
             "${{ steps.c07.outcome }}"
             "${{ steps.c08.outcome }}"
+            "${{ steps.c09.outcome }}"
           )
 
           mark() { [ "$1" = success ] && echo "✅" || echo "❌"; }

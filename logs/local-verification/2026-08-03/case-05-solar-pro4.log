@@ -1,0 +1,90 @@
+== Model under test: solar-pro4 ==
+== cloning a fresh shallow copy of pilot-upstage-solar-open2 into scratch/target ==
+✓ cloned b83214d
+
+== 3 questions about this project (hard gate) ==
+
+== Question 1: What is this repository (pilot-upstage-solar-open2) about? ==
+== solar-pro4 reset-check #1: tokens 39383/50000, requests 98/100 ==
+Not fresh yet — waiting 15s before checking again.
+== solar-pro4 reset-check #2: tokens 49998/50000, requests 98/100 ==
+Budget is fresh — starting the case.
+  This repository is **`jyje/pilot-upstage-solar-open2`** — a pilot that 
+  tests multiple mainstream agent harnesses with Upstage's **Solar Open 
+  2** model (a 250B-A15B MoE open-weight model with 1M-token context, 
+  purpose-built for agentic tasks).
+  
+  The core idea: demonstrate that Solar Open 2 can act as a **drop-in 
+  backend** for existing, popular agent frameworks already in use — no 
+  bespoke tooling required.
+  
+  ## The 8 cases
+  
+  Each top-level directory is a self-contained case with its own 
+  README, verification script (real API calls, no mocks), and CI entry:
+  
+  | # | Case | Category | What it does |
+  |---|------|----------|--------------|
+  | 01 | Solar Open 2 × Claude Code | Review | Claude Code ha
+  ...(truncated)
+✓ question 1 answered
+
+== Question 2: What did the most recent commit change? ==
+== solar-pro4 reset-check #1: tokens 0/50000, requests 98/100 ==
+Not fresh yet — waiting 71s before checking again.
+== solar-pro4 reset-check #2: tokens 49998/50000, requests 98/100 ==
+Budget is fresh — starting the case.
+  The most recent commit is **`b83214d`** — `🔨 build(release): generate 
+  CHANGELOG.md for v1.4`.
+  
+  **Summary:** This is a large initial commit (137 files, +28,921 
+  lines) that sets up the **Solar Open2 agent ecosystem** project. Key 
+  additions:
+  
+  | Area | What was added |
+  |------|---------------|
+  | **Agent skills** | `.agents/skills/` and `.claude/skills/` with 
+  `centered-readme`, `git-commit-helper`, `python-lint` SKILL.md files |
+  | **CI/verification workflows** | 8 GitHub workflow files under 
+  `.github/workflows/` for verifying different agent frameworks (Solar 
+  Open2, Hermes, Claude SDK, LangChain, Grok, OMP, etc.) |
+  | **Verification cases (01–08)** | Eight directories, each with 
+  README/REPR
+  ...(truncated)
+✓ question 2 answered
+
+== Question 3: How many experiment cases does this repo have, and what does each one demonstrate? ==
+== solar-pro4 reset-check #1: tokens 25974/50000, requests 98/100 ==
+Not fresh yet — waiting 28s before checking again.
+== solar-pro4 reset-check #2: tokens 49998/50000, requests 98/100 ==
+Budget is fresh — starting the case.
+  Let me explore the repository to find the experiment cases.This repo 
+  has **8 experiment cases**, each demonstrating Solar Open 2 wired 
+  into a different agent harness:
+  
+  | # | Case | Category | What it demonstrates |
+  |---|------|----------|---------------------|
+  | 01 | **Solar Open 2 × Claude Code** | Review | Building a Claude 
+  Code harness (skills, etc.) backed by Solar Open 2 |
+  | 02 | **Solar Open 2 × Hermes Agent** | Review | Running Hermes Agent 
+  via its bundled Upstage provider and official Docker image |
+  | 03 | **Solar Open 2 × Claude Agent SDK** | Extend | Driving a local 
+  Claude Code instance programmatically with the Claude Agent SDK |
+  | 04 | **Solar Open 2 × LangChain Deepagents** 
+  ...(truncated)
+✓ question 3 answered
+✓ all 3 questions answered
+
+== openwiki code --update: generate documentation (best-effort) ==
+⚠ documentation generation failed (known: heavy multi-turn calls can exceed Upstage's default rate limit) — not gating this script's exit status
+  429 You've reached your API request limit. Please wait and try again 
+  later. If your use case requires a higher rate limit, please refer to 
+  our Pricing - commitment tier at 
+  https://www.upstage.ai/pricing/api#commitment to see how rate limits 
+  are determined based on your commitment amount
+  
+  Troubleshooting URL: 
+  https://docs.langchain.com/oss/javascript/langchain/errors/MODEL_RATE_
+  LIMIT/
+
+✓ All checks passed (3-question Q&A gate).

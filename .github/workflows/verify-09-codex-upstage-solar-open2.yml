@@ -1,0 +1,34 @@
+name: verify-09-codex-upstage-solar-open2
+
+# Manual, single-case counterpart to verify-all-sequential.yml — run just
+# this one case without waiting for the others. Same
+# scripts/verify-case.sh wrapper (full rate-limit reset wait, solar-open2
+# only), so behavior matches what this case does inside the sequential
+# run. Manual-only by design, same as verify-all-sequential.yml.
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  verify:
+    runs-on: ubuntu-26.04-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install LiteLLM and Codex
+        run: |
+          pip install 'litellm[proxy]'
+          npm install -g @openai/codex
+
+      - name: "Case 09 — Solar Open 2 x Codex"
+        env:
+          UPSTAGE_API_KEY: ${{ secrets.UPSTAGE_API_KEY }}
+        run: ./scripts/verify-case.sh 09-codex-upstage-solar-open2 solar-open2

@@ -1,0 +1,64 @@
+== Model under test: upstage/solar-open2 ==
+
+== omp config path discovers the generated agent directory ==
+✓ omp discovered the Solar Open 2 provider config
+
+== Method A: deterministic single-turn headless reply ==
+✓ omp completed a live solar-open2 round trip
+  Working...
+  omp-solar-ready
+
+== Method B: reasoning-heavy prompt ==
+✓ solar-open2 reasoned through the sum correctly
+  Working...
+  Here is the step-by-step reasoning for why the sum of the first 50 
+  positive integers equals 1275.
+  
+  ### 1. Identify the Sequence
+  The problem asks for the sum of the first 50 positive integers. This 
+  is an arithmetic series:
+  $$ 1 + 2 + 3 + \dots + 50 $$
+  
+  ### 2. Use the Sum Formula
+  The sum of the first $n$ positive integers is given by the formula:
+  $$ S_n = \frac{n(n + 1)}{2} $$
+  
+  **Why this formula works (Gauss's Method):**
+  If you pair the first and last numbers, the second and second-to-last 
+  numbers, and so on, each pair sums to the same value ($n + 1$):
+  - $1 + 50 = 51$
+  - $2 + 49 = 51$
+  - $3 + 48 = 51$
+  
+  Since there are 50 numbers total, there are $50 / 2 = 25$ such pairs.
+  Total Sum = 
+  ...(truncated)
+
+== Method C: small coding task ==
+✓ solar-open2 wrote the requested function
+  Working...
+  ```python
+  def is_prime(n):
+      """
+      Checks if a number n is a prime number.
+      Returns True if prime, False otherwise.
+      """
+      if n <= 1:
+          return False
+      if n <= 3:
+          return True
+      if n % 2 == 0 or n % 3 == 0:
+          return False
+      i = 5
+      while i * i <= n:
+          if n % i == 0 or n % (i + 2) == 0:
+              return False
+          i += 6
+      return True
+  ```
+
+== Method D: real development task -- 6x6 Mini Sudoku ==
+  skipped (SKIP_METHOD_D set) -- see ../gallery/case-08-omp-sudoku/
+  for the verified, published result of this method.
+
+✓ All checks passed (Method D skipped).

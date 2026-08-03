@@ -1,0 +1,47 @@
+Case 01 — Solar Open 2 x Claude Code — solar-pro4 local verification
+Date: 2026-08-03
+Model: solar-pro4 (via docker/litellm-proxy, use_chat_completions_url_for_anthropic_messages=true)
+
+Upstage's own Anthropic-compatible endpoint has no model mapping for
+solar-pro4 (see 01-solar-open2-harness Method B against
+https://api.upstage.ai directly: no response). This proxy exists to
+close that gap for any Anthropic-format client.
+
+== Raw request, identical wire format to what Claude Code sends ==
+
+$ curl "http://127.0.0.1:4000/v1/messages?beta=true" \
+    -H "Authorization: Bearer sk-local-solar-proxy" \
+    -H "anthropic-version: 2023-06-01" \
+    -H "Content-Type: application/json" \
+    -d '{"model":"solar-pro4","max_tokens":16,"messages":[{"role":"user","content":"hi"}]}'
+
+{"id":"a93a14f4-f110-48a0-8c8e-bb4d4356ef6f","type":"message","role":"assistant","model":"solar-pro4", ...
+"content":[{"type":"thinking","thinking":"Okay, the user just said \"hi\". That's a simple greeting. I"...}],
+"stop_reason":"max_tokens"}
+
+RESULT: PASS — solar-pro4 answers correctly through the Anthropic-shaped
+/v1/messages bridge, same as solar-open2.
+
+== Note: direct `claude -p "hello"` CLI invocation ==
+
+Running the bare `claude` binary as a subprocess from *this* development
+session (itself a Claude Code Desktop host) failed with:
+
+  API Error: 400 No connected db.
+
+Root cause (confirmed via proxy logs + `env | grep -i claude`): this
+session's own ambient environment carries CLAUDE_CODE_OAUTH_SCOPES /
+CLAUDE_CODE_SDK_HAS_OAUTH_REFRESH, which the spawned `claude` CLI
+subprocess inherits and prioritizes over the exported
+ANTHROPIC_AUTH_TOKEN, so it authenticates to the local proxy with the
+host session's own token instead of the proxy's master key — which the
+proxy (no database configured) can't validate as a virtual key. This is
+an artifact of testing `claude` nested inside a Claude Code session, not
+a defect in the proxy or in solar-pro4 support. Confirmed absent when
+invoked via the Claude Agent SDK instead (see case-03-solar-pro4.log),
+which builds a clean subprocess environment.
+
+VERDICT: solar-pro4 works through the litellm-proxy bridge for
+Anthropic-format Claude Code traffic (raw wire-format + SDK-mediated CLI
+both confirmed). The bare-CLI failure is a local, nested-session
+credential-precedence artifact specific to this dev environment.

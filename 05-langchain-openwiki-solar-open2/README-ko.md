@@ -196,4 +196,17 @@ CI에서도 한 단계로 실행됩니다(수동 실행, `solar-open2`만):
 link`), 다른 모든 Case와 동일한 `UPSTAGE_API_KEY` 저장소 시크릿을
 재사용합니다.
 
+## Solar Pro4
+
+브릿지가 필요 없습니다: `openwiki`의 범용 `openai-compatible`
+provider는 `solar-open2`와 동일하게 Upstage의 Chat Completions
+엔드포인트에 직접 도달합니다.
+
+2026-08-03에 로컬로 검증했습니다(전체 로그:
+[`logs/local-verification/2026-08-03/case-05-solar-pro4.log`](../logs/local-verification/2026-08-03/case-05-solar-pro4.log)):
+hard-gate Q&A 3개 질문 모두 `solar-pro4`로 통과했습니다 — 매번 완전한
+레이트리밋 리셋을 기다린 뒤 진행했으며, 이 리포가 Solar Open 2에 대해
+이미 문서화한 것과 같은 패턴입니다(Finding 3). best-effort인 `openwiki
+code --update`는 예상대로 레이트리밋에 걸렸으며 게이트에는 영향 없습니다.
+
 전체 맥락은 리포 레벨의 [`PLAN.md`](../PLAN.md)를 참고하세요.

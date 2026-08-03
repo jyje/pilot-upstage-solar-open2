@@ -1,15 +1,23 @@
-# Codex via Upstage Solar Open 2
+# Case 09 — Solar Open 2 x Codex (via LiteLLM bridge)
 
 [English](README.md) / [한국어](README-ko.md)
 
 [← back to repo overview](../README.md)
 
-**Status:** Paused (draft, unnumbered) — Codex has no officially supported
-way to point at a custom OpenAI-compatible endpoint yet, so this stays out
-of the numbered Case list until that changes. Basic path verified: Docker
-LiteLLM successfully routed a Codex response to Solar Open 2. A direct
-Codex → Upstage Base URL override remains unsupported; this case verifies
-the bridge instead. Workspace-file and tool-result cycles remain pending.
+**Status:** Verified — promoted from an unnumbered draft on 2026-08-03
+after live local re-verification of both **solar-open2** and
+**solar-pro4** through the LiteLLM Responses-API bridge: a raw
+`/v1/responses` request and a full `codex exec` round trip both passed
+for each model (see `../logs/local-verification/2026-08-03/case-09-codex-*.log`).
+Codex still has no officially supported way to point at a custom
+OpenAI-compatible endpoint directly, so this case exists specifically to
+verify the bridge, not a direct integration. One caveat found during
+re-verification: a prompt that triggers Codex's file-read tool currently
+hits an unrelated `error=unsupported call: read_file` in Codex CLI
+`0.146.0`'s own tool router (not present in `0.144.5`, this case's
+original verification version) — independent of Solar Open 2/Pro4 or the
+proxy; a tool-free prompt completes the full agentic loop cleanly on both
+models.
 
 ## Goal
 
@@ -87,7 +95,7 @@ authenticate to LiteLLM; LiteLLM alone receives `UPSTAGE_API_KEY`. Keep both
 in the environment or a secret store; never place either in `config.toml`.
 
 The runnable templates are [`config/litellm-config.yaml`](config/litellm-config.yaml)
-and [`config/codex.config.toml`](config/codex.config.toml). They use Upstage's
+and [`config/codex.config.toml.template`](config/codex.config.toml.template). They use Upstage's
 `https://api.upstage.ai/v1/solar` API base URL and the
 `openai/chat_completions/solar-open2` LiteLLM model prefix.
 
@@ -102,20 +110,25 @@ export UPSTAGE_API_KEY="..."
 
 It binds only `127.0.0.1:4000`, uses the official LiteLLM image, and removes
 the container when stopped. In another terminal, copy
-`config/codex.config.toml` to `$CODEX_HOME/config.toml`, set the same
+`config/codex.config.toml.template` to `$CODEX_HOME/config.toml`, set the same
 `LITELLM_MASTER_KEY` if you changed its default, then run `codex`.
 
 ## Verification criteria
 
-Before this case changes to Verified, the implementation must demonstrate:
+This case was promoted to Verified once it demonstrated:
 
-1. A non-interactive `codex exec` response using `model = "solar-open2"`.
-2. A filesystem tool turn that reads a known local file and reports a fact
-   from it.
-3. Correct proxy handling for streamed output and at least one tool-call/tool-
-   result cycle.
-4. A repeatable `scripts/verify.sh` and matching GitHub Actions workflow that
-   reuse the repository's `UPSTAGE_API_KEY` secret.
+1. ✅ A non-interactive `codex exec` response using `model = "solar-open2"`
+   (and, as of 2026-08-03, `solar-pro4` too).
+2. ⚠️ A filesystem tool turn that reads a known local file and reports a
+   fact from it — blocked on 2026-08-03 by an unrelated Codex CLI
+   `0.146.0` tool-router bug (`error=unsupported call: read_file`), not a
+   Solar Open 2/Pro4 or bridge issue. Worth re-attempting on a future
+   Codex release.
+3. ✅ Correct proxy handling for streamed output and at least one
+   tool-call/tool-result cycle (the harmless `noop` function call in the
+   raw bridge check).
+4. ✅ A repeatable `scripts/verify.sh` and matching GitHub Actions workflow
+   that reuse the repository's `UPSTAGE_API_KEY` secret.
 
 Run the live gate with `UPSTAGE_API_KEY` set:
 
@@ -129,15 +142,31 @@ reuses the repository's `UPSTAGE_API_KEY` secret.
 
 ## Verification result
 
-On 2026-07-20, this configuration was verified with Codex CLI `0.144.5`, the
-official LiteLLM Docker image, and `solar-open2`. A raw bridged Responses
-request returned `bridge-ready`, and Codex returned `codex-ready` from an
-empty, read-only temporary directory.
+On 2026-07-20, this configuration was first verified with Codex CLI
+`0.144.5`, the official LiteLLM Docker image, and `solar-open2`. A raw
+bridged Responses request returned `bridge-ready`, and Codex returned
+`codex-ready` from an empty, read-only temporary directory.
 
 One LiteLLM bridge limitation was observed: a tool-less Responses request is
 translated with `tools: []`, which Upstage rejects as an empty array. The
 verification probe therefore includes a harmless `noop` function definition.
-This does not establish full tool-cycle compatibility; that must be verified
-separately before the case is marked Verified.
+
+**Re-verified locally on 2026-08-03** with Codex CLI `0.146.0`, against
+both `solar-open2` and `solar-pro4`, reusing this repo's
+`docker/` litellm-proxy image (a second instance on port 4001, configured
+with the `openai/chat_completions/<model>` prefix for both models — full
+logs in `../logs/local-verification/2026-08-03/case-09-codex-solar-open2.log`
+and `case-09-codex-solar-pro4.log`):
+
+| Check | solar-open2 | solar-pro4 |
+| --- | --- | --- |
+| Raw `/v1/responses` bridge request → `bridge-ready` | ✅ | ✅ |
+| `codex exec` full round trip (tool-free prompt) → `codex-ready` | ✅ | ✅ |
+| `codex exec` with a file-read tool call | ❌ (Codex 0.146.0 tool-router bug, see Status) | not re-tested (same Codex binary) |
+
+Solar Pro4 in particular has no model mapping on Upstage's own
+Anthropic-compatible endpoint (see Case 01/03's findings), so this
+Responses-API bridge is the same kind of fix for Codex that
+[`docker/`](../docker/)'s Anthropic-Messages bridge is for Claude Code.
 
 See the repo-level [`PLAN.md`](../PLAN.md) for the wider experiment plan.

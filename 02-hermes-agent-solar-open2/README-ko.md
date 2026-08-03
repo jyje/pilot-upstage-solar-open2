@@ -112,6 +112,18 @@ text or formatting.The user wants me to reply with exactly
 hermes-ready
 ```
 
+## Solar Pro4
+
+브릿지가 필요 없습니다: Hermes Agent는 자체 내장 `upstage` provider(내부는
+Chat Completions)로 Upstage에 도달하며, Anthropic 형태의 프로토콜을 전혀
+거치지 않습니다 — 그래서 Case 01/03/09와 달리, `solar-pro4`도 이미 되는
+`solar-open2`와 정확히 같은 방식으로 도달할 수 있습니다.
+
+2026-08-03에 로컬로 검증했습니다(전체 로그:
+[`logs/local-verification/2026-08-03/case-02-solar-pro4.log`](../logs/local-verification/2026-08-03/case-02-solar-pro4.log)):
+`hermes doctor`가 Upstage 연결을 확인했고, `solar-pro4`로 실제 대화
+왕복이 기대한 `hermes-ready` 응답을 반환했습니다.
+
 ## 출처
 
 - [Hermes Agent CLI 레퍼런스](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/reference/cli-commands.md)

@@ -1,0 +1,80 @@
+  ✓ Venv entry point exists (.venv/bin/hermes)
+  ✗ ~/.local/bin/hermes not found (hermes command may not work outside the venv)
+
+◆ External Tools
+  ✓ git
+  ✓ ripgrep (rg) (faster file search)
+    → Running inside a container — using local terminal backend (docker-in-docker is not configured by default)
+  ✓ docker (optional)
+  ✓ Node.js
+  ✓ agent-browser (Node.js) (browser automation)
+  ✓ Playwright Chromium (browser engine)
+  ✓ Browser tools (agent-browser) deps (no known vulnerabilities)
+  ⚠ web workspace deps (0 critical, 24 high, 0 moderate — build-tool advisory; clears via lockfile bump)
+    →   ^ build-time tooling (not runtime); if manual npm remediation errors with an arborist crash it's a known npm bug — clears via a lockfile bump
+  ⚠ ui-tui workspace deps (0 critical, 20 high, 0 moderate — build-tool advisory; clears via lockfile bump)
+    →   ^ build-time tooling (not runtime); if manual npm remediation errors with an arborist crash it's a known npm bug — clears via a lockfile bump
+
+◆ API Connectivity
+  Running 29 connectivity checks in parallel…                                                                        ⚠ OpenRouter API (not configured)
+  ✓ Upstage Solar       
+
+◆ Tool Availability
+  ✓ browser
+  ✓ clarify
+  ✓ code_execution
+  ✓ cronjob
+  ✓ delegation
+  ✓ file
+  ✓ memory
+  ✓ project
+  ✓ session_search
+  ✓ skills
+  ✓ terminal
+  ✓ todo
+  ✓ video
+  ✓ vision
+  ✓ kanban (runtime-gated; loaded only for dispatcher-spawned workers)
+  ⚠ browser-cdp (system dependency not met)
+  ⚠ computer_use (system dependency not met)
+  ⚠ discord (missing DISCORD_BOT_TOKEN)
+  ⚠ discord_admin (missing DISCORD_BOT_TOKEN)
+  ⚠ feishu_doc (system dependency not met)
+  ⚠ feishu_drive (system dependency not met)
+  ⚠ hermes-yuanbao (system dependency not met)
+  ⚠ homeassistant (system dependency not met)
+  ⚠ image_gen (system dependency not met)
+  ⚠ spotify (system dependency not met)
+  ⚠ tts (system dependency not met)
+  ⚠ video_gen (system dependency not met)
+  ⚠ web (missing EXA_API_KEY, PARALLEL_API_KEY, TAVILY_API_KEY, FIRECRAWL_API_KEY, FIRECRAWL_API_URL, FIRECRAWL_GATEWAY_URL, TOOL_GATEWAY_DOMAIN, TOOL_GATEWAY_SCHEME, TOOL_GATEWAY_USER_TOKEN)
+  ⚠ x_search (missing XAI_API_KEY)
+
+◆ Skills Hub
+  ⚠ Skills Hub directory not initialized (run: hermes skills list)
+  ⚠ No GITHUB_TOKEN (60 req/hr rate limit — set in ~/opt/data/.env for better rates)
+
+◆ Memory Provider
+  ✓ Built-in memory active (no external provider configured — this is fine)
+
+────────────────────────────────────────────────────────────
+  Found 5 issue(s) to address:
+
+  1. Run 'hermes setup' to configure API keys
+  2. Missing ~/.local/bin/hermes symlink — run 'hermes doctor --fix'
+  3. web workspace has 24 npm vulnerabilities
+  4. ui-tui workspace has 20 npm vulnerabilities
+  5. Run 'hermes setup' to configure missing API keys for full tool access
+
+  Tip: run 'hermes doctor --fix' to auto-fix what's possible.
+✓ Hermes accepted the Upstage configuration
+
+== Check 3: live chat round trip via the built-in Upstage provider ==
+  ⚠ tirith security scanner enabled but not available — command scanning will use pattern matching only
+
+┌─ Reasoning ──────────────────────────────────────────────────────────────────┐
+The user wants me to reply with exactly "hermes-ready". Let me do that.The user wants me to reply with exactly "hermes-ready". Let me do that.
+hermes-ready
+
+session_id: 20260803_133058_497862
+✓ Hermes completed a live solar-pro4 round trip

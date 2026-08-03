@@ -95,6 +95,7 @@ The wrapper just adds a wait in front.
 | Case 06 | Grok Build CLI against Solar Open 2 as a custom model provider | [`06-grok-build-solar-open2/REPRODUCE.md`](../06-grok-build-solar-open2/REPRODUCE.md) |
 | Case 07 | Hermes Agent on Kubernetes via the `hermes-agent-helm` chart, verified on a kind cluster | [`07-hermes-agent-helm-solar-open2/REPRODUCE.md`](../07-hermes-agent-helm-solar-open2/REPRODUCE.md) |
 | Case 08 | omp (oh-my-pi) CLI against Solar Open 2 as a custom model provider, including a real build task graded by a headless browser | [`08-omp-solar-open2/REPRODUCE.md`](../08-omp-solar-open2/REPRODUCE.md) |
+| Case 09 | OpenAI Codex bridged to Solar Open 2 (and Solar Pro4) via a local LiteLLM Responses-API proxy | [`09-codex-upstage-solar-open2/REPRODUCE.md`](../09-codex-upstage-solar-open2/REPRODUCE.md) |
 
 Each page has its own Korean twin — follow the `[한국어]` link at its top.
 

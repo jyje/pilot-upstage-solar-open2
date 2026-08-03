@@ -227,4 +227,16 @@ CI에서는 두 가지 방식으로 실행됩니다(둘 다 수동 실행, `sola
 >   "http_status": 400, ...
 > }
 
+## Solar Pro4
+
+브릿지가 필요 없습니다: Grok Build는 Solar Open 2를 커스텀
+`chat_completions` 프로토콜 provider로 등록하며, 동일한 등록이
+Upstage의 Chat Completions 엔드포인트에서 `solar-pro4`에도 직접
+도달합니다.
+
+2026-08-03에 로컬로 검증했습니다(전체 로그:
+[`logs/local-verification/2026-08-03/case-06-solar-pro4.log`](../logs/local-verification/2026-08-03/case-06-solar-pro4.log)):
+방식 A(결정론적 응답), B(추론 프롬프트), C(코딩 과제) 모두 `solar-pro4`로
+통과했습니다.
+
 전체 맥락은 리포 레벨의 [`PLAN.md`](../PLAN.md)를 참고하세요.

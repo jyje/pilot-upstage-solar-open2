@@ -1,0 +1,12 @@
+# Template — verify.sh substitutes $SOLAR_MODEL before copying this to an
+# isolated $CODEX_HOME/config.toml. The proxy key authenticates Codex to
+# LiteLLM; Upstage's API key remains confined to the proxy process.
+model = "$SOLAR_MODEL"
+model_provider = "solar_proxy"
+model_context_window = 32768
+
+[model_providers.solar_proxy]
+name = "Solar via LiteLLM"
+base_url = "http://127.0.0.1:4000/v1"
+env_key = "LITELLM_MASTER_KEY"
+wire_api = "responses"

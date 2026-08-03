@@ -143,4 +143,19 @@ Runs as a step in CI (manual dispatch, solar-open2 only):
 no Node/`claude`-CLI install step needed, unlike Case 01 and Case 03 — reusing the
 same `UPSTAGE_API_KEY` repository secret.
 
+## Solar Pro4
+
+No bridge needed: `ChatUpstage` reaches Upstage's OpenAI-compatible
+endpoint directly, the same path `solar-open2` already uses — no
+Anthropic-shaped protocol involved.
+
+Locally verified 2026-08-03 (full log:
+[`logs/local-verification/2026-08-03/case-04-solar-pro4.log`](../logs/local-verification/2026-08-03/case-04-solar-pro4.log)):
+Methods A (tool use) and B (virtual filesystem) passed cleanly on every
+attempt. Method C (named subagent delegation) hit persistent rate
+limiting after a day of heavy cumulative testing across every case plus
+the proxy setup — consistent with this repo's documented Tier-0 capacity
+pattern (see PLAN.md's Case 05, Finding 4), not a `solar-pro4`-specific
+defect.
+
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.

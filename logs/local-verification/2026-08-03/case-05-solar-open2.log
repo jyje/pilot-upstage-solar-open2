@@ -1,0 +1,105 @@
+== Model under test: solar-open2 ==
+== cloning a fresh shallow copy of pilot-upstage-solar-open2 into scratch/target ==
+✓ cloned b83214d
+
+== 3 questions about this project (hard gate) ==
+
+== Question 1: What is this repository (pilot-upstage-solar-open2) about? ==
+== solar-open2 reset-check #1: tokens 33129/50000, requests 98/100 ==
+Not fresh yet — waiting 18s before checking again.
+== solar-open2 reset-check #2: tokens 49998/50000, requests 98/100 ==
+Budget is fresh — starting the case.
+  Let me explore the repository to understand what it's about.This is 
+  **`jyje/pilot-upstage-solar-open2`**, a repository that demonstrates 
+  how **Upstage Solar Open 2** — a 250B-parameter MoE open-weight model 
+  (15B active, 1M-token context) — works as a drop-in backend across 
+  multiple popular agent harnesses and frameworks.
+  
+  ## What the repo does
+  
+  It hosts **8 independent cases** organized into top-level 
+  directories, each showing Solar Open 2 wired into a *different* 
+  existing agent ecosystem without building custom integration code:
+  
+  | Case | Harness/Framework | Type |
+  |------|-------------------|------|
+  | 01 | **Claude Code** | Review — route Claude Code at Solar via 
+  Anthropic-compatible
+  ...(truncated)
+✓ question 1 answered
+
+== Question 2: What did the most recent commit change? ==
+== solar-open2 reset-check #1: tokens 7010/50000, requests 98/100 ==
+Not fresh yet — waiting 49s before checking again.
+== solar-open2 reset-check #2: tokens 49998/50000, requests 98/100 ==
+Budget is fresh — starting the case.
+  The most recent commit (`b83214d`) was a release build commit titled 
+  **"🔨 build(release): generate CHANGELOG.md for v1.4"**.
+  
+  It added **137 files** with **28,921 insertions**, essentially 
+  bootstrapping the repository for v1.4. Key changes include:
+  
+  **New skill definitions:**
+  - `.agents/skills/` and `.claude/skills/` — `centered-readme`, 
+  `git-commit-helper`, `python-lint`
+  
+  **New verification harness projects:**
+  - `01-solar-open2-harness` through `08-omp-solar-open2` — each with 
+  READMEs, REPRODUCE docs, scripts, and config
+  
+  **Documentation & metadata:**
+  - `CHANGELOG.md`, `CONTRIBUTING.md`, `AGENTS.md`, `PLAN.md`, `LICENSE`
+  - `README.md`, `README-ko.md`
+  - `docs/REPRODUCE.md` and `docs/R
+  ...(truncated)
+✓ question 2 answered
+
+== Question 3: How many experiment cases does this repo have, and what does each one demonstrate? ==
+== solar-open2 reset-check #1: tokens 26740/50000, requests 98/100 ==
+Not fresh yet — waiting 15s before checking again.
+== solar-open2 reset-check #2: tokens 49998/50000, requests 98/100 ==
+Budget is fresh — starting the case.
+⚠ attempt 1 failed — retrying after a fresh headroom check
+  429 You've reached your API request limit. Please wait and try again 
+  later. If your use case requires a higher rate limit, please refer to 
+  our Pricing - commitment tier at 
+  https://www.upstage.ai/pricing/api#commitment to see how rate limits 
+  are determined based on your commitment amount
+  
+  Troubleshooting URL: 
+  https://docs.langchain.com/oss/javascript/langchain/errors/MODEL_RATE_
+  LIMIT/
+== solar-open2 reset-check #1: tokens 0/50000, requests 98/100 ==
+Not fresh yet — waiting 66s before checking again.
+== solar-open2 reset-check #2: tokens 49998/50000, requests 98/100 ==
+Budget is fresh — starting the case.
+  There are **8 experiment cases** in this repo. Each wires Solar Open 
+  2 into a different existing agent harness or framework:
+  
+  | Case | Category | What it demonstrates |
+  |---|---|---|
+  | **01 — Solar Open 2 × Claude Code** | Review | Building a Claude Code 
+  harness (skills, etc.) backed by Solar Open 2 |
+  | **02 — Solar Open 2 × Hermes Agent** | Review | Running Hermes Agent 
+  through its official bundled Upstage provider and Docker image |
+  | **03 — Solar Open 2 × Claude Agent SDK** | Extend | Driving a local 
+  Claude Code instance programmatically with the Claude Agent SDK |
+  | **04 — Solar Open 2 × LangChain Deepagents** | Extend | Initializing 
+  LangChain deepagents at code level using t
+  ...(truncated)
+✓ question 3 answered
+✓ all 3 questions answered
+
+== openwiki code --update: generate documentation (best-effort) ==
+⚠ documentation generation failed (known: heavy multi-turn calls can exceed Upstage's default rate limit) — not gating this script's exit status
+  429 You've reached your API request limit. Please wait and try again 
+  later. If your use case requires a higher rate limit, please refer to 
+  our Pricing - commitment tier at 
+  https://www.upstage.ai/pricing/api#commitment to see how rate limits 
+  are determined based on your commitment amount
+  
+  Troubleshooting URL: 
+  https://docs.langchain.com/oss/javascript/langchain/errors/MODEL_RATE_
+  LIMIT/
+
+✓ All checks passed (3-question Q&A gate).

@@ -99,6 +99,7 @@ UPSTAGE_API_KEY="..." ./scripts/verify-case.sh 01-solar-open2-harness solar-open
 | Case 06 | Grok Build CLI를 커스텀 모델 provider로 Solar Open 2 구동 | [`06-grok-build-solar-open2/REPRODUCE-ko.md`](../06-grok-build-solar-open2/REPRODUCE-ko.md) |
 | Case 07 | `hermes-agent-helm` 차트로 Kubernetes에 배포, kind 클러스터에서 검증 | [`07-hermes-agent-helm-solar-open2/REPRODUCE-ko.md`](../07-hermes-agent-helm-solar-open2/REPRODUCE-ko.md) |
 | Case 08 | omp(oh-my-pi) CLI를 커스텀 모델 provider로 Solar Open 2 구동 — 헤드리스 브라우저로 채점하는 실제 개발 과제 포함 | [`08-omp-solar-open2/REPRODUCE-ko.md`](../08-omp-solar-open2/REPRODUCE-ko.md) |
+| Case 09 | 로컬 LiteLLM Responses API 프록시로 OpenAI Codex를 Solar Open 2(그리고 Solar Pro4)에 연결 | [`09-codex-upstage-solar-open2/REPRODUCE-ko.md`](../09-codex-upstage-solar-open2/REPRODUCE-ko.md) |
 
 각 문서 상단의 `[English]` 링크를 따라가면 영문판도 볼 수 있습니다.
 

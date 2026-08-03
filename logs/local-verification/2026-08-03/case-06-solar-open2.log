@@ -1,0 +1,67 @@
+== Model under test: solar-open2 ==
+
+== grok inspect discovers the generated config ==
+✓ grok discovered the Solar Open 2 model config
+
+== Method A: deterministic single-turn headless reply ==
+✓ grok completed a live solar-open2 round trip
+  grok-solar-ready
+
+== Method B: reasoning-heavy prompt ==
+✓ solar-open2 reasoned through the sum correctly
+  The sum of the first 50 positive integers equals 1275. Here is the 
+  step-by-step reasoning:
+  
+  ## Step 1: Identify the Problem
+  
+  We want to find the sum:
+  
+  $$1 + 2 + 3 + \cdots + 50$$
+  
+  ## Step 2: Use the Formula for the Sum of the First n Integers
+  
+  There is a well-known formula for the sum of the first **n** positive 
+  integers:
+  
+  $$S_n = \frac{n(n + 1)}{2}$$
+  
+  This formula applies to our problem with **n = 50**.
+  
+  ## Step 3: Why Does This Formula Work?
+  
+  The formula comes from a clever observation attributed to the 
+  mathematician Carl Friedrich Gauss. When you pair the first and last 
+  numbers, the second and second-to-last numbers, and so on, each pair 
+  sums to the same value:
+  
+  | Pair | First + Last | Su
+  ...(truncated)
+
+== Method C: small coding task ==
+  attempt 1 failed (possibly rate-limited) — retrying in 30s
+✓ solar-open2 wrote the requested function
+  ```python
+  def is_prime(n: int) -> bool:
+      """Return True if n is a prime number, False otherwise."""
+      if n < 2:
+          return False
+      if n == 2:
+          return True
+      if n % 2 == 0:
+          return False
+      for i in range(3, int(n ** 0.5) + 1, 2):
+          if n % i == 0:
+              return False
+      return True
+  ```
+
+== Finding check: tool-use against Solar Open 2 (expected to fail, not gated) ==
+  (did not reproduce the known function-name-drop error this run — see output below)
+  too_many_requests: You've reached your API request limit. Please wait 
+  and try again later. If your use case requires a higher rate limit, 
+  please refer to our Pricing - commitment t...
+  Error: too_many_requests: You've reached your API request limit. 
+  Please wait and try again later. If your use case requires a higher 
+  rate limit, please refer to our Pricing - commitment t...
+
+✓ All checks passed.

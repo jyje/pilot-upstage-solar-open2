@@ -147,4 +147,18 @@ CI에서도 한 단계로 실행됩니다(수동 실행, `solar-open2`만):
 Case 01에서 만들어둔 동일한 `UPSTAGE_API_KEY` 저장소 시크릿을 재사용합니다 —
 새 시크릿도, 별도 Anthropic 키 비용도 필요 없습니다.
 
+## Solar Pro4
+
+Case 01과 같은 간극입니다: Upstage의 Anthropic 호환 엔드포인트에는
+`solar-pro4` 모델 매핑이 없습니다. [`docker/`](../docker/)의
+litellm-proxy가 이를 메웁니다 — `ClaudeAgentOptions(env={...})`의
+`ANTHROPIC_BASE_URL`을 Upstage 대신 프록시로 향하게 하면 됩니다.
+
+2026-08-03에 로컬로 검증했습니다(전체 로그:
+[`logs/local-verification/2026-08-03/case-03-solar-pro4.log`](../logs/local-verification/2026-08-03/case-03-solar-pro4.log)):
+프록시를 통한 `solar-pro4` 대상 `query()` 호출이 첫 시도에 진짜 응답을
+반환했습니다 — SDK의 격리된 서브프로세스 환경은 Case 01의 Solar Pro4
+절에서 언급한, 중첩된 Claude Code 세션 안에서 순정 `claude` CLI를 호출할
+때 생기는 로컬 자격증명 우선순위 문제의 영향을 받지 않습니다.
+
 전체 맥락은 리포 레벨의 [`PLAN.md`](../PLAN.md)를 참고하세요.

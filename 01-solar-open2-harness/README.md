@@ -399,4 +399,22 @@ It also runs as a step in CI (manual dispatch, solar-open2 only):
 [`.github/workflows/verify-all-sequential.yml`](../.github/workflows/verify-all-sequential.yml),
 using the `UPSTAGE_API_KEY` repository secret.
 
+## Solar Pro4
+
+Upstage's Anthropic-compatible endpoint — the one Case 01A/B/C all talk
+to directly — has no model mapping for `solar-pro4`: pointed there
+directly, a client gets no response. [`docker/`](../docker/)'s
+litellm-proxy bridges this by speaking Anthropic Messages on the
+client-facing side and Chat Completions to Upstage underneath.
+
+Locally re-verified 2026-08-03 (full log:
+[`logs/local-verification/2026-08-03/case-01-solar-pro4.log`](../logs/local-verification/2026-08-03/case-01-solar-pro4.log)):
+a raw `/v1/messages` request through the proxy, with the exact headers
+Claude Code sends, returned a real `solar-pro4` response — confirming
+the bridge works for this case's own protocol. (A direct `claude -p`
+CLI invocation from inside a nested Claude Code dev session hit an
+unrelated local credential-precedence artifact, not a proxy or model
+issue — see the log for details; the Claude Agent SDK path in Case 03
+isn't affected.)
+
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.

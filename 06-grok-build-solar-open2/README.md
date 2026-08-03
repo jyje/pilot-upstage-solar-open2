@@ -224,4 +224,15 @@ for the latest). Real, unedited output — not hand-picked or edited:
 >   "http_status": 400, ...
 > }
 
+## Solar Pro4
+
+No bridge needed: Grok Build registers Solar Open 2 as a custom
+`chat_completions`-protocol provider, and the same registration reaches
+`solar-pro4` directly on Upstage's Chat Completions endpoint.
+
+Locally verified 2026-08-03 (full log:
+[`logs/local-verification/2026-08-03/case-06-solar-pro4.log`](../logs/local-verification/2026-08-03/case-06-solar-pro4.log)):
+Methods A (deterministic reply), B (reasoning prompt), and C (coding
+task) all passed against `solar-pro4`.
+
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.

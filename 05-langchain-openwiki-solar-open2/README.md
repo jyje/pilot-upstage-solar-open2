@@ -200,4 +200,17 @@ builds the patched fork from source (`pnpm install && pnpm run build &&
 npm link`), reusing the same `UPSTAGE_API_KEY` repository secret as
 every other case.
 
+## Solar Pro4
+
+No bridge needed: `openwiki`'s generic `openai-compatible` provider
+reaches Upstage's Chat Completions endpoint directly, same as
+`solar-open2`.
+
+Locally verified 2026-08-03 (full log:
+[`logs/local-verification/2026-08-03/case-05-solar-pro4.log`](../logs/local-verification/2026-08-03/case-05-solar-pro4.log)):
+all 3 questions in the hard-gate Q&A passed against `solar-pro4`, after
+waiting for a full rate-limit reset between each — the same pattern
+this repo already documents for Solar Open 2 (Finding 3). Best-effort
+`openwiki code --update` still hit a rate limit as expected; non-gating.
+
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.

@@ -1,0 +1,16 @@
+== Model under test: solar-open2 ==
+== demo.py: Methods A/B/C against solar-open2 ==
+== Method A: custom tool use (weather lookup) ==
+  The weather in Seoul is currently sunny.
+PASS: Method A answered using the weather tool.
+
+== Method B: deepagents' built-in virtual filesystem ==
+  HELLO-DEEPAGENTS
+PASS: Method B wrote and read back the file correctly.
+
+== Method C: named subagent delegation ==
+  17 + 25 = **42**
+PASS: Method C's math-agent subagent computed 17 + 25 correctly.
+
+All checks passed.
+✓ All checks passed.

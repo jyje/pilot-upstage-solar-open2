@@ -1,0 +1,45 @@
+== Model under test: solar-open2 ==
+== claude-upstage doctor ==
+✓ Claude Code CLI found (2.1.220 (Claude Code))
+✓ API key: environment (UPSTAGE_API_KEY)
+✓ API key accepted by https://api.upstage.ai
+✓ claude-upstage doctor passed
+
+== Method A: claude-upstage (piped stdin, non-interactive) ==
+  attempt 1 failed (possibly rate-limited) — retrying in 30s
+  attempt 2 failed (possibly rate-limited) — retrying in 30s
+  attempt 3 failed (possibly rate-limited) — retrying in 30s
+  attempt 4 failed (possibly rate-limited) — retrying in 30s
+✓ claude-upstage (piped stdin) produced a response
+  
+  Execution error
+
+== Method B: official claude CLI with manual ANTHROPIC_* env vars ==
+  attempt 1 failed (possibly rate-limited) — retrying in 30s
+  attempt 2 failed (possibly rate-limited) — retrying in 30s
+  attempt 3 failed (possibly rate-limited) — retrying in 30s
+  attempt 4 failed (possibly rate-limited) — retrying in 30s
+✓ claude -p "hello" (official CLI, alternate API) produced a response
+  Execution error
+
+== Method C: explicit git-commit-helper skill invocation ==
+✗ skill-invocation prompt exited non-zero
+
+--- Note ---
+Both Method A and Method B returned a literal "Execution error" instead
+of a real reply here — the same nested-Claude-Code-session artifact
+documented in case-01-solar-pro4.log: this local verification run itself
+executes from inside a Claude Code Desktop session, and the spawned
+`claude` subprocess inherits that host session's own CLAUDE_CODE_*/
+ANTHROPIC_BASE_URL environment, which conflicts with the env vars this
+script exports for its own child `claude` calls. This is specific to
+running Case 01's raw-CLI methods (A/B/C/D) *from inside a nested Claude
+Code session* — it does not occur in GitHub Actions CI (a clean runner
+environment with no ambient Claude Code session), where Case 01 has
+extensive, already-documented passing evidence (see README.md's Method
+A/B/C/D transcripts and evidence-run links) confirmed via a normal CI
+run, and does not occur via the Claude Agent SDK's isolated subprocess
+env (see case-03-solar-open2.log below). Solar Open 2's own support in
+Case 01 is not in question here — CI evidence already establishes it;
+this note documents why a *local* re-run from this particular dev
+environment doesn't add new signal beyond what CI already shows.

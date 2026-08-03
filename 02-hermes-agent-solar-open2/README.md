@@ -110,6 +110,18 @@ text or formatting.The user wants me to reply with exactly
 hermes-ready
 ```
 
+## Solar Pro4
+
+No bridge needed: Hermes Agent reaches Upstage through its own built-in
+`upstage` provider (Chat Completions underneath), not through any
+Anthropic-shaped protocol — so unlike Cases 01/03/09, `solar-pro4` is
+reachable here exactly the same way `solar-open2` already is.
+
+Locally verified 2026-08-03 (full log:
+[`logs/local-verification/2026-08-03/case-02-solar-pro4.log`](../logs/local-verification/2026-08-03/case-02-solar-pro4.log)):
+`hermes doctor` confirmed Upstage connectivity and a live chat round trip
+against `solar-pro4` returned the expected `hermes-ready` response.
+
 ## Sources
 
 - [Hermes Agent CLI reference](https://github.com/NousResearch/hermes-agent/blob/main/website/docs/reference/cli-commands.md)

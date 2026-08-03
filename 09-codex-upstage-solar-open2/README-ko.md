@@ -1,16 +1,20 @@
-# Upstage Solar Open 2를 통한 Codex
+# Case 09 — Solar Open 2 x Codex (LiteLLM 브릿지)
 
 [English](README.md) / [한국어](README-ko.md)
 
 [← 리포 개요로 돌아가기](../README.md)
 
-**상태:** 대기 중(draft, 번호 없음) — Codex가 아직 커스텀 OpenAI 호환
-엔드포인트를 가리키는 공식 지원 방법을 제공하지 않아서, 그게 바뀌기 전까지는
-번호가 매겨진 Case 목록에 포함하지 않습니다. 기본 경로는 검증 완료 —
-Docker LiteLLM이 Codex 응답을 Solar Open 2로 성공적으로 라우팅했습니다.
-Codex → Upstage 직접 Base URL 변경은 여전히 지원되는 방식이 아니며, 이
-Case는 그 대신 브리지의 동작을 검증합니다. workspace-file 및 tool-result
-cycle은 아직 확인 대상입니다.
+**상태:** 검증 완료 — 2026-08-03에 번호 없는 draft에서 정식 승격했습니다.
+LiteLLM Responses API 브릿지를 통해 **solar-open2**와 **solar-pro4** 둘
+다 로컬에서 재검증: raw `/v1/responses` 요청과 전체 `codex exec` 왕복이
+두 모델 모두 통과했습니다(`../logs/local-verification/2026-08-03/case-09-codex-*.log`
+참고). Codex는 여전히 커스텀 OpenAI 호환 엔드포인트를 직접 가리키는 공식
+지원 방법이 없어서, 이 Case는 브릿지 자체를 검증하는 용도입니다. 재검증
+중 발견한 한 가지: 파일 읽기 도구를 유발하는 프롬프트는 Codex CLI
+`0.146.0`의 자체 도구 라우터 버그(`error=unsupported call: read_file`,
+이 Case가 처음 검증했던 `0.144.5`에서는 없던 문제)에 걸립니다 — Solar
+Open 2/Pro4나 프록시와는 무관합니다. 도구 호출이 없는 프롬프트는 두
+모델 모두에서 전체 에이전틱 루프를 깨끗하게 완료합니다.
 
 ## 목표
 
@@ -87,7 +91,7 @@ Codex는 LiteLLM 인증용 `LITELLM_MASTER_KEY`만 사용하고,
 두고 `config.toml`에는 절대 기록하지 않습니다.
 
 실행 가능한 템플릿은 [`config/litellm-config.yaml`](config/litellm-config.yaml)과
-[`config/codex.config.toml`](config/codex.config.toml)입니다. Upstage API base URL
+[`config/codex.config.toml.template`](config/codex.config.toml.template)입니다. Upstage API base URL
 `https://api.upstage.ai/v1/solar` 및 LiteLLM 모델 prefix
 `openai/chat_completions/solar-open2`를 사용합니다.
 
@@ -101,18 +105,18 @@ export UPSTAGE_API_KEY="..."
 ```
 
 공식 LiteLLM 이미지를 쓰며 `127.0.0.1:4000`에만 바인딩하고, 중지하면
-컨테이너도 제거됩니다. 다른 터미널에서 `config/codex.config.toml`을
+컨테이너도 제거됩니다. 다른 터미널에서 `config/codex.config.toml.template`을
 `$CODEX_HOME/config.toml`로 복사하고, 기본값을 바꿨다면 같은
 `LITELLM_MASTER_KEY`를 설정한 뒤 `codex`를 실행합니다.
 
 ## 검증 기준
 
-이 Case가 검증 완료로 바뀌려면 다음을 입증해야 합니다.
+이 Case는 다음을 입증한 뒤 검증 완료로 승격했습니다.
 
-1. `model = "solar-open2"`를 사용하는 비대화형 `codex exec` 응답.
-2. 알려진 로컬 파일을 읽어 그 내용을 보고하는 filesystem tool turn.
-3. 스트리밍 출력 및 적어도 한 번의 tool-call/tool-result cycle을 프록시가 정확히 처리함.
-4. 리포의 `UPSTAGE_API_KEY` secret을 재사용하는 `scripts/verify.sh`와 GitHub Actions workflow.
+1. ✅ `model = "solar-open2"`(2026-08-03부터는 `solar-pro4`도)를 사용하는 비대화형 `codex exec` 응답.
+2. ⚠️ 알려진 로컬 파일을 읽어 그 내용을 보고하는 filesystem tool turn — 2026-08-03 기준 Codex CLI `0.146.0`의 자체 도구 라우터 버그(`error=unsupported call: read_file`)로 막혔습니다. Solar Open 2/Pro4나 브릿지 문제가 아닙니다. 이후 Codex 릴리스에서 재시도할 가치가 있습니다.
+3. ✅ 스트리밍 출력 및 적어도 한 번의 tool-call/tool-result cycle을 프록시가 정확히 처리함(raw 브릿지 체크의 무해한 `noop` function call).
+4. ✅ 리포의 `UPSTAGE_API_KEY` secret을 재사용하는 `scripts/verify.sh`와 GitHub Actions workflow.
 
 `UPSTAGE_API_KEY`를 설정한 뒤 실제 게이트를 실행합니다.
 
@@ -127,14 +131,30 @@ LiteLLM을 기동하고 raw `/v1/responses` 브리지 요청을 먼저 확인한
 ## 검증 결과
 
 2026-07-20에 Codex CLI `0.144.5`, 공식 LiteLLM Docker 이미지 및
-`solar-open2`로 이 구성을 검증했습니다. bridged Responses 요청은
+`solar-open2`로 이 구성을 처음 검증했습니다. bridged Responses 요청은
 `bridge-ready`를, 비어 있는 read-only 임시 디렉터리의 Codex는
 `codex-ready`를 반환했습니다.
 
 LiteLLM 브리지의 한 가지 제약도 확인했습니다. tool이 없는 Responses 요청을
 변환할 때 `tools: []`를 붙이고, Upstage는 이를 빈 배열로 거부합니다. 따라서
-검증 probe에는 무해한 `noop` function definition을 포함합니다. 이는 전체 tool
-cycle 호환성을 뜻하지 않으므로, Case를 검증 완료로 바꾸기 전에 별도로 확인해야
-합니다.
+검증 probe에는 무해한 `noop` function definition을 포함합니다.
+
+**2026-08-03에 Codex CLI `0.146.0`으로, `solar-open2`와 `solar-pro4`
+둘 다 로컬에서 재검증**했습니다 — 이 리포 `docker/` litellm-proxy
+이미지를 재사용해 4001 포트에 두 번째 인스턴스를 띄우고
+`openai/chat_completions/<model>` prefix로 두 모델 다 설정했습니다(전체
+로그: `../logs/local-verification/2026-08-03/case-09-codex-solar-open2.log`,
+`case-09-codex-solar-pro4.log`):
+
+| 체크 | solar-open2 | solar-pro4 |
+| --- | --- | --- |
+| raw `/v1/responses` 브릿지 요청 → `bridge-ready` | ✅ | ✅ |
+| `codex exec` 전체 왕복(도구 없는 프롬프트) → `codex-ready` | ✅ | ✅ |
+| 파일 읽기 tool call을 동반한 `codex exec` | ❌ (Codex 0.146.0 도구 라우터 버그, 위 상태 참고) | 동일 바이너리라 재시도 안 함 |
+
+특히 solar-pro4는 Upstage 자체 Anthropic 호환 엔드포인트에 모델 매핑이
+없어서(Case 01/03의 발견 참고), 이 Responses API 브릿지는 Codex에게
+[`docker/`](../docker/)의 Anthropic Messages 브릿지가 Claude Code에게
+해주는 것과 같은 역할을 합니다.
 
 전체 실험 계획은 리포 레벨의 [`PLAN.md`](../PLAN.md)를 참고하세요.

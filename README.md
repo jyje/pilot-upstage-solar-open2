@@ -63,6 +63,7 @@ presented independently.
 | [Case 06 — Solar Open 2 x Grok Build](06-grok-build-solar-open2/) | Extend | Run xAI's Grok Build CLI against Solar Open 2 as a custom model provider | [![verify-06](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml) |
 | [Case 07 — Solar Open 2 x Hermes Agent Helm](07-hermes-agent-helm-solar-open2/) | Extend | Deploy Hermes Agent onto Kubernetes (via the `hermes-agent-helm` Helm chart, on a kind cluster) and verify it reaches Solar Open 2 | [![verify-07](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml) |
 | [Case 08 — Solar Open 2 x omp](08-omp-solar-open2/) | Extend | Run omp (oh-my-pi) against Solar Open 2 as a custom model provider, including a real build task graded by a headless browser | [![verify-08](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml) |
+| [Case 09 — Solar Open 2 x Codex](09-codex-upstage-solar-open2/) | Extend | Run OpenAI Codex against Solar Open 2 through a LiteLLM Responses-API bridge, since Codex only speaks the Responses wire protocol | [![verify-09](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-09-codex-upstage-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-09-codex-upstage-solar-open2.yml) |
 
 **Review** cases validate that Solar Open 2 works correctly in an
 existing, official harness path. **Extend** cases go further, wiring
@@ -93,6 +94,10 @@ use, not something that requires bespoke tooling:
 - **Case 08** — omp (oh-my-pi), a terminal coding agent forked from Pi,
   via its own custom OpenAI-compatible provider mechanism — the only
   case asked to actually build something, not just answer a prompt.
+- **Case 09** — OpenAI's Codex CLI, which only speaks the Responses wire
+  protocol, bridged to Solar Open 2's Chat Completions endpoint via a
+  local LiteLLM proxy — promoted from an unnumbered draft once the
+  bridge was verified end to end.
 
 Every case is self-contained: its own `README.md`/`README-ko.md`, its own
 `scripts/verify.sh` that exercises real Upstage API calls (no mocks), and
@@ -146,11 +151,58 @@ mainstream framework already speaks, not a custom client:
   false`, since omp defaults to sending a `store` field Upstage's
   endpoint rejects. See
   [Case 08's README](08-omp-solar-open2/README.md) for the full trace.
+- Case 09's Codex only speaks the Responses API, which Upstage doesn't
+  implement (Chat Completions is its only surface) — a real protocol
+  mismatch, not a config gap. A local LiteLLM proxy bridges
+  Responses → Chat Completions (the `openai/chat_completions/<model>`
+  model prefix), the same technique [`docker/`](docker/) uses to bridge
+  Claude Code's Anthropic Messages protocol for Solar Pro4. See
+  [Case 09's README](09-codex-upstage-solar-open2/README.md) for the full
+  trace.
 
 The practical upshot: adding a new agent harness to this list is mostly
 configuration (base URL, auth style, model ID), not new integration code,
 as long as the harness already speaks OpenAI- or Anthropic-shaped wire
 formats.
+
+## Solar Pro4
+
+Every case above is also locally re-verified against **Solar Pro4**
+(full logs in [`logs/local-verification/`](logs/local-verification/),
+2026-08-03). Cases 02, 04-08 reach Solar Pro4 the same way they reach
+Solar Open 2 — directly, over Upstage's OpenAI-compatible endpoint, no
+proxy involved, since Pro4 is fully supported there.
+
+Cases 01, 03, and 09 are different: they speak Claude Code's Anthropic
+Messages protocol or Codex's Responses protocol, and **Upstage's own
+Anthropic-compatible endpoint has no model mapping for `solar-pro4`** —
+a client pointed there directly gets no response, confirmed via Case 01
+first, then a `[codex#01] pilot-upstage-solar-open2` Codex session
+independently hitting the same dead end. Pro4 works fine over Upstage's
+Chat Completions endpoint (the same one every other case already uses);
+it's specifically the Anthropic-shaped entry point that's missing the
+mapping.
+
+[`docker/`](docker/) is the fix for that gap: a docker-compose LiteLLM
+proxy that speaks Anthropic Messages / Responses API on the client-facing
+side and bridges to Upstage's Chat Completions underneath — the same
+`use_chat_completions_url_for_anthropic_messages` /
+`openai/chat_completions/<model>` techniques Case 09's own bridge uses
+for Codex. Point `ANTHROPIC_BASE_URL` at the local proxy instead of
+Upstage directly, and Solar Pro4 becomes reachable from Claude Code (or
+`claude-upstage`) exactly like Solar Open 2 already is.
+
+| Case | Solar Pro4 path | Result |
+| --- | --- | --- |
+| 01 — Claude Code | via `docker/`'s Anthropic Messages bridge | ✅ |
+| 02 — Hermes Agent | direct (Upstage's built-in provider) | ✅ |
+| 03 — Claude Agent SDK | via `docker/`'s Anthropic Messages bridge | ✅ |
+| 04 — LangChain Deepagents | direct | ✅ (Methods A/B; Method C rate-limited under heavy same-day testing, not a Pro4 defect) |
+| 05 — LangChain OpenWiki | direct | ✅ |
+| 06 — Grok Build | direct | ✅ |
+| 07 — Hermes Agent Helm | direct | ✅ |
+| 08 — omp | direct | ✅ |
+| 09 — Codex | via its own Responses-API LiteLLM bridge | ✅ |
 
 ## Verified against Tier 0 — limits & mitigations
 

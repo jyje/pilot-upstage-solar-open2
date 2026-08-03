@@ -63,6 +63,7 @@ Grok Build, omp 생태계의 에이전트 하네스로 구축하고 실행해보
 | [Case 06 — Solar Open 2 x Grok Build](06-grok-build-solar-open2/) | Extend | xAI의 Grok Build CLI를 커스텀 모델 provider로 Solar Open 2 실행 | [![verify-06](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-06-grok-build-solar-open2.yml) |
 | [Case 07 — Solar Open 2 x Hermes Agent Helm](07-hermes-agent-helm-solar-open2/) | Extend | Hermes Agent를 Kubernetes에 배포(`hermes-agent-helm` Helm 차트, kind 클러스터)하고 Solar Open 2 활용성 검증 | [![verify-07](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-07-hermes-agent-helm-solar-open2.yml) |
 | [Case 08 — Solar Open 2 x omp](08-omp-solar-open2/) | Extend | omp(oh-my-pi)를 커스텀 모델 provider로 Solar Open 2 실행 — 헤드리스 브라우저로 채점하는 실제 개발 과제 포함 | [![verify-08](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml) |
+| [Case 09 — Solar Open 2 x Codex](09-codex-upstage-solar-open2/) | Extend | Codex는 Responses 와이어 프로토콜만 구사하므로, LiteLLM Responses API 브릿지로 Solar Open 2 실행 | [![verify-09](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-09-codex-upstage-solar-open2.yml/badge.svg)](https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-09-codex-upstage-solar-open2.yml) |
 
 **Review** Case는 기존 공식 하네스 경로에서 Solar Open 2가 올바르게
 동작하는지 검증합니다. **Extend** Case는 한 걸음 더 나아가, 그
@@ -91,6 +92,9 @@ Grok Build, omp 생태계의 에이전트 하네스로 구축하고 실행해보
 - **Case 08** — Pi에서 포크된 터미널 코딩 에이전트 omp(oh-my-pi)가
   자체 커스텀 OpenAI 호환 provider 메커니즘으로 실행 — 단순히 프롬프트에
   답하는 게 아니라 실제로 뭔가를 만들어보라고 요청한 유일한 Case.
+- **Case 09** — Responses 와이어 프로토콜만 구사하는 OpenAI Codex CLI를
+  로컬 LiteLLM 프록시로 Solar Open 2의 Chat Completions 엔드포인트에
+  브릿지 — 브릿지가 종단 간 검증된 뒤 번호 없는 draft에서 정식 승격.
 
 모든 Case는 독립적입니다 — 각자 `README.md`/`README-ko.md`, 실제 Upstage
 API를 호출하는(모킹 없음) 자체 `scripts/verify.sh`, 그리고 공유 CI
@@ -144,11 +148,58 @@ Case 추가나 로컬 실행 방법은 [`CONTRIBUTING.md`](CONTRIBUTING.md)를
   하나: `compat.supportsStore: false` — omp가 기본으로 보내는 `store`
   필드를 Upstage 엔드포인트가 거부하기 때문입니다. 전체 추적 과정은
   [Case 08의 README](08-omp-solar-open2/README-ko.md)를 참고하세요.
+- Case 09의 Codex는 Responses API만 구사하는데, Upstage는 이를 구현하지
+  않습니다(Chat Completions만이 유일한 표면입니다) — 설정 문제가 아니라
+  진짜 프로토콜 불일치입니다. 로컬 LiteLLM 프록시가 Responses →
+  Chat Completions로 브릿지합니다(`openai/chat_completions/<model>` 모델
+  prefix) — [`docker/`](docker/)가 Claude Code의 Anthropic Messages
+  프로토콜을 Solar Pro4용으로 브릿지할 때 쓰는 것과 같은 기법입니다.
+  전체 추적 과정은
+  [Case 09의 README](09-codex-upstage-solar-open2/README-ko.md)를
+  참고하세요.
 
 실질적인 결론: 프레임워크가 이미 OpenAI 또는 Anthropic 형태의 와이어
 포맷을 구사한다면, 새 에이전트 하네스를 이 목록에 추가하는 작업은 대부분
 새로운 통합 코드가 아니라 설정(베이스 URL, 인증 방식, 모델 ID)만으로
 끝납니다.
+
+## Solar Pro4
+
+위의 모든 Case는 **Solar Pro4**로도 로컬에서 재검증했습니다(전체 로그는
+[`logs/local-verification/`](logs/local-verification/), 2026-08-03).
+Case 02, 04-08은 Solar Open 2와 완전히 같은 방식으로 Solar Pro4에
+도달합니다 — Upstage의 OpenAI 호환 엔드포인트로 직접, 프록시 없이 —
+Pro4가 거기서 완전히 지원되기 때문입니다.
+
+Case 01, 03, 09는 다릅니다: Claude Code의 Anthropic Messages 프로토콜
+또는 Codex의 Responses 프로토콜을 구사하는데, **Upstage 자체 Anthropic
+호환 엔드포인트에는 `solar-pro4` 모델 매핑이 없습니다** — 거기로 바로
+연결한 클라이언트는 응답을 받지 못합니다. Case 01에서 먼저 확인했고,
+이후 `[codex#01] pilot-upstage-solar-open2` Codex 세션이 독립적으로
+같은 막다른 길에 부딪혔습니다. Pro4는 다른 모든 Case가 이미 쓰고 있는
+동일한 Chat Completions 엔드포인트에서는 잘 동작합니다 — 매핑이 빠진
+곳은 특정하게 Anthropic 형태의 진입점뿐입니다.
+
+[`docker/`](docker/)가 이 간극을 메우는 해법입니다: 클라이언트 쪽에서는
+Anthropic Messages / Responses API를 구사하고 내부적으로 Upstage Chat
+Completions로 브릿지하는 docker-compose LiteLLM 프록시 — Case 09
+자체 Codex 브릿지가 쓰는 것과 같은
+`use_chat_completions_url_for_anthropic_messages` /
+`openai/chat_completions/<model>` 기법입니다. `ANTHROPIC_BASE_URL`을
+Upstage 대신 이 로컬 프록시로 향하게 하면, Solar Pro4도 이미 되는 Solar
+Open 2와 똑같이 Claude Code(또는 `claude-upstage`)에서 접근 가능해집니다.
+
+| Case | Solar Pro4 경로 | 결과 |
+| --- | --- | --- |
+| 01 — Claude Code | `docker/`의 Anthropic Messages 브릿지 경유 | ✅ |
+| 02 — Hermes Agent | 직접(Upstage 내장 provider) | ✅ |
+| 03 — Claude Agent SDK | `docker/`의 Anthropic Messages 브릿지 경유 | ✅ |
+| 04 — LangChain Deepagents | 직접 | ✅ (방식 A/B; 방식 C는 당일 대량 테스트로 인한 레이트리밋, Pro4 결함 아님) |
+| 05 — LangChain OpenWiki | 직접 | ✅ |
+| 06 — Grok Build | 직접 | ✅ |
+| 07 — Hermes Agent Helm | 직접 | ✅ |
+| 08 — omp | 직접 | ✅ |
+| 09 — Codex | 자체 Responses API LiteLLM 브릿지 경유 | ✅ |
 
 ## 티어 0 기준 검증 — 한계와 대처법
 

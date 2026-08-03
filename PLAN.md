@@ -24,6 +24,9 @@ seminar-ready home:
    **Pi**, against Solar Open 2 as a custom OpenAI-compatible model
    provider — and asking it to actually build a working app, not just
    answer a prompt.
+9. Running **OpenAI Codex** against Solar Open 2 through a local
+   **LiteLLM** Responses-API bridge, since Codex only speaks the
+   Responses wire protocol and Upstage only implements Chat Completions.
 
 Each case is scoped to be independently readable, runnable, and
 presentable — someone should be able to open one case's folder and follow
@@ -41,6 +44,7 @@ it without needing any of the others.
 | Case 06 — Solar Open 2 x Grok Build | Run xAI's Grok Build CLI against Solar Open 2 as a custom model provider | Grok Build, Solar Open 2 | Verified |
 | Case 07 — Solar Open 2 x Hermes Agent Helm | Deploy Hermes Agent onto Kubernetes (via the `hermes-agent-helm` Helm chart, on a kind cluster) and verify it reaches Solar Open 2 | Kubernetes, Helm, kind, Hermes Agent | Verified |
 | Case 08 — Solar Open 2 x omp | Run omp (oh-my-pi) against Solar Open 2 as a custom model provider, including a real build task graded by a headless browser | omp, Playwright, Solar Open 2 | Verified |
+| Case 09 — Solar Open 2 x Codex | Bridge OpenAI Codex (Responses API only) to Solar Open 2's Chat Completions endpoint via a local LiteLLM proxy | Codex, LiteLLM, Solar Open 2 | Verified |
 
 ## Case 01 — Solar Open 2 x Claude Code
 
@@ -309,6 +313,54 @@ it without needing any of the others.
   app in `gallery/case-08-omp-sudoku/`. See `08-omp-solar-open2/README.md`
   for details.
 
+## Case 09 — Solar Open 2 x Codex
+
+- **Goal**: determine whether OpenAI's Codex CLI can run an agentic
+  coding task on Solar Open 2, given a real protocol mismatch: Codex
+  only speaks the Responses API, and Upstage only implements Chat
+  Completions.
+- **Approach**: bridge the two with a local LiteLLM proxy. Its
+  `openai/chat_completions/<model>` model prefix forces a
+  `/responses -> /chat/completions` translation for a custom
+  OpenAI-compatible upstream, so Codex's Responses-shaped traffic lands
+  on Upstage's actual, documented Chat Completions surface.
+- **Result**: done. First verified 2026-07-20 (Codex CLI `0.144.5`): a
+  raw bridged Responses request returned `bridge-ready`, and `codex exec`
+  returned `codex-ready`. Started as an unnumbered draft
+  (`draft/codex-upstage-solar-open2/`) because Codex has no officially
+  supported way to point at a custom OpenAI-compatible endpoint — this
+  case exists to verify the bridge, not claim a direct integration.
+  Promoted to Case 09 on 2026-08-03 after local re-verification against
+  **both `solar-open2` and `solar-pro4`** (Codex CLI `0.146.0`): raw
+  bridge and full `codex exec` round trips passed for both models. One
+  finding along the way: a prompt that triggers Codex's file-read tool
+  hit `error=unsupported call: read_file` in Codex CLI 0.146.0's own
+  tool router (not present in 0.144.5) — a Codex-side regression
+  unrelated to Solar Open 2/Pro4 or the bridge; `scripts/verify.sh` now
+  uses a tool-free prompt to avoid it. Verified locally and in CI
+  (`.github/workflows/verify-all-sequential.yml`, reusing the
+  `UPSTAGE_API_KEY` secret). See `09-codex-upstage-solar-open2/README.md`
+  for details.
+
+## Solar Pro4
+
+Every case (01-09) is also locally re-verified against **solar-pro4**
+(2026-08-03; full logs in `logs/local-verification/2026-08-03/`). Cases
+02, 04-08 reach it exactly like Solar Open 2 — directly over Upstage's
+OpenAI-compatible endpoint, no proxy needed, since Pro4 is fully
+supported there.
+
+Cases 01, 03, and 09 are different: Upstage's own Anthropic-compatible
+endpoint has no model mapping for `solar-pro4` — confirmed first via
+Case 01, then independently by a `[codex#01] pilot-upstage-solar-open2`
+Codex session hitting the same dead end. Pro4 works fine over Upstage's
+Chat Completions endpoint; only the Anthropic-shaped entry point is
+missing the mapping. [`docker/`](docker/) bridges that gap for Claude
+Code the same way Case 09's own LiteLLM setup bridges Codex — a
+docker-compose LiteLLM proxy speaking Anthropic Messages on the
+client-facing side (`use_chat_completions_url_for_anthropic_messages`),
+Chat Completions to Upstage underneath.
+
 ## Repo structure
 
 See [`AGENTS.md`](AGENTS.md) for the directory tree and repo conventions
@@ -318,7 +370,7 @@ policy).
 
 ## Next steps
 
-Cases 01-08 are implemented and verified (Case 06's tool-calling has a
+Cases 01-09 are implemented and verified (Case 06's tool-calling has a
 known, documented limitation — see its two findings above). Open items:
 - Find or wait for a client-side way to disable streaming (or otherwise
   route around the dropped tool_call name) for Grok Build's custom
@@ -331,7 +383,9 @@ known, documented limitation — see its two findings above). Open items:
   `langchain-ai/openwiki` for Case 05's two findings (the `anthropic`
   provider auth gap and the streaming tool-name bug) — not done yet,
   a separate decision from building Case 05 itself.
-- Revisit a direct OpenAI Codex integration once there's a clearer path
-  between Codex's Responses-API provider interface and Upstage's Chat
-  Completions endpoint; earlier exploration is archived in
-  `draft/codex-upstage-solar-open2/`.
+- Re-attempt Case 09's file-read tool-cycle check on a future Codex CLI
+  release once its `read_file` tool-router regression (seen in `0.146.0`,
+  absent in `0.144.5`) is fixed upstream.
+- Revisit a direct OpenAI Codex integration (no LiteLLM bridge) once
+  Codex ships a Responses-API-to-Chat-Completions option of its own, or
+  a documented custom-provider path for Upstage's endpoint shape.

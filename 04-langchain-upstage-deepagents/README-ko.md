@@ -144,4 +144,19 @@ CI에서도 한 단계로 실행됩니다(수동 실행, `solar-open2`만):
 Case 01·03과 달리 Node/`claude` CLI 설치 과정이 필요 없습니다 — 동일한
 `UPSTAGE_API_KEY` 저장소 시크릿을 재사용합니다.
 
+## Solar Pro4
+
+브릿지가 필요 없습니다: `ChatUpstage`는 `solar-open2`가 이미 쓰는 것과
+동일한 경로로 Upstage의 OpenAI 호환 엔드포인트에 직접 도달합니다 —
+Anthropic 형태의 프로토콜이 전혀 관여하지 않습니다.
+
+2026-08-03에 로컬로 검증했습니다(전체 로그:
+[`logs/local-verification/2026-08-03/case-04-solar-pro4.log`](../logs/local-verification/2026-08-03/case-04-solar-pro4.log)):
+방식 A(tool use)와 B(virtual filesystem)는 매 시도마다 깨끗하게
+통과했습니다. 방식 C(named subagent delegation)는 이 리포의 모든
+Case와 프록시 설정까지 하루 종일 대량으로 테스트한 뒤라 지속적인
+레이트리밋에 걸렸습니다 — 이 리포가 이미 문서화한 Tier-0 용량 패턴과
+일치하며(PLAN.md Case 05 Finding 4 참고), `solar-pro4` 자체의 결함이
+아닙니다.
+
 전체 맥락은 리포 레벨의 [`PLAN.md`](../PLAN.md)를 참고하세요.

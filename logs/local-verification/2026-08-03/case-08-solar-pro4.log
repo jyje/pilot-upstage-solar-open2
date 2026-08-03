@@ -1,0 +1,61 @@
+== Model under test: upstage/solar-pro4 ==
+
+== omp config path discovers the generated agent directory ==
+✓ omp discovered the Solar Open 2 provider config
+
+== Method A: deterministic single-turn headless reply ==
+✓ omp completed a live solar-pro4 round trip
+  Working...
+  omp-solar-ready
+
+== Method B: reasoning-heavy prompt ==
+✓ solar-pro4 reasoned through the sum correctly
+  Working...
+  ## Sum of the First 50 Positive Integers = 1275
+  
+  There are several ways to arrive at this. Let me walk through the 
+  most intuitive one first, then verify with the general formula.
+  
+  ### Method 1: Gauss's Pairing Trick
+  
+  Write the numbers from 1 to 50 forwards, then backwards underneath:
+  
+  | Forward  | 1 | 2 | 3 | ... | 48 | 49 | 50 |
+  |----------|---|---|---|-----|-----|-----|-----|
+  | Backward | 50 | 49 | 48 | ... | 3 | 2 | 1 |
+  | **Sum**  | **51** | **51** | **51** | ... | **51** | **51** | 
+  **51** |
+  
+  Each column sums to the same value: $1 + 50 = 2 + 49 = 3 + 48 = 
+  \cdots = 51$.
+  
+  Since there are 50 numbers, we have 50 such pairs:
+  
+  $$50 \times 51 = 2550$$
+  
+  But this counts every number **t
+  ...(truncated)
+
+== Method C: small coding task ==
+✓ solar-pro4 wrote the requested function
+  Working...
+  ```python
+  def is_prime(n: int) -> bool:
+      """Return True if n is a prime number, False otherwise."""
+      if n <= 1:
+          return False
+      if n == 2:
+          return True
+      if n % 2 == 0:
+          return False
+      for i in range(3, int(n ** 0.5) + 1, 2):
+          if n % i == 0:
+              return False
+      return True
+  ```
+
+== Method D: real development task -- 6x6 Mini Sudoku ==
+  skipped (SKIP_METHOD_D set) -- see ../gallery/case-08-omp-sudoku/
+  for the verified, published result of this method.
+
+✓ All checks passed (Method D skipped).

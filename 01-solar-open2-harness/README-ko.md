@@ -396,4 +396,22 @@ CI에서도 한 단계로 실행됩니다(수동 실행, `solar-open2`만):
 [`.github/workflows/verify-all-sequential.yml`](../.github/workflows/verify-all-sequential.yml),
 `UPSTAGE_API_KEY` 저장소 시크릿을 사용합니다.
 
+## Solar Pro4
+
+Case 01A/B/C가 모두 직접 이야기하는 Upstage의 Anthropic 호환
+엔드포인트에는 `solar-pro4` 모델 매핑이 없습니다 — 거기로 직접 연결한
+클라이언트는 응답을 받지 못합니다. [`docker/`](../docker/)의
+litellm-proxy가 클라이언트 쪽에서는 Anthropic Messages를 구사하고
+내부적으로 Upstage Chat Completions로 브릿지해서 이 간극을 메웁니다.
+
+2026-08-03에 로컬로 재검증했습니다(전체 로그:
+[`logs/local-verification/2026-08-03/case-01-solar-pro4.log`](../logs/local-verification/2026-08-03/case-01-solar-pro4.log)):
+Claude Code가 실제로 보내는 것과 동일한 헤더로 프록시를 통해 raw
+`/v1/messages` 요청을 보내니 진짜 `solar-pro4` 응답이 돌아왔습니다 —
+이 Case의 프로토콜에서 브릿지가 동작함을 확인했습니다. (중첩된 Claude
+Code 개발 세션 안에서 `claude -p` CLI를 직접 실행하면 무관한 로컬
+자격증명 우선순위 문제가 발생했습니다 — 프록시나 모델 문제가 아닙니다.
+자세한 내용은 로그 참고. Case 03의 Claude Agent SDK 경로는 이 문제의
+영향을 받지 않습니다.)
+
 전체 맥락은 리포 레벨의 [`PLAN.md`](../PLAN.md)를 참고하세요.

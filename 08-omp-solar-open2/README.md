@@ -292,4 +292,17 @@ Upstage API, all four methods:
 All Method D checks passed.
 ```
 
+## Solar Pro4
+
+No bridge needed: omp registers Solar Open 2 as a custom
+`openai-completions` provider, and the same registration reaches
+`solar-pro4` directly on Upstage's Chat Completions endpoint.
+
+Locally verified 2026-08-03 (full log:
+[`logs/local-verification/2026-08-03/case-08-solar-pro4.log`](../logs/local-verification/2026-08-03/case-08-solar-pro4.log)):
+Methods A (deterministic reply), B (reasoning prompt), and C (coding
+task) all passed against `solar-pro4` (Method D skipped locally too, same
+as the `solar-open2` CI run — see `gallery/case-08-omp-sudoku/` for the
+published Method D result).
+
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.

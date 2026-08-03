@@ -22,7 +22,7 @@ fonts:
 
 <div class="cover-readme-hero">
   <img class="cover-readme-image" src="/images/agent-ecosystem.png" alt="Solar Open 2 agent ecosystem" />
-  <p class="cover-readme-tagline"><Localized en="✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, and omp" ko="✨ Upstage Solar Open 2 기반의 다양한 에이전트 하네스를 검증합니다: Claude Code, Hermes Agent(쿠버네티스 배포도 검증), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, omp" /></p>
+  <p class="cover-readme-tagline"><Localized en="✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 (and Solar Pro4) models: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, omp, and Codex" ko="✨ Upstage Solar Open 2(그리고 Solar Pro4) 기반의 다양한 에이전트 하네스를 검증합니다: Claude Code, Hermes Agent(쿠버네티스 배포도 검증), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, omp, Codex" /></p>
   <div class="cover-badges" aria-label="Project status badges">
     <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml" target="_blank" rel="noreferrer"><img src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-all-sequential.yml/badge.svg" alt="verify all sequential status" /></a>
     <a href="https://docs.python.org/3.13/" target="_blank" rel="noreferrer"><img src="https://img.shields.io/badge/python-3.13-3776AB?logo=python&amp;logoColor=white" alt="Python 3.13" /></a>
@@ -426,6 +426,55 @@ fonts:
 
 ---
 
+<div class="case-pill">CASE 09</div>
+
+<div class="case-brand-logo"><img src="https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-png/dark/openai.png" alt="Codex" /></div>
+
+# Codex
+
+## <Localized en="Bridging Codex's Responses API to Solar Open 2" ko="Codex의 Responses API를 Solar Open 2로 브릿지" /><em class="case-h2-sub"><Localized en="A real protocol mismatch, closed with a local LiteLLM proxy" ko="진짜 프로토콜 불일치를, 로컬 LiteLLM 프록시로 해결" /></em>
+
+<div class="case-card">
+  <p class="case-card-desc"><Localized en="OpenAI's Codex CLI only speaks the Responses wire protocol; Upstage only implements Chat Completions. No Base URL override closes that gap directly — a local LiteLLM proxy translates Responses to Chat Completions underneath, so Codex reaches Solar Open 2 (and Solar Pro4) without any client-side patch." ko="OpenAI Codex CLI는 Responses 와이어 프로토콜만 구사하고, Upstage는 Chat Completions만 구현합니다. Base URL만 바꿔서는 이 간극이 메워지지 않습니다 — 로컬 LiteLLM 프록시가 내부적으로 Responses를 Chat Completions로 변환해서, 클라이언트 쪽 패치 없이 Codex가 Solar Open 2(그리고 Solar Pro4)에 도달합니다." /></p>
+  <div class="case-card-highlights">
+    <div class="case-chip"><span class="case-chip-icon">🌉</span><span><Localized en="Promoted from an unnumbered draft once the Responses -> Chat Completions bridge was verified end to end" ko="Responses -> Chat Completions 브릿지가 종단 간 검증된 뒤 번호 없는 draft에서 정식 승격" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🔑</span><span><Localized en="LITELLM_MASTER_KEY authenticates Codex to the proxy; only the proxy ever sees UPSTAGE_API_KEY" ko="LITELLM_MASTER_KEY는 Codex-프록시 간 인증만 담당하며, UPSTAGE_API_KEY는 프록시만 봅니다" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🚧</span><span><Localized en="A file-read tool prompt hit an unrelated Codex CLI 0.146.0 tool-router bug — a tool-free prompt completes the loop cleanly" ko="파일 읽기 tool 프롬프트는 Codex CLI 0.146.0의 무관한 도구 라우터 버그에 걸립니다 — 도구 호출 없는 프롬프트는 깨끗하게 완료됩니다" /></span></div>
+  </div>
+  <div class="case-evidence">
+    <div class="case-evidence-label"><Localized en="Verified in CI + locally, both solar-open2 and solar-pro4" ko="CI + 로컬 검증, solar-open2/solar-pro4 둘 다" /></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">✓</span><span class="case-evidence-result"><Localized en="Raw /v1/responses bridge request returned bridge-ready" ko="raw /v1/responses 브릿지 요청이 bridge-ready 반환" /></span></div>
+    <div class="case-evidence-row"><span class="case-evidence-method">✓</span><span class="case-evidence-result"><Localized en="codex exec full round trip returned codex-ready, both models" ko="codex exec 전체 왕복이 두 모델 모두 codex-ready 반환" /></span></div>
+    <div class="case-qa">
+      <div class="case-qa-line is-prompt"><span class="case-qa-tag">Ask</span><span class="case-qa-text">"Reply with only this exact text, no tool calls: codex-ready"</span></div>
+      <div class="case-qa-line is-reply"><span class="case-qa-tag">Got</span><span class="case-qa-text">codex-ready</span></div>
+    </div>
+  </div>
+  <div class="case-cta-row">
+    <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-09-codex-upstage-solar-open2.yml" target="_blank" rel="noreferrer"><img class="case-cta-badge" src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-09-codex-upstage-solar-open2.yml/badge.svg" alt="verify-09 status" /></a>
+    <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/09-codex-upstage-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="Read more" ko="자세히 보기" /></a>
+  </div>
+</div>
+
+---
+
+<div class="case-pill">SOLAR PRO4</div>
+
+# <Localized en="A second model, verified across every case" ko="두 번째 모델도 모든 케이스에서 검증" />
+
+## <Localized en="Cases 02, 04-08 need nothing new; Cases 01/03/09 need a bridge" ko="Case 02, 04-08은 그대로 되고; Case 01/03/09만 브릿지가 필요합니다" />
+
+<div class="case-card">
+  <p class="case-card-desc"><Localized en="Every case above was locally re-verified against solar-pro4. Upstage's Anthropic-compatible endpoint has no model mapping for it, so Cases 01/03/09 (Claude Code, the Agent SDK, Codex) route through a local litellm-proxy bridge instead of Upstage directly. Every other case already reaches Upstage's Chat Completions endpoint directly, so solar-pro4 just works there, unchanged." ko="위의 모든 케이스를 solar-pro4로도 로컬에서 재검증했습니다. Upstage의 Anthropic 호환 엔드포인트에는 이 모델의 매핑이 없어서, Case 01/03/09(Claude Code, Agent SDK, Codex)는 Upstage에 직접 붙는 대신 로컬 litellm-proxy 브릿지를 거칩니다. 나머지 케이스는 이미 Upstage의 Chat Completions 엔드포인트에 직접 붙어 있어서, solar-pro4도 변경 없이 그대로 동작합니다." /></p>
+  <div class="case-card-highlights">
+    <div class="case-chip"><span class="case-chip-icon">🔍</span><span><Localized en="Found by a Codex session independently hitting the same Anthropic-endpoint dead end Case 01 first confirmed" ko="Case 01이 처음 확인한 것과 같은 Anthropic 엔드포인트 막다른 길을, Codex 세션이 독립적으로도 발견" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🐳</span><span><Localized en="docker/'s docker-compose litellm-proxy: use_chat_completions_url_for_anthropic_messages closes the gap" ko="docker/의 docker-compose litellm-proxy: use_chat_completions_url_for_anthropic_messages로 간극을 메움" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">📋</span><span><Localized en="Full logs for all 9 cases in logs/local-verification/" ko="9개 케이스 전체 로그는 logs/local-verification/에 있음" /></span></div>
+  </div>
+</div>
+
+---
+
 # <Localized en="Verification & CI" ko="검증 & CI" />
 
 ## <Localized en="Every case, automatically verified on every relevant commit" ko="관련 커밋마다 모든 케이스를 자동으로 검증합니다" />
@@ -496,6 +545,7 @@ https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 | 06 — Grok Build | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` <Localized en="+ standalone" ko="+ 단독 실행" /> |
 | 07 — Hermes Agent Helm | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` <Localized en="+ standalone" ko="+ 단독 실행" /> |
 | 08 — omp | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` <Localized en="+ standalone (A-C; D verified locally)" ko="+ 단독 실행 (A-C만; D는 로컬 검증)" /> |
+| 09 — Codex | ✅ <Localized en="Verified" ko="검증 완료" /> | Extend | `verify-all-sequential` <Localized en="+ standalone" ko="+ 단독 실행" /> |
 
 ---
 
@@ -591,7 +641,7 @@ https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 
 ### <Localized en="Near-term" ko="단기" />
 
-- **Case 09+** — <Localized en="new harness integrations (more Kubernetes operators, more LangChain ecosystem tools, more IDE integrations)" ko="새로운 하네스 통합 (쿠버네티스 오퍼레이터, LangChain 생태계 도구, IDE 통합 확대)" />
+- **Case 10+** — <Localized en="new harness integrations (more Kubernetes operators, more LangChain ecosystem tools, more IDE integrations)" ko="새로운 하네스 통합 (쿠버네티스 오퍼레이터, LangChain 생태계 도구, IDE 통합 확대)" />
 - **<Localized en="Telegram/Discord for Case 07" ko="Case 07의 텔레그램·디스코드 연동" />** — <Localized en="messenger integration on top of the verified Helm deployment (currently documented but not gated)" ko="검증된 Helm 배포 위에 메신저를 연동합니다 (현재는 문서화만 되어 있고 CI 게이트는 없음)" />
 - **<Localized en="Rate-limit-aware verification" ko="레이트 리밋을 고려한 검증" />** — <Localized en="Case 05's Finding 3 (50K tokens/min ceiling) could be addressed with batched/parallel verification strategies" ko="Case 05의 Finding 3(분당 5만 토큰 한도)은 배치·병렬 검증 전략으로 완화할 수 있습니다" />
 
@@ -616,7 +666,7 @@ https://github.com/jyje/pilot-upstage-solar-open2/actions/runs/...
 
 > *<Localized en="Can Upstage's Solar Open 2 model run through real, production-grade agent harnesses — not just a raw API call?" ko="Upstage의 Solar Open 2 모델이 API 호출 하나가 아니라, 실제 프로덕션급 에이전트 하네스를 통해서도 동작할 수 있을까?" />*
 
-<span><Localized en="Eight cases later, the answer is" ko="여덟 개의 케이스를 거친 지금, 답은" /> **<Localized en="yes" ko="그렇다" />** — <Localized en="across Claude Code, Hermes Agent, Claude Agent SDK, LangChain, OpenWiki, Grok Build, omp, and Kubernetes/Helm." ko="Claude Code, Hermes Agent, Claude Agent SDK, LangChain, OpenWiki, Grok Build, omp, Kubernetes/Helm 전반에 걸쳐서입니다." /> <Localized en="The remaining work is scaling that answer to more harnesses, more models, and more operators." ko="남은 과제는 이 결과를 더 많은 하네스, 더 많은 모델, 더 많은 오퍼레이터로 확장하는 것입니다." /></span>
+<span><Localized en="Nine cases and two models later, the answer is" ko="아홉 개의 케이스와 두 개의 모델을 거친 지금, 답은" /> **<Localized en="yes" ko="그렇다" />** — <Localized en="across Claude Code, Hermes Agent, Claude Agent SDK, LangChain, OpenWiki, Grok Build, omp, Codex, and Kubernetes/Helm, on both Solar Open 2 and Solar Pro4." ko="Claude Code, Hermes Agent, Claude Agent SDK, LangChain, OpenWiki, Grok Build, omp, Codex, Kubernetes/Helm 전반에 걸쳐, Solar Open 2와 Solar Pro4 둘 다에서입니다." /> <Localized en="The remaining work is scaling that answer to more harnesses, more models, and more operators." ko="남은 과제는 이 결과를 더 많은 하네스, 더 많은 모델, 더 많은 오퍼레이터로 확장하는 것입니다." /></span>
 
 </v-click>
 
