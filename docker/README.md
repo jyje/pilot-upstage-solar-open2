@@ -2,7 +2,16 @@
 
 [← back to repo overview](../README.md)
 
-Unnumbered, not a Case: a small local utility, not a portfolio experiment.
+Unnumbered, not a Case: a small local dev utility, not a portfolio
+experiment. Cases 01 and 03 (Claude Code, the Claude Agent SDK) use it to
+locally verify `solar-pro4` — see
+[`../logs/local-verification/`](../logs/local-verification/) for the
+captured transcripts. Case 09 (Codex) hits the same underlying gap but
+needs LiteLLM's Responses API bridge instead of this one's Anthropic
+Messages bridge, so it ships its own separate, self-contained LiteLLM
+setup at
+[`../09-codex-upstage-solar-open2/config/`](../09-codex-upstage-solar-open2/config/)
+rather than reusing this directory.
 
 ## Why this exists
 
@@ -64,10 +73,9 @@ This LiteLLM image's `/v1/messages` route defaults to bridging **any**
 Chat Completions — confirmed live: with a plain `openai/<model>` mapping,
 every request 404'd with `OpenAIException - 404 page not found`, because
 Upstage has no `/responses` endpoint at all (Chat Completions is its only
-documented surface — the same gap this repo's
-[`draft/codex-upstage-solar-open2/`](../draft/codex-upstage-solar-open2/)
-case hit from Codex's own Responses API, on the client side instead of
-here).
+documented surface — the same gap
+[Case 09](../09-codex-upstage-solar-open2/) hits from Codex's own
+Responses API, on the client side instead of here).
 
 The fix is `litellm_settings.use_chat_completions_url_for_anthropic_messages: true`
 (already set in [`litellm-config.yaml`](litellm-config.yaml)) — LiteLLM's
@@ -87,7 +95,9 @@ of whether the key itself is valid.
   it's never sent to Upstage. `UPSTAGE_API_KEY` is the only credential the
   proxy forwards upstream.
 - `.env` is gitignored repo-wide; only `.env.sample` is committed.
-- This is intentionally outside the numbered Case list (see
-  [`../draft/codex-upstage-solar-open2/`](../draft/codex-upstage-solar-open2/)
+- This directory itself stays outside the numbered Case list — it's
+  shared dev plumbing, not an independent, presentable experiment. See
+  [`../09-codex-upstage-solar-open2/`](../09-codex-upstage-solar-open2/)
   for the same LiteLLM-bridge idea applied to Codex's Responses API
-  instead of Claude Code's Anthropic Messages API).
+  instead of Claude Code's Anthropic Messages API, as its own numbered
+  Case with its own self-contained proxy config.

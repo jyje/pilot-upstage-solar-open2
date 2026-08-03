@@ -38,7 +38,7 @@ default = "solar-open2"
 ```
 
 `api_backend = "chat_completions"` is the key line: unlike
-[the Codex draft](../draft/codex-upstage-solar-open2/README.md), which
+[Case 09's Codex bridge](../09-codex-upstage-solar-open2/README.md), which
 is hard-locked to the Responses API protocol, Grok Build lets a custom
 model pick its wire protocol per entry (`chat_completions`, `responses`,
 or `messages`) — so it speaks the same OpenAI-compatible Chat

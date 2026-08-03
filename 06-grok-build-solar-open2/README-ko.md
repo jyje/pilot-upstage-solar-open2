@@ -39,7 +39,7 @@ default = "solar-open2"
 ```
 
 핵심은 `api_backend = "chat_completions"`입니다. Responses API
-프로토콜에 고정된 [Codex 초안](../draft/codex-upstage-solar-open2/README-ko.md)과
+프로토콜에 고정된 [Case 09의 Codex 브릿지](../09-codex-upstage-solar-open2/README-ko.md)와
 달리, Grok Build는 커스텀 모델마다 와이어 프로토콜
 (`chat_completions`, `responses`, `messages`)을 직접 고를 수 있어서,
 Upstage가 실제로 제공하는 OpenAI 호환 Chat Completions 포맷을 그대로
