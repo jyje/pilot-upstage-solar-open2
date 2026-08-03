@@ -1,0 +1,13 @@
+services:
+  litellm-proxy:
+    image: docker.litellm.ai/berriai/litellm:latest
+    container_name: solar-litellm-proxy
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:4000:4000"
+    environment:
+      - UPSTAGE_API_KEY=${UPSTAGE_API_KEY:?UPSTAGE_API_KEY is not set (see .env.sample)}
+      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:-sk-local-solar-proxy}
+    volumes:
+      - ./litellm-config.yaml:/app/config.yaml:ro
+    command: ["--config", "/app/config.yaml"]

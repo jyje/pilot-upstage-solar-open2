@@ -1,0 +1,51 @@
+# LiteLLM's built-in /v1/messages route speaks the Anthropic Messages API
+# on the client-facing side, but for any model whose custom_llm_provider
+# resolves to "openai" it defaults to bridging through the Responses API
+# internally, not Chat Completions — confirmed live: with a plain
+# "openai/<model>" mapping, every /v1/messages call 404'd against Upstage
+# with "OpenAIException - 404 page not found", because Upstage has no
+# /responses endpoint at all (Chat Completions is its only documented
+# surface; same finding as this repo's draft/codex-upstage-solar-open2/
+# case, hit there from Codex's own Responses API instead of here).
+#
+# litellm.use_chat_completions_url_for_anthropic_messages=True is the
+# escape hatch for exactly this (see
+# litellm/llms/anthropic/experimental_pass_through/messages/handler.py,
+# _should_route_to_responses_api) — it routes /v1/messages through
+# litellm.acompletion() (Chat Completions) instead, for every provider,
+# not just Upstage. Confirmed live: without it, both models 404; with it,
+# both reach Upstage's real Chat Completions endpoint (an invalid test
+# key then gets a real 401 back instead of a 404).
+#
+# solar-pro4 has no model mapping on Upstage's own Anthropic-compatible
+# path (Claude Code pointed there directly gets no response), but it
+# works fine over Chat Completions — this config exposes both
+# solar-open2 (a control; already reachable directly) and solar-pro4
+# through the one Anthropic-shaped /v1/messages endpoint.
+model_list:
+  - model_name: solar-open2
+    litellm_params:
+      model: openai/solar-open2
+      api_base: https://api.upstage.ai/v1/solar
+      api_key: os.environ/UPSTAGE_API_KEY
+      drop_params: true
+      additional_drop_params:
+        - web_search_options
+        - client_metadata
+
+  - model_name: solar-pro4
+    litellm_params:
+      model: openai/solar-pro4
+      api_base: https://api.upstage.ai/v1/solar
+      api_key: os.environ/UPSTAGE_API_KEY
+      drop_params: true
+      additional_drop_params:
+        - web_search_options
+        - client_metadata
+
+litellm_settings:
+  drop_params: true
+  use_chat_completions_url_for_anthropic_messages: true
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
