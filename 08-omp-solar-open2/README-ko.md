@@ -195,6 +195,29 @@ C의 코드에 `def is_prime`가 없거나, 방식 D의 결과물이 위 Playwri
 둡니다. 그 로컬 실행 결과는 아래 [증거 실행](#증거-실행)에서 확인할
 수 있습니다.
 
+### 방식 D 헤드투헤드: solar-open2 vs solar-pro4
+
+이전 로컬 검증 회차에서 방식 D가 두 모델 모두 건너뛰어졌다는 점이 감사
+과정에서 드러나, 2026-08-04에 같은 프롬프트·같은 하네스·같은 8분
+제한으로 두 모델 각각 새로 실행했습니다. 전체 기록:
+[`case-08-method-d-sudoku-head-to-head.log`](../logs/local-verification/2026-08-03/case-08-method-d-sudoku-head-to-head.log).
+
+| | solar-open2 | solar-pro4 |
+| --- | --- | --- |
+| 첫 시도에 `index.html` 생성 | 예 | 예 |
+| **무수정 상태로** 게이트 통과 | 아니오 | 아니오 |
+| 결함 유형 | 주어진 칸/빈 칸 집합이 뒤바뀜, **그리고** `generateFullGrid()`가 서로 독립적이라 잘못 가정한 박스 3개를 미리 채움(6x6의 2x3 박스인 그 셋은 0–2열을 공유) | 잘못된 줄 하나 — `var positions = shuffle positions = shufflePositions();` — 문법 오류로 스크립트 전체가 죽음 |
+| 통과까지 걸린 수정 라운드 | 도달 못 함 (3회 시도, 그중 2회는 8분 예산을 소진하며 수정 자체를 내놓지 못함) | 1회 |
+| 최종 게이트 | ✗ | ✓ 6/6 |
+
+두 모델 모두 단발로는 이 과제를 통과하지 못했습니다. 차이는 "무엇이
+망가졌고 얼마나 복구 가능했는가"입니다. `solar-pro4`의 결함은 기계적인
+것 하나였고 한 번에 고쳤지만, `solar-open2`는 논리 결함이 두 겹으로
+쌓여 있었고 수정 도중 에이전틱 예산을 두 번이나 소진했습니다. 각 1회
+실행은 벤치마크가 아니지만, 실제 과제에서 나온 실제 결과이므로 덮지
+않고 기록합니다. 갤러리에 게시된 open2 항목은 이번 실행 결과물이 아니라
+이전에 이미 검증된 빌드입니다.
+
 `UPSTAGE_API_KEY`를 설정하고 `omp`를 설치한 뒤
 (`curl -fsSL https://omp.sh/install | sh`), `PATH`에 Node 18+가 있는
 상태로 로컬에서 실행하세요.
@@ -301,6 +324,6 @@ Completions 엔드포인트에서 `solar-pro4`에도 직접 도달합니다.
 방식 A(결정론적 응답), B(추론 프롬프트), C(코딩 과제) 모두 `solar-pro4`로
 통과했습니다(방식 D는 `solar-open2` CI 실행과 마찬가지로 로컬에서도
 건너뛰었습니다 — 게시된 방식 D 결과는
-`gallery/case-08-omp-sudoku/` 참고).
+`gallery/case-08-omp-sudoku-solar-open2/` 참고).
 
 전체 맥락은 리포 레벨의 [`PLAN.md`](../PLAN.md)를 참고하세요.

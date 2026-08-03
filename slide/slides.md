@@ -419,7 +419,7 @@ fonts:
   </div>
   <div class="case-cta-row">
     <a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml" target="_blank" rel="noreferrer"><img class="case-cta-badge" src="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml/badge.svg" alt="verify-08 status" /></a>
-    <a class="case-cta" href="https://jyje.github.io/pilot-upstage-solar-open2/gallery/case-08-omp-sudoku/" target="_blank" rel="noreferrer"><Localized en="Play it" ko="플레이해보기" /></a>
+    <a class="case-cta" href="https://jyje.github.io/pilot-upstage-solar-open2/gallery/case-08-omp-sudoku-solar-open2/" target="_blank" rel="noreferrer"><Localized en="Play it" ko="플레이해보기" /></a>
     <a class="case-cta" href="https://github.com/jyje/pilot-upstage-solar-open2/blob/main/08-omp-solar-open2/README.md" target="_blank" rel="noreferrer"><Localized en="Read more" ko="자세히 보기" /></a>
   </div>
 </div>
@@ -470,6 +470,24 @@ fonts:
     <div class="case-chip"><span class="case-chip-icon">🔍</span><span><Localized en="Found by a Codex session independently hitting the same Anthropic-endpoint dead end Case 01 first confirmed" ko="Case 01이 처음 확인한 것과 같은 Anthropic 엔드포인트 막다른 길을, Codex 세션이 독립적으로도 발견" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">🐳</span><span><Localized en="docker/'s docker-compose litellm-proxy: use_chat_completions_url_for_anthropic_messages closes the gap" ko="docker/의 docker-compose litellm-proxy: use_chat_completions_url_for_anthropic_messages로 간극을 메움" /></span></div>
     <div class="case-chip"><span class="case-chip-icon">📋</span><span><Localized en="Full logs for all 9 cases in logs/local-verification/" ko="9개 케이스 전체 로그는 logs/local-verification/에 있음" /></span></div>
+  </div>
+</div>
+
+---
+
+<div class="case-pill">SOLAR PRO4</div>
+
+# <Localized en="Where the two models actually diverged" ko="두 모델이 실제로 갈린 지점" />
+
+## <Localized en="Connectivity checks say little; only Case 08's build task separated them" ko="연결성 검증으로는 알 수 없고, Case 08의 빌드 과제만이 둘을 갈랐습니다" />
+
+<div class="case-card">
+  <p class="case-card-desc"><Localized en="Case 08's Method D is the only task here that asks a model to build something substantial — a working 6x6 Sudoku app from a written spec, graded by a headless browser. Run head-to-head with the same prompt, harness, and 8-minute budget, neither model passed unedited. What differed was how recoverable the damage was." ko="Case 08의 방식 D는 이 리포에서 유일하게 모델에게 실제로 무언가를 만들라고 요구하는 과제입니다 — 명세로부터 동작하는 6x6 스도쿠 앱을 만들고, 헤드리스 브라우저로 채점합니다. 같은 프롬프트·하네스·8분 예산으로 맞붙였을 때 두 모델 모두 무수정으로는 통과하지 못했습니다. 갈린 건 그 손상이 얼마나 복구 가능했는가였습니다." /></p>
+  <div class="case-card-highlights">
+    <div class="case-chip"><span class="case-chip-icon">✅</span><span><Localized en="solar-pro4 — one mechanical defect (a syntax error); fixed in a single round, then 6/6 checks" ko="solar-pro4 — 기계적 결함 하나(문법 오류). 한 번에 고쳐 6/6 통과" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">⚠️</span><span><Localized en="solar-open2 — two stacked logic defects; 3 fix rounds attempted, 2 exhausted the 8-minute budget, never reached green that run" ko="solar-open2 — 논리 결함 두 겹. 수정 3회 시도 중 2회가 8분 예산 소진, 그 실행에서는 통과 못 함" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">🎮</span><span><Localized en="Both published builds are playable in gallery/, each labelled with the model that made it" ko="두 빌드 모두 gallery/에서 플레이 가능하며, 각각 만든 모델이 표시됨" /></span></div>
+    <div class="case-chip"><span class="case-chip-icon">⚖️</span><span><Localized en="One run each is not a benchmark — but it is a real result, recorded rather than smoothed over" ko="각 1회 실행은 벤치마크가 아니지만, 실제 결과이므로 덮지 않고 기록" /></span></div>
   </div>
 </div>
 

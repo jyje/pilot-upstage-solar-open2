@@ -44,9 +44,33 @@ set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
 SOLAR_MODEL="${SOLAR_MODEL:-solar-open2}"
+# Upstage's own Anthropic-compatible endpoint by default. Overridable so
+# these same methods can run against a local Anthropic-Messages bridge
+# instead (see docker/) — required for solar-pro4, which Upstage has no
+# model mapping for on this endpoint. SOLAR_AUTH_TOKEN comes with it,
+# since a local bridge authenticates with its own key, not the Upstage one.
+SOLAR_BASE_URL="${SOLAR_BASE_URL:-https://api.upstage.ai}"
+SOLAR_AUTH_TOKEN="${SOLAR_AUTH_TOKEN:-${UPSTAGE_API_KEY:-}}"
 
 fail() { printf '✗ %s\n' "$1" >&2; exit 1; }
 ok()   { printf '✓ %s\n' "$1"; }
+
+# is_real_reply <text> — non-empty *and* not one of Claude Code's own
+# failure sentinels. A plain `[ -n "$out" ]` check isn't enough: when the
+# CLI can't reach its backend it still exits 0 and prints a short error
+# string, which a non-empty test happily accepts. That produced a silent
+# false pass in a local run (Methods A and B both "✓ produced a
+# response" whose actual content was the literal "Execution error") —
+# caught only by reading the transcript by hand. Treat those as failures
+# so a retry fires and, if they persist, the script exits non-zero.
+is_real_reply() {
+  s="$(printf '%s' "$1" | tr -d '[:space:]')"
+  [ -n "$s" ] || return 1
+  case "$1" in
+    *"Execution error"*|*"API Error"*|*"Please run /login"*|*"Not logged in"*) return 1 ;;
+  esac
+  return 0
+}
 
 # preview <text> — up to ~700 chars, wrapped to <=70 cols (was one line,
 # <=100 chars), so a single dense paragraph still renders as 10+ lines.
@@ -98,8 +122,8 @@ strip_wrapper_banner() {
 # the default timeout — subagent calls (Method D) run a nested agent and
 # need more headroom than a direct completion.
 claude_solar() {
-  ANTHROPIC_BASE_URL="https://api.upstage.ai" \
-  ANTHROPIC_AUTH_TOKEN="$UPSTAGE_API_KEY" \
+  ANTHROPIC_BASE_URL="$SOLAR_BASE_URL" \
+  ANTHROPIC_AUTH_TOKEN="$SOLAR_AUTH_TOKEN" \
   ANTHROPIC_MODEL="$SOLAR_MODEL" \
   ANTHROPIC_SMALL_FAST_MODEL="$SOLAR_MODEL" \
   ANTHROPIC_DEFAULT_HAIKU_MODEL="$SOLAR_MODEL" \
@@ -126,12 +150,14 @@ echo
 echo "== Method A: claude-upstage (piped stdin, non-interactive) =="
 method_a_out=""
 for attempt in 1 2 3 4 5; do
-  if method_a_out="$(printf 'hello\n' | timeout 60 claude-upstage 2>&1)" && [ -n "$method_a_out" ]; then
+  if method_a_out="$(printf 'hello\n' | timeout 60 claude-upstage 2>&1)" \
+    && is_real_reply "$method_a_out"; then
     break
   fi
   [ "$attempt" -lt 5 ] && backoff
 done
-[ -n "$method_a_out" ] || fail "claude-upstage (piped stdin) produced no output after 5 attempts"
+is_real_reply "$method_a_out" \
+  || fail "claude-upstage (piped stdin) produced no usable response after 5 attempts: $(oneline "$method_a_out")"
 ok "claude-upstage (piped stdin) produced a response"
 preview "$(strip_wrapper_banner "$method_a_out")"
 
@@ -139,12 +165,13 @@ echo
 echo "== Method B: official claude CLI with manual ANTHROPIC_* env vars =="
 method_b_out=""
 for attempt in 1 2 3 4 5; do
-  if method_b_out="$(claude_solar "hello")" && [ -n "$method_b_out" ]; then
+  if method_b_out="$(claude_solar "hello")" && is_real_reply "$method_b_out"; then
     break
   fi
   [ "$attempt" -lt 5 ] && backoff
 done
-[ -n "$method_b_out" ] || fail "claude -p \"hello\" produced no output after 5 attempts"
+is_real_reply "$method_b_out" \
+  || fail "claude -p \"hello\" produced no usable response after 5 attempts: $(oneline "$method_b_out")"
 ok "claude -p \"hello\" (official CLI, alternate API) produced a response"
 preview "$method_b_out"
 
@@ -196,11 +223,15 @@ echo
 echo "== Method E: jyje/claude-docker (community Docker image) =="
 docker pull ghcr.io/jyje/claude-docker >/dev/null 2>&1 \
   || fail "docker pull ghcr.io/jyje/claude-docker failed"
+# A loopback SOLAR_BASE_URL is the *host's* loopback, which means nothing
+# inside the container — rewrite it to the host gateway so Method E can
+# reach a local bridge too (no-op for the default Upstage URL).
+docker_base_url="$(printf '%s' "$SOLAR_BASE_URL" | sed -E 's#//(127\.0\.0\.1|localhost)([:/])#//host.docker.internal\2#')"
 method_e_out=""
 for attempt in 1 2 3 4 5; do
-  if method_e_out="$(docker run --rm \
-    -e ANTHROPIC_BASE_URL="https://api.upstage.ai" \
-    -e ANTHROPIC_AUTH_TOKEN="$UPSTAGE_API_KEY" \
+  if method_e_out="$(docker run --rm --add-host host.docker.internal:host-gateway \
+    -e ANTHROPIC_BASE_URL="$docker_base_url" \
+    -e ANTHROPIC_AUTH_TOKEN="$SOLAR_AUTH_TOKEN" \
     -e ANTHROPIC_MODEL="$SOLAR_MODEL" \
     -e ANTHROPIC_SMALL_FAST_MODEL="$SOLAR_MODEL" \
     -e ANTHROPIC_DEFAULT_HAIKU_MODEL="$SOLAR_MODEL" \
@@ -209,12 +240,14 @@ for attempt in 1 2 3 4 5; do
     -e ANTHROPIC_DEFAULT_FABLE_MODEL="$SOLAR_MODEL" \
     -e CLAUDE_CODE_SUBAGENT_MODEL="$SOLAR_MODEL" \
     -e CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
-    ghcr.io/jyje/claude-docker claude -p "hello" 2>&1)" && [ -n "$method_e_out" ]; then
+    ghcr.io/jyje/claude-docker claude -p "hello" 2>&1)" \
+    && is_real_reply "$method_e_out"; then
     break
   fi
   [ "$attempt" -lt 5 ] && backoff
 done
-[ -n "$method_e_out" ] || fail "claude-docker \"hello\" produced no output after 5 attempts"
+is_real_reply "$method_e_out" \
+  || fail "claude-docker \"hello\" produced no usable response after 5 attempts: $(oneline "$method_e_out")"
 ok "claude-docker \"hello\" (containerized official CLI) produced a response"
 preview "$method_e_out"
 

@@ -1,47 +1,54 @@
-Case 01 — Solar Open 2 x Claude Code — solar-pro4 local verification
-Date: 2026-08-03
-Model: solar-pro4 (via docker/litellm-proxy, use_chat_completions_url_for_anthropic_messages=true)
+== Model under test: solar-pro4 ==
+== claude-upstage doctor ==
+✓ Claude Code CLI found (2.1.220 (Claude Code))
+✓ API key: environment (UPSTAGE_API_KEY)
+✓ API key accepted by https://api.upstage.ai
+✓ claude-upstage doctor passed
 
-Upstage's own Anthropic-compatible endpoint has no model mapping for
-solar-pro4 (see 01-solar-open2-harness Method B against
-https://api.upstage.ai directly: no response). This proxy exists to
-close that gap for any Anthropic-format client.
+== Method A: claude-upstage (piped stdin, non-interactive) ==
+✓ claude-upstage (piped stdin) produced a response
+  
+  안녕하세요! 현재 어떤 작업을 도와드릴까요? 이 프로젝트에 대해 궁금한 점이 있거나, 구체적인 작업이 필요하시면 알려주세요.
 
-== Raw request, identical wire format to what Claude Code sends ==
+== Method B: official claude CLI with manual ANTHROPIC_* env vars ==
+✓ claude -p "hello" (official CLI, alternate API) produced a response
+  안녕하세요! 무엇을 도와드릴까요?
 
-$ curl "http://127.0.0.1:4000/v1/messages?beta=true" \
-    -H "Authorization: Bearer sk-local-solar-proxy" \
-    -H "anthropic-version: 2023-06-01" \
-    -H "Content-Type: application/json" \
-    -d '{"model":"solar-pro4","max_tokens":16,"messages":[{"role":"user","content":"hi"}]}'
+== Method C: explicit git-commit-helper skill invocation ==
+✓ git-commit-helper skill format honored via solar-pro4
+  📄 docs(docs): add hello.txt greeting document
 
-{"id":"a93a14f4-f110-48a0-8c8e-bb4d4356ef6f","type":"message","role":"assistant","model":"solar-pro4", ...
-"content":[{"type":"thinking","thinking":"Okay, the user just said \"hi\". That's a simple greeting. I"...}],
-"stop_reason":"max_tokens"}
+== Method D: subagent (Task tool) call via CLAUDE_CODE_SUBAGENT_MODEL ==
+✓ subagent call completed on solar-pro4 and saw the real directory
+  현재 디렉토리(`01-solar-open2-harness/`)에 있는 파일 목록입니다.
+  
+  - `.env.sample`
+  - `README-ko.md`
+  - `README.md`
+  - `REPRODUCE-ko.md`
+  - `REPRODUCE.md`
 
-RESULT: PASS — solar-pro4 answers correctly through the Anthropic-shaped
-/v1/messages bridge, same as solar-open2.
+== Method E: jyje/claude-docker (community Docker image) ==
+✓ claude-docker "hello" (containerized official CLI) produced a response
+  Hello! How can I help you today?
 
-== Note: direct `claude -p "hello"` CLI invocation ==
+✓ All checks passed.
 
-Running the bare `claude` binary as a subprocess from *this* development
-session (itself a Claude Code Desktop host) failed with:
+--- Run note ---
+Methods A-D above are verbatim output from a single
+`SOLAR_BASE_URL=http://127.0.0.1:4000 SOLAR_AUTH_TOKEN=sk-local-solar-proxy
+SOLAR_MODEL=solar-pro4 ./scripts/verify.sh` run (env -i scrubbed, see
+case-01-solar-open2.log for why that is required in this dev
+environment). That run was interrupted by the harness partway through
+Method E, so Method E was re-issued on its own, with the exact command
+the script builds -- including the host.docker.internal rewrite the
+script now applies to a loopback SOLAR_BASE_URL, since the host's
+127.0.0.1 means nothing inside the container. Its output is recorded
+above as it was returned.
 
-  API Error: 400 No connected db.
-
-Root cause (confirmed via proxy logs + `env | grep -i claude`): this
-session's own ambient environment carries CLAUDE_CODE_OAUTH_SCOPES /
-CLAUDE_CODE_SDK_HAS_OAUTH_REFRESH, which the spawned `claude` CLI
-subprocess inherits and prioritizes over the exported
-ANTHROPIC_AUTH_TOKEN, so it authenticates to the local proxy with the
-host session's own token instead of the proxy's master key — which the
-proxy (no database configured) can't validate as a virtual key. This is
-an artifact of testing `claude` nested inside a Claude Code session, not
-a defect in the proxy or in solar-pro4 support. Confirmed absent when
-invoked via the Claude Agent SDK instead (see case-03-solar-pro4.log),
-which builds a clean subprocess environment.
-
-VERDICT: solar-pro4 works through the litellm-proxy bridge for
-Anthropic-format Claude Code traffic (raw wire-format + SDK-mediated CLI
-both confirmed). The bare-CLI failure is a local, nested-session
-credential-precedence artifact specific to this dev environment.
+Caveat on Method A: it goes through the `claude-upstage` wrapper, which
+hardcodes Upstage's own endpoint and does not honor SOLAR_BASE_URL, so
+that one check did not exercise the proxy or solar-pro4 -- it is the
+wrapper's own default path. The script's header already documents that
+it never asserts Method A's model. Methods B, C, D and E all ran
+against solar-pro4 through the local bridge.

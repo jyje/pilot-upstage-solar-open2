@@ -1,2 +1,18 @@
-⚠ claude.ai connectors are disabled because ANTHROPIC_API_KEY or another auth source is set and takes precedence over your claude.ai login · Unset it to load your organization's connectors
-REPLY: Hello! How can I help you today?
+== Model under test: solar-open2 ==
+== demo.py: Methods A/B/C against solar-open2 ==
+== Method A: query() one-shot call, structured message types ==
+  message types seen: AssistantMessage, ResultMessage, SystemMessage
+  Hello! 👋 I'm Solar Open2, ready to help you with whatever you need.
+  What would you like to work on today?
+PASS: Method A got a structured reply.
+
+== Method B: ClaudeSDKClient multi-turn session memory ==
+  42
+PASS: Method B recalled context across turns.
+
+== Method C: query() + tool use, ToolUseBlock visibility ==
+  -> saw_tool_use=True
+PASS: Method C's tool use surfaced in the structured stream.
+
+All checks passed.
+✓ All checks passed.

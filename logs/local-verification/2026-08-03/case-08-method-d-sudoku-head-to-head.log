@@ -1,0 +1,85 @@
+Case 08 — Method D (6x6 Mini Sudoku build) — solar-open2 vs solar-pro4
+Date: 2026-08-04 (local, sequential, shared Tier-0 UPSTAGE_API_KEY)
+Harness: omp (oh-my-pi), `omp --print --auto-approve --max-time 8m`
+Prompt: 08-omp-solar-open2/scripts/sudoku-prompt.txt (identical for both)
+Gate:   08-omp-solar-open2/scripts/verify-sudoku.mjs (Playwright, 6 checks)
+
+WHY THIS RUN EXISTS
+-------------------
+An audit of this repo's 2026-08-03 local verification logs found Method D
+had been SKIPPED (SKIP_METHOD_D=1) for both models, so no sudoku was
+actually built in that round, and the single published gallery entry
+carried no model attribution. This run builds it for real, per model.
+
+RAW SINGLE-SHOT RESULT (before any fix round)
+---------------------------------------------
+Both models produced an index.html on the first attempt. Neither passed
+the spec gate unedited:
+
+  solar-open2  -> renders, but initPuzzle() assigns `givenCells = removed`
+                  and then renders `input.value = puzzle[row][col]` for
+                  cells IN that set. `removed` is the set of cells the
+                  generator BLANKED (set to 0), so the logic is inverted:
+                  blank cells render as the literal "0" and the real
+                  givens render empty.
+                  Gate: ✗ "given cell cell-0-2 has invalid value 0"
+
+  solar-pro4   -> hard JavaScript syntax error, line 245:
+                    var positions = shuffle positions = shufflePositions();
+                  Throws "Unexpected identifier 'positions'", so the whole
+                  script dies and the board never renders.
+                  Gate: ✗ "expected 36 cell inputs, found 0"
+
+ASK-VERIFY-FIX LOOP (same methodology the existing gallery entry used —
+the model is asked to fix its own bug; no hand-written code substituted)
+------------------------------------------------------------------------
+  solar-pro4   -> 1 round. Given the exact malformed line, it replaced it
+                  with `var positions = shufflePositions();` and changed
+                  nothing else.
+                  Gate after fix: ✓ 6/6 ALL PASS.
+
+  solar-open2  -> 3 rounds attempted, still failing at cutoff:
+                  round 1 (inversion, verbose prompt) — Deadline exceeded
+                          at the 8m cap, no edit written.
+                  round 2 (inversion, tightened single-line prompt) —
+                          succeeded; rewrote the assignment to build
+                          givenCells as the complement of `removed`.
+                          Gate then surfaced a DEEPER pre-existing bug:
+                          ✗ "given cells conflict at cell-5-1 (puzzle
+                          generation is broken)".
+                          Root cause (read by hand): generateFullGrid()
+                          pre-fills fillBox(0,0), fillBox(2,0), fillBox(4,0)
+                          under the comment "Fill diagonal boxes first
+                          (they don't affect each other)" — but in a 6x6
+                          grid with 2-row x 3-col boxes those three boxes
+                          all occupy columns 0-2, so they very much do
+                          conflict. The comment's premise is simply wrong.
+                  round 3 (targeted at that generation bug) — Deadline
+                          exceeded at 8m again, no edit written.
+
+HEAD-TO-HEAD SUMMARY
+--------------------
+| | solar-open2 | solar-pro4 |
+| Produced an index.html first try | yes | yes |
+| Passed the gate unedited | no | no |
+| Failure class | logic (inverted set) + invalid grid generation | syntax error |
+| Fix rounds to green | not reached (3 attempted, 2 timed out at 8m) | 1 |
+| Final gate | ✗ (this run) | ✓ 6/6 |
+
+On this task, in this run, solar-pro4 was decisively better: its single
+defect was mechanical and it repaired it in one pass, while solar-open2
+had two stacked logic defects and twice exhausted the 8-minute agentic
+budget without emitting an edit. One run each is not a benchmark — but
+it is a real, reproducible difference on a real task, not a smoke test.
+
+WHAT SHIPPED TO THE GALLERY
+---------------------------
+  gallery/case-08-omp-sudoku-solar-open2/  — the previously published
+      open2 build (renamed from case-08-omp-sudoku/ to carry its model
+      in the path), re-verified ✓ 6/6 today. Its own multi-round fix
+      history is documented in gallery/README.md.
+  gallery/case-08-omp-sudoku-solar-pro4/   — THIS run's pro4 build,
+      ✓ 6/6 after the single fix round above.
+Both artifacts now state which model built them, in the page itself.
+This run's failing open2 output was not published; it is described above
+instead.

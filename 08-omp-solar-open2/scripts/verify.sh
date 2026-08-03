@@ -147,7 +147,7 @@ echo
 echo "== Method D: real development task -- 6x6 Mini Sudoku =="
 
 if [ -n "${SKIP_METHOD_D:-}" ]; then
-  echo "  skipped (SKIP_METHOD_D set) -- see ../gallery/case-08-omp-sudoku/"
+  echo "  skipped (SKIP_METHOD_D set) -- see ../gallery/case-08-omp-sudoku-solar-open2/"
   echo "  for the verified, published result of this method."
   echo
   ok "All checks passed (Method D skipped)."

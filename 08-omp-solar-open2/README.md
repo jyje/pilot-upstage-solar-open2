@@ -197,6 +197,29 @@ published as a playable app in [`../gallery/`](../gallery/) instead of
 being re-run each time. See [Evidence run](#evidence-run) below for
 that local transcript.
 
+### Method D head-to-head: solar-open2 vs solar-pro4
+
+Method D was run fresh for both models on 2026-08-04 — same prompt, same
+harness, same 8-minute budget — after an audit found it had been skipped
+for both in the previous local round. Full transcript:
+[`case-08-method-d-sudoku-head-to-head.log`](../logs/local-verification/2026-08-03/case-08-method-d-sudoku-head-to-head.log).
+
+| | solar-open2 | solar-pro4 |
+| --- | --- | --- |
+| Wrote an `index.html` first try | yes | yes |
+| Passed the gate **unedited** | no | no |
+| Failure class | inverted given/blank cell set, **and** a `generateFullGrid()` that pre-fills three boxes it wrongly assumes are independent (in a 6x6 grid with 2x3 boxes they share columns 0–2) | one malformed line — `var positions = shuffle positions = shufflePositions();` — a hard syntax error that killed the whole script |
+| Fix rounds to green | not reached (3 attempted; 2 exhausted the 8-minute budget without emitting an edit) | 1 |
+| Final gate | ✗ | ✓ 6/6 |
+
+Neither model passed this task in one shot. The difference is in what
+broke and how recoverable it was: `solar-pro4`'s single defect was
+mechanical and it repaired it in one pass, while `solar-open2` had two
+stacked logic defects and twice ran out the agentic budget mid-fix. One
+run each is not a benchmark, but it's a real result on a real task and
+it's recorded rather than smoothed over. The published open2 gallery
+entry is the earlier, already-verified build — not this run's output.
+
 Run locally with `UPSTAGE_API_KEY` set, `omp` installed
 (`curl -fsSL https://omp.sh/install | sh`), and Node 18+ on `PATH`:
 
@@ -302,7 +325,7 @@ Locally verified 2026-08-03 (full log:
 [`logs/local-verification/2026-08-03/case-08-solar-pro4.log`](../logs/local-verification/2026-08-03/case-08-solar-pro4.log)):
 Methods A (deterministic reply), B (reasoning prompt), and C (coding
 task) all passed against `solar-pro4` (Method D skipped locally too, same
-as the `solar-open2` CI run — see `gallery/case-08-omp-sudoku/` for the
+as the `solar-open2` CI run — see `gallery/case-08-omp-sudoku-solar-open2/` for the
 published Method D result).
 
 See the repo-level [`PLAN.md`](../PLAN.md) for full context.

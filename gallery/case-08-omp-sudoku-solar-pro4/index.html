@@ -1,0 +1,548 @@
+<!-- 6x6 Mini Sudoku — single self-contained file.
+Design choices: backtracking fills a complete valid grid (1-6, each row/col/2x3 box
+exacts once); ~half the cells are removed at random to form the puzzle. The puzzle is
+validated solvable at generation time by backtracking for *any* solution (uniqueness
+not required — win detection is rule-based, not against a memorized answer). Given cells
+are readonly + data-given="true"; editable cells accept only "1"–"6" (and Backspace/Delete
+to clear), all other input ignored. Conflicts are highlighted live on every change.
+Win = rule-based check (rows/cols/boxes each contain 1-6 exactly once, no empties)
+sets #status to "Solved!" and adds class "solved". A "New Puzzle" button regenerates.
+Cells use id="cell-R-C" (0-indexed). -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6x6 Mini Sudoku</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #f4f5f7;
+    color: #1d2330;
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    margin: 0 0 8px 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .status {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    height: 1.4em;
+    color: #5a6275;
+    transition: color 0.15s ease;
+  }
+  .status.solved {
+    color: #1a7f37;
+  }
+  .board {
+    display: inline-grid;
+    grid-template-columns: repeat(6, 54px);
+    grid-template-rows: repeat(6, 54px);
+    background: #fff;
+    border: 2px solid #2b3548;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  }
+  .cell {
+    width: 54px;
+    height: 54px;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border: 1px solid #c7ccd6;
+    color: #1d2330;
+    background: #ffffff;
+    outline: none;
+    caret-color: #2b6fd6;
+  }
+  .cell.editable {
+    color: #1d2330;
+  }
+  .cell.given {
+    background: #eef1f7;
+    color: #2b3548;
+    font-weight: 700;
+  }
+  /* Thicker borders between boxes: 2x3 box grid.
+     Rows {0,1},{2,3},{4,5}; Cols {0,1,2},{3,4,5}. */
+  .cell.border-right {
+    border-right: 2px solid #2b3548;
+  }
+  .cell.border-bottom {
+    border-bottom: 2px solid #2b3548;
+  }
+  .cell.conflict {
+    color: #c0392b;
+    background: #fdecea;
+  }
+  .cell.conflict.given {
+    background: #fbe9e7;
+  }
+  .cell.correct {
+    color: #1a7f37;
+    background: #eaf8ef;
+  }
+  .cell.correct.given {
+    background: #e3eef2;
+  }
+  .cell.focused {
+    box-shadow: inset 0 0 0 2px #2b6fd6;
+  }
+  button#new-puzzle {
+    margin-top: 18px;
+    padding: 10px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: #2b3548;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  button#new-puzzle:hover { background: #1f2738; }
+  button#new-puzzle:active { background: #151b28; }
+  .footer { margin-top: 10px; font-size: 0.82rem; color: #8a92a3; }
+</style>
+</head>
+<body>
+  <h1>6×6 Mini Sudoku</h1>
+  <p class="built-by" style="margin:0 0 1rem;font-size:.78rem;opacity:.65;letter-spacing:.02em">
+    Built by <strong>solar-pro4</strong> via omp · Case 08
+  </p>
+  <div id="status" class="status"></div>
+  <div id="board" class="board" aria-label="6 by 6 Sudoku grid"></div>
+  <button id="new-puzzle" type="button">New Puzzle</button>
+  <div class="footer">Digits 1–6. Click an empty cell to enter a number.</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var SIZE = 6;
+  var BOX_ROWS = 2;
+  var BOX_COLS = 3;
+  var NUM_CELLS_TO_KEEP = 18; // keep ~half given (18 of 36)
+  var BOARD = document.getElementById("board");
+  var STATUS = document.getElementById("status");
+  var NEW_BTN = document.getElementById("new-puzzle");
+
+  // ---------- Backtracking solver / generator ----------
+
+  // Check whether placing `val` at (r,c) is legal in `grid`.
+  function isValidPlace(grid, r, c, val) {
+    // row
+    for (var j = 0; j < SIZE; j++) {
+      if (j !== c && grid[r][j] === val) return false;
+    }
+    // column
+    for (var i = 0; i < SIZE; i++) {
+      if (i !== r && grid[i][c] === val) return false;
+    }
+    // box
+    var br = Math.floor(r / BOX_ROWS) * BOX_ROWS;
+    var bc = Math.floor(c / BOX_COLS) * BOX_COLS;
+    for (var bi = br; bi < br + BOX_ROWS; bi++) {
+      for (var bj = bc; bj < bc + BOX_COLS; bj++) {
+        if ((bi !== r || bj !== c) && grid[bi][bj] === val) return false;
+      }
+    }
+    return true;
+  }
+
+  // Find first empty cell scanning row-by-row; returns [r,c] or null.
+  function firstEmpty(grid) {
+    for (var i = 0; i < SIZE; i++) {
+      for (var j = 0; j < SIZE; j++) {
+        if (grid[i][j] === 0) return [i, j];
+      }
+    }
+    return null;
+  }
+
+  // Fill grid (in place, 0 = empty) with a complete valid solution.
+  // Uses shuffled digit order so generated grids vary.
+  function solveFill(grid) {
+    var empty = firstEmpty(grid);
+    if (!empty) return true; // already full & valid
+    var r = empty[0], c = empty[1];
+    var order = shuffle([1,2,3,4,5,6]);
+    for (var k = 0; k < order.length; k++) {
+      var v = order[k];
+      if (isValidPlace(grid, r, c, v)) {
+        grid[r][c] = v;
+        if (solveFill(grid)) return true;
+        grid[r][c] = 0;
+      }
+    }
+    return false;
+  }
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  // Generate a complete valid 6x6 grid.
+  function generateFullGrid() {
+    var g = [];
+    for (var i = 0; i < SIZE; i++) { g.push(new Array(SIZE).fill(0)); }
+    var ok = solveFill(g);
+    if (!ok) throw new Error("Failed to generate a valid grid");
+    return g;
+  }
+
+  // Check whether `puzzle` (0 = hole) has AT LEAST ONE solution.
+  // `solution` (output) receives one full solution so we know it's solvable.
+  function hasSolution(puzzle, solution) {
+    var cur = [];
+    for (var i = 0; i < SIZE; i++) { cur.push(puzzle[i].slice()); }
+    var found = backtrackSolve(cur);
+    if (found && solution) {
+      for (var r = 0; r < SIZE; r++) { solution[r] = cur[r].slice(); }
+    }
+    return !!found;
+  }
+
+  function backtrackSolve(grid) {
+    var empty = firstEmpty(grid);
+    if (!empty) return true;
+    var r = empty[0], c = empty[1];
+    for (var v = 1; v <= SIZE; v++) {
+      if (isValidPlace(grid, r, c, v)) {
+        grid[r][c] = v;
+        if (backtrackSolve(grid)) return true;
+        grid[r][c] = 0;
+      }
+    }
+    return false;
+  }
+
+  // ---------- Build a playable puzzle ----------
+
+  function buildPuzzle() {
+    var solution = generateFullGrid();
+
+    // Start with all cells given, then remove cells one by one, keeping the
+    // puzzle solvable at every step. We keep removing until we've removed enough.
+    var puzzle = [];
+    for (var i = 0; i < SIZE; i++) { puzzle.push(solution[i].slice()); }
+
+    var toRemove = SIZE * SIZE - NUM_CELLS_TO_KEEP; // 18
+    var positions = shufflePositions();
+    var removed = 0;
+    for (var p = 0; p < positions.length && removed < toRemove; p++) {
+      var pr = positions[p][0], pc = positions[p][1];
+      if (puzzle[pr][pc] === 0) continue; // already removed
+      var backup = puzzle[pr][pc];
+      puzzle[pr][pc] = 0;
+      var testSol = [];
+      if (hasSolution(puzzle, testSol)) {
+        // keep removal
+        removed++;
+      } else {
+        puzzle[pr][pc] = backup; // revert
+      }
+      // stop early if we've removed enough
+      if (removed >= toRemove) break;
+    }
+    return { puzzle: puzzle, solution: solution };
+  }
+
+  function shufflePositions() {
+    var arr = [];
+    for (var i = 0; i < SIZE; i++) {
+      for (var j = 0; j < SIZE; j++) { arr.push([i, j]); }
+    }
+    return shuffle(arr);
+  }
+
+  // ---------- Rendering ----------
+
+  var GIVEN_CELLS = new Map(); // id -> "true"
+
+  function render(puzzle) {
+    BOARD.innerHTML = "";
+    GIVEN_CELLS = new Map();
+
+    for (var r = 0; r < SIZE; r++) {
+      for (var c = 0; c < SIZE; c++) {
+        var input = document.createElement("input");
+        input.type = "text";
+        input.inputMode = "numeric";
+        input.maxLength = 1;
+        input.id = "cell-" + r + "-" + c;
+
+        var val = puzzle[r][c];
+        if (val !== 0) {
+          input.value = String(val);
+          input.setAttribute("readonly", "");
+          input.setAttribute("data-given", "true");
+          input.className = "cell given";
+        } else {
+          input.setAttribute("data-given", "false");
+          input.className = "cell editable";
+        }
+
+        // Box borders
+        if (c % BOX_COLS === BOX_COLS - 1) input.classList.add("border-right");
+        if (r % BOX_ROWS === BOX_ROWS - 1) input.classList.add("border-bottom");
+
+        input.dataset.row = String(r);
+        input.dataset.col = String(c);
+
+        input.addEventListener("input", onCellInput);
+        input.addEventListener("keydown", onCellKeydown);
+        input.addEventListener("focus", onCellFocus);
+
+        BOARD.appendChild(input);
+      }
+    }
+    STATUS.textContent = "";
+    STATUS.classList.remove("solved");
+  }
+
+  // ---------- Input handling ----------
+
+  function onCellInput(e) {
+    var input = e.target;
+    if (input.getAttribute("readonly") !== null) return; // given: ignore
+    enforceOnlyDigit(input);
+    afterCellChange(input);
+  }
+
+  function onCellKeydown(e) {
+    var input = e.target;
+    if (input.getAttribute("readonly") !== null) {
+      e.preventDefault();
+      return;
+    }
+    // Allow: digits 1-6, Backspace, Delete, Tab, arrows, home/end
+    var allowed =
+      (e.key >= "1" && e.key <= "6") ||
+      e.key === "Backspace" ||
+      e.key === "Delete" ||
+      e.key === "Tab" ||
+      e.key === "ArrowLeft" ||
+      e.key === "ArrowRight" ||
+      e.key === "ArrowUp" ||
+      e.key === "ArrowDown" ||
+      e.key === "Home" ||
+      e.key === "End";
+    if (!allowed) {
+      e.preventDefault();
+    }
+    // Backspace/Delete should clear the field
+    if ((e.key === "Backspace" || e.key === "Delete") && input.value === "") {
+      // nothing extra needed
+    }
+  }
+
+  // Enforce that the value is empty or a single digit 1-6. If not, fix it.
+  function enforceOnlyDigit(input) {
+    var v = input.value;
+    if (v === "") return;
+    // Keep only the first character that is 1-6; otherwise clear.
+    var m = v.match(/^([1-6]).*/);
+    if (m) {
+      input.value = m[1];
+    } else {
+      input.value = "";
+    }
+  }
+
+  // Clear any "focused" highlight on blur (we use CSS :focus-visible style
+  // via a class only for cells that are editable and empty to show a hint).
+  function onCellFocus(e) {
+    var input = e.target;
+    input.classList.add("focused");
+  }
+
+  // ---------- Conflict detection ----------
+
+  function afterCellChange(input) {
+    var r = parseInt(input.dataset.row, 10);
+    var c = parseInt(input.dataset.col, 10);
+    var val = input.value === "" ? 0 : parseInt(input.value, 10);
+
+    // Collect all currently-edited violations.
+    computeConflicts();
+
+    // Win check
+    if (checkSolved()) {
+      STATUS.textContent = "Solved!";
+      STATUS.classList.add("solved");
+    } else {
+      // Only clear solved text if not solved
+      if (STATUS.textContent === "Solved!") {
+        STATUS.textContent = "";
+        STATUS.classList.remove("solved");
+      }
+    }
+  }
+
+  function computeConflicts() {
+    // Read current board
+    var board = [];
+    var cells = [];
+    var allInputs = BOARD.querySelectorAll("input");
+    for (var i = 0; i < allInputs.length; i++) {
+      var inp = allInputs[i];
+      var r = parseInt(inp.dataset.row, 10);
+      var c = parseInt(inp.dataset.col, 10);
+      if (!board[r]) board[r] = [];
+      var v = inp.value === "" ? 0 : parseInt(inp.value, 10);
+      board[r][c] = v;
+      if (!cells[r]) cells[r] = [];
+      cells[r][c] = inp;
+    }
+
+    // Clear previous conflict/correct markers (keep given/editable classes)
+    for (var ri = 0; ri < SIZE; ri++) {
+      for (var ci = 0; ci < SIZE; ci++) {
+        var el = cells[ri][ci];
+        el.classList.remove("conflict", "correct");
+      }
+    }
+
+    // For every filled cell, check row/col/box for duplicates
+    var conflictSet = new Set(); // "r,c"
+    for (var rr = 0; rr < SIZE; rr++) {
+      for (var cc = 0; cc < SIZE; cc++) {
+        var v = board[rr][cc];
+        if (v === 0) continue;
+        // scan row
+        for (var j = 0; j < SIZE; j++) {
+          if (j === cc) continue;
+          if (board[rr][j] === v) {
+            conflictSet.add(rr + "," + cc);
+            conflictSet.add(rr + "," + j);
+          }
+        }
+        // scan column
+        for (var i = 0; i < SIZE; i++) {
+          if (i === rr) continue;
+          if (board[i][cc] === v) {
+            conflictSet.add(rr + "," + cc);
+            conflictSet.add(i + "," + cc);
+          }
+        }
+        // scan box
+        var br = Math.floor(rr / BOX_ROWS) * BOX_ROWS;
+        var bc = Math.floor(cc / BOX_COLS) * BOX_COLS;
+        for (var bi = br; bi < br + BOX_ROWS; bi++) {
+          for (var bj = bc; bj < bc + BOX_COLS; bj++) {
+            if (bi === rr && bj === cc) continue;
+            if (board[bi][bj] === v) {
+              conflictSet.add(rr + "," + cc);
+              conflictSet.add(bi + "," + bj);
+            }
+          }
+        }
+      }
+    }
+
+    // Mark conflicts
+    for (var key in conflictSet) {
+      // conflictSet keys are numeric indexes in some engines; iterate properly.
+    }
+    conflictSet.forEach(function (key) {
+      var parts = key.split(",");
+      var rr = parseInt(parts[0], 10);
+      var cc = parseInt(parts[1], 10);
+      cells[rr][cc].classList.add("conflict");
+    });
+  }
+
+  // ---------- Solved check (rule-based, NOT against memorized solution) ----------
+
+  function checkSolved() {
+    // Every cell must be non-empty, and each row/col/box must contain 1..6 exactly once.
+    var board = [];
+    var allInputs = BOARD.querySelectorAll("input");
+    for (var i = 0; i < allInputs.length; i++) {
+      var inp = allInputs[i];
+      var r = parseInt(inp.dataset.row, 10);
+      var c = parseInt(inp.dataset.col, 10);
+      if (!board[r]) board[r] = [];
+      var v = inp.value === "" ? 0 : parseInt(inp.value, 10);
+      if (v < 1 || v > SIZE) return false; // empty or invalid => not solved
+      board[r][c] = v;
+    }
+
+    // Rows
+    for (var r = 0; r < SIZE; r++) {
+      var seenR = new Array(SIZE + 1).fill(false);
+      for (var c = 0; c < SIZE; c++) {
+        var v = board[r][c];
+        if (v < 1 || v > SIZE || seenR[v]) return false;
+        seenR[v] = true;
+      }
+      for (var k = 1; k <= SIZE; k++) { if (!seenR[k]) return false; }
+    }
+    // Columns
+    for (var c = 0; c < SIZE; c++) {
+      var seenC = new Array(SIZE + 1).fill(false);
+      for (var r = 0; r < SIZE; r++) {
+        var v = board[r][c];
+        if (v < 1 || v > SIZE || seenC[v]) return false;
+        seenC[v] = true;
+      }
+      for (var k = 1; k <= SIZE; k++) { if (!seenC[k]) return false; }
+    }
+    // Boxes
+    for (var br = 0; br < SIZE; br += BOX_ROWS) {
+      for (var bc = 0; bc < SIZE; bc += BOX_COLS) {
+        var seenB = new Array(SIZE + 1).fill(false);
+        for (var i = br; i < br + BOX_ROWS; i++) {
+          for (var j = bc; j < bc + BOX_COLS; j++) {
+            var v = board[i][j];
+            if (v < 1 || v > SIZE || seenB[v]) return false;
+            seenB[v] = true;
+          }
+        }
+        for (var k = 1; k <= SIZE; k++) { if (!seenB[k]) return false; }
+      }
+    }
+    return true;
+  }
+
+  // ---------- New puzzle ----------
+
+  function newPuzzle() {
+    STATUS.textContent = "";
+    STATUS.classList.remove("solved");
+    var puzzle = buildPuzzle().puzzle;
+    render(puzzle);
+    // Remove any leftover correct/conflict styles
+  }
+
+  // ---------- Init ----------
+
+  // Hook up new-puzzle button
+  NEW_BTN.addEventListener("click", newPuzzle);
+
+  // Generate initial puzzle
+  newPuzzle();
+
+  // Expose nothing to global scope.
+})();
+</script>
+</body>
+</html>

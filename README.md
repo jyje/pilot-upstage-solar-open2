@@ -201,8 +201,31 @@ Upstage directly, and Solar Pro4 becomes reachable from Claude Code (or
 | 05 — LangChain OpenWiki | direct | ✅ |
 | 06 — Grok Build | direct | ✅ |
 | 07 — Hermes Agent Helm | direct | ✅ |
-| 08 — omp | direct | ✅ |
+| 08 — omp | direct | ✅ Methods A–C; Method D (the Sudoku build) passed after one fix round — see below |
 | 09 — Codex | via its own Responses-API LiteLLM bridge | ✅ |
+
+### The one place the two models actually diverged
+
+Everything above is a connectivity-and-capability check that both models
+pass. Case 08's **Method D** is the only task in this repo that asks a
+model to *build* something substantial — a working 6x6 Sudoku app from a
+written spec — and it's where they came apart. Run head-to-head on
+2026-08-04 with the same prompt, harness, and 8-minute budget:
+
+- **`solar-pro4`** — one defect in its raw output (a malformed line that
+  was a hard JavaScript syntax error). Handed that exact line back, it
+  fixed it in **one round**, then passed all 6 browser checks.
+- **`solar-open2`** — two stacked logic defects (an inverted
+  given/blank cell set, plus a grid generator that pre-fills three boxes
+  it wrongly assumes are independent). Three fix rounds attempted; two
+  exhausted the 8-minute budget without emitting an edit. **Did not reach
+  a passing state in that run.**
+
+Neither passed unedited. One run each is not a benchmark — but it is a
+real result on a real task, so it's recorded rather than smoothed over.
+Both models' published builds are in [`gallery/`](gallery/), each
+labelled with the model that made it; the full transcript is in
+[`case-08-method-d-sudoku-head-to-head.log`](logs/local-verification/2026-08-03/case-08-method-d-sudoku-head-to-head.log).
 
 ## Verified against Tier 0 — limits & mitigations
 

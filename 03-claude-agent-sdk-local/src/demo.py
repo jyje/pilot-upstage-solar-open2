@@ -24,15 +24,26 @@ from claude_agent_sdk import (
 )
 
 SOLAR_MODEL = os.environ.get("SOLAR_MODEL", "solar-open2")
-SOLAR_BASE_URL = "https://api.upstage.ai"
+# Upstage's own Anthropic-compatible endpoint by default. Overridable so
+# the same three methods can be run against a local Anthropic-Messages
+# bridge instead (see docker/) — needed for solar-pro4, which Upstage
+# has no model mapping for on this endpoint.
+SOLAR_BASE_URL = os.environ.get("SOLAR_BASE_URL", "https://api.upstage.ai")
 
 
 def solar_options(cwd: str | None = None) -> ClaudeAgentOptions:
     """Same Solar Open 2 recipe verified in topic 01: ANTHROPIC_AUTH_TOKEN,
-    not ANTHROPIC_API_KEY (the SDK docs' own example hangs against Upstage)."""
+    not ANTHROPIC_API_KEY (the SDK docs' own example hangs against Upstage).
+
+    Read the credential here rather than at import time, so importing this
+    module (as the tests do) doesn't require UPSTAGE_API_KEY to be set.
+    SOLAR_AUTH_TOKEN overrides it when SOLAR_BASE_URL points at a local
+    bridge, which authenticates with its own key instead of Upstage's.
+    """
     env = {
         "ANTHROPIC_BASE_URL": SOLAR_BASE_URL,
-        "ANTHROPIC_AUTH_TOKEN": os.environ["UPSTAGE_API_KEY"],
+        "ANTHROPIC_AUTH_TOKEN": os.environ.get("SOLAR_AUTH_TOKEN")
+        or os.environ["UPSTAGE_API_KEY"],
     }
     return ClaudeAgentOptions(model=SOLAR_MODEL, env=env, cwd=cwd)
 

@@ -109,16 +109,18 @@
       <a class="back" href="../">&larr; back to jyje/pilot-upstage-solar-open2</a>
       <h1>Gallery</h1>
       <p class="lede">
-        Real apps that Solar Open 2 actually built through this repo's agent-harness
-        cases &mdash; played and functionally checked in a real browser, not just a
-        text reply. Nothing here is hand-written or hand-edited beyond a couple of
-        openly-noted, minimal bugfixes (see each entry).
+        Real apps that Upstage's Solar models actually built through this repo's
+        agent-harness cases &mdash; played and functionally checked in a real
+        browser, not just a text reply. Nothing here is hand-written or
+        hand-edited beyond a couple of openly-noted, minimal bugfixes (see each
+        entry). Each entry names the model that built it: the same spec given to
+        two different models does not produce the same result.
       </p>
 
-      <a class="card" href="case-08-omp-sudoku/">
-        <p class="card-title">6&times;6 Mini Sudoku</p>
+      <a class="card" href="case-08-omp-sudoku-solar-open2/">
+        <p class="card-title">6&times;6 Mini Sudoku &mdash; solar-open2</p>
         <p class="card-desc">
-          Built by <strong>Solar Open 2</strong> through
+          Built by <strong>solar-open2</strong> through
           <strong>omp (oh-my-pi)</strong>, asked only for a written requirements
           spec &mdash; puzzle generation, live conflict highlighting, real win
           detection, and a working "New Puzzle" button, all self-contained in
@@ -127,6 +129,21 @@
         <div class="card-meta">
           <span class="tag">Case 08 &mdash; omp</span>
           <span class="tag">solar-open2</span>
+        </div>
+      </a>
+
+      <a class="card" href="case-08-omp-sudoku-solar-pro4/">
+        <p class="card-title">6&times;6 Mini Sudoku &mdash; solar-pro4</p>
+        <p class="card-desc">
+          The same spec, same harness, same 8-minute budget &mdash; given to
+          <strong>solar-pro4</strong> instead, as a head-to-head. Its raw output
+          had one hard syntax error that killed the whole script; handing that
+          exact line back fixed it in a single round, after which it passed all
+          six browser checks.
+        </p>
+        <div class="card-meta">
+          <span class="tag">Case 08 &mdash; omp</span>
+          <span class="tag">solar-pro4</span>
         </div>
       </a>
 

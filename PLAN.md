@@ -310,8 +310,25 @@ it without needing any of the others.
   D (the Sudoku build) is a multi-minute agentic build that CI skips
   (`SKIP_METHOD_D=1`) rather than re-running on every dispatch -- it's
   verified locally instead, and its output is published as a playable
-  app in `gallery/case-08-omp-sudoku/`. See `08-omp-solar-open2/README.md`
+  app in `gallery/case-08-omp-sudoku-solar-open2/`. See `08-omp-solar-open2/README.md`
   for details.
+  5. Method D is the only task in this repo that asks a model to *build*
+     something substantial, and it's the one place `solar-open2` and
+     `solar-pro4` measurably diverged. Run head-to-head on 2026-08-04
+     (same prompt, harness, and 8-minute budget), neither passed the
+     Playwright gate unedited: `solar-pro4` emitted one malformed line
+     (a hard JS syntax error that killed the whole script) and repaired
+     it in a single fix round, reaching 6/6; `solar-open2` had two
+     stacked logic defects (an inverted given/blank cell set, plus a
+     `generateFullGrid()` that pre-fills three boxes it wrongly assumes
+     are independent -- in a 6x6 grid with 2x3 boxes they share columns
+     0-2) and twice exhausted the 8-minute budget mid-fix without
+     emitting an edit, never reaching green in that run. One run each is
+     not a benchmark, but it is a real result on a real task. Full
+     transcript:
+     `logs/local-verification/2026-08-03/case-08-method-d-sudoku-head-to-head.log`.
+     Both models' published builds live in `gallery/`, each labelled
+     with the model that made it.
 
 ## Case 09 — Solar Open 2 x Codex
 
