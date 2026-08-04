@@ -1,6 +1,29 @@
 # Changelog
 
 All notable changes to this repo are documented here.
+## [1.5] - 2026-08-04
+
+### Features
+
+- ✨ feat(docker): add a litellm-proxy bridge for Solar Pro4 over Anthropic Messages ([`24ba72e`](https://github.com/jyje/pilot-upstage-solar-open2/commit/24ba72e172fca0474af47b38cd446cb81b6778cb)) — @jyje
+- ✨ feat(case-09): promote Codex draft to Case 09, verify Solar Pro4 across every case ([`3a31e17`](https://github.com/jyje/pilot-upstage-solar-open2/commit/3a31e1703555e67606398514d883b090acfca1a9)) — @jyje
+
+
+### Bug Fixes
+
+- 🐛 bug(docs): fix broken links left by the draft-to-Case-09 promotion ([`ad1f545`](https://github.com/jyje/pilot-upstage-solar-open2/commit/ad1f545351dd5635e7cd4f5d2d535d9f729b701c)) — @jyje
+- 🐛 bug(verify): fix a false-pass, replace two fake logs, run Method D for real ([`a2c2473`](https://github.com/jyje/pilot-upstage-solar-open2/commit/a2c2473ca74bd595703f06305e424157755ac7a2)) — @jyje
+- 🐛 bug(slides): add Case 09 to the landing page's case launcher table ([`3ad741c`](https://github.com/jyje/pilot-upstage-solar-open2/commit/3ad741cabbc627120ca95a93bd74dcf20c9666f9)) — @jyje
+
+
+<details>
+<summary>Miscellaneous (1)</summary>
+
+- ⬆️ dep(security): patch the 5 high-severity Dependabot alerts ([`e0d4dc7`](https://github.com/jyje/pilot-upstage-solar-open2/commit/e0d4dc776e8d74846befb86e6061d8e48ffc2755)) — @jyje
+
+</details>
+
+
 ## [1.4] - 2026-07-27
 
 ### Features
