@@ -81,7 +81,7 @@ const selectorPage = `<!doctype html>
       </div>
       <h1>jyje/pilot-upstage-solar-open2</h1>
       <img class="hero-image" src="./images/agent-ecosystem.png" alt="Solar Open 2 agent ecosystem" />
-      <p class="tagline">✨ Testing multiple agent harnesses powered by the Upstage Solar Open 2 model: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, and omp</p>
+      <p class="tagline">✨ Testing multiple agent harnesses powered by Upstage's Solar Open 2 and Solar Pro4 models: Claude Code, Hermes Agent (also verified on Kubernetes), Claude Agent SDK, LangChain Deepagents, OpenWiki, Grok Build, omp, and Codex</p>
       <div class="cases-scroll">
         <table class="cases" aria-label="Use cases">
           <thead>
@@ -128,10 +128,15 @@ const selectorPage = `<!doctype html>
               <td class="case-category">Extend</td>
               <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-08-omp-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-08-omp-solar-open2.yml?label=&logo=github&logoColor=white" alt="verify-08 status" /></a></td>
             </tr>
+            <tr>
+              <td class="case-name">09 — Codex</td>
+              <td class="case-category">Extend</td>
+              <td class="case-ci"><a href="https://github.com/jyje/pilot-upstage-solar-open2/actions/workflows/verify-09-codex-upstage-solar-open2.yml" target="_blank" rel="noreferrer"><img src="https://img.shields.io/github/actions/workflow/status/jyje/pilot-upstage-solar-open2/verify-09-codex-upstage-solar-open2.yml?label=&logo=github&logoColor=white" alt="verify-09 status" /></a></td>
+            </tr>
           </tbody>
         </table>
       </div>
-      <p class="gallery-link"><a href="./gallery/">→ Gallery: real, playable apps Solar Open 2 built</a></p>
+      <p class="gallery-link"><a href="./gallery/">→ Gallery: real, playable apps Solar Open 2 &amp; Pro4 built</a></p>
       <p class="nav-label">Start the slides — choose a language</p>
       <nav aria-label="Presentation language">
         <a class="lang" href="./en/#1" lang="en">English</a>
