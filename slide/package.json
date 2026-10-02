@@ -14,8 +14,8 @@
     "test:e2e": "node test-slidev.mjs"
   },
   "devDependencies": {
-    "@slidev/cli": "^52.18.0",
-    "@slidev/client": "^52.18.0",
+    "@slidev/cli": "^53.0.0",
+    "@slidev/client": "^53.0.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17"
@@ -24,6 +24,7 @@
   "overrides": {
     "@hono/node-server": "^2.0.5",
     "dompurify": "^3.4.12",
-    "fast-uri": "^3.1.6"
+    "fast-uri": "^3.1.6",
+    "image-size": "^2.0.4"
   }
 }
