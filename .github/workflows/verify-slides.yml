@@ -1,0 +1,39 @@
+name: verify-slides
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "slide/**"
+      - ".github/workflows/verify-slides.yml"
+  push:
+    branches: [main]
+    paths:
+      - "slide/**"
+      - ".github/workflows/verify-slides.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: slide/package-lock.json
+
+      - name: Install slide dependencies
+        run: npm ci --prefix slide --ignore-scripts
+
+      - name: Test sprintf-js security fix
+        run: npm run test:security --prefix slide
+
+      - name: Build English and Korean decks
+        env:
+          SLIDEV_BASE_PATH: /${{ github.event.repository.name }}/
+        run: npm run build:pages --prefix slide
