@@ -11,20 +11,23 @@
     "build:pages": "node scripts/build-pages.mjs",
     "preview": "slidev build && npx serve dist",
     "preview:pages": "npm run build:pages && vite preview --outDir dist --port 3030",
-    "test:e2e": "node test-slidev.mjs"
+    "test:e2e": "node test-slidev.mjs",
+    "test:security": "node scripts/test-sprintf-js-security.mjs"
   },
   "devDependencies": {
     "@slidev/cli": "^53.0.0",
     "@slidev/client": "^53.0.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.3",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "sprintf-js": "file:vendor/sprintf-js"
   },
   "packageManager": "npm@10.0.0",
   "overrides": {
     "@hono/node-server": "^2.0.5",
     "dompurify": "^3.4.12",
     "fast-uri": "^3.1.6",
-    "image-size": "^2.0.4"
+    "image-size": "^2.0.4",
+    "sprintf-js": "$sprintf-js"
   }
 }
