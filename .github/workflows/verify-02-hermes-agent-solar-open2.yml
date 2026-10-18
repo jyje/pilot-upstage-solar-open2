@@ -13,7 +13,7 @@ jobs:
   verify:
     runs-on: ubuntu-26.04-arm
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: "Case 02 — Solar Open 2 x Hermes Agent"
         env:
