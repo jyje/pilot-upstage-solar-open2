@@ -11,7 +11,6 @@
     "build:pages": "node scripts/build-pages.mjs",
     "preview": "slidev build && npx serve dist",
     "preview:pages": "npm run build:pages && vite preview --outDir dist --port 3030",
-    "test:e2e": "node test-slidev.mjs",
     "test:security": "node scripts/test-sprintf-js-security.mjs"
   },
   "devDependencies": {
