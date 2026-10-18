@@ -34,7 +34,7 @@ jobs:
   verify-sequential:
     runs-on: ubuntu-26.04-arm
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v5
         with:
@@ -69,7 +69,7 @@ jobs:
       # 05-langchain-openwiki-solar-open2/README.md's Finding 2 for the
       # full writeup.
       - name: Check out patched openwiki fork
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: jyje/openwiki
           ref: fix/disable-streaming-for-tool-calling-providers
