@@ -82,6 +82,7 @@ async def method_a_query() -> str:
 async def method_b_session_memory() -> str:
     """ClaudeSDKClient multi-turn session: a number told in turn 1 must
     come back in turn 2, proving the session retains context."""
+    reply = ""
     async with ClaudeSDKClient(options=solar_options()) as client:
         await client.query("Remember the number 42. Reply with just OK.")
         async for _ in client.receive_response():
@@ -90,13 +91,16 @@ async def method_b_session_memory() -> str:
         await client.query(
             "What number did I just ask you to remember? Reply with just the number."
         )
-        reply = ""
         async for message in client.receive_response():
             if isinstance(message, AssistantMessage):
                 for block in message.content:
                     if isinstance(block, TextBlock):
                         reply = block.text
-        return reply
+    if not reply:
+        raise RuntimeError(
+            "Claude Agent SDK session returned no assistant text for the second turn"
+        )
+    return reply
 
 
 async def method_c_tool_use() -> bool:
