@@ -16,3 +16,6 @@ dev = [
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+
+[tool.uv]
+constraint-dependencies = ["mcp>=1.30.0,<2"]
