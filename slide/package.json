@@ -24,7 +24,7 @@
   "packageManager": "npm@10.0.0",
   "overrides": {
     "@hono/node-server": "^2.0.5",
-    "dompurify": "^3.4.12",
+    "dompurify": "^3.4.17",
     "fast-uri": "^3.1.6",
     "image-size": "^2.0.4",
     "sprintf-js": "$sprintf-js"
